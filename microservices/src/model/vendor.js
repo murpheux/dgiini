@@ -3,6 +3,6 @@ import {
 } from "./user";
 
 
-export default class Client extends User {
+export default class Vendor extends User {
 
 }
