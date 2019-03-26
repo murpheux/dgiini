@@ -1,9 +1,17 @@
-export class User {
-    constructor(username) {
+'use strict';
 
+export class User {
+    ratings = []
+
+    constructor(username) {
+        this.username = username
     }
 
-    getUsername() {
+    get_username() {
         return this.username;
+    }
+
+    get_password() {
+        return this.password
     }
 }

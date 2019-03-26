@@ -3,7 +3,6 @@ const router = express.Router();
 import Task from '../model/task';
 import uuid from 'uuid/v4';
 
-
 router.get('/', (req, res, next) => {
     let payload = {
         "payload": "Hello From ImageCompacter service"
@@ -23,7 +22,23 @@ router.get('/tasks', (req, res, next) => {
     res.json(tasks);
 });
 
-router.post('/tasks', (req, res) => {
+router.post('/client', (req, res, next) => {});
+
+router.post('/vendor', (req, res, next) => {});
+
+router.post('/task', (req, res, next) => {})
+
+router.get('/api/task', (req, res, next) => {})
+
+router.get('/client', (req, res, next) => {})
+
+router.get('/vendor', (req, res, next) => {})
+
+router.put('/task', (req, res, next) => {})
+
+router.put('/rate', (req, res, next) => {})
+
+router.post('/ztasks', (req, res) => {
     let user = new User(req.body.name,
         req.body.username, req.body.email);
     res.json(user);

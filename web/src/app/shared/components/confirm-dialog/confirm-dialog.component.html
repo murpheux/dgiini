@@ -1,0 +1,14 @@
+<div>
+    <h6 class="alert alert-danger" mat-dialog-subtitle>Confirm Delete !!</h6>
+    <div mat-dialog-content>
+      <p>{{confirmMessage}}?</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-flat-button id="btnDialogCancel" (click)="dialogRef.close(false)">
+       <mat-icon>arrow_back</mat-icon>
+        Cancel</button>
+      <button mat-flat-button id="btnDialogConfirm"  (click)="dialogRef.close(true)">
+          <mat-icon>check_box</mat-icon>
+        Confirm</button>
+    </div>
+</div>

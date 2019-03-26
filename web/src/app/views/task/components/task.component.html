@@ -1,0 +1,40 @@
+<app-loader *ngIf="!model"></app-loader>
+<div class="container" *ngIf="model">
+  <mat-card>
+    <a mat-raised-button color="accent" routerLink="./create"
+      i18n="create link | link label create @@createlink">create</a>
+    <mat-table [dataSource]="model">
+
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Task Title Column -->
+      <ng-container cdkColumnDef="title">
+        <mat-header-cell *cdkHeaderCellDef i18n="table header title  | table header title  @@tblHeaderTaskTitle">
+          Title
+        </mat-header-cell>
+        <mat-cell *cdkCellDef="let element">
+          <a [routerLink]="['/task/edit/', element.id ]"> {{ element.title }} </a>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container cdkColumnDef="description">
+        <mat-header-cell *cdkHeaderCellDef
+          i18n="table header description | table header description @@tblHeaderTaskDescription"> Description
+        </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.description }} </mat-cell>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container cdkColumnDef="amount">
+        <mat-header-cell *cdkHeaderCellDef i18n="table header amount | table header amount @@tblHeaderAmount">
+          Amount </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.amount }} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *cdkHeaderRowDef="['title', 'description', 'amount']"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: ['title', 'description', 'amount']"></mat-row>
+    </mat-table>
+  </mat-card>
+</div>
