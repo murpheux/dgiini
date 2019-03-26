@@ -4,12 +4,12 @@
 
 import express from 'express'
 import dotenv from 'dotenv/config'
-import bodyParser from 'body-parser'
-import task_router from './routes/task_route'
-import fs from 'fs'
-import path from 'path'
-import morgan from 'morgan'
-import uuid from 'uuid/v4'
+import bodyParser from 'body-parser';
+import notify_router from './routes/notify_route';
+import fs from 'fs';
+import path from 'path';
+import morgan from 'morgan';
+import uuid from 'uuid/v4';
 //import rfs from 'rotating-file-stream'
 
 const log_level = process.env.LOG_LEVEL || 'debug';
@@ -32,12 +32,6 @@ const accesslogstream = fs.createWriteStream(path.join(__dirname, log_file), {
     flags: 'a'
 })
 
-// const accesslogstream = rfs(path.join(__dirname, log_file), {
-//     flags: 'a',
-//     interval: '1d', // rotate daily
-//     path: path.join(__dirname, 'log')
-// })
-
 app.use(assignId)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -52,7 +46,18 @@ app.use(morgan(log_format, {
     stream: accesslogstream
 }))
 
-app.use('/api/', task_router);
+app.configure('development', () => {
+    app.use(express.errorHandler({
+        dumpExceptions: true,
+        showStack: true
+    }));
+})
+
+app.configure('production', 'staging', () => {
+    app.use(express.errorHandler())
+})
+
+app.use('/api/', notify_router)
 
 //start the app server
 app.listen(port, () => console.log(`task api listening on port ${port}!`));

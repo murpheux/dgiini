@@ -1,11 +1,20 @@
-import express from 'express';
-const router = express.Router();
-import Task from '../model/task';
-import uuid from 'uuid/v4';
+#!node
+
+'use strict'
+
+import express from 'express'
+const router = express.Router()
+import Task from '../model/task'
+import uuid from 'uuid/v4'
+
+const app_name = process.env.APP_NAME
+const version = process.env.APP_VERSION
+const build = process.env.APP_BUILD
+
 
 router.get('/', (req, res, next) => {
     let payload = {
-        "payload": "Hello From ImageCompacter service"
+        "Service": `${app_name} ${version} ${build}`
     }
 
     res.json(payload)
