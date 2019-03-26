@@ -1,0 +1,133 @@
+version: "3.4"
+services:
+
+    web:
+        image: php:7.0-apache
+        environment:
+            - QTASKR_ENV=development
+            - QTASKR_GW=https://apigw/api
+        ports:
+            - "9000:80"
+        volumes:
+            - ../../webui:/var/www/html
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+    apigw:
+        image: node:9.11.2-jessie
+        environment:
+            - QTASKR_ENV=development
+            - QTASKR_GW_HOST=0.0.0.0
+            - QTASKR_GW_PORT=443
+            - QTASKR_AUTH=https://auth_service/api
+            - QTASKR_TASK=https://task_service/api
+            - QTASKR_BILL=https://bill_service/api
+            - QTASKR_NOTIFY=https://notify_service/api
+        ports:
+            - "8000:443"
+        volumes:
+            - ../../api_gateway:/usr/src/app
+            - ../../certs:/usr/src/app/certs
+        command: >
+            bash -c "cd /usr/src/app
+            && yarn install
+            && yarn start"
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+    auth_service:
+        image: python:3.7.0-stretch
+        environment:
+            - QTASKR_ENV=development
+            - QTASKR_AUTH=https://auth_service/api
+            - QTASKR_TASK=https://task_service/api
+            - QTASKR_BILL=https://bill_service/api
+            - QTASKR_NOTIFY=https://notify_service/api
+            - QTASKR_AUTH_DB=db_auth:27017
+            - QTASKR_TASK_DB=db_task:27017
+            - QTASKR_BILL_DB=db_bill:27017
+            - QTASKR_NOTIFY_DB=db_notify:27017
+        ports:
+            - "7000:443"
+        volumes:
+            - ../../service:/usr/src/app
+        command: >
+            bash -c "cd /usr/src/app
+            && pip install --upgrade pip
+            && pip install -r requirements.txt
+            && gunicorn --certfile=certs/qtaskr.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 auth_v1:api"
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+    task_service:
+        image: python:3.7.0-stretch
+        environment:
+            - QTASKR_ENV=development
+            - QTASKR_AUTH=https://auth_service/api
+            - QTASKR_TASK=https://task_service/api
+            - QTASKR_BILL=https://bill_service/api
+            - QTASKR_NOTIFY=https://notify_service/api
+            - QTASKR_AUTH_DB=db_auth:27017
+            - QTASKR_TASK_DB=db_task:27017
+            - QTASKR_BILL_DB=db_bill:27017
+            - QTASKR_NOTIFY_DB=db_notify:27017
+        ports:
+            - "7001:443"
+        volumes:
+            - ../../service:/usr/src/app
+        command: >
+            bash -c "cd /usr/src/app
+            && pip install --upgrade pip
+            && pip install -r requirements.txt
+            && gunicorn --certfile=certs/qtaskr.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 task_v1:api"
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+    db_auth:
+        image: mongo:4.0.0-xenial
+        ports:
+            - "27017:27017"
+        environment:
+            - NODE_ENV=development
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+
+    db_task:
+        image: mongo:4.0.0-xenial
+        ports:
+            - "27018:27017"
+        environment:
+            - NODE_ENV=development
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+    db_notify:
+        image: mongo:4.0.0-xenial
+        ports:
+            - "27019:27017"
+        environment:
+            - NODE_ENV=development
+        networks:
+            - qtaskrnet
+        deploy:
+            replicas: 1
+
+networks:
+    qtaskrnet:
+
+
+
+

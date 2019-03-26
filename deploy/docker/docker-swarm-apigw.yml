@@ -1,0 +1,28 @@
+version: "3.4"
+services:
+
+    apigw:
+        image: node:9.11.2-jessie
+        environment:
+            - NODE_ENV=development
+        ports:
+            - "8000:8000"
+        volumes:
+            - ../../api_gateway:/usr/src/app
+            - ../../certs:/usr/src/app/certs
+        command: >
+            bash -c "cd /usr/src/app
+            && mkdir logs
+            && yarn install
+            && yarn start"
+        networks:
+            - gwnet
+        deploy:
+            replicas: 8
+
+networks:
+    gwnet:
+
+
+
+

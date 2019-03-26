@@ -1,0 +1,37 @@
+version: "3.4"
+services:
+
+    auth_service:
+        image: python:3.7.0-stretch
+        environment:
+            - NODE_ENV=development
+        ports:
+            - "7000:7000"
+        volumes:
+            - ../../service:/usr/src/app
+        command: >
+            bash -c "cd /usr/src/app
+            && pip install --upgrade pip
+            && pip install -r requirements.txt
+            && gunicorn --certfile=certs/qtaskr.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:7000 auth_v1:api"
+        networks:
+            - svcnet
+        deploy:
+            replicas: 4
+
+    db:
+        image: mongo:4.0.0-xenial
+        ports:
+            - "27017:27017"
+        #entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongol" ]
+        networks:
+            - dbnet
+        deploy:
+            replicas: 1
+
+
+networks:
+    svcnet:
+    dbnet:
+
+

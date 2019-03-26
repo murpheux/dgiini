@@ -1,0 +1,49 @@
+/usr/local/etc/logrotate.d/
+
+TEST
+sudo  logrotate -v -f /usr/local/etc/logrotate.d
+
+START
+sudo brew services start logrotate
+
+RESTART
+sudo brew services restart logrotate
+
+
+/var/log/seisewa/*.log {
+    daily
+    missingok
+    copytruncate
+    rotate 1
+    size 30k
+    dateext dateformat -%Y-%m-%d-%s
+    compress
+    compresscmd /bin/bzip2
+    compressext .bz2
+    delaycompress
+    notifempty
+    create 640 root adm
+    sharedscripts
+    postrotate
+        /etc/init.d/apache2 reload > /dev/null
+        day=$(date +%Y-%m-%d)
+        mv auth.log.1 /var/www/gamelogs/dir/auth_$day.log
+    endscript
+    prerotate
+        scp /var/log/seisewa/*.log.gz murpheux@gru:~/docs
+        /home/bala/myscript.sh
+    endscript
+}
+
+
+/Users/murpheux/Workspace/projects/seisewa/service/logs/*.log {
+    daily
+    missingok
+    copytruncate
+    rotate 100
+    dateext dateformat -%Y-%m-%d-%s
+    compress
+    delaycompress
+    notifempty
+    create 640 root adm
+}
