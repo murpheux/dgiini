@@ -7,7 +7,7 @@ export const environment = {
   API_Gateway_Base: "https://0091259a-112a-4196-ac71-7abe2acab76c.mock.pstmn.io/api/v1",
   Oauth2_issuer: "https://dev-209802.okta.com/oauth2/default",
   Oauth2_redirectUrl: "http://localhost:8080/implicit/callback",
-  Oauth2_clientid: process.env.OAUTH2_CLIENTID
+  //Oauth2_clientid: process.env.OAUTH2_CLIENTID
 };
 
 /*
