@@ -17,7 +17,8 @@ const task_schema = new mongoose.Schema({
         zipcode: { type: String },
         country: { type: String }
     },
-    time: { type: Date, default: Date.now().valueOf() }
+    time: { type: Date, default: Date.now().valueOf() },
+    status: { type: Boolean, default: true }
 })
 
 export default task_schema

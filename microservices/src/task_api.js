@@ -7,7 +7,10 @@ import express from 'express'
 // eslint-disable-next-line no-unused-vars
 import _ from 'dotenv/config'
 import bodyParser from 'body-parser'
+
 import task_router from './routes/task_route'
+import taskphoto_router from './routes/taskphoto_route'
+
 //import fs from 'fs'
 import path from 'path'
 import morgan from 'morgan'
@@ -56,6 +59,7 @@ app.use(morgan(log_format, {
 }))
 
 app.use('/api/', task_router)
+app.use('/api/', taskphoto_router)
 
 //start the app server
 app.listen(port, () => console.log(`task api listening on port ${port}!`))
