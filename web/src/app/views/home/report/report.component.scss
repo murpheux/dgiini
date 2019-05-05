@@ -1,0 +1,42 @@
+.report
+                {
+                    .report-sub-title
+                    {
+                        font-family: 'Open Sans';
+                        font-size: 18px;
+                        color: black;
+                    }
+                    .chart
+                    {
+                        span
+                        {
+                        font-family: 'Open Sans';
+                        font-size: 12px;
+
+                        &.asia-pacific
+                            {
+                                color:#5eaf03;
+                            }
+                        &.n-america
+                            {
+                                color:#0070c0;
+                            }
+                        &.middle-east
+                            {
+                                color:#ff9200;
+                            }
+                        &.l-america
+                            {
+                                color:#ffb700;
+                            }
+                        &.africa
+                            {
+                                color:#861dc1;
+                            }
+                        &.europe
+                            {
+                                color:#e11c00;
+                            }
+                        }
+                    }
+                }

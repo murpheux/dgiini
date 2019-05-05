@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
 @import "~bootstrap/dist/css/bootstrap.min.css";
 $fa-font-path: '../node_modules/font-awesome/fonts';
+@import '~ngx-toastr/toastr.css';
 $table-accent-bg: rgba(#eee, .0) !default;
 
 @font-face {
@@ -12,7 +12,3 @@ $table-accent-bg: rgba(#eee, .0) !default;
 @import "~font-awesome/scss/font-awesome.scss";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
-.applogo img {
-  width: 64px;
-}

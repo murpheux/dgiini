@@ -1,0 +1,50 @@
+<div class="container">
+  <app-loader *ngIf="!model"></app-loader>
+  <mat-card *ngIf="model">
+    <form *ngIf="budgetDetailsFormGroup" [formGroup]="budgetDetailsFormGroup">
+      <ng-template matStepLabel>Project
+        Details</ng-template>
+      <div>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Budget Code</mat-label>
+              <input matInput placeholder="Placeholder" formControlName="budget_code">
+              <mat-icon matSuffix>settings</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Overhead Rate</mat-label>
+              <input matInput placeholder="Overhead rate" formControlName="overheadrate">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="budgetDetailsFormGroup.controls['overheadrate'].invalid">
+                <span *ngIf="budgetDetailsFormGroup.controls['overheadrate'].errors.required">Overhead rate is
+                  required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <hr>
+        <div class="action-bar">
+          <div class="d-flex flex-row justify-content-around">
+            <div>
+              <button type="submit" color="primary" id="btnSaveObjectivesAndProceed" mat-stroked-button
+                (click)='handleSave(true)'>Save & Proceed</button>
+            </div>
+            <div>
+              <button type="submit" color="primary" id="btnSaveObjectives" mat-stroked-button
+                (click)='handleSave(false)'>Save</button>
+            </div>
+            <div>
+              <button mat-stroked-button matStepperCancel id="btnCancelSaveObjectives"
+                (click)='handleCancel()'>Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>

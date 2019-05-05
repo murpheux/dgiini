@@ -1,0 +1,42 @@
+<div class="container">
+  <mat-card>
+      <div class="flex-row">
+          <div class="full-width"></div>
+          <div class="full-width thick">
+            5. <mat-label > PROJECT SCHEDULE </mat-label>
+          </div>
+          <mat-card>
+            <div class="full-width"></div>
+            <div class="full-width">
+              5.1. <mat-label > Preliminary overview project schedule </mat-label>
+            </div>
+            <div class="full-width"></div>
+            <div class="full-width">
+              5.1.1 <mat-label > preliminary overview project schedule is presented in Appendix A. This preliminary project schedule is indicative only, a detailed work plan will be prepared once the experts are recruited and deployed in the field as per Section 5.2 below. </mat-label>
+            </div>
+            <div class="full-width">
+              5.2. <mat-label >  Detailed Planning of Project Activities</mat-label>
+            </div>
+            <div class="full-width"></div>
+            <div class="full-width">
+              5.2.1 <mat-label > The Project Coordinator produces a consolidated work plan based on the preliminary schedule in collaboration with the other experts within                               <mat-form-field class="quarter-width" >
+                <input type="number" matInput placeholder="# of Weeks" [(ngModel)]="numberOfWeeks"  name="numberOfWeeks" maxlength="2"><mat-icon matSuffix></mat-icon></mat-form-field> weeks of the commencement of their assignment. This plan is submitted first to ICAO and then to the [ENTITY] for approval. </mat-label>
+            </div>
+        </mat-card>
+        <div></div><div></div>
+        <div class="d-flex flex-row">
+          <div class="flex-fill"></div>
+          <div class="flex-fill">
+              <div class="d-flex flex-row justify-content-around">
+                <button mat-stroked-button  i18n="wizard button generate | wizard button generate @@wizardButtonSave" (click)='save()' >Save</button>
+                <button mat-stroked-button matStepperCancel i18n="wizard button cancel | wizard button cancel @@wizardButtonCancel" (click)='handleCancel()'>Cancel</button>
+              </div>
+              </div>
+          <div class="flex-fill"></div>
+      </div>
+      </div>
+  </mat-card>
+  <div>
+    {{responseMessage}}
+</div>
+</div>

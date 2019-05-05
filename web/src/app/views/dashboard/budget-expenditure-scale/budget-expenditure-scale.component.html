@@ -1,0 +1,13 @@
+<div class="d-flex flex-row p-1 budget-expend-scale">
+    <div class="d-flex flex-column justify-content-center progress-tag">
+            <h5>{{tag}}</h5>
+        </div>
+    <div class="d-block w-100 ">
+        <div class="progress border" style="height:25px;">
+            <div class="progress-bar expenditure p-4" role="progressbar" attr.aria-valuenow="{{expenditures}}" aria-valuemin="0" aria-valuemax="100" style.width="{{expenditures}}%"></div>
+        </div>
+        <div class="progress border" style="height:25px;">
+            <div class="progress-bar funding p-4" role="progressbar" attr.aria-valuenow="{{funding}}" aria-valuemin="0" aria-valuemax="100" style.width="{{funding}}%"></div>
+        </div>
+    </div>
+</div>

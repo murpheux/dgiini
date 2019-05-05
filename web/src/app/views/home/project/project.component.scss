@@ -1,0 +1,31 @@
+.project
+                {
+                  .card
+                  {
+                      .card-header
+                      {
+                          padding: 1px;
+                          button
+                          {
+                            font-family: 'Open Sans';
+                            font-size: 14px;
+                            background: #1c81c3;
+                            color:#fff;
+                            font-weight: bold;
+
+                            &.collapsed
+                            {
+                            color:#ccc;
+                            font-weight: normal;
+                            }
+                          }
+                      }
+                      .card-body
+                      {
+                        font-family: 'Open Sans';
+                        font-size: 14px;
+                        color: black;
+                        background-color: #e3f0f8;
+                      }
+                  }
+                }

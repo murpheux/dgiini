@@ -1,0 +1,72 @@
+<app-loader *ngIf="!model"></app-loader>
+<div class="mt-3 project-context-container" *ngIf="model">
+    <form [formGroup]="projectcontextFormGroup" *ngIf="projectcontextFormGroup">
+        <div class="context">
+             <div *ngFor="let section of sections">
+                  <h5 class="card-header">
+                        <div class ="pull-left">
+                            <button mat-button color="primary" (click)="addContent(section.name)"><mat-icon matTooltip="Add a new content">playlist_add</mat-icon></button>
+                        </div>
+                        <a data-toggle="collapse" href="#{{section.name}}-card" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                            <i class="fa fa-chevron-down pull-right"></i>
+                            <div class="p-2 context-title">{{section.label}}</div><span class="ml-4">{{projectcontextFormGroup.value[section.name].length}} item(s)</span>
+                        </a>
+                  </h5>
+                  <div id="{{section.name}}-card" class="collapse show" aria-labelledby="heading-example">
+                       <div class="card-body" style="padding-top: 10px;">
+                            <div class="context-item" >
+                               <!-- content -->
+                               <div formArrayName="{{section.name}}" class="full-width p-1">
+                                    <div cdkDropList [cdkDropListData]="projectcontextFormGroup.value[section.name]"  (cdkDropListDropped)="dropContent($event, section.name)" >
+                                         <div cdkDrag *ngFor="let content of projectcontextFormGroup['controls'][section.name]['controls']; let iContent=index">
+                                            <div formGroupName="{{iContent}}">
+                                                <div class="d-flex flex-row justify-content-around" >
+                                                      <div class = "spaces"></div>
+                                                      <div matTooltip="Hold to drag and relase to drop" class="drag-handle pull-left" cdkDragHandle>
+                                                         <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                                              <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                                                              <path d="M0 0h24v24H0z" fill="none"></path>
+                                                         </svg>
+                                                      </div>
+                                                      <div class = "spaces"></div>
+                                                      <div>
+                                                          <mat-form-field style="width:80px !important">
+                                                              <mat-label>Order No.</mat-label>
+                                                              <input matInput placeholder="Order No" formControlName="orderNo">
+                                                          </mat-form-field>
+                                                      </div>
+                                                      <div class = "spaces"></div>
+                                                      <div class = "half-width">
+                                                           <mat-form-field class = "half-width">
+                                                              <mat-label>Content</mat-label>
+                                                              <textarea matInput placeholder="content" formControlName="title"></textarea>
+                                                           </mat-form-field>
+                                                      </div>
+                                                      <div>
+                                                          <button mat-button (click)="deleteContent(iContent,section.name)" color="warn"><mat-icon matTooltip="Delete current content">delete_outline</mat-icon></button>
+                                                      </div>
+                                                </div>
+                                                <mat-divider [vertical]="false"></mat-divider>
+                                            </div>
+                                          </div>
+                                      </div>
+                                </div>
+                                <!-- content End -->
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+          </div>
+          <div class="action-bar">
+            <div class="d-flex flex-row justify-content-around">
+                <div>
+                  <button type="submit" color="primary" matTooltip="Save or Update current context info"
+                          id="btnSaveObjectives" mat-stroked-button (click)='handleSave()'>Save</button>
+                </div>
+                <div>
+                  <button mat-stroked-button matTooltip="Reset current context info"  id="btnCancel" (click)='handleCancel()'>Cancel</button>
+                </div>
+            </div>
+          </div>
+    </form>
+</div>

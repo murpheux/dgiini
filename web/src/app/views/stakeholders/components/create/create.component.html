@@ -1,0 +1,192 @@
+<div class="container">
+  <app-loader *ngIf="!model"></app-loader>
+  <mat-card>
+    <form [formGroup]="formGroup" (ngSubmit)="handleUpdateStakeholder()">
+      <mat-horizontal-stepper formArrayName="formArray" linear #stepper>
+        <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
+          <ng-template matStepLabel>{{ steps[0].label }}</ng-template>
+          <div class="d-flex flex-row">
+            <div class="flex-fill"></div>
+            <div class="flex-fill">
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Account ID</mat-label>
+                  <input matInput placeholder="Account Id" formControlName="accountid">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['accountid'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['accountid'].errors.required">Account Id is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Salutation</mat-label>
+                  <select matNativeControl formControlName="salutation">
+                    <option *ngFor="let sal of salutations" value={{sal}}>{{sal}}
+                    </option>
+                  </select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Firstname</mat-label>
+                  <input matInput placeholder="Firstname" formControlName="firstname">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['firstname'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['firstname'].errors.required">Firstname is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Middlename</mat-label>
+                  <input matInput placeholder="Middlename" formControlName="middlename">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['middlename'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['middlename'].errors.required">Middlename is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Lastname</mat-label>
+                  <input matInput placeholder="Latstname" formControlName="lastname">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['lastname'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['lastname'].errors.required">Lastname is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Email</mat-label>
+                  <input matInput placeholder="Email" formControlName="email">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['email'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['email'].errors.required">Email is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Phone</mat-label>
+                  <input matInput placeholder="Phone" formControlName="phone">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['phone'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['phone'].errors.required">Phone is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Fax</mat-label>
+                  <input matInput placeholder="Fax" formControlName="fax">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="stakeholderFormGroup.controls['fax'].invalid">
+                    <span *ngIf="stakeholderFormGroup.controls['fax'].errors.required">Fax is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="flex-fill"></div>
+
+
+          </div>
+          <hr>
+          <div class="d-flex flex-row">
+            <div class="flex-fill"></div>
+            <div class="flex-fill">
+              <div class="d-flex flex-row justify-content-around">
+                <button mat-stroked-button matStepperNext type="button">Next</button>
+              </div>
+            </div>
+            <div class="flex-fill"></div>
+          </div>
+        </mat-step>
+        <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
+          <div class="d-flex flex-row">
+            <div class="flex-fill"></div>
+            <div class="flex-fill">
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Address Line 1</mat-label>
+                  <input matInput placeholder="Address" formControlName="address1">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="addressFormGroup.controls['address1'].invalid">
+                    <span *ngIf="addressFormGroup.controls['address1'].errors.required">Address Line 1 is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Address Line 2</mat-label>
+                  <input matInput placeholder="Address" formControlName="address2">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="addressFormGroup.controls['address2'].invalid">
+                    <span *ngIf="addressFormGroup.controls['address2'].errors.required">Address Line 2 is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>City</mat-label>
+                  <input matInput placeholder="City" formControlName="city">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="addressFormGroup.controls['city'].invalid">
+                    <span *ngIf="addressFormGroup.controls['city'].errors.required">City is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>State/Province</mat-label>
+                  <input matInput placeholder="State/Province" formControlName="state_province">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="addressFormGroup.controls['state_province'].invalid">
+                    <span *ngIf="addressFormGroup.controls['state_province'].errors.required">State/Province is
+                      required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Country</mat-label>
+                  <select matNativeControl formControlName="country">
+                    <option *ngFor="let country of countries" value={{country.id}}>{{country.name}}</option>
+                  </select>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="full-width">
+                  <mat-label>Postal Code/Zip</mat-label>
+                  <input matInput placeholder="Postal Code" formControlName="state_postal_zip_codeprovince">
+                  <mat-icon matSuffix></mat-icon>
+                  <mat-error *ngIf="addressFormGroup.controls['state_postal_zip_codeprovince'].invalid">
+                    <span *ngIf="addressFormGroup.controls['state_postal_zip_codeprovince'].errors.required">Postal Code
+                      is required</span>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+
+            </div>
+          </div>
+          <div class="flex-fill"></div>
+          <hr>
+          <div class="d-flex flex-row">
+            <div class="m-2 mr-auto"> <button mat-stroked-button matStepperPrevious>Back</button></div>
+            <div class="m-2"> <button type="submit" color="primary" mat-stroked-button matStepperNext>Save</button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
+  </mat-card>
+</div>

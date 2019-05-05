@@ -1,0 +1,98 @@
+<div class="container">
+  <app-loader *ngIf="!model"></app-loader>
+  <div class="m-2 mr-auto"><button color="warn" id="btnDeleteStakeholder" mat-stroked-button
+      (click)="openConfirmationDialog(model.stakeholder.accountid)">Delete</button></div>
+  <mat-card *ngIf="model">
+    <form *ngIf="stakeholderDetailsFormGroup" [formGroup]="stakeholderDetailsFormGroup"
+      (ngSubmit)="handleUpdateStakeholder()">
+      <ng-template matStepLabel>Stakeholder Details</ng-template>
+      <div>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Account ID</mat-label>
+              <input matInput placeholder="Placeholder" formControlName="accountid">
+              <mat-icon matSuffix>settings</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Salutation</mat-label>
+              <select matNativeControl formControlName="salutation">
+                <option *ngFor="let sal of salutations" [value]="sal">{{sal}}</option>
+              </select>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['salutation'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['salutation'].errors.required">Salutation type is
+                  required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Firstname</mat-label>
+              <input matInput placeholder="Firstname" formControlName="firstname">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['firstname'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['firstname'].errors.required">Firstname is
+                  required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Middlename</mat-label>
+              <input matInput placeholder="Middlename" formControlName="middlename">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['middlename'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['middlename'].errors.required">Middlename is
+                  required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Lastname</mat-label>
+              <input matInput placeholder="Lastname" formControlName="lastname">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['lastname'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['lastname'].errors.required">Lastname is
+                  required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" formControlName="email">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['email'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['email'].errors.required">Email is required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex-fill p-1">
+            <mat-form-field class="full-width">
+              <mat-label>Phone</mat-label>
+              <input matInput placeholder="Phone" formControlName="phone">
+              <mat-icon matSuffix></mat-icon>
+              <mat-error *ngIf="stakeholderDetailsFormGroup.controls['phone'].invalid">
+                <span *ngIf="stakeholderDetailsFormGroup.controls['phone'].errors.required">Phone is required</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <hr>
+        <div class="d-flex flex-row">
+          <div class="m-2"><button mat-stroked-button id="btnBack" (click)='handleBack()'>Back</button></div>
+          <div class="m-2"><button type="submit" color="primary" id="btnSaveProject" mat-stroked-button
+              (click)="handleUpdateStakeholder()">Save</button></div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>
