@@ -1,5 +1,3 @@
-#!node
-
 'use strict'
 
 export const app_name = process.env.APP_NAME

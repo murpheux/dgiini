@@ -1,5 +1,3 @@
-#!node
-
 'use strict'
 
 const construct_output = (res, code, desc, payload) => {
