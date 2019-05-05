@@ -1,29 +1,48 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NotifyHeaderService } from 'src/app/services/notify-header.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-header-template",
-  templateUrl: "./header-template.component.html",
-  styleUrls: ["./header-template.component.scss"]
+  selector: 'app-header-template',
+  templateUrl: './header-template.component.html',
+  styleUrls: ['./header-template.component.scss']
 })
-export class HeaderTemplateComponent implements OnInit {
-  selectedLanguage = "en";
-  constructor() {}
+export class HeaderTemplateComponent implements OnInit, OnDestroy {
+  selectedLanguage = 'en';
+  subscription: Subscription;
+  isLoggedIn = false;
 
+  constructor( private notifyHeaderService: NotifyHeaderService) {
+    this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+    });
+   }
   ngOnInit() {
-    this.selectedLanguage = localStorage.getItem("locale");
+    this.selectedLanguage = localStorage.getItem('locale');
+    const currentBPMSUser = JSON.parse(localStorage.getItem('currentBPMSUser'));
+
+    if (currentBPMSUser) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
   }
 
   changeLang(lang: string) {
-    if (lang === localStorage.getItem("locale")) {
+    if (lang === localStorage.getItem('locale')) {
       return;
     }
-    if (lang === "en") {
-      localStorage.setItem("locale", "en");
-    } else if (lang === "fr") {
-      localStorage.setItem("locale", "fr");
+    if (lang === 'en') {
+      localStorage.setItem('locale', 'en');
+    } else if (lang === 'fr') {
+      localStorage.setItem('locale', 'fr');
     } else {
-      localStorage.setItem("locale", "es");
+      localStorage.setItem('locale', 'es');
     }
     window.location.reload();
   }
+  ngOnDestroy() {
+    // unsubscribe to ensure no memory leaks
+    this.subscription.unsubscribe();
+}
 }

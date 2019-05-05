@@ -1,0 +1,201 @@
+<div>
+  <div class="container">
+    <app-loader *ngIf="!(model && countries && industryTypes  && regions)"></app-loader>
+    <div class="d-flex flex-row justify-content-between">
+        <div class="p-2">
+
+        </div>
+        <div class="p-2">
+            <button color="warn" [hidden]="!isEditMode" id="btnDeleteProject" mat-stroked-button
+            (click)="openConfirmationDialog(model.entity.id)">Delete</button>
+        </div>
+      </div>
+    <mat-spinner [hidden]="!isLoading" [diameter]="30"></mat-spinner>
+      <mat-card *ngIf="(countries && industryTypes && regions)">
+              <form [formGroup]="entityDetailsFormGroup">
+                  <div class="d-flex flex-row">
+                    <div class="flex-fill p-1">
+                       <div class="f-flex flex-column">
+                          <span class="mat-headline">Entity Information</span>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width" >
+                                  <mat-label>Entity Name</mat-label>
+                                  <input matInput placeholder="Entity Name" formControlName="entityName" [(ngModel)]="model.entity.name" name="EntityName" maxlength="250">
+                                  <mat-icon matSuffix></mat-icon>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['entityName'].invalid">
+                                      <span *ngIf="entityDetailsFormGroup.controls['entityName'].errors.required">Entity Name is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width" >
+                                  <mat-label>Entity Acronym</mat-label>
+                                  <input matInput placeholder="Entity Acronym" formControlName="entityAcronym" [(ngModel)]="model.entity.acronym" name="EntityAcronym" maxlength="6">
+                                  <mat-icon matSuffix></mat-icon>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['entityAcronym'].invalid">
+                                      <span *ngIf="entityDetailsFormGroup.controls['entityAcronym'].errors.required">Entity Acronym is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width">
+                                  <mat-label >Entity Type</mat-label>
+                                  <select matNativeControl formControlName="entityTypeId" [(ngModel)]="model.entity.entityTypeId"  name="entityType">
+                                    <option selected></option>
+                                    <option *ngFor="let entityType of entityTypes" [value]="entityType.id">{{entityType.name}}</option>
+                                  </select>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['entityTypeId'].invalid">
+                                  <span *ngIf="entityDetailsFormGroup.controls['entityTypeId'].errors.required">Entity Type is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width">
+                                  <mat-label >Industry Type</mat-label>
+                                  <select matNativeControl formControlName="industryTypeId" [(ngModel)]="model.entity.industryTypeId"  name="industryType">
+                                    <option selected></option>
+                                    <option *ngFor="let industryType of industryTypes" [value]="industryType.id">{{industryType.name}}</option>
+                                  </select>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['industryTypeId'].invalid">
+                                  <span *ngIf="entityDetailsFormGroup.controls['industryTypeId'].errors.required">Industry Type is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width">
+                                  <mat-label >Region</mat-label>
+                                  <select matNativeControl formControlName="regionId" [(ngModel)]="model.entity.regionId"  (ngModelChange)="onRegionSelect($event)">
+                                    <option selected></option>
+                                    <option *ngFor="let region of regions" [value]="region.id">{{region.name}}</option>
+                                  </select>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['regionId'].invalid">
+                                      <span  *ngIf="entityDetailsFormGroup.controls['regionId'].errors.required">Region is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                              <mat-form-field class="full-width">
+                                  <mat-label >Country</mat-label>
+                                  <select matNativeControl formControlName="countryId" [(ngModel)]="model.entity.countryId" >
+                                    <option selected></option>
+                                    <option *ngFor="let country of filteredCountries" [value]="country.id" >{{country.name}}</option>
+                                  </select>
+                                  <mat-error *ngIf="entityDetailsFormGroup.controls['countryId'].invalid">
+                                      <span  *ngIf="entityDetailsFormGroup.controls['countryId'].errors.required">Country is required</span>
+                                  </mat-error>
+                                </mat-form-field>
+                          </div>
+                          <div class="flex-fill p-1">
+                          <mat-form-field class="full-width" >
+                              <mat-label>Comments</mat-label>
+                              <textarea matInput placeholder="Comments" formControlName="comments" [(ngModel)]="model.entity.description" name="comments" rows="2" ></textarea>
+                              <mat-icon matSuffix></mat-icon>
+                          </mat-form-field>
+                        </div>
+                       </div>
+
+                    </div>
+                    <div class="flex-fill p-1">
+                        <div class="f-flex flex-column">
+                            <div formGroupName="address" >
+                                  <div class="flex-fill p-1">
+                                    <span class="mat-headline">Address</span>
+                                    <div class="f-flex">
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Address Line 1</mat-label>
+                                              <input matInput placeholder="Address Line 1" formControlName="addressLine1" [(ngModel)]="model.entity.address.line1" name="addressline1" maxlength="100">
+
+                                            </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Address Line 2</mat-label>
+                                              <input matInput placeholder="Address Line 2" formControlName="addressLine2" [(ngModel)]="model.entity.address.line2" name="addressline2" maxlength="100">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>City</mat-label>
+                                              <input matInput placeholder="Address City" formControlName="addressCity" [(ngModel)]="model.entity.address.city" name="addresscity" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>State/Province</mat-label>
+                                              <input matInput placeholder="State or Province" formControlName="addressStateOrProvince" [(ngModel)]="model.entity.address.stateOrProvince" name="addressstate" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Zip/Postal Code</mat-label>
+                                              <input matInput placeholder="Zip/Postal Code" formControlName="addressPostalCode" [(ngModel)]="model.entity.address.postalcode" name="addresspostalcode" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </div>
+                            <div formGroupName="mailingAddress">
+                                <div class="p-1">
+                                    <mat-checkbox [checked]="isSameMailingAddress" (change)="onSameAddressChanged($event)">Same as Address</mat-checkbox>
+                                 </div>
+                                    <div class="p-1">
+                                    <span class="mat-headline">Mailing Address</span>
+                                    <div class="f-flex ">
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Address Line 1</mat-label>
+                                              <input matInput placeholder="Address Line 1" formControlName="mailaddressLine1" [(ngModel)]="model.entity.mailingAddress.line1" name="mailaddressline1" maxlength="100">
+
+                                            </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Address Line 2</mat-label>
+                                              <input matInput placeholder="Address Line 2" formControlName="mailaddressLine2" [(ngModel)]="model.entity.mailingAddress.line2" name="mailaddressline2" maxlength="100">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>City</mat-label>
+                                              <input matInput placeholder="Address City" formControlName="mailaddressCity" [(ngModel)]="model.entity.mailingAddress.city" name="mailaddresscity" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>State/Province</mat-label>
+                                              <input matInput placeholder="State or Province" formControlName="mailaddressStateOrProvince" [(ngModel)]="model.entity.mailingAddress.stateOrProvince" name="mailaddressstate" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                      <div class="p-1">
+                                          <mat-form-field class="full-width" >
+                                              <mat-label>Zip/Postal Code</mat-label>
+                                              <input matInput placeholder="Zip/Postal Code" formControlName="mailaddressPostalCode" [(ngModel)]="model.entity.mailingAddress.postalcode" name="mailaddresspostalcode" maxlength="50">
+                                          </mat-form-field>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                            </div>
+                         </div>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <div class="d-flex flex-row">
+                      <div class="flex-fill"></div>
+                      <div class="flex-fill">
+                          <div class="d-flex flex-row justify-content-around">
+
+                            <button mat-stroked-button color="primary" [hidden]='isEditMode' (click)='create()'>Generate</button>
+                            <button mat-stroked-button color="primary" [hidden]='!isEditMode' (click)='update()'>Update</button>
+                            <button mat-stroked-button matStepperCancel  (click)='handleCancel()'>Cancel</button>
+                          </div>
+                          </div>
+                      <div class="flex-fill"></div>
+                  </div>
+
+                </form>
+      </mat-card>
+  </div>
+</div>

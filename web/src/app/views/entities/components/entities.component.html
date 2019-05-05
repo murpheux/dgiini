@@ -1,0 +1,49 @@
+<div class="container">
+  <app-loader *ngIf="!(dataSource)"></app-loader>
+  <mat-card >
+      <div class="d-flex flex-row">
+          <div class="f-flex flex-column">
+              <a mat-raised-button color="accent" routerLink="./create" >Create</a>
+          </div>
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <mat-form-field >
+            <input matInput type="search" (keyup)="applyFilter($event.target.value)" placeholder="Search" >
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear class="mat-elevation-z8"  >
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header > Entity Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" ><a [routerLink]="['./create/', element.id ]">  {{element.name}} </a> </mat-cell>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="acronym">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Entity Acronym </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.acronym}} </mat-cell>
+      </ng-container>
+
+      <!-- Weight Column -->
+       <ng-container matColumnDef="entityTypeName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Entity Type </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.entityTypeName}} </mat-cell>
+      </ng-container>
+
+       <!-- Weight Column -->
+        <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Country  </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef= "columnsToDisplay "></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnsToDisplay"></mat-row>
+      </table>
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 25, 50,100]" showFirstLastButtons></mat-paginator>
+ </mat-card>
+</div>
+

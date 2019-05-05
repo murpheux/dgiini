@@ -1,0 +1,217 @@
+<app-loader *ngIf="!model"></app-loader>
+<div class="mt-3 project-objectives-container" *ngIf="model">
+  <form [formGroup]="projectObjectivesform" *ngIf="projectObjectivesform">
+      <!-- Objectives -->
+
+      <div cdkDropList [id]="model.projectCode" [cdkDropListData]="projectObjectivesform.value.objectives" (cdkDropListDropped)="dropObjective($event)" formArrayName="objectives" class="objectives">
+          <div class="d-flex flex-row">
+              <div class="d-flex flex-row">
+                  <div><h5 class="p-2 objectives-title">Objectives</h5></div>
+                  <div class="flex-fill"><button mat-button color="primary" (click)="addObjective()"><mat-icon>playlist_add</mat-icon></button></div>
+              </div>
+          </div>
+          <div class="objective-box" cdkDrag  class="card" *ngFor="let objective of projectObjectivesform['controls'].objectives['controls']; let iObjective=index">
+              <h5 class="card-header">
+                  <div class="drag-handle" cdkDragHandle>
+                      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg>
+                    </div>
+                  <div class="pull-left">
+                      <button mat-button  color="warn" (click)="deleteObjective(iObjective)"><mat-icon>delete_outline</mat-icon></button>
+                  </div>
+                  <a data-toggle="collapse" href="#objective-card-{{iObjective}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                      <i class="fa fa-chevron-down pull-right"></i>
+                     Objective {{objective.value.sequenceNo}}  <span class="text-muted text-sm">{{objective.value.title}}</span> 
+                  </a> 
+              </h5>
+
+              <div id="objective-card-{{iObjective}}" class="collapse show" aria-labelledby="heading-example">
+                  <div class="card-body">
+                      <div class="objective-item">
+                            <div formGroupName="{{iObjective}}" class=" full-width p-1">
+                                <mat-form-field  class="full-width">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput placeholder="Estimated duration" formControlName="title">
+                                  </mat-form-field>
+                              <p>{{ formErrors.objectives[iObjective].title }}</p>
+
+                               <!-- Performance Indicators -->
+                               <div formArrayName="performanceIndicators" class="performanceIndicators">
+                                  <div class="d-flex flex-row">
+                                      <div><h5 class="p-2 performance-indicators-title">Performance Indicators</h5></div>
+                                      <div><button mat-button  color="primary" (click)="addPerformanceIndicator(iObjective)"><mat-icon>playlist_add</mat-icon></button></div>
+                                  </div>
+                                  <div *ngFor="let performanceIndicator of objective['controls'].performanceIndicators['controls']; let iPerformanceIndicator=index">
+                                    <div class="performance-indicator-item" formGroupName="{{iPerformanceIndicator}}">
+                                      <div class="d-flex flex-row justify-content-around">
+                                        <div></div>
+                                        <div class="flex-fill">
+                                          <mat-form-field  class="full-width">
+                                              <mat-label>Title</mat-label>
+                                              <input matInput placeholder="Estimated duration" formControlName="title">
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="p-1"><button mat-button  color="warn" (click)="deletePerformanceIndicator(iObjective, iPerformanceIndicator)"><mat-icon>delete_outline</mat-icon></button></div>
+                                      </div>
+                                      <div class="d-flex flex-row justify-content-around">
+                                          <div></div>
+                                          <div><p> {{ formErrors.objectives[iObjective].performanceIndicators[iPerformanceIndicator].title }}</p></div>
+                                          <div></div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- Performance Indicators End-->
+
+                              <!-- Deliverables -->
+                              <div  cdkDropList [id]="objective.id" [cdkDropListData]="objective.value.deliverables"  (cdkDropListDropped)="dropDeliverable($event, iObjective)" formArrayName="deliverables" class="deliverables">
+                                <div class="d-flex flex-row">
+                                    <div><h5 class="p-2 deliverables-title">Deliverables</h5></div>
+                                    <div><button mat-button  color="primary" (click)="addDeliverable(iObjective)"><mat-icon>playlist_add</mat-icon></button></div>
+                                </div>
+
+                                <div class="card" class="deliverable-box" cdkDrag  *ngFor="let deliverable of objective['controls'].deliverables['controls']; let iDeliverable=index">
+                                    <h5 class="card-header">
+                                        <div class="drag-handle" cdkDragHandle>
+                                            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                              <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                                              <path d="M0 0h24v24H0z" fill="none"></path>
+                                            </svg>
+                                          </div>
+                                        <div class="pull-left">
+                                            <button mat-button  color="warn" (click)="deleteDeliverable(iObjective, iDeliverable)"><mat-icon>delete_outline</mat-icon></button>
+                                        </div>
+                                        <a data-toggle="collapse" href="#deliverable-card-{{iDeliverable}}" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-block">
+                                            <i class="fa fa-chevron-down pull-right"></i>
+                                            Deliverable {{deliverable.value.sequenceNo}}
+                                            <span class="text-muted text-sm">{{deliverable.value.title}}</span> 
+                                        </a>
+                                    </h5>
+                                    <div id="deliverable-card-{{iDeliverable}}" class="collapse show" aria-labelledby="heading-example">
+                                        <div class="card-body">
+                                            <div class="deliverable-item"  formGroupName="{{iDeliverable}}">
+                                                <div class="d-flex flex-row justify-content-start">
+                                                    <div class="p-2 deliverable-title"><h6><span class="badge badge-secondary">Deliverable {{deliverable.value.sequenceNo}}</span></h6></div>
+                                                </div>
+                                                <div class="d-flex flex-row justify-content-around">
+                                                    <div></div>
+                                                    <div class="flex-fill">
+                                                      <mat-form-field  class="full-width">
+                                                          <mat-label>Title</mat-label>
+                                                          <input matInput placeholder="Estimated duration" formControlName="title">
+                                                      </mat-form-field>
+                                                    </div>
+                                                  </div>
+                                                  <div class="d-flex flex-row justify-content-around">
+                                                      <div></div>
+                                                      <div><p> {{ formErrors.objectives[iObjective].deliverables[iDeliverable].title }}</p></div>
+                                                      <div></div>
+                                                </div>
+                                              <!-- Activities -->
+                                              <div formArrayName="activities" class="activities">
+                                                  <div class="d-flex flex-row">
+                                                      <div><h5 class="p-2 activities-title">Activities</h5></div>
+                                                      <div><button mat-button color="primary" (click)="addActivity(iObjective, iDeliverable)"><mat-icon>playlist_add</mat-icon></button></div>
+                                                  </div>
+                                                  <div cdkDropList [id]="deliverable.id" [cdkDropListData]="deliverable.value.activities"  (cdkDropListDropped)="dropActivity($event, iObjective, iDeliverable)" class="activiities">
+                                                    <div class="activity-box" cdkDrag *ngFor="let activity of deliverable['controls'].activities['controls']; let iActivity=index">
+                                                      <div  class="activity-item" formGroupName="{{iActivity}}">
+                                                          <div class="d-flex flex-row justify-content-around flex-wrap">
+                                                                <div class="drag-handle" cdkDragHandle>
+                                                                  <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                                                                    <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                                                                    <path d="M0 0h24v24H0z" fill="none"></path>
+                                                                  </svg>
+                                                                </div>
+                                                              <div>
+                                                                  <mat-form-field style="width:80px !important">
+                                                                      <mat-label>No</mat-label>
+                                                                      <input matInput placeholder="Estimated duration" formControlName="sequenceNo">
+                                                                  </mat-form-field>
+                                                                </div>
+                                                              <div>
+                                                                <mat-form-field>
+                                                                    <mat-label>Title</mat-label>
+                                                                    <input matInput placeholder="Estimated duration" formControlName="title">
+                                                                </mat-form-field>
+                                                              </div>
+                                                              <div>
+                                                                  <mat-form-field>
+                                                                      <mat-label>Estimated Start Date</mat-label>
+                                                                      <input matInput [matDatepicker]="pickerEstimatedStartDate" formControlName="estimatedStartDate">
+                                                                      <mat-datepicker-toggle matSuffix [for]="pickerEstimatedStartDate"></mat-datepicker-toggle>
+                                                                      <mat-datepicker #pickerEstimatedStartDate></mat-datepicker>
+                                                                  </mat-form-field>
+                                                              </div>
+                                                              <div>
+                                                                  <mat-form-field style="width:80px !important">
+                                                                    <mat-label>Duration</mat-label>
+                                                                    <input matInput placeholder="Estimated duration" formControlName="duration">
+                                                                  </mat-form-field>
+                                                              </div>
+                                                              <div>
+                                                                  <mat-form-field>
+                                                                      <mat-label>Duration Unit</mat-label>
+                                                                      <select matNativeControl formControlName="durationUnit">
+                                                                        <option *ngFor="let unit of durationUnits" [value]="unit.id">{{unit.name}}</option>
+                                                                      </select>
+                                                                  </mat-form-field>
+                                                              </div>
+                                                              <div>
+                                                                  <mat-form-field>
+                                                                      <mat-label>Responsible</mat-label>
+                                                                      <input matInput placeholder="Estimated duration" formControlName="responsible">
+                                                                  </mat-form-field>
+                                                              </div>
+                                                              <div><button mat-button  (click)="deleteActivity(iObjective, iDeliverable, iActivity)"  color="warn"><mat-icon>delete_outline</mat-icon></button></div>
+                                                          </div>
+                                                            <!-- <div class="d-flex flex-row justify-content-around">
+
+                                                                <div><p>{{ formErrors.objectives[iObjective].deliverables[iDeliverable].activities[iActivity].title }}</p></div>
+                                                                <div><p>{{ formErrors.objectives[iObjective].deliverables[iDeliverable].activities[iActivity].estimatedStartDate }}</p></div>
+                                                                <div><p>{{ formErrors.objectives[iObjective].deliverables[iDeliverable].activities[iActivity].duration }}</p></div>
+                                                                <div><p>{{ formErrors.objectives[iObjective].deliverables[iDeliverable].activities[iActivity].durationUnit }}</p></div>
+                                                                <div><p>{{ formErrors.objectives[iObjective].deliverables[iDeliverable].activities[iActivity].responsible }}</p></div>
+                                                                <div></div>
+                                                          </div> -->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                              <!-- Activities End -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+
+                                </div>
+                              </div>
+                              <!-- Deliverables End-->
+                            </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Objectives End -->
+      <div class="action-bar">
+          <div class="d-flex flex-row justify-content-around">
+              <div>
+                <button type="submit" color="primary"
+                id="btnSaveObjectivesAndProceed" mat-stroked-button (click)='handleSave(true)'>Save & Proceed</button>
+              </div>
+              <div>
+                <button type="submit" color="primary"
+                id="btnSaveObjectives" mat-stroked-button (click)='handleSave(false)'>Save</button>
+              </div>
+              <div>
+                <button mat-stroked-button matStepperCancel id="btnCancelSaveObjectives" (click)='handleCancel()'>Cancel</button>
+              </div>
+          </div>
+        </div>
+  </form>
+</div>
+

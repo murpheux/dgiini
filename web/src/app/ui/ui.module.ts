@@ -4,6 +4,8 @@ import { LayoutComponent } from './layout.component';
 import { RouterModule } from '@angular/router';
 import { HeaderModule } from './header';
 import { FooterModule } from './footer';
+import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [LayoutComponent],

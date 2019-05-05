@@ -1,11 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { MatStepperModule, MatHorizontalStepper } from '@angular/material/stepper';
 import {
-  MatStepperModule,
-  MatHorizontalStepper
-} from "@angular/material/stepper";
-import {
-  MatFormFieldModule,
   MatInputModule,
   MatCheckboxModule,
   MatDatepickerModule,
@@ -16,13 +12,15 @@ import {
   MatButtonModule,
   MatIconModule,
   MatToolbarModule,
+  MatTooltipModule,
   MatCardModule,
   MatTableModule,
   MatMenuModule,
   MatSlideToggle,
   MatSlideToggleModule,
   MatTabsModule,
-  MatDividerModule
+  MatDividerModule,
+  MatFormFieldModule
 } from "@angular/material";
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -42,8 +40,11 @@ import { CdkTableModule } from "@angular/cdk/table";
     MatNativeDateModule,
     MatAutocompleteModule,
     MatDialogModule,
+    MatIconModule,
     MatGridListModule,
     MatToolbarModule,
+    MatTooltipModule,
+    MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatDialogModule,
@@ -72,6 +73,8 @@ import { CdkTableModule } from "@angular/cdk/table";
     MatIconModule,
     MatGridListModule,
     MatToolbarModule,
+    MatTooltipModule,
+    MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatDialogModule,
@@ -85,4 +88,4 @@ import { CdkTableModule } from "@angular/cdk/table";
     DragDropModule
   ]
 })
-export class MaterialDesignModule {}
+export class MaterialDesignModule { }

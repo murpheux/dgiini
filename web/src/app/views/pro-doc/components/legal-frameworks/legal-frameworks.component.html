@@ -1,0 +1,50 @@
+<div class="container">
+    <mat-card>
+        <div class="flex-row">
+            <div class="full-width"></div>
+            <div class="full-width thick">
+              13. <mat-label > LEGAL FRAMEWORK </mat-label>
+            </div>
+            <mat-card>
+              <div class="full-width"></div>
+              <div class="full-width">
+                13.1. <mat-label > This project document shall constitute Annex <mat-form-field class="full-width" >
+                    <input matInput placeholder="Annex number" [(ngModel)]="annexNumber">
+                    <mat-icon matSuffix></mat-icon>
+                  </mat-form-field> to the <mat-form-field class="full-width" >
+                      <input matInput placeholder="Applicable Agreement" [(ngModel)]="applicableAgreement">
+                      <mat-icon matSuffix></mat-icon>
+                    </mat-form-field> between the International Civil Aviation Organization (ICAO) and the [ENTITY]. </mat-label>
+              </div>
+              <div class="full-width"></div>
+              <div class="full-width">
+                13.2. <mat-label > The project document will come into force upon its signing by both parties and will be considered as operationally active, upon receipt at ICAO of the necessary funds as indicated in Section 4 of the present project document.</mat-label>
+              </div>
+              <div class="full-width">
+                13.3. <mat-label >  Any change, amendment or revision to this project document (including scope, duration, budget, responsibilities, or other), will need to be formally approved in writing by both Parties.</mat-label>
+              </div>
+              <div class="full-width">
+                13.4. <mat-label >  The project can be terminated at any time if after two formal notifications from TCB, the [ENTITY] continues not to fulfil its obligations indicated in Section 4 and Section 11 of the present Project Document.</mat-label>
+              </div>
+              <div class="full-width">
+                13.5. <mat-label >  Nothing contained in or relating to this Project Document shall be deemed a waiver, express or implied, of any of the privileges and immunities of ICAO and its personnel. The [ENTITY] shall indemnify, hold harmless and, in consultation with ICAO, defend ICAO, including its personnel, from any and all actions, claims or other demands arising out of any act performed by ICAO on behalf of the [ENTITY] pursuant to this Project Document. The obligation under this clause does not lapse upon termination or completion of this Project Document.</mat-label>
+              </div>
+              <div class="full-width"></div>
+          </mat-card>
+          <div></div><div></div>
+          <div class="d-flex flex-row">
+            <div class="flex-fill"></div>
+            <div class="flex-fill">
+                <div class="d-flex flex-row justify-content-around">
+                  <button mat-stroked-button (click)='save()' >Save</button>
+                  <button mat-stroked-button (click)='handleCancel()'>Cancel</button>
+                </div>
+                </div>
+            <div class="flex-fill"></div>
+        </div>
+        </div>
+    </mat-card>
+    <div>
+      {{responseMessage}}
+  </div>
+  </div>

@@ -1,0 +1,39 @@
+<app-loader *ngIf="!model "></app-loader>
+<div class="container" *ngIf="model">
+  <mat-card>
+ <a mat-raised-button color="accent" routerLink="./create">create</a>
+  <mat-table [dataSource]="model.projects">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- Position Column -->
+  <ng-container cdkColumnDef="code">
+    <mat-header-cell *cdkHeaderCellDef> Project Code </mat-header-cell>
+    <mat-cell *cdkCellDef="let element"> <a [routerLink]="['/projects/edit/', element.code ]"> {{element.code}}</a>  </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container cdkColumnDef="title">
+    <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
+    <mat-cell *cdkCellDef="let element"> {{element.title}} </mat-cell>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container cdkColumnDef="expectedStartDate">
+    <mat-header-cell *cdkHeaderCellDef> Start Date </mat-header-cell>
+    <mat-cell *cdkCellDef="let element"> {{element.expectedStartDate | date }} </mat-cell>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container cdkColumnDef="spanPeriod">
+    <mat-header-cell *cdkHeaderCellDef> Duration </mat-header-cell>
+    <mat-cell *cdkCellDef="let element"> {{element.spanPeriod}}  </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *cdkHeaderRowDef="['code', 'title', 'expectedStartDate', 'spanPeriod']"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: ['code', 'title', 'expectedStartDate', 'spanPeriod']"></mat-row>
+  </mat-table>
+  </mat-card>
+</div>

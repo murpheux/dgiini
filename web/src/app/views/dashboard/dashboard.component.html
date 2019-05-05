@@ -1,3 +1,125 @@
-<p>
-  dashboard works!
-</p>
+   <div class="dashboard container-fluid">
+    <div class="d-flex flex-row flex-wrap justify-content-center p-4 project-details-content">
+    <div class="d-flex flex-column">
+      <form>
+        <div class="d-flex flex-row justify-content-center flex-wrap project-filter-general">
+            <div class="d-flex flex-row">
+                <label class="form-label-fixed p-2" for="projectType">Project Type</label>
+                <div class="form-group">
+                    <select class="form-control" id="projectType">
+                        <option disabled selected >All</option>
+                    </select>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                    <label class="form-label-fixed p-2" for="agreementType">Agreement Type</label>
+                    <div  class="form-group">
+                        <select class="form-control" id="agreementType">
+                            <option disabled selected>All</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="d-flex flex-row">
+                <label class="form-label-fixed p-2" for="geographicalCoverage">Geo. Coverage</label>
+                <div  class="form-group">
+                    <select class="form-control" id="geographicalCoverage">
+                        <option disabled selected>Entire</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+     <div class="d-flex flex-row justify-content-between flex-wrap mt-4">
+        <ul class="nav nav-pills project-nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Completed Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Projects in Developments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Active Projects</a>
+            </li>
+        </ul>
+      </div>
+      <div class="d-flex flex-row justify-content-center flex-wrap mt-4">
+        <div class="d-flex flex-column p-2 left-pane">
+                <div class="mb-3 text-center">
+                    <h4 class="p-1">Total Project By Country</h4>
+                </div>
+                <div class="d-flex flex-row justify-content-around">
+                        <div>
+                            <h5 class="project-increase-header"><i class="fa fa-circle increase m-2"></i>Increase from last year </h5>
+                        </div>
+                        <div>
+                            <h5 class="project-increase-header"><i class="fa fa-circle decrease m-2"></i>Decrease from last year </h5>
+                        </div>
+                </div>
+                <div class="p-2">
+                    <img src="assets/images/map.png" alt="world map" class="img-responsive img-fluid">
+                </div>
+        </div>
+        <div class="d-flex flex-column p-2 right-pane flex-wrap">
+            <div class="mb-3 text-center">
+                <h4 class="p-1">
+                    Total Projects Expenditures vs. Funding
+                </h4>
+            </div>
+            <form>
+                <div class="d-flex flex-column flex-wrap project-filter-specific">
+                    <div class="d-flex flex-row">
+                        <label class="form-label-fixed p-2" for="country">Country</label>
+                        <select class="form-control" id="country">
+                            <option disabled selected>All</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <label class="form-label-fixed p-2" for="region">Region</label>
+                        <select class="form-control" id="region">
+                            <option selected value="-1">All</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <label class="form-label-fixed p-2" for="customer">Customer</label>
+                        <select class="form-control" id="customer">
+                            <option selected value="-1">All</option>
+                        </select>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <label class="form-label-fixed p-2" for="icaoOffice">Icao Office</label>
+                        <select class="form-control" id="icaoOffice">
+                            <option disabled selected>All</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div class="project-expenditure-funding mt-3">
+                <div class="d-flex flex-row justify-content-around">
+                    <div>
+                        <h5 class="project-increase-header"><i class="fa fa-square expenditure m-1"></i>Expenditure</h5>
+                    </div>
+                    <div>
+                        <h5 class="project-increase-header"><i class="fa fa-square funding m-1"></i>Funding</h5>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <app-budget-expenditure-scale tag="AF" funding="75" expenditures="25"></app-budget-expenditure-scale>
+                    <app-budget-expenditure-scale tag="AM" funding="45" expenditures="35"></app-budget-expenditure-scale>
+                    <app-budget-expenditure-scale tag="AP" funding="85" expenditures="25"></app-budget-expenditure-scale>
+                    <app-budget-expenditure-scale tag="E" funding="15" expenditures="17"></app-budget-expenditure-scale>
+                    <app-budget-expenditure-scale tag="ME" funding="35" expenditures="77"></app-budget-expenditure-scale>
+
+                    <div class="d-flex flex-row pl-3">
+                      <div class="pl-3 pr-4">0</div>
+                      <div class="pl-3 pr-4">100</div>
+                      <div class="pl-3 pr-4">200</div>
+                      <div class="pl-3 pr-4">300</div>
+                      <div class="pl-3 pr-4">400</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+</div>

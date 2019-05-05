@@ -1,0 +1,197 @@
+
+.mat-button:focus {
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.project-context-container {
+
+    margin-bottom: 100px;
+    margin: 0 10%;
+    .light{
+    color:#eee;
+    }
+    .card-header{
+        padding:  0 10px !important;
+        height: 40px;
+        line-height: 40px;
+        vertical-align: middle;
+        a{
+          text-decoration: none;
+          span{
+            font-size: 14px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: inline-block;
+            width: 70%;
+            height: 100%;
+            line-height: 100%;
+            overflow: hidden
+          }
+        }
+
+        .fa {
+            transition: .3s transform ease-in-out;
+            line-height: 40px;
+          }
+
+          .collapsed .fa {
+            transform: rotate(90deg);
+          }
+
+          .mat-icon{
+            line-height: 18px;
+          }
+    }
+    .card-body{
+      border-left-width: 2px;
+      border-right-width: 2px;
+    }
+
+    .full-width {
+      width: 100%;
+    }
+    .half-width {
+      width: 800px;
+    }
+    .mat-form-field {
+      font-size: 14px;
+      padding-left: 10px;
+    }
+      .context  {
+        padding: 1px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        margin-top: 10px;
+
+        .drag-handle{
+          cursor: move;
+          float: left;
+          height: 100%;
+        }
+      }
+
+      .context {
+        padding:40px 40px;
+        margin-bottom: 20px;
+        height: 65vh;
+        overflow-y: scroll;
+        cdk-drag-preview {
+          box-sizing: border-box;
+          border-radius: 4px;
+          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                      0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+        }
+        .cdk-drag-placeholder {
+          opacity: 0;
+        }
+
+        .cdk-drag-animating {
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        &:last-child {
+          border: none;
+        }
+
+        &.cdk-drop-list-dragging &:not(.cdk-drag-placeholder) {
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+
+
+        .context-title {
+          display: inline-block;
+          height: 24px;
+          line-height: 10px;
+          position: relative;
+          margin: 5px 0px 8px 10px;
+          padding: 0 0px 0 12px;
+          background: #68a372;
+          -webkit-border-bottom-right-radius: 3px;
+          border-bottom-right-radius: 3px;
+          -webkit-border-top-right-radius: 3px;
+          border-top-right-radius: 3px;
+          -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          color: #fff;
+          font-size: 12px;
+          font-family: "Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;
+          text-decoration: none;
+          text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          font-weight: bold;
+          &:before{
+            content: "";
+            position: absolute;
+            top:0;
+            left: -12px;
+            width: 0;
+            height: 0;
+            border-color: transparent #68a372 transparent transparent;
+            border-style: solid;
+            border-width: 12px 12px 12px 0;
+          }
+          &:after{
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 1px;
+            float: left;
+            width: 5px;
+            height: 5px;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            background: #fff;
+            -webkit-box-shadow: -1px -1px 2px rgba(0,0,0,0.4);
+            box-shadow: -1px -1px 2px rgba(0,0,0,0.4);
+          }
+        }
+        .context-item {
+        background: #DCE6F2;
+        -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
+        box-shadow: 0 10px 6px -6px #777;
+    }
+  }
+
+}
+.action-bar{
+  display: block;
+  position: relative;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  border-top: solid 1px #f4f6f6;
+  padding: 5px;
+}
+
+.spaces {
+  margin-right:20px;
+}
+.mat-divider{
+  border-top-width: 2px;
+  margin-bottom: 5px;
+}
+

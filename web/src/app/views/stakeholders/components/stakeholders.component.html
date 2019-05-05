@@ -1,0 +1,51 @@
+<app-loader *ngIf="!model"></app-loader>
+<div class="container" *ngIf="model">
+  <mat-card>
+    <a mat-raised-button color="accent" routerLink="./create">create</a>
+    <mat-table [dataSource]="model.stakeholders">
+
+      <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Account ID Column -->
+      <ng-container cdkColumnDef="accountid">
+        <mat-header-cell *cdkHeaderCellDef> Account ID </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.accountid }} </mat-cell>
+      </ng-container>
+
+      <!-- Budget Name Column -->
+      <ng-container cdkColumnDef="name">
+        <mat-header-cell *cdkHeaderCellDef> Full Name
+        </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> <a [routerLink]="['/stakeholders/edit/', element.accountid ]">
+            {{element.salutation}} {{element.firstname}} {{ element.middlename }}. {{ element.lastname }} </a>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Project Role Column -->
+      <ng-container cdkColumnDef="role">
+        <mat-header-cell *cdkHeaderCellDef> Role
+        </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.role }} </mat-cell>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container cdkColumnDef="email">
+        <mat-header-cell *cdkHeaderCellDef>
+          Email </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.email }} </mat-cell>
+      </ng-container>
+
+      <!-- Phone Column -->
+      <ng-container cdkColumnDef="phone">
+        <mat-header-cell *cdkHeaderCellDef> Phone
+        </mat-header-cell>
+        <mat-cell *cdkCellDef="let element"> {{ element.phone }} </mat-cell>
+      </ng-container>
+
+
+      <mat-header-row *cdkHeaderRowDef="['accountid', 'name', 'role', 'email', 'phone']"></mat-header-row>
+      <mat-row *cdkRowDef="let row; columns: ['accountid', 'name', 'role', 'email', 'phone']"></mat-row>
+    </mat-table>
+  </mat-card>
+</div>
