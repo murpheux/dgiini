@@ -18,7 +18,7 @@ module.exports = {
         })
     ],
     output: {
-        path: path.resolve(__dirname, '../build/taskms/'),
+        path: path.resolve(__dirname, '../dist/taskms/'),
         filename: 'bundle_task_api.js'
     },
     externals: [nodeExternals()],

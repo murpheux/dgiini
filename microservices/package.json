@@ -5,7 +5,9 @@
     "author": "Clement Onawole",
     "license": "MIT",
     "scripts": {
-        "build": "babel src --out-dir dist",
+        "build-task": "webpack --config src/webpack-task.config.js",
+        "build-build": "webpack --config src/webpack-bill.config.js",
+        "build_old": "babel src --out-dir dist",
         "api": "nodemon --exec babel-node --",
         "apiprod": "NODE_ENV=production nodemon --exec babel-node --",
         "apiw": "nodemon --watch --exec babel-node --",

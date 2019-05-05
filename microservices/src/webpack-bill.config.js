@@ -18,7 +18,7 @@ module.exports = {
         })
     ],
     output: {
-        path: path.resolve(__dirname, '../build/billms/'),
+        path: path.resolve(__dirname, '../dist/billms/'),
         filename: 'bundle_bill_api.js'
     },
     externals: [nodeExternals()],
