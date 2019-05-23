@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
 'use strict'
 
+import 'dotenv/config'
 import express from 'express'
-// eslint-disable-next-line no-unused-vars
-import _ from 'dotenv/config'
+import compression from 'compression'
 import bodyParser from 'body-parser'
-
 import task_router from './routes/task_route'
 import taskphoto_router from './routes/taskphoto_route'
 
@@ -22,6 +21,7 @@ const log_file = process.env.LOG_TARGET || 'logfile.log'
 const port = process.env.PORT || process.env.APP_PORT
 
 const app = express()
+app.use(compression()) // use compression
 
 const assignId = (req, res, next) => {
     req.id = uuid()

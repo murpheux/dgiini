@@ -1,21 +1,20 @@
-version: "3"
+version: '3.3'
 services:
 
     web:
-        # will build ./web/Dockerfile
-        build: ./web
+        image: nginx:1.16.0
         environment:
             - NODE_ENV=development
         ports:
             - "9000:80"
         volumes:
             - ../../webui:/var/www/html
-        container_name: qt_web
+        container_name: mtaskr_web
         networks:
             - webnet
 
     apigw:
-        build: ./apigw
+        image: node:9.11.2-jessie
         environment:
             - NODE_ENV=development
         ports:
@@ -23,7 +22,7 @@ services:
         volumes:
             - ../../api_gateway:/usr/src/app
             - ../../certs:/usr/src/app/certs
-        container_name: qt_apigw
+        container_name: mtaskr_tyk
         command: >
             bash -c "cd /usr/src/app
             && mkdir logs
@@ -33,7 +32,7 @@ services:
             - gwnet
 
     auth_service:
-        build: ./service
+        image: node:9.11.2-jessie
         environment:
             - NODE_ENV=development
         ports:
@@ -55,7 +54,7 @@ services:
             - svcnet
 
     task_service:
-        build: ./service
+        image: node:9.11.2-jessie
         environment:
             - NODE_ENV=development
         ports:
@@ -64,10 +63,6 @@ services:
         volumes:
             - ../../service:/usr/src/app
         container_name: qt_task
-        # links:
-        #     - db
-        # depends_on:
-        #     - db
         command: >
             bash -c "cd /usr/src/app
             && mkdir logs
@@ -85,38 +80,6 @@ services:
         container_name: qmongo
         networks:
             - dbnet
-
-#   redis:
-#     image: redis:4.0.9-alpine
-#     ports:
-#       - "6379:6379"
-#     container_name: redii
-    #networks:
-    #  - dbnet
-    #deploy:
-    #  replicas: 2
-    #  update_config:
-    #    parallelism: 2
-    #    delay: 10s
-    #  restart_policy:
-    #    condition: on-failure
-
-    # rmq:
-    #   image: rabbitmq:3.7.7
-    #   ports:
-    #     - "5672:5672"
-    #     - "15672:15672"
-    #   container_name: rabii
-    #   networks:
-    #           - dbnet
-
-    rmq:
-        image: rabbitmq:management
-        ports:
-            - "5672:5672"
-            - "15672:15672"
-        networks:
-              - dbnet
 
 networks:
     webnet:
