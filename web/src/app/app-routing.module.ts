@@ -19,20 +19,12 @@ const routes: Routes = [
     loadChildren: './views/dashboard/dashboard.module#DashboardModule'
   },
   {
-    path: 'projects',
-    loadChildren: './views/projects/projects.module#ProjectsModule'
+    path: 'new',
+    loadChildren: './views/tasks/tasks.module#TasksModule'
   },
   {
-    path: 'entities',
-    loadChildren: './views/entities/entities.module#EntitiesModule'
-  },
-  {
-    path: 'prodoc',
-    loadChildren: './views/pro-doc/pro-doc.module#ProDocModule'
-  },
-  {
-    path: 'stakeholders',
-    loadChildren: './views/stakeholders/stakeholders.module#StakeholdersModule'
+    path: 'tasks',
+    loadChildren: './views/tasks/tasks.module#TasksModule'
   }
 ];
 

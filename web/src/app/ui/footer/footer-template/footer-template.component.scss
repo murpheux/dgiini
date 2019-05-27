@@ -1,16 +1,19 @@
-$font-stack:  'Din Regular';
-
-.footer
-{
+$font-stack: 'Din Regular';
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
     width: 100%;
     display: block;
     background: #fff;
     box-shadow: 0 0 30px 30px #fff;
-    .navbar-nav a
-    {
+    .navbar-nav a {
         font-family: 'Open Sans';
         font-size: 16px;
         color: #3b474f;
-
     }
+}
+
+.greylogo {
+    width: 200px;
 }

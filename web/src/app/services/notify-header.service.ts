@@ -14,7 +14,7 @@ export class NotifyHeaderService {
     this.isLoggedIn = false;
     this.SigningInChanged.next(this.isLoggedIn);
   }
-  getSignInStatus(): Observable<boolean> { 
+  getSignInStatus(): Observable<boolean> {
     return this.SigningInChanged;
   }
 }

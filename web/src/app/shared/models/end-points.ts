@@ -30,4 +30,6 @@ export class EndPoints {
      public static readonly CONTACT_MANAGEMENT_ENTITY_TYPES = `${EndPoints.CONTACT_MANAGEMENT_ENTITIES}/entitytypes`;
     public static readonly CONTACT_MANAGEMENT_STAKEHOLDERS = `${Modules.CONTACT_MANAGEMENT}/stakeholders`;
 
+    /// Tasks
+    public static readonly TASK_SERVICE = `api/tasks`;
 }

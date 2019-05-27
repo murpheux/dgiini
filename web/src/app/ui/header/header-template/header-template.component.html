@@ -2,7 +2,7 @@
     <div class="d-flex flex-row flex-wrap justify-content-around">
         <div>
             <a href="/">
-                <img src="assets/images/maple_logo.png" class="img-fluid">
+                <img src="assets/images/maple_logo.png" class="img-fluid applogo">
             </a>
         </div>
         <div>
@@ -12,16 +12,16 @@
                         <a class="nav-link" [routerLink]="['./home']">Home</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./dashboard']">Dashboard</a>
-                    </li>
-                    <li class="nav-itemp m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./projects']">Projects</a>
+                        <a class="nav-link" [routerLink]="['./tasks/new']">Post a task</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./entities']">Entities</a>
+                        <a class="nav-link" [routerLink]="['./tasks/new']">Categories</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./stakeholders']">Stakeholders</a>
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">Browse tasks</a>
+                    </li>
+                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">How it works</a>
                     </li>
                 </ul>
             </nav>

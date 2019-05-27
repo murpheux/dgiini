@@ -1,0 +1,51 @@
+<app-loader *ngIf="!model"></app-loader>
+<div class="container" *ngIf="model">
+    <mat-card>
+        <a mat-raised-button color="accent" routerLink="./tasks/new">create</a>
+        <mat-table [dataSource]="model.result">
+
+            <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Title Column -->
+            <ng-container cdkColumnDef="title">
+                <mat-header-cell *cdkHeaderCellDef> Title </mat-header-cell>
+                <mat-cell *cdkCellDef="let element"> <a [routerLink]="['/tasks/', element.id ]"> {{ element.title }} </a> </mat-cell>
+            </ng-container>
+
+            <!-- Description Column -->
+            <ng-container cdkColumnDef="description">
+                <mat-header-cell *cdkHeaderCellDef> Description
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let element">
+                    {{element.description}}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Project Role Column -->
+            <ng-container cdkColumnDef="category">
+                <mat-header-cell *cdkHeaderCellDef> Category
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let element"> {{ element.category }} </mat-cell>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container cdkColumnDef="location">
+                <mat-header-cell *cdkHeaderCellDef>
+                    Location </mat-header-cell>
+                <mat-cell *cdkCellDef="let element"> {{ element.location.city }} </mat-cell>
+            </ng-container>
+
+            <!-- Phone Column -->
+            <ng-container cdkColumnDef="estimated_hours">
+                <mat-header-cell *cdkHeaderCellDef> Estimated Hrs
+                </mat-header-cell>
+                <mat-cell *cdkCellDef="let element"> {{ element.estimated_hours }} </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *cdkHeaderRowDef="['title', 'description', 'category', 'location', 'estimated_hours']"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: ['title', 'description', 'category', 'location', 'estimated_hours']"></mat-row>
+        </mat-table>
+    </mat-card>
+</div>

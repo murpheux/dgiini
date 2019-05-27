@@ -4511,6 +4511,13 @@ ngx-toastr@^10.0.2:
   dependencies:
     tslib "^1.9.0"
 
+ngx-ui-loader@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/ngx-ui-loader/-/ngx-ui-loader-7.2.2.tgz#cabef2d1ebc73ea2b054f545c8df8590d7963e55"
+  integrity sha512-zmwKSypGuzwyOrGpRS/p5FO5avmbCmDWcBJM11JgJyykB50/W+KbuoOm7dFP9kYMccr2JbUAkWosztNMhY3t1Q==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

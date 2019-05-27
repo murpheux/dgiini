@@ -4,42 +4,28 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ReportComponent } from './report/report.component';
-import { ProjectComponent } from './project/project.component';
-import { WorkPLanComponent } from './work-plan/work-plan.component';
-import { PayrollComponent } from './payroll/payroll.component';
-import { ContactComponent } from './contact/contact.component';
-import { ServiceRequestComponent } from './service-request/service-request.component';
-import { TravelAuthorityComponent } from './travel-authority/travel-authority.component';
-import { BudgetComponent } from './budget/budget.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { TaskCategoryNodeComponent } from './task-category-node/task-category-node.component';
+import { TaskShowcaseComponent } from './task-showcase/task-showcase.component';
+import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
+import { TaskCardComponent } from './task-card/task-card.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    ReportComponent,
-    ProjectComponent,
-    WorkPLanComponent,
-    PayrollComponent,
-    ContactComponent,
-    ServiceRequestComponent,
-    TravelAuthorityComponent,
-    BudgetComponent
+    CarouselComponent,
+    TaskCategoryNodeComponent,
+    TaskShowcaseComponent,
+    TaskCardComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    MaterialDesignModule,
   ],
   exports: [
     HomeComponent,
-    ReportComponent,
-    ProjectComponent,
-    WorkPLanComponent,
-    PayrollComponent,
-    ContactComponent,
-    ServiceRequestComponent,
-    TravelAuthorityComponent,
-    BudgetComponent
   ]
 
 })
