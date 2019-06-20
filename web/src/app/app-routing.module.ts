@@ -4,27 +4,31 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './views/home/home.module#HomeModule'
+    loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'home',
-    loadChildren: './views/home/home.module#HomeModule'
+    loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'user',
-    loadChildren: './views/user/user.module#UserModule'
+    loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
   },
   {
     path: 'dashboard',
-    loadChildren: './views/dashboard/dashboard.module#DashboardModule'
+    loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: 'new',
-    loadChildren: './views/tasks/tasks.module#TasksModule'
+    loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule)
+  },
+  {
+    path: 'browse',
+      loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule)
   },
   {
     path: 'tasks',
-    loadChildren: './views/tasks/tasks.module#TasksModule'
+    loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule)
   }
 ];
 

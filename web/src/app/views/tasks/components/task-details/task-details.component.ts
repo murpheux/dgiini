@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DeleteTaskDialogComponent } from './delete-dialog/delete-task-dialog.component';
 
 @Component({

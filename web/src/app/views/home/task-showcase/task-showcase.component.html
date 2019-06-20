@@ -1,44 +1,46 @@
 <h1>See what others are getting done</h1>
-
-<mat-tab-group mat-align-tabs="end">
-    <mat-tab label="Moving home">
-        <div>
-            <p>Got a few boxes to shift, an apartment or entire house? Get your home moved just the way you want, by whom you want, when you want. Let Airtasker shoulder the load.</p>
-            <div *ngFor="let task from taskList">
-                <app-task-card task="task"></app-task-card>
-            </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Starting a business">
-        <div>
-            <p>Taking a big leap and need some expert advice or assistance? Airtasker can help you get some cracking marketing collateral, admin muscle or a few extra hands to help ease the burden.</p>
+<app-loader *ngIf="!model "></app-loader>
+<div class="container" *ngIf="model">
+    <mat-tab-group mat-align-tabs="end">
+        <mat-tab label="Moving home">
             <div>
-                <app-task-card></app-task-card>
+                <p>Got a few boxes to shift, an apartment or entire house? Get your home moved just the way you want, by whom you want, when you want. Let Airtasker shoulder the load.</p>
+                <div class="d-flex flex-row">
+                    <app-task-card [task]="task" *ngFor="let task of model.result"></app-task-card>
+                </div>
             </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Fixing Sutff">
-        <div>
-            <p>Do you have a hole in the wall that needs plugging? Perhaps a TV that needs mounting? Or maybe you have that perfect shade of green, but no time to paint? Get a Tasker to help.</p>
+        </mat-tab>
+        <mat-tab label="Starting a business">
             <div>
-                <app-task-card></app-task-card>
+                <p>Taking a big leap and need some expert advice or assistance? Airtasker can help you get some cracking marketing collateral, admin muscle or a few extra hands to help ease the burden.</p>
+                <div class="d-flex flex-row">
+                    <app-task-card [task]="task" *ngFor="let task of model.result"></app-task-card>
+                </div>
             </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Hosting a party">
-        <div>
-            <p>Got something to celebrate and the guest list all ready, but need everything else? Let Airtasker help you find the best bartenders, party planners, photographers and entertainment in the land.</p>
+        </mat-tab>
+        <mat-tab label="Fixing Sutff">
             <div>
-                <app-task-card></app-task-card>
+                <p>Do you have a hole in the wall that needs plugging? Perhaps a TV that needs mounting? Or maybe you have that perfect shade of green, but no time to paint? Get a Tasker to help.</p>
+                <div class="d-flex flex-row">
+                    <app-task-card [task]="task" *ngFor="let task of model.result"></app-task-card>
+                </div>
             </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Other stuff">
-        <div>
-            <p>Want something done but feel like it’s too random? Whether it’s getting rescued from a spider or help building a bobsled - you can get nearly anything done through Airtasker.</p>
+        </mat-tab>
+        <mat-tab label="Hosting a party">
             <div>
-                <app-task-card></app-task-card>
+                <p>Got something to celebrate and the guest list all ready, but need everything else? Let Airtasker help you find the best bartenders, party planners, photographers and entertainment in the land.</p>
+                <div class="d-flex flex-row">
+                    <app-task-card [task]="task" *ngFor="let task of model.result"></app-task-card>
+                </div>
             </div>
-        </div>
-    </mat-tab>
-</mat-tab-group>
+        </mat-tab>
+        <mat-tab label="Other stuff">
+            <div>
+                <p>Want something done but feel like it’s too random? Whether it’s getting rescued from a spider or help building a bobsled - you can get nearly anything done through Airtasker.</p>
+                <div class="d-flex flex-row">
+                    <app-task-card [task]="task" *ngFor="let task of model.result"></app-task-card>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

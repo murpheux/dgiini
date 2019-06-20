@@ -11,10 +11,12 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { TaskCreateComponent } from './components/task-create/task-create.component';
 import { TaskCategoriesComponent } from './components/task-categories/task-categories.component';
+import { TaskBrowseComponent } from './components/task-browse/task-browse.component';
+import { TaskFilterComponent } from './components/task-filter/task-filter.component';
 
 
 @NgModule({
-    declarations: [TaskListComponent, TaskDetailsComponent, TaskCreateComponent, TaskCategoriesComponent],
+    declarations: [TaskListComponent, TaskDetailsComponent, TaskCreateComponent, TaskCategoriesComponent, TaskBrowseComponent, TaskFilterComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -23,7 +25,7 @@ import { TaskCategoriesComponent } from './components/task-categories/task-categ
         MaterialDesignModule,
         NgxUiLoaderModule,
     ],
-    exports: [TaskListComponent, TaskCategoriesComponent],
+    exports: [TaskListComponent, TaskCategoriesComponent, TaskCreateComponent],
     providers: [TaskService]
 })
 export class TasksModule { }

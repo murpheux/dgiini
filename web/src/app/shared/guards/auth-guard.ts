@@ -1,9 +1,8 @@
-import {CanActivate, Router} from '@angular/router';
+import {CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router/src/router_state';
 
 @Injectable()
-export class NeedAuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

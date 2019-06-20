@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 
 @Component({
   selector: 'app-header-template',
@@ -12,7 +14,8 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   isLoggedIn = false;
 
-  constructor( private notifyHeaderService: NotifyHeaderService) {
+  constructor( private notifyHeaderService: NotifyHeaderService,
+      public dialog: MatDialog) {
     this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
     });
@@ -27,6 +30,14 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
       this.isLoggedIn = false;
     }
   }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(TaskCreateComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 
   changeLang(lang: string) {
     if (lang === localStorage.getItem('locale')) {

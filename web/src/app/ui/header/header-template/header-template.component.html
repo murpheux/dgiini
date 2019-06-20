@@ -12,13 +12,17 @@
                         <a class="nav-link" [routerLink]="['./home']">Home</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./tasks/new']">Post a task</a>
+                        <button class="nav-link" mat-button (click)="openDialog()">Post a task</button>
+                        <!-- <a class="nav-link" [routerLink]="['./tasks/new']">Post a task</a> -->
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" [routerLink]="['./tasks/new']">Categories</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">Browse tasks</a>
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">Tasks</a>
+                    </li>
+                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./browse']">Browse tasks</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">How it works</a>

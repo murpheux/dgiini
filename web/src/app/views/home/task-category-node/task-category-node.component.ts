@@ -7,9 +7,7 @@ import { HomeService } from '../services/home.service';
     styleUrls: ['./task-category-node.component.scss']
 })
 export class TaskCategoryNodeComponent implements OnInit {
-    categories: []; // = [ 'Business & Admin', 'Cleaning', 'Delivery & removals',
-        // 'Furniture Assembly', 'Handyman', 'Marketing & Design', 'Home & Gardening',
-        // 'Others' ];
+    categories: [];
 
     constructor(private homeService: HomeService) { }
 

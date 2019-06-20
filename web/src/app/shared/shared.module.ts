@@ -14,7 +14,7 @@ import { ServerErrorInterceptor } from './interceptors/server-error.interceptor'
 import { ContentLoaderComponent } from './components/content-loader/content-loader.component';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { NoHttpCacheInterceptor } from './interceptors/no-http-cache-interceptor';
-import { NeedAuthGuard } from './guards/need-auth-guard';
+import { AuthGuard } from './guards/auth-guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
@@ -25,8 +25,8 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
   providers: [
     UtilService,
     LoadingService,
-    NeedAuthGuard,
-     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    AuthGuard,
+    //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
      { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
      { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
      { provide: HTTP_INTERCEPTORS, useClass: NoHttpCacheInterceptor, multi: true },

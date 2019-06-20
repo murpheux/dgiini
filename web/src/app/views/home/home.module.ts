@@ -9,6 +9,7 @@ import { TaskCategoryNodeComponent } from './task-category-node/task-category-no
 import { TaskShowcaseComponent } from './task-showcase/task-showcase.component';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { TaskCardComponent } from './task-card/task-card.component';
+import { TasksModule } from '../tasks/tasks.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TaskCardComponent } from './task-card/task-card.component';
     HomeRoutingModule,
     SharedModule,
     MaterialDesignModule,
+    TasksModule
   ],
   exports: [
     HomeComponent,
