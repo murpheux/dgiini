@@ -1,19 +1,18 @@
 'use strict'
 
-import express from 'express'
-import mongoose from 'mongoose'
-import task_schema from '../data_schema/task_schema'
-import construct_output from './lib'
-import { app_name, version, build, database_uri } from './common'
+const express = require('express')
+require('../models/task')
+const mongoClient = require('mongodb').MongoClient
+require('./lib')
+const common = require('./common')
 
 const router = express.Router()
-mongoose.connect(database_uri, { useCreateIndex: true, useNewUrlParser: true })
-const task = mongoose.model('task', task_schema)
+mongoClient.connect(common.database_uri)
 
 //
 router.get('/', (req, res) => {
     let payload = {
-        'Service': `${app_name} ${version} ${build}`
+        'Service': `${common.app_name} ${common.version} ${common.build}`
     }
 
     res.json(payload)
@@ -95,4 +94,4 @@ router.put('/task', (req, res) => {
     })
 })
 
-export default router
+module.exports = router

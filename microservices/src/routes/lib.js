@@ -10,4 +10,4 @@ const construct_output = (res, code, desc, payload) => {
     res.json(json)
 }
 
-export default construct_output
+exports = construct_output

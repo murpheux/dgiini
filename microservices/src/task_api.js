@@ -1,18 +1,19 @@
 /* eslint-disable no-console */
 'use strict'
 
-import 'dotenv/config'
-import express from 'express'
-import compression from 'compression'
-import bodyParser from 'body-parser'
-import task_router from './routes/task_route'
-import taskphoto_router from './routes/taskphoto_route'
+require('dotenv').config()
+const express = require('express')
+const compression = require('compression')
+const bodyParser = require('body-parser')
+    // const fs = require('fs')
+const rfs = require('rotating-file-stream')
+const path = require('path')
+const morgan = require('morgan')
+require('uuid/v4')
+require('rotating-file-stream')
 
-//import fs from 'fs'
-import path from 'path'
-import morgan from 'morgan'
-import uuid from 'uuid/v4'
-import rfs from 'rotating-file-stream'
+const task_router = require('./routes/task_route')
+const taskphoto_router = require('./routes/taskphoto_route')
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'

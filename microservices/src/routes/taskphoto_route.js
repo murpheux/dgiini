@@ -1,14 +1,12 @@
 'use strict'
 
-import express from 'express'
-import mongoose from 'mongoose'
-import taskphoto_schema from '../data_schema/taskphoto_schema'
-import construct_output from './lib'
-import { database_uri } from './common'
+const express = require('express')
+require('./lib')
+const common = require('./common')
+const mongoClient = require('mongodb').MongoClient
 
 const router = express.Router()
-mongoose.connect(database_uri, { useCreateIndex: true, useNewUrlParser: true })
-const photo = mongoose.model('photo', taskphoto_schema)
+mongoClient.connect(common.database_uri)
 
 //taskphotos
 router.get('/task/photo/:id', (req, res) => {
@@ -37,4 +35,4 @@ router.put('/task/photo', (req, res) => {
     })
 })
 
-export default router
+module.exports = router
