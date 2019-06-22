@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "mtaskr": {
+        "dgini": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/mtaskr",
+                        "outputPath": "dist/dgini",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -72,7 +72,7 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }],
-                            "outputPath": "dist/mtaskr-fr/",
+                            "outputPath": "dist/dgini-fr/",
                             "i18nFile": "src/locale/messages.fr.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "fr",
@@ -97,7 +97,7 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }],
-                            "outputPath": "dist/mtaskr-es/",
+                            "outputPath": "dist/dgini-es/",
                             "i18nFile": "src/locale/messages.es.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "es",
@@ -105,7 +105,7 @@
                         },
                         "fr": {
                             "aot": true,
-                            "outputPath": "dist/mtaskr-fr/",
+                            "outputPath": "dist/dgini-fr/",
                             "i18nFile": "src/locale/messages.fr.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "fr",
@@ -113,7 +113,7 @@
                         },
                         "es": {
                             "aot": true,
-                            "outputPath": "dist/mtaskr-es/",
+                            "outputPath": "dist/dgini-es/",
                             "i18nFile": "src/locale/messages.es.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "es",
@@ -124,24 +124,24 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "mtaskr:build"
+                        "browserTarget": "dgini:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "mtaskr:build:production"
+                            "browserTarget": "dgini:build:production"
                         },
                         "fr": {
-                            "browserTarget": "mtaskr:build:fr"
+                            "browserTarget": "dgini:build:fr"
                         },
                         "es": {
-                            "browserTarget": "mtaskr:build:es"
+                            "browserTarget": "dgini:build:es"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "mtaskr:build"
+                        "browserTarget": "dgini:build"
                     }
                 },
                 "test": {
@@ -175,7 +175,7 @@
                 }
             }
         },
-        "mtaskr-e2e": {
+        "dgini-e2e": {
             "root": "e2e/",
             "projectType": "application",
             "prefix": "",
@@ -184,11 +184,11 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "mtaskr:serve"
+                        "devServerTarget": "dgini:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "mtaskr:serve:production"
+                            "devServerTarget": "dgini:serve:production"
                         }
                     }
                 },
@@ -204,5 +204,5 @@
             }
         }
     },
-    "defaultProject": "mtaskr"
+    "defaultProject": "dgini"
 }

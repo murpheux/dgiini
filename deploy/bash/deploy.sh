@@ -1,4 +1,4 @@
-# deploy qtaskr application
+# deploy dgini application
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied"

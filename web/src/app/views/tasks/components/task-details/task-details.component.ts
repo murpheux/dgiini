@@ -4,7 +4,8 @@ import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { DeleteTaskDialogComponent } from './delete-dialog/delete-task-dialog.component';
+import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.component';
+import { Guid } from 'guid-typescript';
 
 @Component({
     selector: 'app-task-details',
@@ -16,7 +17,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
     subscription: any;
     model: ITask;
     readonly = false;
-    dialogRef: MatDialogRef<DeleteTaskDialogComponent>;
+    dialogRef: MatDialogRef<TaskDeleteDialogComponent>;
 
     taskFormGroup: FormGroup;
 
@@ -51,7 +52,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.readonly = true;
     }
 
-    getTask(id: string): void {
+    getTask(id: Guid): void {
         this.taskService.getTask(id).subscribe(response => {
                 this.model = response.payload.result;
                 this.buildForms();
@@ -99,15 +100,15 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
 
-    handleDeleteTask(id: string) {
+    handleDeleteTask(id: Guid) {
         this.taskService.deleteTask(id).subscribe(result => {
 
         });
         this.router.navigate(['tasks']);
     }
 
-    openConfirmationDialog(id: string) {
-        this.dialogRef = this.dialog.open(DeleteTaskDialogComponent, {
+    openConfirmationDialog(id: Guid) {
+        this.dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
             disableClose: false
         });
         this.dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete task '${this.model.id}' ?`;

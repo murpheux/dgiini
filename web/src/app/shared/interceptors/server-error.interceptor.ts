@@ -19,11 +19,11 @@ export class ServerErrorInterceptor implements HttpInterceptor {
       retry(1),
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
-          const currentBPMSUser = JSON.parse(localStorage.getItem('currentBPMSUser'));
-        if (currentBPMSUser) {
+          const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${currentBPMSUser.accessToken}`
+                    Authorization: `Bearer ${currentUser.accessToken}`
                 }
             });
         }

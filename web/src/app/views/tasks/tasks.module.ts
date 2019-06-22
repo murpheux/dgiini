@@ -13,10 +13,13 @@ import { TaskCreateComponent } from './components/task-create/task-create.compon
 import { TaskCategoriesComponent } from './components/task-categories/task-categories.component';
 import { TaskBrowseComponent } from './components/task-browse/task-browse.component';
 import { TaskFilterComponent } from './components/task-filter/task-filter.component';
+import { TaskDeleteDialogComponent } from './components/task-details/delete-dialog/task-delete-dialog.component';
 
 
 @NgModule({
-    declarations: [TaskListComponent, TaskDetailsComponent, TaskCreateComponent, TaskCategoriesComponent, TaskBrowseComponent, TaskFilterComponent],
+    declarations: [TaskListComponent, TaskDetailsComponent,
+        TaskCreateComponent, TaskCategoriesComponent, TaskBrowseComponent,
+        TaskFilterComponent, TaskDeleteDialogComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -25,6 +28,9 @@ import { TaskFilterComponent } from './components/task-filter/task-filter.compon
         MaterialDesignModule,
         NgxUiLoaderModule,
     ],
+    entryComponents: [
+        TaskDeleteDialogComponent,
+      ],
     exports: [TaskListComponent, TaskCategoriesComponent, TaskCreateComponent],
     providers: [TaskService]
 })

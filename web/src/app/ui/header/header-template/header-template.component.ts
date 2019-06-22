@@ -3,57 +3,72 @@ import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
+import { LoginComponent } from 'src/app/views/user/login/login.component';
 
 @Component({
-  selector: 'app-header-template',
-  templateUrl: './header-template.component.html',
-  styleUrls: ['./header-template.component.scss']
+    selector: 'app-header-template',
+    templateUrl: './header-template.component.html',
+    styleUrls: ['./header-template.component.scss']
 })
 export class HeaderTemplateComponent implements OnInit, OnDestroy {
-  selectedLanguage = 'en';
-  subscription: Subscription;
-  isLoggedIn = false;
+    selectedLanguage = 'en';
+    subscription: Subscription;
+    isLoggedIn = false;
 
-  constructor( private notifyHeaderService: NotifyHeaderService,
-      public dialog: MatDialog) {
-    this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn;
-    });
-   }
-  ngOnInit() {
-    this.selectedLanguage = localStorage.getItem('locale');
-    const currentBPMSUser = JSON.parse(localStorage.getItem('currentBPMSUser'));
-
-    if (currentBPMSUser) {
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
-  }
-
-    openDialog() {
-        const dialogRef = this.dialog.open(TaskCreateComponent);
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+    constructor(
+        private notifyHeaderService: NotifyHeaderService,
+        public dialog: MatDialog
+    ) {
+        this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
+            this.isLoggedIn = isLoggedIn;
         });
     }
 
-  changeLang(lang: string) {
-    if (lang === localStorage.getItem('locale')) {
-      return;
+    ngOnInit() {
+        this.selectedLanguage = localStorage.getItem('locale');
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (currentUser) {
+            this.isLoggedIn = true;
+        } else {
+            this.isLoggedIn = false;
+        }
     }
-    if (lang === 'en') {
-      localStorage.setItem('locale', 'en');
-    } else if (lang === 'fr') {
-      localStorage.setItem('locale', 'fr');
-    } else {
-      localStorage.setItem('locale', 'es');
+
+    openDialog() {
+        const dialogRef = this.dialog.open(TaskCreateComponent, {
+            height: '600px',
+            width: '800px',
+          });
+
+        dialogRef.afterClosed().subscribe(result => {
+           // show notice if necessary
+        });
     }
-    window.location.reload();
-  }
-  ngOnDestroy() {
-    // unsubscribe to ensure no memory leaks
-    this.subscription.unsubscribe();
-}
+
+    openLoginDialog() {
+        const logingRef = this.dialog.open(LoginComponent);
+
+        logingRef.afterClosed().subscribe(result => {
+           // show notice if necessary
+        });
+    }
+
+    changeLang(lang: string) {
+        if (lang === localStorage.getItem('locale')) {
+            return;
+        }
+        if (lang === 'en') {
+            localStorage.setItem('locale', 'en');
+        } else if (lang === 'fr') {
+            localStorage.setItem('locale', 'fr');
+        } else {
+            localStorage.setItem('locale', 'es');
+        }
+        window.location.reload();
+    }
+    ngOnDestroy() {
+        // unsubscribe to ensure no memory leaks
+        this.subscription.unsubscribe();
+    }
 }

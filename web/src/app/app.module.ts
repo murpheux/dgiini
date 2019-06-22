@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NotifyHeaderService } from './services/notify-header.service';
+import 'hammerjs';
 
 @NgModule({
   declarations: [

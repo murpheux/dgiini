@@ -1,3 +1,120 @@
-<p>
-  task-create works!
-</p>
+<div class="container">
+    <app-loader *ngIf="!model"></app-loader>
+    <mat-card>
+        <mat-horizontal-stepper linear #stepper>
+            <mat-step [stepControl]="taskStep1FormGroup">
+                <form [formGroup]="taskStep1FormGroup">
+                    <ng-template matStepLabel>What do you need done?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What do you need done?</mat-label>
+                                    <input matInput placeholder="enter title" formControlName="title">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <textarea matInput placeholder="enter details" formControlName="description" matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=8></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="taskStep2FormGroup">
+                <form [formGroup]="taskStep2FormGroup">
+                    <ng-template matStepLabel>What is your budget?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-label>What is your budget?</mat-label>
+                                <div>
+                                    <mat-radio-group aria-label="Select an option" formControlName="taskType">
+                                        <mat-radio-button *ngFor="let key of options_keys" [value]="key">{{ options[key] }}</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>Location</mat-label>
+                                    <textarea matInput placeholder="enter details" formControlName="city"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>When do you need it done?</mat-label>
+                                    <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskDate">
+                                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="taskStep3FormGroup">
+                <form [formGroup]="taskStep3FormGroup">
+                    <ng-template matStepLabel>Where do you need it done?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-label>Where do you need it done?</mat-label>
+                                <div>
+                                    <mat-radio-group aria-label="Select an option" formControlName="rateunit">
+                                        <mat-radio-button *ngFor="let key of rateunits_keys" [value]="key">{{ rateunits[key] }}</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>Amount</mat-label>
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input matInput type="text" class="form-control" aria-label="Amount (to the nearest dollar)" formControlName="rate" appDigitOnly>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">.00</span>
+                                        </div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <div class="input-group mb-2">
+                                        <input matInput type="text" class="form-control" placeholder="0" aria-label="Recipient's username" aria-describedby="basic-addon2" formControlName="esthrs">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="basic-addon2">hrs</span>
+                                        </div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                You are now done.
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                    <button mat-button type="submit">Save</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card>
+</div>

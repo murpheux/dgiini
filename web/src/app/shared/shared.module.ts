@@ -16,10 +16,11 @@ import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { NoHttpCacheInterceptor } from './interceptors/no-http-cache-interceptor';
 import { AuthGuard } from './guards/auth-guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 
 @NgModule({
   declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent],
+    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective],
   exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
     ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent],
   providers: [

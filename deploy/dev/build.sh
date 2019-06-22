@@ -1,2 +1,2 @@
 #!/bin/bash
-ssh -l murpheux -p 53801 gru build mtaskr
+ssh -l murpheux -p 53801 gru build dgini

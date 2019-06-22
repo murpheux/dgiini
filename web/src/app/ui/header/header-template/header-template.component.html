@@ -2,7 +2,7 @@
     <div class="d-flex flex-row flex-wrap justify-content-around">
         <div>
             <a href="/">
-                <img src="assets/images/maple_logo.png" class="img-fluid applogo">
+                <img src="assets/images/logo.png" class="img-fluid applogo">
             </a>
         </div>
         <div>
@@ -36,7 +36,7 @@
                 <img src="assets/images/default-avatar.png">
             </button>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" [routerLink]="['./user/login']" *ngIf="!isLoggedIn">Sign in</a>
+                    <a class="dropdown-item" (click)="openLoginDialog()" *ngIf="!isLoggedIn">Sign in</a>
                     <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
                 </div>
             </div>

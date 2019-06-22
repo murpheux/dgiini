@@ -13,7 +13,7 @@ services:
             bash -c "cd /usr/src/app
             && pip install --upgrade pip
             && pip install -r requirements.txt
-            && gunicorn --certfile=certs/qtaskr.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:7000 auth_v1:api"
+            && gunicorn --certfile=certs/dgini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:7000 auth_v1:api"
         networks:
             - svcnet
         deploy:
@@ -33,5 +33,3 @@ services:
 networks:
     svcnet:
     dbnet:
-
-

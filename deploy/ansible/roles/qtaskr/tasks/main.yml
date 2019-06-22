@@ -6,4 +6,4 @@ with item:
   - nmap
 
 name: "Run dk swarm deploy"
-shell: dk stack deploy -c ../docker/docker-swarm.yml qtaskr
+shell: dk stack deploy -c ../docker/docker-swarm.yml dgini

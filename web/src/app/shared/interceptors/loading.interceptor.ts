@@ -18,7 +18,7 @@ export class LoadingInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.requests.push(req);
         this.loaderService.isLoading.next(true);
-        return Observable.create(observer => {
+        return new Observable(observer => {
           const subscription = next.handle(req)
             .subscribe(
             event => {

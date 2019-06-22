@@ -17,7 +17,7 @@ export class LogoutComponent implements OnInit {
   logout() {
     // remove user from local storage to log user out
     this.notifyHeaderService.loggedOut();
-    localStorage.removeItem('currentBPMSUser');
+    localStorage.removeItem('currentUser');
     this.router.navigate(['/user/login']);
 }
 }

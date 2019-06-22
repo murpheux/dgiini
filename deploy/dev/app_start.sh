@@ -1,7 +1,7 @@
 #!/bin/bash
 # script to start app services
 
-cd $QTASKR_HOME/deployment/docker
+cd $DGINI_HOME/deployment/docker
 
 # start database - mongo
 docker-compose up -d db
@@ -24,4 +24,4 @@ node -r esm notify_v1:api &
 cd ../web
 ng serve &
 
-cd $QTASKR_HOME
+cd $DGINI_HOME

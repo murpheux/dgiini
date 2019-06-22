@@ -3,12 +3,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-task-project-dialog',
-    templateUrl: './delete-task-dialog.component.html',
-    styleUrls: ['./delete-task-dialog.component.scss']
+    templateUrl: './task-delete-dialog.component.html',
+    styleUrls: ['./task-delete-dialog.component.scss']
   })
 
-export class DeleteTaskDialogComponent {
+export class TaskDeleteDialogComponent {
   public confirmMessage: string;
     constructor(
-        public dialogRef: MatDialogRef<DeleteTaskDialogComponent>) {}
+        public dialogRef: MatDialogRef<TaskDeleteDialogComponent>) {}
 }
