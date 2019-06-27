@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../services/home.service';
-import { IResponse } from '../../tasks/models/IResponse';
+import { IResponse } from '../../models/IResponse';
+import { ITask } from '../../models/ITask';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-showcase',
@@ -8,16 +9,16 @@ import { IResponse } from '../../tasks/models/IResponse';
     styleUrls: ['./task-showcase.component.scss']
 })
 export class TaskShowcaseComponent implements OnInit {
-    model: any;
+    model: ITask[];
 
-    constructor(private homeService: HomeService) { }
+    constructor(private taskService: TaskService) { }
 
     ngOnInit() {
         this.getTasks();
     }
 
     getTasks() {
-        this.homeService.getTasks().subscribe((response: IResponse) => {
+        this.taskService.getTasks().subscribe((response: IResponse) => {
             this.model = response.payload;
         });
     }

@@ -4,27 +4,27 @@ services:
     web:
         image: php:7.0-apache
         environment:
-            - DGINI_ENV=development
-            - DGINI_GW=https://apigw/api
+            - DGIINI_ENV=development
+            - DGIINI_GW=https://apigw/api
         ports:
             - "9000:80"
         volumes:
             - ../../webui:/var/www/html
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
     apigw:
         image: node:9.11.2-jessie
         environment:
-            - DGINI_ENV=development
-            - DGINI_GW_HOST=0.0.0.0
-            - DGINI_GW_PORT=443
-            - DGINI_AUTH=https://auth_service/api
-            - DGINI_TASK=https://task_service/api
-            - DGINI_BILL=https://bill_service/api
-            - DGINI_NOTIFY=https://notify_service/api
+            - DGIINI_ENV=development
+            - DGIINI_GW_HOST=0.0.0.0
+            - DGIINI_GW_PORT=443
+            - DGIINI_AUTH=https://auth_service/api
+            - DGIINI_TASK=https://task_service/api
+            - DGIINI_BILL=https://bill_service/api
+            - DGIINI_NOTIFY=https://notify_service/api
         ports:
             - "8000:443"
         volumes:
@@ -35,22 +35,22 @@ services:
             && yarn install
             && yarn start"
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
     auth_service:
         image: python:3.7.0-stretch
         environment:
-            - DGINI_ENV=development
-            - DGINI_AUTH=https://auth_service/api
-            - DGINI_TASK=https://task_service/api
-            - DGINI_BILL=https://bill_service/api
-            - DGINI_NOTIFY=https://notify_service/api
-            - DGINI_AUTH_DB=db_auth:27017
-            - DGINI_TASK_DB=db_task:27017
-            - DGINI_BILL_DB=db_bill:27017
-            - DGINI_NOTIFY_DB=db_notify:27017
+            - DGIINI_ENV=development
+            - DGIINI_AUTH=https://auth_service/api
+            - DGIINI_TASK=https://task_service/api
+            - DGIINI_BILL=https://bill_service/api
+            - DGIINI_NOTIFY=https://notify_service/api
+            - DGIINI_AUTH_DB=db_auth:27017
+            - DGIINI_TASK_DB=db_task:27017
+            - DGIINI_BILL_DB=db_bill:27017
+            - DGIINI_NOTIFY_DB=db_notify:27017
         ports:
             - "7000:443"
         volumes:
@@ -59,24 +59,24 @@ services:
             bash -c "cd /usr/src/app
             && pip install --upgrade pip
             && pip install -r requirements.txt
-            && gunicorn --certfile=certs/dgini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 auth_v1:api"
+            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 auth_v1:api"
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
     task_service:
         image: python:3.7.0-stretch
         environment:
-            - DGINI_ENV=development
-            - DGINI_AUTH=https://auth_service/api
-            - DGINI_TASK=https://task_service/api
-            - DGINI_BILL=https://bill_service/api
-            - DGINI_NOTIFY=https://notify_service/api
-            - DGINI_AUTH_DB=db_auth:27017
-            - DGINI_TASK_DB=db_task:27017
-            - DGINI_BILL_DB=db_bill:27017
-            - DGINI_NOTIFY_DB=db_notify:27017
+            - DGIINI_ENV=development
+            - DGIINI_AUTH=https://auth_service/api
+            - DGIINI_TASK=https://task_service/api
+            - DGIINI_BILL=https://bill_service/api
+            - DGIINI_NOTIFY=https://notify_service/api
+            - DGIINI_AUTH_DB=db_auth:27017
+            - DGIINI_TASK_DB=db_task:27017
+            - DGIINI_BILL_DB=db_bill:27017
+            - DGIINI_NOTIFY_DB=db_notify:27017
         ports:
             - "7001:443"
         volumes:
@@ -85,9 +85,9 @@ services:
             bash -c "cd /usr/src/app
             && pip install --upgrade pip
             && pip install -r requirements.txt
-            && gunicorn --certfile=certs/dgini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 task_v1:api"
+            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 task_v1:api"
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
@@ -98,7 +98,7 @@ services:
         environment:
             - NODE_ENV=development
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
@@ -110,7 +110,7 @@ services:
         environment:
             - NODE_ENV=development
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
@@ -121,9 +121,9 @@ services:
         environment:
             - NODE_ENV=development
         networks:
-            - dgininet
+            - dgiininet
         deploy:
             replicas: 1
 
 networks:
-    dgininet:
+    dgiininet:

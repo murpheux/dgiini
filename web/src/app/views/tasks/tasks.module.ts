@@ -14,12 +14,20 @@ import { TaskCategoriesComponent } from './components/task-categories/task-categ
 import { TaskBrowseComponent } from './components/task-browse/task-browse.component';
 import { TaskFilterComponent } from './components/task-filter/task-filter.component';
 import { TaskDeleteDialogComponent } from './components/task-details/delete-dialog/task-delete-dialog.component';
+import { TaskCardComponent } from './components/task-card/task-card.component';
+import { TaskCategoryNodeComponent } from './components/task-category-node/task-category-node.component';
+import { TaskShowcaseComponent } from './components/task-showcase/task-showcase.component';
+import { TaskViewComponent } from './components/task-view/task-view.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
 
 @NgModule({
     declarations: [TaskListComponent, TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent, TaskBrowseComponent,
-        TaskFilterComponent, TaskDeleteDialogComponent],
+        TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
+        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -27,11 +35,20 @@ import { TaskDeleteDialogComponent } from './components/task-details/delete-dial
         CoreModule,
         MaterialDesignModule,
         NgxUiLoaderModule,
+        FontAwesomeModule
     ],
     entryComponents: [
         TaskDeleteDialogComponent,
       ],
-    exports: [TaskListComponent, TaskCategoriesComponent, TaskCreateComponent],
+    exports: [TaskListComponent, TaskCategoriesComponent,
+        TaskCreateComponent, TaskCardComponent,
+        TaskCategoryNodeComponent, TaskShowcaseComponent],
     providers: [TaskService]
 })
-export class TasksModule { }
+export class TasksModule {
+
+    contructor() {
+        library.add( faLocationArrow );
+    }
+
+}

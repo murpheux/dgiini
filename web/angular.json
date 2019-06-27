@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "dgini": {
+        "dgiini": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -17,7 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/dgini",
+                        "outputPath": "dist/dgiini",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -72,7 +72,7 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }],
-                            "outputPath": "dist/dgini-fr/",
+                            "outputPath": "dist/dgiini-fr/",
                             "i18nFile": "src/locale/messages.fr.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "fr",
@@ -97,7 +97,7 @@
                                 "maximumWarning": "2mb",
                                 "maximumError": "5mb"
                             }],
-                            "outputPath": "dist/dgini-es/",
+                            "outputPath": "dist/dgiini-es/",
                             "i18nFile": "src/locale/messages.es.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "es",
@@ -105,7 +105,7 @@
                         },
                         "fr": {
                             "aot": true,
-                            "outputPath": "dist/dgini-fr/",
+                            "outputPath": "dist/dgiini-fr/",
                             "i18nFile": "src/locale/messages.fr.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "fr",
@@ -113,7 +113,7 @@
                         },
                         "es": {
                             "aot": true,
-                            "outputPath": "dist/dgini-es/",
+                            "outputPath": "dist/dgiini-es/",
                             "i18nFile": "src/locale/messages.es.xlf",
                             "i18nFormat": "xlf",
                             "i18nLocale": "es",
@@ -124,24 +124,24 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "dgini:build"
+                        "browserTarget": "dgiini:build"
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "dgini:build:production"
+                            "browserTarget": "dgiini:build:production"
                         },
                         "fr": {
-                            "browserTarget": "dgini:build:fr"
+                            "browserTarget": "dgiini:build:fr"
                         },
                         "es": {
-                            "browserTarget": "dgini:build:es"
+                            "browserTarget": "dgiini:build:es"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "dgini:build"
+                        "browserTarget": "dgiini:build"
                     }
                 },
                 "test": {
@@ -175,7 +175,7 @@
                 }
             }
         },
-        "dgini-e2e": {
+        "dgiini-e2e": {
             "root": "e2e/",
             "projectType": "application",
             "prefix": "",
@@ -184,11 +184,11 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "dgini:serve"
+                        "devServerTarget": "dgiini:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "dgini:serve:production"
+                            "devServerTarget": "dgiini:serve:production"
                         }
                     }
                 },
@@ -204,5 +204,5 @@
             }
         }
     },
-    "defaultProject": "dgini"
+    "defaultProject": "dgiini"
 }

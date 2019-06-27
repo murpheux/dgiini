@@ -1,12 +1,11 @@
+/* eslint-disable no-console */
 'use strict'
 
 const express = require('express')
-require('./lib')
-const common = require('./common')
-const mongoClient = require('mongodb').MongoClient
+require('../shared/lib').default
+const common = require('../shared/common')
 
 const router = express.Router()
-mongoClient.connect(common.database_uri)
 
 //taskphotos
 router.get('/task/photo/:id', (req, res) => {

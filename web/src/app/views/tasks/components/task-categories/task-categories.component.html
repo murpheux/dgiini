@@ -1,3 +1,12 @@
-<p>
-    task-categories works!
-</p>
+<div class="container">
+    <div class="row">
+        <div *ngIf="model" class="col-md-4 scrollable">
+            <div *ngFor="let task of model">
+                <app-task-card [task]="task"></app-task-card>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <app-task-view *ngIf="currentTask" [task]="currentTask"></app-task-view>
+        </div>
+    </div>
+</div>

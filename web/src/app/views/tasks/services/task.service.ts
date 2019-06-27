@@ -12,18 +12,29 @@ import { Guid } from 'guid-typescript';
   providedIn: 'root'
 })
 export class TaskService {
+    private baseUrl = `${environment.DOMAIN}/api`;
     private serviceUrl = `${environment.DOMAIN}/${EndPoints.TASK_SERVICE}`;
 
     constructor(private http: HttpClient) { }
 
+    getTaskCategories(): Observable<IResponse> {
+        const url = `${this.baseUrl}/categories`;
+        return this.http.get<IResponse>(url);
+    }
+
     getTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
-        return this.http.get<any>(url);
+        return this.http.get<IResponse>(url);
+    }
+
+    getTasksByCategory(category: string): Observable<IResponse> {
+        const url = `${this.serviceUrl}/category/${category}`;
+        return this.http.get<IResponse>(url);
     }
 
     getTask(id: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}/${id}`;
-        return this.http.get<any>(url);
+        return this.http.get<IResponse>(url);
     }
 
     saveTask(task: ITask) {

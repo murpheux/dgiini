@@ -9,17 +9,7 @@ import { IResponse } from '../../tasks/models/IResponse';
   providedIn: 'root'
 })
 export class HomeService {
-    private serviceUrl = `${environment.DOMAIN}/${EndPoints.TASK_SERVICE}`;
 
     constructor(private http: HttpClient) { }
 
-    getTaskCategories(): Observable<IResponse> {
-        const url = `${this.serviceUrl}/categories`;
-        return this.http.get<any>(url);
-    }
-
-    getTasks(): Observable<IResponse> {
-        const url = `${this.serviceUrl}`;
-        return this.http.get<any>(url);
-    }
 }

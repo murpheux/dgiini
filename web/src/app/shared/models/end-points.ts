@@ -32,4 +32,5 @@ export class EndPoints {
 
     /// Tasks
     public static readonly TASK_SERVICE = `api/tasks`;
+    public static readonly MESSAGE_SERVICE = `api/messages`;
 }

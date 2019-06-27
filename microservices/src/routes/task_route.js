@@ -1,97 +1,231 @@
 'use strict'
 
 const express = require('express')
-require('../models/task')
 const mongoClient = require('mongodb').MongoClient
-require('./lib')
-const common = require('./common')
-
+const common = require('../shared/common')
+const build_response = require('../shared/lib')
+const validator = require('fluent-validator')
 const router = express.Router()
-mongoClient.connect(common.database_uri)
+const winston = require('../winston')
+const HttpStatus = require('http-status-codes')
+const ObjectId = require('mongodb').ObjectId
+const titleCase = require('title-case')
 
-//
-router.get('/', (req, res) => {
-    let payload = {
-        'Service': `${common.app_name} ${common.version} ${common.build}`
-    }
+const database = process.env.TASK_DATABASE || 'dg_taskdb'
+const TASK_COLL = 'tasks'
+const VALIDATION_MSG = 'validation errors encountered'
 
-    res.json(payload)
-})
+const options = {
+    poolSize: 20,
+    socketTimeoutMS: 480000,
+    keepAlive: 300000,
+    sslValidate: false,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000,
+    useNewUrlParser: true
+}
 
-//tasks
-router.get('/task', (req, res) => {
-    task.find((err, tasks) => {
-        if (err) return console.error(err)
+// task list
+router.get('/tasks', (_, res) => {
+    mongoClient.connect(common.database_uri, options, (err, client) => {
+        if (err) {
+            winston.log(err)
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(0, err.message, err))
+        } else {
+            const db = client.db(database)
 
-        construct_output(res, 0, '', tasks)
+            db.collection(TASK_COLL).find().toArray((err, tasks) => {
+                if (err) {
+                    winston.log(err)
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                } else {
+                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    client.close()
+                }
+            })
+        }
     })
 })
 
-router.get('/task/:id', (req, res) => {
-    task.find({ _id: req.params.id }, (err, tasks) => {
-        if (err) return console.error(err)
+// task
+router.get('/tasks/:id', (req, res) => {
+    const id = req.params.id
+    var validation = validator().validate(id).isNotEmpty()
+        .and.matches('^[a-f0-9]{24}$')
 
-        construct_output(res, 0, '', tasks)
-    })
-})
+    if (validation.hasErrors()) {
 
-// router.delete('/task2/:id', (req, res) => {
-//     task.findOneAndUpdate({ _id: req.param.id }, {
-//             status: false // field:values to update
-//         }, {
-//             new: true, // return updated doc
-//             runValidators: true // validate before update
-//         })
-//         .then(doc => { construct_output(res, 0, '', {}) })
-//         .catch(err => { console.error(err) })
-// })
-
-router.patch('/task/:id', (req, res) => {
-    task.update({ _id: req.params.id }, req.body, { multi: true }, (err, numberAffected) => {
-        construct_output(res, 0, '', numberAffected)
-    })
-})
-
-router.delete('/task/:id', (req, res) => {
-    task.update({ _id: req.params.id }, { status: false }, { multi: true }, (err, numberAffected) => {
-        construct_output(res, 0, '', numberAffected)
-    })
-})
-
-router.post('/find/task', (req, res) => {
-    let search_str = req.body
-
-    if ('paging' in search_str) {
-        const paging = req.body.paging
-        const skip = (paging.pagenumber - 1) * paging.nperpage
-        const limit = paging.nperpage
-
-        // remove payload
-        delete search_str['paging']
-
-        task.find(search_str, (err, tasks) => {
-            if (err) return console.error(err)
-
-            construct_output(res, 0, '', tasks)
-        }).skip(skip + 1).limit(limit)
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-
-        task.find(search_str, (err, tasks) => {
-            if (err) return console.error(err)
-
-            construct_output(res, 0, '', tasks)
+        mongoClient.connect(common.database_uri, options, (err, client) => {
+            if (err) {
+                winston.log(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            } else {
+                const db = client.db(database)
+                db.collection(TASK_COLL).findOne({ _id: ObjectId(id) }, (err, task) => {
+                    if (err) {
+                        winston.log(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    } else {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task))
+                        client.close()
+                    }
+                })
+            }
         })
     }
 })
 
-router.put('/task', (req, res) => {
-    let task = new task(req.body)
 
-    task.save((err, tk) => {
-        if (err) return console.error(err)
+// update
+router.put('/tasks', (req, res) => {
+    const task = req.body
+    var validation = validator().validate(task.id).isNotNull().and.isNotEmpty()
+        .and.matches('^[a-f0-9]{24}$')
 
-        construct_output(res, 0, '', tk._id)
-    })
+    if (validation.hasErrors()) {
+
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+
+        const id = task.id
+        delete task['id']
+
+        mongoClient.connect(common.database_uri, options, (err, client) => {
+            if (err) {
+                winston.log(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            } else {
+                const db = client.db(database)
+                db.collection(TASK_COLL).updateOne({ _id: ObjectId(id) }, { $set: task }, (err, result) => {
+                    if (err) {
+                        winston.log(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    } else {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result.nModified))
+                        client.close()
+                    }
+                })
+            }
+        })
+    }
 })
+
+// delete
+router.delete('/tasks/:id', (req, res) => {
+    const id = req.params.id
+    var validation = validator().validate(id).isNotEmpty()
+        .matches('^[a-f0-9]{24}$')
+
+    if (validation.hasErrors()) {
+
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        mongoClient.connect(common.database_uri, options, (err, client) => {
+            if (err) {
+                winston.log(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            } else {
+                const db = client.db(database)
+                db.collection(TASK_COLL).deleteOne({ _id: ObjectId(id) }, (err, result) => {
+                    if (err) {
+                        winston.log(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    } else {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result))
+                        client.close()
+                    }
+                })
+            }
+        })
+    }
+})
+
+// create 
+router.post('/tasks', (req, res) => {
+    const task = req.body
+    const validation = validateTask(task)
+
+    if (validation.hasErrors()) {
+
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+
+        mongoClient.connect(common.database_uri, options, (err, client) => {
+            if (err) {
+                winston.log(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            } else {
+                const db = client.db(database)
+                db.collection(TASK_COLL).insertOne(task, (err, result) => {
+                    if (err) {
+                        winston.log(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    } else {
+                        res.status(HttpStatus.CREATED).json(build_response(HttpStatus.CREATED, '', result.insertedId))
+                        client.close()
+                    }
+                })
+            }
+        })
+    }
+})
+
+// task
+router.get('/tasks/category/:category', (req, res) => {
+    let category = req.params.category
+    var validation = validator().validate(category).isNotEmpty()
+
+    category = titleCase(category)
+
+    if (validation.hasErrors()) {
+
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        mongoClient.connect(common.database_uri, options, (err, client) => {
+            if (err) {
+                winston.log(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            } else {
+                const db = client.db(database)
+                db.collection(TASK_COLL).find({ category: category }).toArray((err, tasks) => {
+                    if (err) {
+                        winston.log(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    } else {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                        client.close()
+                    }
+                })
+            }
+        })
+    }
+})
+
+
+const categories = ['Cleaning', 'Garden', 'Home', 'HandyMan', 'FurnitureAssembly', 'Mowing', 'SnowPlowing', 'Nursing', 'Childcare', 'Moving', 'Driver', 'Others']
+
+// categories
+router.get('/categories', (req, res) => {
+
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', categories))
+})
+
+const validateTask = (task) => {
+    const validation = validator()
+        .validate(task.title).isNotEmpty()
+        .validate(task.description).isNotEmpty()
+        .validate(task.rate).isNotNull()
+        .validate(task.rate.amount).isNumber().and.isPositive()
+        .validate(task.location).isNotNull()
+        .validate(task.location.street).isNotEmpty()
+        .validate(task.location.city).isNotEmpty()
+        .validate(task.location.state).isNotEmpty()
+        .validate(task.location.zipcode).isNotEmpty()
+        .validate(task.location.country).isNotEmpty()
+
+    return validation
+}
 
 module.exports = router

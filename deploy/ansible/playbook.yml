@@ -1,7 +1,7 @@
 - hosts: all
 	become: true
 	roles:
-		dgini
+		dgiini
 
 -host: ahost
 	become: true

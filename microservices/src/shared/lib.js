@@ -1,13 +1,11 @@
 'use strict'
 
-const construct_output = (res, code, desc, payload) => {
+module.exports = (code, desc, payload) => {
     const json = {
         'code': code,
         'description': desc,
         'payload': payload
     }
 
-    res.json(json)
+    return json
 }
-
-exports = construct_output

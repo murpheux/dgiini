@@ -1,4 +1,4 @@
-# deploy dgini application
+# deploy dgiini application
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
