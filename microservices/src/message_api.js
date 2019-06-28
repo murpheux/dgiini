@@ -8,19 +8,16 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 var winston = require('./winston')
 const uuid = require('uuid/v4')
-require('rotating-file-stream')
 const HttpStatus = require('http-status-codes')
 const common = require('./shared/common')
 const cors = require('cors')
 
-const task_router = require('./routes/task_route')
-const taskphoto_router = require('./routes/taskphoto_route')
-
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
-    //const log_file = process.env.LOG_TARGET || 'logfile.log'
-const port = process.env.PORT || process.env.TASK_API_PORT
+const port = process.env.PORT || process.env.MSG_API_PORT
+
+const message_router = require('./routes/message_route')
 
 const app = express()
 app.use(compression()) // use compression
@@ -60,8 +57,8 @@ app.get('/api/', (req, res) => {
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', task_router)
-app.use('/api/', taskphoto_router)
+app.use('/api/', message_router)
+
 
 app.use((req, res) => {
     res.status(HttpStatus.NOT_FOUND)

@@ -1,26 +1,28 @@
-<h1>What do you need done?</h1>
-<div class="d-flex flex-row mw-100 justify-content-center">
-    <div class="container">
-        <div class="row">
-            <div *ngFor="let category of categoryRow[0]" class="col-md-2">
-                <div class="ml-1 task-cat">
-                    <button type="button" class="btn btn-link" aria-expanded="false">
-                          <img src="assets/images/default-avatar.png">
+<div class="w-100">
+    <h1>What do you need done?</h1>
+    <div class="d-flex flex-fill w-100 justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div *ngFor="let category of categoryRow[0]" class="col-md-2">
+                    <div class="ml-1 task-cat">
+                        <button type="button" class="btn btn-link" aria-expanded="false">
+                          <img src="assets/images/{{category}}.jpg">
                         </button>
-                    <div class="text-center font-weight-bold">
-                        <a routerLink="/tasks/category/{{category}}" class="nav-link">{{category}}</a>
+                        <div class="text-center font-weight-bold">
+                            <a routerLink="/tasks/category/{{category}}" class="nav-link">{{category}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div *ngFor="let category of categoryRow[1]" class="col-md-2">
-                <div class="ml-1 task-cat">
-                    <button type="button" class="btn btn-link" aria-expanded="false">
-                          <img src="assets/images/default-avatar.png">
+            <div class="row">
+                <div *ngFor="let category of categoryRow[1]" class="col-md-2">
+                    <div class="ml-1 task-cat">
+                        <button type="button" class="btn btn-link" aria-expanded="false">
+                          <img src="assets/images/{{category}}.jpg">
                         </button>
-                    <div class="text-center font-weight-bold">
-                        <a routerLink="/tasks/category/{{category}}" class="nav-link">{{category}}</a>
+                        <div class="text-center font-weight-bold">
+                            <a routerLink="/tasks/category/{{category}}" class="nav-link">{{category}}</a>
+                        </div>
                     </div>
                 </div>
             </div>

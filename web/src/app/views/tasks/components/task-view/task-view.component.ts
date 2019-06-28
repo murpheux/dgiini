@@ -13,7 +13,6 @@ export class TaskViewComponent implements OnInit {
 
     ngOnInit() {
 
-        console.log(this.task);
     }
 
 }

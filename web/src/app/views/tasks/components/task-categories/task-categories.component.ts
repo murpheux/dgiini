@@ -23,6 +23,8 @@ export class TaskCategoriesComponent implements OnInit {
         if (params['category']) {
             const category = params['category'];
             this.getTasksByCategory(category);
+        } else {
+            this.getTasks();
         }
     });
   }
@@ -34,5 +36,12 @@ export class TaskCategoriesComponent implements OnInit {
           this.currentTask = this.model[0];
       });
   }
+
+  getTasks() {
+    this.taskService.getTasks().subscribe(success => {
+        this.model = success.payload;
+        this.currentTask = this.model[0];
+    });
+}
 
 }
