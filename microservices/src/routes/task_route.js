@@ -1,15 +1,18 @@
 'use strict'
 
-const express = require('express')
-const mongoClient = require('mongodb').MongoClient
-const common = require('../shared/common')
-const build_response = require('../shared/lib')
-const validator = require('fluent-validator')
+import express from 'express'
+import mongodb from 'mongodb'
+import validator from 'fluent-validator'
+import HttpStatus from 'http-status-codes'
+import titleCase from 'title-case'
+
+import common from '../shared/common'
+import build_response from '../shared/lib'
+import winston from '../winston'
+
 const router = express.Router()
-const winston = require('../winston')
-const HttpStatus = require('http-status-codes')
-const ObjectId = require('mongodb').ObjectId
-const titleCase = require('title-case')
+const mongoClient = mongodb.MongoClient
+const ObjectId = mongodb.ObjectId
 
 const database = process.env.TASK_DATABASE || 'dg_taskdb'
 const TASK_COLL = 'tasks'
@@ -25,27 +28,69 @@ const options = {
     useNewUrlParser: true
 }
 
+const setup_database = () => {
+    mongoClient.connect(common.database_uri, options, (err, client) => {
+        client.db(database).createCollection(TASK_COLL, (err) => {
+            if (err) {
+                winston.error(err)
+            }
+
+            winston.info(`Collection ${TASK_COLL} created!`)
+            client.close()
+        })
+    })
+}
+
+setup_database()
+
 // task list
-router.get('/tasks', (_, res) => {
+router.get('/tasks', async(_, res) => {
     mongoClient.connect(common.database_uri, options, (err, client) => {
         if (err) {
-            winston.log(err)
+            winston.error(err)
             res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(0, err.message, err))
         } else {
             const db = client.db(database)
 
-            db.collection(TASK_COLL).find().toArray((err, tasks) => {
-                if (err) {
-                    winston.log(err)
-                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                } else {
-                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+            const invoke_getlist = async() => {
+                var result = await promise_getlist(db, TASK_COLL)
+                return result
+            }
+
+            invoke_getlist().then(
+                tasks => {
                     client.close()
+                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                },
+                err => {
+                    winston.error(err)
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                 }
-            })
+            )
         }
     })
 })
+
+const promise_getlist = (db, collection, filter, paging) => {
+    return new Promise((resolve, reject) => {
+
+        db.collection(collection).find(filter)
+            .toArray((err, data) => {
+                err ? reject(err) : resolve(data)
+            })
+    })
+}
+
+const promise_getone = (db, collection, filter) => {
+    return new Promise((resolve, reject) => {
+
+        db.collection(collection).find(filter)
+            .toArray((err, data) => {
+                err ? reject(err) : resolve(data)
+            })
+    })
+}
+
 
 // task
 router.get('/tasks/:id', (req, res) => {
@@ -59,13 +104,15 @@ router.get('/tasks/:id', (req, res) => {
     } else {
         mongoClient.connect(common.database_uri, options, (err, client) => {
             if (err) {
-                winston.log(err)
+                winston.error(err)
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             } else {
                 const db = client.db(database)
-                db.collection(TASK_COLL).findOne({ _id: ObjectId(id) }, (err, task) => {
+                db.collection(TASK_COLL).findOne({
+                    _id: ObjectId(id)
+                }, (err, task) => {
                     if (err) {
-                        winston.log(err)
+                        winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                     } else {
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task))
@@ -94,13 +141,17 @@ router.put('/tasks', (req, res) => {
 
         mongoClient.connect(common.database_uri, options, (err, client) => {
             if (err) {
-                winston.log(err)
+                winston.error(err)
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             } else {
                 const db = client.db(database)
-                db.collection(TASK_COLL).updateOne({ _id: ObjectId(id) }, { $set: task }, (err, result) => {
+                db.collection(TASK_COLL).updateOne({
+                    _id: ObjectId(id)
+                }, {
+                    $set: task
+                }, (err, result) => {
                     if (err) {
-                        winston.log(err)
+                        winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                     } else {
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result.nModified))
@@ -124,13 +175,15 @@ router.delete('/tasks/:id', (req, res) => {
     } else {
         mongoClient.connect(common.database_uri, options, (err, client) => {
             if (err) {
-                winston.log(err)
+                winston.error(err)
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             } else {
                 const db = client.db(database)
-                db.collection(TASK_COLL).deleteOne({ _id: ObjectId(id) }, (err, result) => {
+                db.collection(TASK_COLL).deleteOne({
+                    _id: ObjectId(id)
+                }, (err, result) => {
                     if (err) {
-                        winston.log(err)
+                        winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                     } else {
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result))
@@ -154,13 +207,13 @@ router.post('/tasks', (req, res) => {
 
         mongoClient.connect(common.database_uri, options, (err, client) => {
             if (err) {
-                winston.log(err)
+                winston.error(err)
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             } else {
                 const db = client.db(database)
                 db.collection(TASK_COLL).insertOne(task, (err, result) => {
                     if (err) {
-                        winston.log(err)
+                        winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                     } else {
                         res.status(HttpStatus.CREATED).json(build_response(HttpStatus.CREATED, '', result.insertedId))
@@ -185,13 +238,15 @@ router.get('/tasks/category/:category', (req, res) => {
     } else {
         mongoClient.connect(common.database_uri, options, (err, client) => {
             if (err) {
-                winston.log(err)
+                winston.error(err)
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             } else {
                 const db = client.db(database)
-                db.collection(TASK_COLL).find({ category: category }).toArray((err, tasks) => {
+                db.collection(TASK_COLL).find({
+                    category: category
+                }).toArray((err, tasks) => {
                     if (err) {
-                        winston.log(err)
+                        winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                     } else {
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))

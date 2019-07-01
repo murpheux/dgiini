@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ITask } from '../../models/ITask';
 
 @Component({
@@ -8,10 +8,15 @@ import { ITask } from '../../models/ITask';
 })
 export class TaskCardComponent implements OnInit {
     @Input() task: ITask;
+    @Output() taskSelected = new EventEmitter();
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    ontaskcardclick() {
+        this.taskSelected.emit(this.task);
     }
 
 }

@@ -7,3 +7,15 @@
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
 }
+
+.task-card:hover {
+    background-color: yellow;
+}
+
+.task-card:active {
+    background-color: yellow;
+}
+
+.task-active {
+    background-color: lightblue;
+}

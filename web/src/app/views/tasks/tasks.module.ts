@@ -16,17 +16,17 @@ import { TaskCardComponent } from './components/task-card/task-card.component';
 import { TaskCategoryNodeComponent } from './components/task-category-node/task-category-node.component';
 import { TaskShowcaseComponent } from './components/task-showcase/task-showcase.component';
 import { TaskViewComponent } from './components/task-view/task-view.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { TaskUserComponent } from './components/task-user/task-user.component';
-
+import { TaskUserFilterComponent } from './components/task-user-filter/task-user-filter.component';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
-        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent, TaskUserComponent],
+        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent, TaskUserComponent, TaskUserFilterComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -47,7 +47,7 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 export class TasksModule {
 
     contructor() {
-        library.add( faLocationArrow );
+        library.add(faCoffee);
     }
 
 }

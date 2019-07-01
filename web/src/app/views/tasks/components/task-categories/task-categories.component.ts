@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-task-categories',
@@ -11,6 +12,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TaskCategoriesComponent implements OnInit {
     model: ITask[];
     currentTask: ITask;
+
+    title = 'app';
+    faCoffee = faCoffee;
 
   constructor(
       private taskService: TaskService,
@@ -38,10 +42,16 @@ export class TaskCategoriesComponent implements OnInit {
   }
 
   getTasks() {
-    this.taskService.getTasks().subscribe(success => {
-        this.model = success.payload;
-        this.currentTask = this.model[0];
-    });
-}
+        this.taskService.getTasks().subscribe(success => {
+            this.model = success.payload;
+            this.currentTask = this.model[0];
+        });
+    }
+
+    handleChildEvent(task: ITask) {
+        this.currentTask.selected = false;
+        this.currentTask = task;
+        this.currentTask.selected = true;
+    }
 
 }

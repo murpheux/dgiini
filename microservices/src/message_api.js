@@ -1,53 +1,47 @@
 /* eslint-disable no-console */
 'use strict'
 
-const config = require('dotenv').config()
-const express = require('express')
-const compression = require('compression')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
-var winston = require('./winston')
-const uuid = require('uuid/v4')
-const HttpStatus = require('http-status-codes')
-const common = require('./shared/common')
-const cors = require('cors')
+import config from 'dotenv/config'
+import express from 'express'
+import compression from 'compression'
+import bodyParser from 'body-parser'
+import morgan from 'morgan'
+import cors from 'cors'
+import uuid from 'uuid/v4'
+import HttpStatus from 'http-status-codes'
+
+import winston from './winston'
+import common from './shared/common'
+
+const msg_router = require('./routes/message_route')
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
 const port = process.env.PORT || process.env.MSG_API_PORT
 
-const message_router = require('./routes/message_route')
+const CLIENT_URL = 'http://localhost:9000'
 
 const app = express()
 app.use(compression()) // use compression
 
 // check configuration
-if (config.error) {
-    throw config.error
-}
+if (config.error) { throw config.error }
 
 // id for log
-const assignId = (req, res, next) => {
+const requestId = (req, res, next) => {
     req.id = uuid()
     next()
 }
 
-morgan.token('id', (req) => {
-    return req.id
-})
+morgan.token('id', (req) => { return req.id })
 
-app.use(assignId)
+app.use(requestId)
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(morgan(log_format, {
-    stream: winston.stream
-}))
-
-app.use(cors({ origin: 'http://localhost:9000' }))
+app.use(morgan(log_format, { stream: winston.stream }))
+app.use(cors({ origin: CLIENT_URL }))
 
 // ping
 app.get('/api/', (req, res) => {
@@ -57,9 +51,9 @@ app.get('/api/', (req, res) => {
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', message_router)
+app.use('/api/', msg_router)
 
-
+// 404
 app.use((req, res) => {
     res.status(HttpStatus.NOT_FOUND)
 
@@ -74,4 +68,4 @@ app.use((req, res) => {
 })
 
 //start the app server
-app.listen(port, () => console.log(`task api listening on port ${port}!`))
+app.listen(port, () => console.log(`message api listening on port ${port}!`))

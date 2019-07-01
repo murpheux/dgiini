@@ -1,56 +1,47 @@
 /* eslint-disable no-console */
 'use strict'
 
-const config = require('dotenv').config()
-const express = require('express')
-const compression = require('compression')
-const bodyParser = require('body-parser')
-const morgan = require('morgan')
-var winston = require('./winston')
-const uuid = require('uuid/v4')
-require('rotating-file-stream')
-const HttpStatus = require('http-status-codes')
-const common = require('./shared/common')
-const cors = require('cors')
+import config from 'dotenv/config'
+import express from 'express'
+import compression from 'compression'
+import bodyParser from 'body-parser'
+import morgan from 'morgan'
+import cors from 'cors'
+import uuid from 'uuid/v4'
+import HttpStatus from 'http-status-codes'
 
-const task_router = require('./routes/task_route')
-const taskphoto_router = require('./routes/taskphoto_route')
+import winston from './winston'
+import common from './shared/common'
+
+import task_router from './routes/task_route'
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
-    //const log_file = process.env.LOG_TARGET || 'logfile.log'
 const port = process.env.PORT || process.env.TASK_API_PORT
+
+const CLIENT_URL = 'http://localhost:9000'
 
 const app = express()
 app.use(compression()) // use compression
 
 // check configuration
-if (config.error) {
-    throw config.error
-}
+if (config.error) { throw config.error }
 
 // id for log
-const assignId = (req, res, next) => {
+const requestId = (req, res, next) => {
     req.id = uuid()
     next()
 }
 
-morgan.token('id', (req) => {
-    return req.id
-})
+morgan.token('id', (req) => { return req.id })
 
-app.use(assignId)
+app.use(requestId)
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: false
-}))
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(morgan(log_format, {
-    stream: winston.stream
-}))
-
-app.use(cors({ origin: 'http://localhost:9000' }))
+app.use(morgan(log_format, { stream: winston.stream }))
+app.use(cors({ origin: CLIENT_URL }))
 
 // ping
 app.get('/api/', (req, res) => {
@@ -61,8 +52,8 @@ app.get('/api/', (req, res) => {
 })
 
 app.use('/api/', task_router)
-app.use('/api/', taskphoto_router)
 
+// 404
 app.use((req, res) => {
     res.status(HttpStatus.NOT_FOUND)
 

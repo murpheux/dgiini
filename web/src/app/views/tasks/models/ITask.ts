@@ -5,7 +5,7 @@ import { SchedulerLike } from 'rxjs';
 export enum TaskType { InPerson, Online }
 
 export interface ITask {
-    id: Guid;
+    _id: Guid;
     title: string;
     description: string;
     category: string;
@@ -20,12 +20,14 @@ export interface ITask {
     taskType: TaskType;
     quote: Quotation;
     recur?: Recurrence;
+    selected: boolean;
 }
 
 export class Task implements ITask {
     schedule: Schedule;
     taskType: TaskType;
-    id: Guid;    title: string;
+    _id: Guid;
+    title: string;
     description: string;
     category: string;
     client: { id: string; name: string; };
@@ -37,6 +39,7 @@ export class Task implements ITask {
     created: Date;
     quote: Quotation;
     recur?: Recurrence;
+    selected: boolean;
 }
 
 export class Schedule {

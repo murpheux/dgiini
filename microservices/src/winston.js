@@ -1,11 +1,12 @@
 const appRoot = require('app-root-path')
 const winston = require('winston')
+const log_file = process.env.LOG_TARGET || 'logfile.log'
 
 // define the custom settings for each transport (file, console)
 const options = {
     file: {
         level: 'error',
-        filename: `${appRoot}/src/logs/error.log`,
+        filename: `${appRoot}/src/logs/${log_file}`,
         handleExceptions: true,
         json: true,
         maxsize: 5242880, // 5MB
@@ -31,7 +32,7 @@ const logger = winston.createLogger({
 
 // create a stream object with a 'write' function that will be used by `morgan`
 logger.stream = {
-    write: function(message, encoding) {
+    write: function(message) {
         // use the 'info' log level so the output will be picked up by both transports (file and console)
         logger.info(message)
     },
