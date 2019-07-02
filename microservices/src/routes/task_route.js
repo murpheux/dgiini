@@ -1,7 +1,7 @@
 'use strict'
 
 import express from 'express'
-import mongodb from 'mongodb'
+
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
 import titleCase from 'title-case'
@@ -10,11 +10,9 @@ import common from '../shared/common'
 import build_response from '../shared/lib'
 import winston from '../winston'
 
+const mgaccess = require('../data/mongo_access')
 const router = express.Router()
-const mongoClient = mongodb.MongoClient
-const ObjectId = mongodb.ObjectId
-
-const database = process.env.TASK_DATABASE || 'dg_taskdb'
+const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
 const TASK_COLL = 'tasks'
 const VALIDATION_MSG = 'validation errors encountered'
 
@@ -28,38 +26,33 @@ const options = {
     useNewUrlParser: true
 }
 
-const setup_database = () => {
-    mongoClient.connect(common.database_uri, options, (err, client) => {
-        client.db(database).createCollection(TASK_COLL, (err) => {
-            if (err) {
-                winston.error(err)
-            }
+const collections = [TASK_COLL]
+mgaccess.setup_database(common.database_uri, database_name, options, collections)
+winston.info(`Collection ${collections} created!`)
 
-            winston.info(`Collection ${TASK_COLL} created!`)
-            client.close()
-        })
-    })
+const build_paging = req => {
+    return {
+        order_dir: req.query.dir,
+        sort_keys: req.query.sort,
+        filter: JSON.parse(req.query.filter || '{}'),
+        page: parseInt(req.query.page) || 0,
+        page_limit: parseInt(req.query.pagelimit) || 0,
+    }
 }
 
-setup_database()
-
 // task list
-router.get('/tasks', async(_, res) => {
-    mongoClient.connect(common.database_uri, options, (err, client) => {
-        if (err) {
-            winston.error(err)
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(0, err.message, err))
-        } else {
-            const db = client.db(database)
+router.get('/tasks', (req, res) => {
+    const paging = build_paging(req)
 
+    mgaccess.create_database(common.database_uri, database_name, options).then(
+        db => {
             const invoke_getlist = async() => {
-                var result = await promise_getlist(db, TASK_COLL)
+                var result = await mgaccess.promise_getlist(db, TASK_COLL, paging)
                 return result
             }
 
             invoke_getlist().then(
                 tasks => {
-                    client.close()
                     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
                 },
                 err => {
@@ -67,60 +60,44 @@ router.get('/tasks', async(_, res) => {
                     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
                 }
             )
+        },
+        err => {
+            winston.error(err)
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
         }
-    })
+    )
 })
-
-const promise_getlist = (db, collection, filter, paging) => {
-    return new Promise((resolve, reject) => {
-
-        db.collection(collection).find(filter)
-            .toArray((err, data) => {
-                err ? reject(err) : resolve(data)
-            })
-    })
-}
-
-const promise_getone = (db, collection, filter) => {
-    return new Promise((resolve, reject) => {
-
-        db.collection(collection).find(filter)
-            .toArray((err, data) => {
-                err ? reject(err) : resolve(data)
-            })
-    })
-}
-
 
 // task
 router.get('/tasks/:id', (req, res) => {
     const id = req.params.id
-    var validation = validator().validate(id).isNotEmpty()
-        .and.matches('^[a-f0-9]{24}$')
+    var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
 
     if (validation.hasErrors()) {
-
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mongoClient.connect(common.database_uri, options, (err, client) => {
-            if (err) {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            } else {
-                const db = client.db(database)
-                db.collection(TASK_COLL).findOne({
-                    _id: ObjectId(id)
-                }, (err, task) => {
-                    if (err) {
+        mgaccess.create_database(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getone = async() => {
+                    var result = await mgaccess.promise_getone(db, TASK_COLL)
+                    return result
+                }
+
+                invoke_getone().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
                         winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    } else {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task))
-                        client.close()
                     }
-                })
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             }
-        })
+        )
     }
 })
 
@@ -128,14 +105,11 @@ router.get('/tasks/:id', (req, res) => {
 // update
 router.put('/tasks', (req, res) => {
     const task = req.body
-    var validation = validator().validate(task.id).isNotNull().and.isNotEmpty()
-        .and.matches('^[a-f0-9]{24}$')
+    var validation = validator().validate(task.id).isNotNull().and.isNotEmpty().isMongoObjectId()
 
     if (validation.hasErrors()) {
-
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-
         const id = task.id
         delete task['id']
 
