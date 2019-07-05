@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable, Subject, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { EndPoints } from 'src/app/shared/models/end-points';
 import { ITask } from '../models/ITask';
 import { IResponse } from '../models/IResponse';
 import { Guid } from 'guid-typescript';
@@ -12,13 +11,12 @@ import { Guid } from 'guid-typescript';
   providedIn: 'root'
 })
 export class TaskService {
-    private baseUrl = `${environment.DOMAIN}/api`;
-    private serviceUrl = `${environment.DOMAIN}/${EndPoints.TASK_SERVICE}`;
+    private serviceUrl = `${environment.TASK_API}/tasks`;
 
     constructor(private http: HttpClient) { }
 
     getTaskCategories(): Observable<IResponse> {
-        const url = `${this.baseUrl}/categories`;
+        const url = `${environment.TASK_API}/categories`;
         return this.http.get<IResponse>(url);
     }
 

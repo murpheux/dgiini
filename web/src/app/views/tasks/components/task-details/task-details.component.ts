@@ -61,7 +61,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     buildForms() {
         this.taskFormGroup = this.formBuilder.group({
-            'id': this.formBuilder.control(this.model.id, [ Validators.required ]),
+            'id': this.formBuilder.control(this.model._id, [ Validators.required ]),
             'title': this.formBuilder.control(this.model.title, [ Validators.required ]),
             'description': this.formBuilder.control(this.model.description, [ Validators.required ]),
             'category': this.formBuilder.control(this.model.category, [Validators.required]),
@@ -83,7 +83,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.model.title = this.taskFormGroup.value.title;
         this.model.description = this.taskFormGroup.value.description;
 
-        this.taskService.updateTask(this.model.id, this.model).subscribe(d => {
+        this.taskService.updateTask(this.model._id, this.model).subscribe(d => {
             this.model = null;
             this.router.navigate(['tasks']);
         });
@@ -111,7 +111,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
             disableClose: false
         });
-        this.dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete task '${this.model.id}' ?`;
+        this.dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete task '${this.model._id}' ?`;
 
         this.dialogRef.afterClosed().subscribe(result => {
 

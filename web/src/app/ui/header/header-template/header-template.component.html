@@ -9,20 +9,20 @@
             <nav class="navbar top-nav navbar-expand-lg navbar-light">
                 <ul class="navbar-nav d-flex flex-row justify-content-center flex-wrap">
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./home']">Home</a>
+                        <a class="nav-link" [routerLink]="['./home']">home</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <button class="nav-link" mat-button (click)="openDialog()">Post a task</button>
-                        <!-- <a class="nav-link" [routerLink]="['./tasks/new']">Post a task</a> -->
+                        <!-- <button class="nav-link" mat-button (click)="openDialog()">Post a task</button> -->
+                        <a class="nav-link" (click)="openDialog()">post a task</a>
                     </li>
                     <!-- <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" [routerLink]="['./tasks/new']">Categories</a>
                     </li> -->
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">Tasks</a>
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">browse tasks</a>
                     </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./mytask']">My tasks</a>
+                    <li *ngIf="isLoggedIn" class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./mytask']">my tasks</a>
                     </li>
                     <!-- <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">How it works</a>
@@ -33,13 +33,15 @@
         <div class="d-flex flex-row sign-in-partial">
             <div class="dropdown ml-1">
                 <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="assets/images/default-avatar.png">
+                <img *ngIf="!isLoggedIn" src="assets/images/default-avatar.png">
+                <img *ngIf="isLoggedIn" [src]="currentUser.photo">
             </button>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
                     <a class="dropdown-item" (click)="openLoginDialog()" *ngIf="!isLoggedIn">Sign in</a>
                     <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
                 </div>
             </div>
+            <div class="ml-1 font-weight-bold appuser" *ngIf="isLoggedIn">{{ currentUser?.name }}</div>
         </div>
     </div>
 </header>

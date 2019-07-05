@@ -6,7 +6,9 @@ import { UrlConfig } from 'src/app/shared/models/url-config';
 
 export const environment = {
   production: false,
-  DOMAIN: `${UrlConfig.API_DEVELOPMENT}`
+  TASK_API: `${UrlConfig.TASK_API_BASE}`,
+  AUTH_API: `${UrlConfig.AUTH_API_BASE}`,
+  MSG_API: `${UrlConfig.MSG_API_BASE}`
 };
 
 /*

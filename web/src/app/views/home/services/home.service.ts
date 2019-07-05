@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { EndPoints } from 'src/app/shared/models/end-points';
 import { Observable } from 'rxjs';
 import { IResponse } from '../../tasks/models/IResponse';
 

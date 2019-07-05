@@ -14,6 +14,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isLoggedIn = false;
+    currentUser: any;
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
@@ -26,9 +27,9 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.selectedLanguage = localStorage.getItem('locale');
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        if (currentUser) {
+        if (this.currentUser) {
             this.isLoggedIn = true;
         } else {
             this.isLoggedIn = false;

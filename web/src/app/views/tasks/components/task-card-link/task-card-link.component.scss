@@ -1,0 +1,34 @@
+.task-card {
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 150px;
+}
+
+.header {
+    margin-left: -22px;
+}
+
+.task-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.task-card:hover {
+    background-color: yellow;
+}
+
+.task-card:active {
+    background-color: yellow;
+}
+
+.task-active {
+    background-color: lightblue;
+}
+
+.container {
+    margin-left: -8px;
+}
+
+.rating {
+    margin-top: -20px;
+}

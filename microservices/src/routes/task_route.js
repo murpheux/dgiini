@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict'
 
 import express from 'express'
@@ -7,47 +8,31 @@ import HttpStatus from 'http-status-codes'
 import titleCase from 'title-case'
 
 import common from '../shared/common'
-import build_response from '../shared/lib'
-import winston from '../winston'
+import VALIDATION_MSG from '../shared/error_messages'
+import { build_response, options, build_paging } from '../shared/lib'
+import winston from '../shared/winston'
 
 const mgaccess = require('../data/mongo_access')
 const router = express.Router()
 const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
 const TASK_COLL = 'tasks'
-const VALIDATION_MSG = 'validation errors encountered'
-
-const options = {
-    poolSize: 20,
-    socketTimeoutMS: 480000,
-    keepAlive: 300000,
-    sslValidate: false,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-    useNewUrlParser: true
-}
 
 const collections = [TASK_COLL]
-mgaccess.setup_database(common.database_uri, database_name, options, collections)
-winston.info(`Collection ${collections} created!`)
-
-const build_paging = req => {
-    return {
-        order_dir: req.query.dir,
-        sort_keys: req.query.sort,
-        filter: JSON.parse(req.query.filter || '{}'),
-        page: parseInt(req.query.page) || 0,
-        page_limit: parseInt(req.query.pagelimit) || 0,
-    }
-}
+mgaccess.setup_database(common.database_uri, database_name, options, collections).then(
+    _ => {
+        winston.info(`Collection ${collections} created!`)
+    },
+    err => { winston.error('Error! ', err) }
+)
 
 // task list
 router.get('/tasks', (req, res) => {
     const paging = build_paging(req)
 
-    mgaccess.create_database(common.database_uri, database_name, options).then(
+    mgaccess.get_connection(common.database_uri, database_name, options).then(
         db => {
             const invoke_getlist = async() => {
-                var result = await mgaccess.promise_getlist(db, TASK_COLL, paging)
+                var result = await mgaccess.getlist(db, TASK_COLL, paging)
                 return result
             }
 
@@ -76,10 +61,10 @@ router.get('/tasks/:id', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.create_database(common.database_uri, database_name, options).then(
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
             db => {
                 const invoke_getone = async() => {
-                    var result = await mgaccess.promise_getone(db, TASK_COLL)
+                    var result = await mgaccess.getone(db, TASK_COLL, { _id: id })
                     return result
                 }
 
@@ -113,59 +98,61 @@ router.put('/tasks', (req, res) => {
         const id = task.id
         delete task['id']
 
-        mongoClient.connect(common.database_uri, options, (err, client) => {
-            if (err) {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            } else {
-                const db = client.db(database)
-                db.collection(TASK_COLL).updateOne({
-                    _id: ObjectId(id)
-                }, {
-                    $set: task
-                }, (err, result) => {
-                    if (err) {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_updateone = async() => {
+                    var result = await mgaccess.updateone(db, TASK_COLL, id, task)
+                    return result
+                }
+
+                invoke_updateone().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
                         winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    } else {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result.nModified))
-                        client.close()
                     }
-                })
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             }
-        })
+        )
     }
 })
 
 // delete
 router.delete('/tasks/:id', (req, res) => {
     const id = req.params.id
-    var validation = validator().validate(id).isNotEmpty()
-        .matches('^[a-f0-9]{24}$')
+    var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
 
     if (validation.hasErrors()) {
-
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mongoClient.connect(common.database_uri, options, (err, client) => {
-            if (err) {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            } else {
-                const db = client.db(database)
-                db.collection(TASK_COLL).deleteOne({
-                    _id: ObjectId(id)
-                }, (err, result) => {
-                    if (err) {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_updateone = async() => {
+                    var result = await mgaccess.disable(db, TASK_COLL, id)
+                    return result
+                }
+
+                invoke_updateone().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
                         winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    } else {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.result))
-                        client.close()
                     }
-                })
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             }
-        })
+        )
     }
 })
 
@@ -175,60 +162,67 @@ router.post('/tasks', (req, res) => {
     const validation = validateTask(task)
 
     if (validation.hasErrors()) {
-
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_updateone = async() => {
+                    var result = await mgaccess.create(db, TASK_COLL, task)
+                    return result
+                }
 
-        mongoClient.connect(common.database_uri, options, (err, client) => {
-            if (err) {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            } else {
-                const db = client.db(database)
-                db.collection(TASK_COLL).insertOne(task, (err, result) => {
-                    if (err) {
+                invoke_updateone().then(
+                    task => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task.ops[0]))
+                    },
+                    err => {
                         winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    } else {
-                        res.status(HttpStatus.CREATED).json(build_response(HttpStatus.CREATED, '', result.insertedId))
-                        client.close()
                     }
-                })
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             }
-        })
+        )
     }
 })
 
-// task
+// task/category
 router.get('/tasks/category/:category', (req, res) => {
     let category = req.params.category
     var validation = validator().validate(category).isNotEmpty()
 
     category = titleCase(category)
+    const paging = build_paging(req)
+    paging.filter = { category: category }
 
     if (validation.hasErrors()) {
-
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mongoClient.connect(common.database_uri, options, (err, client) => {
-            if (err) {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            } else {
-                const db = client.db(database)
-                db.collection(TASK_COLL).find({
-                    category: category
-                }).toArray((err, tasks) => {
-                    if (err) {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getlist = async() => {
+                    var result = await mgaccess.getlist(db, TASK_COLL, paging)
+                    return result
+                }
+
+                invoke_getlist().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
                         winston.error(err)
                         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    } else {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
-                        client.close()
                     }
-                })
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
             }
-        })
+        )
     }
 })
 

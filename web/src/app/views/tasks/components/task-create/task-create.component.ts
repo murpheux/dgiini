@@ -63,7 +63,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
     buildForms() {
         this.taskStep1FormGroup = this.formBuilder.group({
-            'id': this.formBuilder.control(this.model.id),
+            'id': this.formBuilder.control(this.model._id),
             'title': this.formBuilder.control(this.model.title,
                 [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
             'description': this.formBuilder.control(this.model.description,

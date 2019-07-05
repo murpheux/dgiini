@@ -21,12 +21,13 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 import { TaskUserFilterComponent } from './components/task-user-filter/task-user-filter.component';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
-        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent, TaskUserComponent, TaskUserFilterComponent],
+        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent, TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,

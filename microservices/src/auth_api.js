@@ -13,12 +13,12 @@ import HttpStatus from 'http-status-codes'
 import winston from './shared/winston'
 import common from './shared/common'
 
-const msg_router = require('./routes/message_route')
+import auth_router from './routes/auth_route'
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
-const port = process.env.PORT || process.env.MSG_API_PORT
+const port = process.env.PORT || process.env.AUTH_API_PORT
 
 const CLIENT_URL = 'http://localhost:9000'
 
@@ -51,7 +51,7 @@ app.get('/api/', (req, res) => {
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', msg_router)
+app.use('/api/', auth_router)
 
 // 404
 app.use((req, res) => {
@@ -68,4 +68,4 @@ app.use((req, res) => {
 })
 
 //start the app server
-app.listen(port, () => console.log(`message api listening on port ${port}!`))
+app.listen(port, () => console.log(`auth api listening on port ${port}!`))
