@@ -33,11 +33,11 @@ header {
         ul.navbar-nav {
             font-family: 'Open Sans';
             font-size: 1rem;
-            text-transform: uppercase;
+            //text-transform: uppercase;
             li {
                 &.active {
                     color: #1c81c3!important;
-                    border-bottom: solid 5px #1c81c3!important;
+                    //border-bottom: solid 5px #1c81c3!important;
                     a.nav-link {
                         color: #1c81c3!important;
                     }
@@ -81,7 +81,7 @@ header {
 }
 
 .applogo {
-    width: 200px;
+    width: 100px;
 }
 
 .appuser {

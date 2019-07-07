@@ -17,6 +17,13 @@ const router = express.Router()
 const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
 const TASK_COLL = 'tasks'
 
+const task_status = {
+    OPEN: 'open',
+    ASSIGNED: 'assigned',
+    CANCELLED: 'cancelled',
+    COMPLETE: 'complete'
+}
+
 const collections = [TASK_COLL]
 mgaccess.setup_database(common.database_uri, database_name, options, collections).then(
     _ => {
@@ -164,6 +171,10 @@ router.post('/tasks', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
+        // enrich
+        task.status = task_status.OPEN
+        task.posted_date = new Date()
+
         mgaccess.get_connection(common.database_uri, database_name, options).then(
             db => {
                 const invoke_updateone = async() => {

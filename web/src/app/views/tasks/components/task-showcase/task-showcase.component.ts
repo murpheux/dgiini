@@ -15,15 +15,12 @@ export class TaskShowcaseComponent implements OnInit {
     mowingModel: ITask[];
     nursingModel: ITask[];
     cleaningModel: ITask[];
+    showcaseTabArray = ['Moving', 'Garden', 'Mowing', 'Nursing', 'Others'];
 
     constructor(private taskService: TaskService) { }
 
     ngOnInit() {
         this.getMovingTasks();
-        this.getGardenTasks();
-        this.getMowingTasks();
-        this.getNursingTasks();
-        this.getCleaningTasks();
     }
 
     getTasks() {
@@ -60,6 +57,43 @@ export class TaskShowcaseComponent implements OnInit {
         this.taskService.getTasksByCategory('Cleaning').subscribe((response: IResponse) => {
             this.cleaningModel = response.payload;
         });
+    }
+
+    onGroupClick(selectedTab: any) {
+        const category = this.showcaseTabArray[+selectedTab.index];
+
+        switch (category) {
+            case 'Moving': {
+                if (!this.movingModel) {
+                    this.getMovingTasks();
+                }
+                break;
+            }
+            case 'Garden': {
+                if (!this.gardenModel) {
+                    this.getGardenTasks();
+                }
+                break;
+            }
+            case 'Mowing': {
+                if (!this.mowingModel) {
+                    this.getMowingTasks();
+                }
+                break;
+            }
+            case 'Nursing': {
+                if (!this.nursingModel) {
+                    this.getNursingTasks();
+                }
+                break;
+            }
+            default: {
+                if (!this.cleaningModel) {
+                    this.getCleaningTasks();
+                }
+                break;
+            }
+        }
     }
 
 }

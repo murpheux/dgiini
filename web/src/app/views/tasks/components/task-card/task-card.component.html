@@ -1,14 +1,15 @@
 <mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="task-card card border-secondary mb-3">
-    <mat-card-header>
-        <mat-card-subtitle>{{task.category}}</mat-card-subtitle>
-    </mat-card-header>
     <mat-card-content>
-        <div mat-card-avatar class="task-header-image"></div>
-        <p>
-            {{task.title}} : {{task.description}}
-        </p>
+        <div class="title font-weight-bold text-primary">{{task.title | titlecase | slice:0:25}}</div>
+        <div class="descr">{{task.description}}</div>
+        <div class="ramount font-weight-bold">{{task.rate.amount | currency:'CAD':'symbol':'1.0-0'}}</div>
+        <div mat-card-avatar class="task-header-image float-right"></div>
+        <div class="taskinfo">
+            <div>lc: {{task.location.city}}, {{task.location.zipcode}}</div>
+            <div>dt: {{task.scheduled_date | date }}</div>
+        </div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button><i class="fas fa-star"></i>{{task.rating}} Stars</button>
+        <div class="footer font-weight-bold small text-success">{{task.status | uppercase}} : 12 offers</div>
     </mat-card-actions>
 </mat-card>

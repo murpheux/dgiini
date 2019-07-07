@@ -4,10 +4,11 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/shared/models/user';
 import { IResponse } from '../../tasks/models/IResponse';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 @Injectable()
 export class AuthService {
     private serviceUrl = `${environment.AUTH_API}`;
+    private loginSubject = new Subject<boolean>();
 
     constructor(private http: HttpClient) { }
 
@@ -29,5 +30,13 @@ export class AuthService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+    }
+
+    isLoggedIn(): Observable<boolean> {
+        return new Observable(observer => { observer.next(localStorage.getItem('currentUser') === null); });
+    }
+
+    getCurrentUser(): Observable<any> {
+        return new Observable(observer => { observer.next(JSON.parse(localStorage.getItem('currentUser'))); });
     }
 }

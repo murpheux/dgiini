@@ -24,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSliderModule} from '@angular/material/slider';
+
 
 @NgModule({
   declarations: [],
@@ -59,6 +61,7 @@ import {MatSelectModule} from '@angular/material/select';
     DragDropModule,
     MatRadioModule,
     MatSelectModule,
+    MatSliderModule,
   ],
   exports: [
     FormsModule,
@@ -89,7 +92,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatTabsModule,
     DragDropModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSliderModule,
   ]
 })
 export class MaterialDesignModule { }

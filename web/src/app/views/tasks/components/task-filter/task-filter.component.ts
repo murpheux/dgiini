@@ -1,18 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { TaskService } from '../../services/task.service';
 
 @Component({
-  selector: 'app-task-filter',
-  templateUrl: './task-filter.component.html',
-  styleUrls: ['./task-filter.component.scss']
+    selector: 'app-task-filter',
+    templateUrl: './task-filter.component.html',
+    styleUrls: ['./task-filter.component.scss']
 })
 export class TaskFilterComponent implements OnInit {
-    toppings = new FormControl();
-    toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+    categories = new FormControl();
+    categoryList: string[];
+    currentCity: string;
+    cities: string[];
+    @Input() selectedCategory: string[];
+    @Input() distanceToHome: number;
 
-  constructor() { }
+    constructor(
+        private taskService: TaskService
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.getTaskCategories();
+
+        this.cities = ['Calgary', 'Edmonton', 'Red Deer'];
+        this.currentCity = this.cities[0];
+    }
+
+    getTaskCategories() {
+        this.taskService.getTaskCategories().subscribe(response => {
+            this.categoryList = response.payload;
+        });
+    }
 
 }

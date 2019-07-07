@@ -1,3 +1,5 @@
-<p>
-  message-list works!
-</p>
+<div *ngIf="messages">
+    <div *ngFor="let message of messages">
+        <app-message-view [message]="message"></app-message-view>
+    </div>
+</div>

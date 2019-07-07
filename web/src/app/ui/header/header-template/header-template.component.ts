@@ -68,6 +68,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
         }
         window.location.reload();
     }
+
     ngOnDestroy() {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
