@@ -1,0 +1,126 @@
+<div class="container">
+    <app-loader *ngIf="!model"></app-loader>
+    <mat-card>
+        <mat-horizontal-stepper linear #stepper>
+            <mat-step [stepControl]="registerStep1FormGroup">
+                <form [formGroup]="registerStep1FormGroup">
+                    <ng-template matStepLabel>What do you need done?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What do you need done?</mat-label>
+                                    <input matInput placeholder="enter username" formControlName="username">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput type="password" placeholder="enter password" formControlName="password">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput type="password" placeholder="confirm password" formControlName="confirmpassword">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="registerStep2FormGroup">
+                <form [formGroup]="registerStep2FormGroup">
+                    <ng-template matStepLabel>What is your budget?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="street" formControlName="street">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="city" formControlName="city">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="zipcode" formControlName="zipcode">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="state" formControlName="state">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="country" formControlName="country">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="registerStep3FormGroup">
+                <form [formGroup]="registerStep3FormGroup">
+                    <ng-template matStepLabel>Where do you need it done?</ng-template>
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="cardNumber" formControlName="cardNumber">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="nameOnCard" formControlName="nameOnCard">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput placeholder="expiry" formControlName="expiry">
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>What are the details</mat-label>
+                                    <input matInput type="password" placeholder="cv2" formControlName="cv2">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperPrevious>Back</button>
+                        <button mat-button matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                You are now done.
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                    <button mat-button type="submit">Save</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </mat-card>
+</div>

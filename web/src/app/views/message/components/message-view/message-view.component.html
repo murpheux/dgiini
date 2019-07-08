@@ -1,6 +1,21 @@
 <div *ngIf="message">
-    <div>{{message.from}}</div>
-    <div>{{message.to}}</div>
-    <div>{{message.message}}</div>
+    <div class="container">
+        <div class="row">
+            <div class="text-primary col-md-12">
+                <a href="#">{{message.from}}</a>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="message offset-md-2 col-md-10">
+                {{message.message}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-9 col-md-3 small">
+                {{message.sentdate | date:'medium'}}
+            </div>
+        </div>
+    </div>
     <hr/>
 </div>

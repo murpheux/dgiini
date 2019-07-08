@@ -3,7 +3,8 @@ import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
-import { LoginComponent } from 'src/app/views/user/login/login.component';
+import { LoginComponent } from 'src/app/views/user/components/login/login.component';
+import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 
 @Component({
     selector: 'app-header-template',
@@ -40,7 +41,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',
-          });
+        });
 
         dialogRef.afterClosed().subscribe(result => {
            // show notice if necessary
@@ -49,10 +50,15 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
 
     openLoginDialog() {
         const logingRef = this.dialog.open(LoginComponent);
+        logingRef.afterClosed().subscribe(result => {});
+    }
 
-        logingRef.afterClosed().subscribe(result => {
-           // show notice if necessary
+    openRegisterDialog() {
+        const registerRef = this.dialog.open(RegisterComponent, {
+            height: '600px',
+            width: '800px',
         });
+        registerRef.afterClosed().subscribe(result => {});
     }
 
     changeLang(lang: string) {

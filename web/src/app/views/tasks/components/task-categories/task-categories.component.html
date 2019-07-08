@@ -1,9 +1,11 @@
-<app-task-filter [distanceToHome]="distanceToHome" [selectedCategory]="selectedCategory"></app-task-filter>
+<app-task-filter [distanceToHome]="distanceToHome" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory"
+    [currentCity]="currentCity"></app-task-filter>
 <div class="container">
     <div class="row">
         <div *ngIf="model" class="col-md-4 scrollable">
+            <div>{{model.length}} tasks</div>
             <div *ngFor="let task of model">
-                <app-task-card (taskSelected)='handleChildEvent($event)' [task]="task"></app-task-card>
+                <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
             </div>
         </div>
         <div class="col-md-8">

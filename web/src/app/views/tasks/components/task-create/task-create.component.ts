@@ -40,7 +40,6 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initializeContent();
-
         this.buildForms();
     }
 

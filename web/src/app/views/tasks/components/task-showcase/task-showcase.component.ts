@@ -30,31 +30,31 @@ export class TaskShowcaseComponent implements OnInit {
     }
 
     getMovingTasks() {
-        this.taskService.getTasksByCategory('Moving').subscribe((response: IResponse) => {
+        this.taskService.getTasksByCategories(['Moving']).subscribe((response: IResponse) => {
             this.movingModel = response.payload;
         });
     }
 
     getGardenTasks() {
-        this.taskService.getTasksByCategory('Garden').subscribe((response: IResponse) => {
+        this.taskService.getTasksByCategories(['Garden']).subscribe((response: IResponse) => {
             this.gardenModel = response.payload;
         });
     }
 
     getMowingTasks() {
-        this.taskService.getTasksByCategory('Mowing').subscribe((response: IResponse) => {
+        this.taskService.getTasksByCategories(['Mowing']).subscribe((response: IResponse) => {
             this.mowingModel = response.payload;
         });
     }
 
     getNursingTasks() {
-        this.taskService.getTasksByCategory('Nursing').subscribe((response: IResponse) => {
+        this.taskService.getTasksByCategories(['Nursing']).subscribe((response: IResponse) => {
             this.nursingModel = response.payload;
         });
     }
 
     getCleaningTasks() {
-        this.taskService.getTasksByCategory('Cleaning').subscribe((response: IResponse) => {
+        this.taskService.getTasksByCategories(['Cleaning']).subscribe((response: IResponse) => {
             this.cleaningModel = response.payload;
         });
     }

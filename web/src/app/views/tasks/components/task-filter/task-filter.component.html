@@ -2,15 +2,14 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-    <a class="navbar-brand" href="#">=/=</a>
+    <span class="navbar-brand">Filter :: </span>
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <span class="font-weight-bold">City: </span>
                 <mat-form-field>
-                    <mat-label>Select city</mat-label>
-                    <mat-select [(ngModel)]="currentCity">
+                    <mat-select [(ngModel)]="currentCity" (selectionChange)="onCityChanged()">
                         <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -18,20 +17,20 @@
             <li class="nav-item">
                 <div>
                     <span class="font-weight-bold">Distance:</span>
-                    <mat-slider thumbLabel [displayWith]="formatLabel" [(ngModel)]="distanceToHome" tickInterval="1" min="1" max="100"></mat-slider> {{distanceToHome}} km
+                    <mat-slider thumbLabel (change)="onDistanceChanged()" [displayWith]="formatLabel" [(ngModel)]="distanceToHome" tickInterval="1" min="1" max="100"></mat-slider> {{distanceToHome}} km
                 </div>
             </li>
             <li class="nav-item">
                 <span class="font-weight-bold">Categories:</span>
                 <mat-form-field>
-                    <mat-label>Categories</mat-label>
                     <mat-select [formControl]="categories" [(ngModel)]="selectedCategory" multiple>
-                        <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
+                        <mat-option (onSelectionChange)="onCategoriesChanged($event)" *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </li>
             <li class="nav-item">
-                <mat-slide-toggle>
+                <mat-label>-</mat-label>
+                <mat-slide-toggle (change)="onHideChanged($event)">
                     <span class="font-weight-bold">Hide Assigned:</span>
                 </mat-slide-toggle>
             </li>

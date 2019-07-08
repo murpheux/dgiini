@@ -15,6 +15,7 @@ export class TaskCategoriesComponent implements OnInit {
     distanceToHome: number;
     selectedCategory: string[];
     defaultDistanceToHome = 55;
+    currentCity = 'Calgary';
 
     title = 'app';
     faCoffee = faCoffee;
@@ -42,24 +43,55 @@ export class TaskCategoriesComponent implements OnInit {
 
 
     getTasksByCategory(category: string) {
-        this.taskService.getTasksByCategory(category).subscribe(success => {
+        this.getTasksByCategories([category]);
+    }
+
+    getTasksByCategories(categories: string[]) {
+        this.taskService.getTasksByCategories(categories).subscribe(success => {
             this.model = success.payload;
-            this.currentTask = this.model[0];
-            this.currentTask.selected = true;
+
+            if (this.model !== undefined && this.model.length !== 0) {
+                this.currentTask = this.model[0];
+                this.currentTask.selected = true;
+            }
         });
     }
 
     getTasks() {
         this.taskService.getTasks().subscribe(success => {
             this.model = success.payload;
-            this.currentTask = this.model[0];
+
+            if (this.model !== undefined && this.model.length !== 0) {
+                this.currentTask = this.model[0];
+                this.currentTask.selected = true;
+            }
         });
     }
 
-    handleChildEvent(task: ITask) {
+    handleTaskSelected(task: ITask) {
         this.currentTask.selected = false;
         this.currentTask = task;
         this.currentTask.selected = true;
+    }
+
+    handleCityChanged(city: string) {
+        this.currentCity = city;
+    }
+
+    handleDistanceChanged(distance: number) {
+        console.log(distance);
+    }
+
+    handleCategoryChanged(categories: string[]) {
+        if (categories.length === 0) {
+            this.getTasks();
+        } else {
+            this.getTasksByCategories(categories);
+        }
+    }
+
+    handleHideChanged(state: boolean) {
+        console.log(state);
     }
 
 }

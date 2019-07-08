@@ -202,12 +202,17 @@ router.post('/tasks', (req, res) => {
 
 // task/category
 router.get('/tasks/category/:category', (req, res) => {
-    let category = req.params.category
-    var validation = validator().validate(category).isNotEmpty()
+    let categories = req.params.category
+    var validation = validator().validate(categories).isNotEmpty()
 
-    category = titleCase(category)
+    categories = JSON.parse(categories)
+
+    categories.forEach(category => {
+        category = titleCase(category)
+    })
+
     const paging = build_paging(req)
-    paging.filter = { category: category }
+    paging.filter = { category: { $in: categories } }
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))

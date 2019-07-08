@@ -10,9 +10,19 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
     styleUrls: ['./task-view.component.scss']
 })
 export class TaskViewComponent implements OnInit {
-    @Input() task: ITask;
+    private _task: ITask;
     public messages: IMessage[];
     public currentUser: any;
+
+    @Input()
+    set task(task: ITask) {
+        this._task = task;
+        this.getTaskMessages();
+    }
+
+    get task(): ITask {
+        return this._task;
+    }
 
     constructor(
         private messageService: MessageService,
@@ -29,11 +39,13 @@ export class TaskViewComponent implements OnInit {
             }
         });
 
-        // TODO: change to logon user id
+        this.getTaskMessages();
+    }
+
+    getTaskMessages() {
         this.messageService.getTaskMessages(this.task._id).subscribe(success => {
             this.messages = success.payload;
         });
-
     }
 
 }
