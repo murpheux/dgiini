@@ -9,8 +9,15 @@
         "build-auth": "parcel build src/auth_api.js --out-dir dist/msauth --target node",
         "build-msg": "parcel build src/msg_api.js --out-dir dist/msmsg --target node",
         "build-bill": "parcel build src/bill_api.js --out-dir dist/msbill --target node",
+
+        "watch-task": "parcel watch src/task_api.js --out-dir dist/mstask --target node",
+        "watch-auth": "parcel watch src/auth_api.js --out-dir dist/msauth --target node",
+        "watch-msg": "parcel watch src/msg_api.js --out-dir dist/msmsg --target node",
+        "watch-bill": "parcel watch src/bill_api.js --out-dir dist/msbill --target node",
+
         "cp": "xargs -n 1 cp -v .env<<<\"dist/mstask/ dist/msauth/ dist/msmsg/\"",
         "build": "concurrently \"yarn build-task\" \"yarn build-auth\" \"yarn build-msg\"",
+        "watch": "concurrently \"yarn watch-task\" \"yarn watch-auth\" \"yarn watch-msg\"",
         "run-prod": "NODE_ENV=production nodemon --exec babel-node --",
         "lint": "eslint src",
         "test": "mocha --require @babel/register",
