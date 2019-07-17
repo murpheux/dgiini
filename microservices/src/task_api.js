@@ -43,6 +43,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan(log_format, { stream: winston.stream }))
 app.use(cors({ origin: CLIENT_URL }))
 
+if (process.env.NODE_ENV === 'production') {
+    //running in production
+}
+
 // ping
 app.get('/api/', (req, res) => {
     let payload = {

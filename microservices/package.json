@@ -5,15 +5,17 @@
     "author": "Clement Onawole",
     "license": "MIT",
     "scripts": {
-        "build-task": "webpack --config src/webpack-task.config.js",
-        "build-bill": "webpack --config src/webpack-bill.config.js",
-        "build": "babel src --out-dir dist",
-        "apinm": "nodemon --exec babel-node --",
-        "apiprod": "NODE_ENV=production nodemon --exec babel-node --",
-        "serve": "node dist/task_api.js",
-        "lint": "eslint",
+        "build-task": "parcel build src/task_api.js --out-dir dist/mstask --target node",
+        "build-auth": "parcel build src/auth_api.js --out-dir dist/msauth --target node",
+        "build-msg": "parcel build src/msg_api.js --out-dir dist/msmsg --target node",
+        "build-bill": "parcel build src/bill_api.js --out-dir dist/msbill --target node",
+        "cp": "xargs -n 1 cp -v .env<<<\"dist/mstask/ dist/msauth/ dist/msmsg/\"",
+        "build": "concurrently \"yarn build-task\" \"yarn build-auth\" \"yarn build-msg\"",
+        "run-prod": "NODE_ENV=production nodemon --exec babel-node --",
+        "lint": "eslint src",
         "test": "mocha --require @babel/register",
-        "api": "nodemon --exec babel-node --"
+        "serve": "nodemon --exec babel-node --",
+        "clean": "rimraf dist"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",
@@ -31,8 +33,6 @@
         "rotating-file-stream": "^1.4.1",
         "title-case": "^2.1.1",
         "uuid": "^3.3.2",
-        "webpack-cli": "^3.3.2",
-        "webpack-node-externals": "^1.7.2",
         "winston": "^3.2.1"
     },
     "devDependencies": {
@@ -49,12 +49,12 @@
         "chai": "^4.2.0",
         "chai-http": "^4.3.0",
         "chokidar": "^3.0.0",
-        "dotenv-webpack": "^1.7.0",
+        "concurrently": "^4.1.1",
         "eslint": "^5.16.0",
         "mocha": "^6.1.4",
         "nodemon": "^1.19.0",
         "pm2": "^3.5.0",
         "sinon": "^7.3.2",
-        "webpack": "^4.30.0"
+        "parcel-bundler": "^1.12.3"
     }
 }
