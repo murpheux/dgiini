@@ -3,6 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -23,7 +24,7 @@ export class TaskCategoriesComponent implements OnInit {
     constructor(
         private taskService: TaskService,
         private route: ActivatedRoute,
-        private router: Router,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -54,6 +55,8 @@ export class TaskCategoriesComponent implements OnInit {
                 this.currentTask = this.model[0];
                 this.currentTask.selected = true;
             }
+
+            this.taskService.enrichTasks(this.model);
         });
     }
 
@@ -65,6 +68,8 @@ export class TaskCategoriesComponent implements OnInit {
                 this.currentTask = this.model[0];
                 this.currentTask.selected = true;
             }
+
+            this.taskService.enrichTasks(this.model);
         });
     }
 

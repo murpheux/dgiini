@@ -38,14 +38,33 @@ export class TaskViewComponent implements OnInit {
                 });
             }
         });
-
-        this.getTaskMessages();
     }
 
     getTaskMessages() {
         this.messageService.getTaskMessages(this.task._id).subscribe(success => {
             this.messages = success.payload;
+
+            // enrich
+            const from = this.messages.map(message => message.from);
+            this.messages.map(message => from.push(message.to));
+
+            // distinct
+            const messageUsers = from.filter((value, index, self) => self.indexOf(value) === index);
+            this.authService.getUserList(messageUsers).subscribe(res => {
+                this.messages.forEach(m => {
+                    res.payload.filter(user => {
+                        m.from = m.from === user._id ? user : m.from;
+                    });
+                });
+            });
         });
+    }
+
+    handleMessageSent(message: IMessage) {
+        message.sentdate = new Date();
+        message.from = this.currentUser;
+
+        this.messages.unshift(message);
     }
 
 }

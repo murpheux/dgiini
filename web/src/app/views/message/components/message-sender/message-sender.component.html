@@ -1,17 +1,28 @@
 <mat-card class=" card border-secondary mb-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div mat-card-avatar class="message-image"></div>
+    <form #messageForm="ngForm" autocomplete="off" (ngSubmit)="handleSubmit(messageForm.value)">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="message-image">
+                        <img *ngIf="currentUser" mat-card-avatar class="message-image" [src]="currentUser.photo" />
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <em *ngIf="messageForm.controls.message?.invalid && (messageForm.controls.message?.touched || mouseoverSave)">Required</em>
+                    <textarea name="message" matInput placeholder="..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=8 required></textarea>
+                </div>
             </div>
-            <div class="col-md-10">
-                <textarea matInput placeholder="..." matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=8></textarea>
+            <div class="row">
+                <div class="offset-md-8 col-md-2">
+                    <button type="button" class="btn btn-danger" (click)="handleCancel()">Clear</button>
+
+                </div>
+                <div class="col-md-2">
+                    <span (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false">
+            <button type="submit" [disabled]="messageForm.invalid" class="btn btn-success float-right">Send</button>
+          </span>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="offset-md-10 col-md-2">
-                <button type="button " class="btn btn-success ">Send</button>
-            </div>
-        </div>
-    </div>
+    </form>
 </mat-card>

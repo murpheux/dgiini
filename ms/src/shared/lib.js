@@ -23,7 +23,7 @@ export const build_response = (code, desc, payload) => {
 export const build_paging = req => {
     return {
         order_dir: req.query.dir,
-        sort_keys: req.query.sort,
+        sort_keys: req.query.sort_keys,
         filter: JSON.parse(req.query.filter || '{}'),
         page: parseInt(req.query.page) || 0,
         page_limit: parseInt(req.query.pagelimit) || 0,

@@ -98,6 +98,7 @@ router.get('/messages/from/:sender', (req, res) => {
 
     const paging = build_paging(req)
     paging.filter = { from: sender }
+    paging.sort_keys = { sentdate: -1 } // include by default
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
@@ -134,6 +135,7 @@ router.get('/messages/task/:id', (req, res) => {
 
     const paging = build_paging(req)
     paging.filter = { 'task': id }
+    paging.sort_keys = { sentdate: -1 }
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))

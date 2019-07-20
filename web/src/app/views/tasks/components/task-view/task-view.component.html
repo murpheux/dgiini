@@ -40,7 +40,7 @@
                     <p>Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
                 </div>
                 <div *ngIf="currentUser">
-                    <app-message-sender></app-message-sender>
+                    <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [from]="currentUser._id" [to]="task.client._id" [task]="task._id"></app-message-sender>
                 </div>
                 <div>
                     <app-message-list [messages]="messages"></app-message-list>

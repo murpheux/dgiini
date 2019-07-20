@@ -2,11 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="text-primary col-md-12">
-                <a href="#">{{message.from}}</a>
+                <a href="#">{{message.from.name}}</a>
             </div>
         </div>
         <div class="row">
-
+            <div class="message-image col-md-2">
+                <img *ngIf="message.from.photo" mat-card-avatar class="message-image" [src]="message.from.photo" />
+            </div>
             <div class="message offset-md-2 col-md-10">
                 {{message.message}}
             </div>

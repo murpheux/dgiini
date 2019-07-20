@@ -13,7 +13,7 @@ import HttpStatus from 'http-status-codes'
 import winston from './shared/winston'
 import common from './shared/common'
 
-const msg_router = require('./routes/message_route')
+const msg_router = require('./routes/msg_route')
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'

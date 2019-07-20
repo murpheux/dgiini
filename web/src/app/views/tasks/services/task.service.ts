@@ -6,6 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { ITask } from '../models/ITask';
 import { IResponse } from '../models/IResponse';
 import { Guid } from 'guid-typescript';
+import { AuthService } from '../../user/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,10 @@ import { Guid } from 'guid-typescript';
 export class TaskService {
     private serviceUrl = `${environment.TASK_API}/tasks`;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService
+    ) { }
 
     getTaskCategories(): Observable<IResponse> {
         const url = `${environment.TASK_API}/categories`;
@@ -48,5 +52,20 @@ export class TaskService {
     deleteTask(id: Guid) {
         const url = `${this.serviceUrl}/${id}`;
         return this.http.delete(url);
+    }
+
+    enrichTasks(tasks: ITask[]) {
+        if (!tasks) { return; }
+
+        const userList = tasks.map(m => m.client.id)
+            .filter((value, index, self) => self.indexOf(value) === index);
+
+        this.authService.getUserList(userList).subscribe(res => {
+            tasks.forEach(m => {
+                res.payload.filter(user => {
+                    m.client = m.client.id === user._id ? user : m.client;
+                });
+            });
+        });
     }
 }

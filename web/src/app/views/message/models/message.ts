@@ -1,12 +1,13 @@
 import { ITask } from '../../tasks/models/ITask';
+import { Guid } from 'guid-typescript';
 
 export interface IMessage {
-    from: string;
-    to: string[];
+    from: Guid;
+    to: Guid;
     message: string;
-    attachement: any[];
-    task: ITask;
-    attachment: IMessageAttachement[];
+    sentdate?: Date;
+    task: Guid;
+    attachment?: IMessageAttachement[];
 }
 
 export interface IMessageAttachement {

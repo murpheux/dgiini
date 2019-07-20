@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/shared/models/user';
 import { IResponse } from '../../tasks/models/IResponse';
 import { Observable, Subject } from 'rxjs';
+import { Guid } from 'guid-typescript';
 @Injectable()
 export class AuthService {
     private serviceUrl = `${environment.AUTH_API}`;
@@ -33,10 +34,15 @@ export class AuthService {
     }
 
     isLoggedIn(): Observable<boolean> {
-        return new Observable(observer => { observer.next(localStorage.getItem('currentUser') === null); });
+        return new Observable(observer => { observer.next(localStorage.getItem('currentUser') !== null); });
     }
 
     getCurrentUser(): Observable<any> {
         return new Observable(observer => { observer.next(JSON.parse(localStorage.getItem('currentUser'))); });
+    }
+
+    getUserList(userids: Guid[]): Observable<IResponse> {
+        const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(u => '"' + u + '"')}]}`;
+        return this.http.get<IResponse>(url);
     }
 }

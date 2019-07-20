@@ -44,7 +44,12 @@ module.exports = {
     getlist: (db, collection, paging) => {
 
         if (paging.filter['_id']) {
-            paging.filter['_id'] = ObjectId(paging.filter['_id'])
+
+            if (Array.isArray(paging.filter['_id'])) {
+                paging.filter['_id'] = { $in: paging.filter['_id'].map(m => ObjectId(m)) }
+            } else {
+                paging.filter['_id'] = ObjectId(paging.filter['_id'])
+            }
         }
 
         if (paging.lastid) {
@@ -57,7 +62,7 @@ module.exports = {
             })
         } else {
             return new Promise((resolve, reject) => {
-                db.collection(collection).find(paging.filter)
+                db.collection(collection).find(paging.filter).sort(paging.sort_keys)
                     .skip(paging.page_limit * (paging.page - 1)).limit(paging.page_limit)
                     .toArray((err, data) => {
                         err ? reject(err) : resolve(data)

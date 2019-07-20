@@ -30,7 +30,7 @@ export class Task implements ITask {
     title: string;
     description: string;
     category: string;
-    client: { id: string; name: string; };
+    client: { id: Guid; name: string; };
     location: IAddress;
     estimated_hours: number;
     time: number;
@@ -48,7 +48,7 @@ export class Schedule {
 }
 
 export class ClientSlim {
-    id: string;
+    id: Guid;
     name: string;
 }
 

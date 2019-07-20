@@ -19,6 +19,11 @@ export class MessageService {
         return this.http.post<IResponse>(url, message);
     }
 
+    sendMessageForTask(message: IMessage): Observable<IResponse> {
+        const url = `${this.serviceUrl}/task/${message.task}`;
+        return this.http.post<IResponse>(url, message);
+    }
+
     getMessages(from: string): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
         return this.http.get<IResponse>(url);

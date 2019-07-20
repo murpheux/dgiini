@@ -14,5 +14,5 @@ export class Message {
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    title = 'dginni app';
+    title = 'dgiini app';
 }
