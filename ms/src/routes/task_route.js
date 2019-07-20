@@ -60,6 +60,42 @@ router.get('/tasks', (req, res) => {
     )
 })
 
+// user task
+router.get('/tasks/user/:id', (req, res) => {
+    const id = req.params.id
+    var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
+
+    const paging = build_paging(req)
+    paging.filter = { 'client.id': id }
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getlist = async() => {
+                    var result = await mgaccess.getlist(db, TASK_COLL, paging)
+                    return result
+                }
+
+                invoke_getlist().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+})
+
 // task
 router.get('/tasks/:id', (req, res) => {
     const id = req.params.id

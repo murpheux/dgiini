@@ -8,7 +8,6 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 const routes: Routes = [
     { path: '', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'new', component: TaskCreateComponent, canActivate: [] },
-    { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'mytask', component: TaskUserComponent, canActivate: [AuthGuard] },
     { path: 'category/:category', component: TaskCategoriesComponent, canActivate: [] }
 ];

@@ -128,6 +128,46 @@ router.get('/messages/from/:sender', (req, res) => {
     }
 })
 
+// user task message
+router.get('/messages/task/:taskid/:userid', (req, res) => {
+    const taskid = req.params.taskid
+    const userid = req.params.userid
+
+    var validation = validator().validate(taskid).isNotNull().and.isNotEmpty().and.isMongoObjectId()
+    validation.validate(userid).isNotNull().and.isNotEmpty().and.isMongoObjectId()
+
+    const paging = build_paging(req)
+    paging.filter = { 'task': taskid, 'from': userid }
+    paging.sort_keys = { sentdate: -1 }
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getlist = async() => {
+                    var result = await mgaccess.getlist(db, MESSAGE_COLL, paging)
+                    return result
+                }
+
+                invoke_getlist().then(
+                    messages => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+})
+
 // task message
 router.get('/messages/task/:id', (req, res) => {
     const id = req.params.id

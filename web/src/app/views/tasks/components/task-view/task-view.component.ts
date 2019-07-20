@@ -12,12 +12,12 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 export class TaskViewComponent implements OnInit {
     private _task: ITask;
     public messages: IMessage[];
-    public currentUser: any;
+    @Input() currentUser: any;
 
     @Input()
     set task(task: ITask) {
         this._task = task;
-        this.getTaskMessages();
+        this.getUserTaskMessages();
     }
 
     get task(): ITask {
@@ -25,38 +25,16 @@ export class TaskViewComponent implements OnInit {
     }
 
     constructor(
-        private messageService: MessageService,
-        private authService: AuthService
+        private messageService: MessageService
     ) { }
 
     ngOnInit() {
-
-        this.authService.isLoggedIn().subscribe(islogin => {
-            if (islogin) {
-                this.authService.getCurrentUser().subscribe(user => {
-                    this.currentUser = user;
-                });
-            }
-        });
     }
 
-    getTaskMessages() {
-        this.messageService.getTaskMessages(this.task._id).subscribe(success => {
+    getUserTaskMessages() {
+        this.messageService.getUserTaskMessages(this.task._id, this.currentUser._id).subscribe(success => {
             this.messages = success.payload;
-
-            // enrich
-            const from = this.messages.map(message => message.from);
-            this.messages.map(message => from.push(message.to));
-
-            // distinct
-            const messageUsers = from.filter((value, index, self) => self.indexOf(value) === index);
-            this.authService.getUserList(messageUsers).subscribe(res => {
-                this.messages.forEach(m => {
-                    res.payload.filter(user => {
-                        m.from = m.from === user._id ? user : m.from;
-                    });
-                });
-            });
+            this.messageService.enrichMessages(this.messages);
         });
     }
 

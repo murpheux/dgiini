@@ -17,6 +17,7 @@ export class TaskCategoriesComponent implements OnInit {
     selectedCategory: string[];
     defaultDistanceToHome = 55;
     currentCity = 'Calgary';
+    public currentUser: any;
 
     title = 'app';
     faCoffee = faCoffee;
@@ -24,7 +25,8 @@ export class TaskCategoriesComponent implements OnInit {
     constructor(
         private taskService: TaskService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -36,6 +38,14 @@ export class TaskCategoriesComponent implements OnInit {
                 this.getTasksByCategory(category);
             } else {
                 this.getTasks();
+            }
+        });
+
+        this.authService.isLoggedIn().subscribe(islogin => {
+            if (islogin) {
+                this.authService.getCurrentUser().subscribe(user => {
+                    this.currentUser = user;
+                });
             }
         });
 
@@ -84,7 +94,6 @@ export class TaskCategoriesComponent implements OnInit {
     }
 
     handleDistanceChanged(distance: number) {
-        console.log(distance);
     }
 
     handleCategoryChanged(categories: string[]) {
@@ -96,7 +105,6 @@ export class TaskCategoriesComponent implements OnInit {
     }
 
     handleHideChanged(state: boolean) {
-        console.log(state);
     }
 
 }

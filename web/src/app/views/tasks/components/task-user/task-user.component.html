@@ -2,12 +2,13 @@
 <div class="container">
     <div class="row">
         <div *ngIf="model" class="col-md-4 scrollable">
+            <div>{{model.length}} tasks</div>
             <div *ngFor="let task of model">
-                <app-task-card (taskSelected)='handleChildEvent($event)' [task]="task"></app-task-card>
+                <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
             </div>
         </div>
         <div class="col-md-8">
-            <app-task-view *ngIf="currentTask" [task]="currentTask"></app-task-view>
+            <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
         </div>
     </div>
 </div>
