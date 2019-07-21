@@ -9,12 +9,12 @@
             <li class="nav-item active">
                 Filter:
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                    <mat-button-toggle value="bold">All Tasks</mat-button-toggle>
-                    <mat-button-toggle value="italic">Posted Tasks</mat-button-toggle>
-                    <mat-button-toggle value="underline">Draft Tasks</mat-button-toggle>
-                    <mat-button-toggle value="underline">Tasks Assigned</mat-button-toggle>
-                    <mat-button-toggle value="underline">Offers Pending</mat-button-toggle>
-                    <mat-button-toggle value="underline">Tasks Completed</mat-button-toggle>
+                    <mat-button-toggle value="all" (change)="onToggleChanged($event.value)">All Tasks</mat-button-toggle>
+                    <mat-button-toggle value="posted" (change)="onToggleChanged($event.value)">Posted Tasks</mat-button-toggle>
+                    <mat-button-toggle value="draft" (change)="onToggleChanged($event.value)">Draft Tasks</mat-button-toggle>
+                    <mat-button-toggle value="assigned" (change)="onToggleChanged($event.value)">Tasks Assigned</mat-button-toggle>
+                    <mat-button-toggle value="pending" (change)="onToggleChanged($event.value)">Offers Pending</mat-button-toggle>
+                    <mat-button-toggle value="completed" (change)="onToggleChanged($event.value)">Tasks Completed</mat-button-toggle>
                 </mat-button-toggle-group>
             </li>
         </ul>

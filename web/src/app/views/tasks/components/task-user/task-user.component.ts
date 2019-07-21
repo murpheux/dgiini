@@ -63,5 +63,4 @@ export class TaskUserComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => { });
     }
-
 }

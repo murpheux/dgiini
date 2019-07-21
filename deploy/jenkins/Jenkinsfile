@@ -21,7 +21,8 @@ pipeline {
                             $class: 'GitSCM',
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
-                            extensions: [],
+                            extensions: [[$class: 'CleanBeforeCheckout'], 
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -45,7 +46,8 @@ pipeline {
                             $class: 'GitSCM',
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
-                            extensions: [],
+                            extensions: [[$class: 'CleanBeforeCheckout'], 
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -69,7 +71,8 @@ pipeline {
                             $class: 'GitSCM',
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
-                            extensions: [],
+                            extensions: [[$class: 'CleanBeforeCheckout'], 
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -93,7 +96,8 @@ pipeline {
                             $class: 'GitSCM',
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
-                            extensions: [],
+                            extensions: [[$class: 'CleanBeforeCheckout'], 
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
