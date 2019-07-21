@@ -22,7 +22,7 @@ pipeline {
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -47,7 +47,7 @@ pipeline {
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -72,7 +72,7 @@ pipeline {
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
@@ -97,7 +97,7 @@ pipeline {
                             branches: [[name: '*/dev']],
                             doGenerateSubmoduleConfigurations: false,
                             extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]]
+                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
                             submoduleCfg: [],
                             userRemoteConfigs: [[
                                 credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
