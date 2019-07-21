@@ -1,0 +1,114 @@
+pipeline {
+    agent none
+    stages {
+        stage('Preparation') {
+            agent {
+                label "linux"
+            }
+            steps {
+                // Git repository
+                git 'scarlet:/projects.git/projects/dgiini'
+            }
+        }
+        stage('Build') {
+            parallel {
+                stage('Build web') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/dev']],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[
+                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
+                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                            ]
+                        ]])
+                        sh "cd ${WORKSPACE}/web && export PATH=$PATH:/home/jenkins/.npm-global/bin # use by other script && yarn && yarn build-dev"
+                    }
+                    post {
+                        always {
+                            echo 'Angular build complete'
+                        }
+                    }
+                }
+                stage('Build task_api') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/dev']],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[
+                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
+                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                            ]
+                        ]])
+                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-task"
+                    }
+                    post {
+                        always {
+                            echo 'Task Api build complete!'
+                        }
+                    }
+                }
+                stage('Build auth_api') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/dev']],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[
+                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
+                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                            ]
+                        ]])
+                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-auth"
+                    }
+                    post {
+                        always {
+                            echo 'Auth Api build complete!'
+                        }
+                    }
+                }
+                stage('Build msg_api') {
+                    agent {
+                        label "linux"
+                    }
+                    steps {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/dev']],
+                            doGenerateSubmoduleConfigurations: false,
+                            extensions: [],
+                            submoduleCfg: [],
+                            userRemoteConfigs: [[
+                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
+                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                            ]
+                        ]])
+                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-msg"
+                    }
+                    post {
+                        always {
+                            echo 'Msg Api build complete!'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

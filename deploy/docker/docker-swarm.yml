@@ -92,7 +92,7 @@ services:
             replicas: 1
 
     db_auth:
-        image: mongo:4.0.0-xenial
+        image: mongo:4.1.13-bionic
         ports:
             - "27017:27017"
         environment:
@@ -104,7 +104,7 @@ services:
 
 
     db_task:
-        image: mongo:4.0.0-xenial
+        image: mongo:4.1.13-bionic
         ports:
             - "27018:27017"
         environment:
@@ -115,7 +115,7 @@ services:
             replicas: 1
 
     db_notify:
-        image: mongo:4.0.0-xenial
+        image: mongo:4.1.13-bionic
         ports:
             - "27019:27017"
         environment:
