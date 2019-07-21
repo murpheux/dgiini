@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: '', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'new', component: TaskCreateComponent, canActivate: [] },
     { path: 'mytask', component: TaskUserComponent, canActivate: [AuthGuard] },
+    { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'category/:category', component: TaskCategoriesComponent, canActivate: [] }
 ];
 

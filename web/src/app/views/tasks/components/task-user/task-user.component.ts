@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { ITask } from '../../models/ITask';
 import { IUser } from 'src/app/views/user/models/user';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskCreateComponent } from '../task-create/task-create.component';
 
 @Component({
     selector: 'app-task-user',
@@ -19,6 +21,7 @@ export class TaskUserComponent implements OnInit {
         private taskService: TaskService,
         private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
         private authService: AuthService
     ) { }
 
@@ -50,6 +53,15 @@ export class TaskUserComponent implements OnInit {
         this.currentTask.selected = false;
         this.currentTask = task;
         this.currentTask.selected = true;
+    }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(TaskCreateComponent, {
+            height: '600px',
+            width: '800px',
+        });
+
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
 }

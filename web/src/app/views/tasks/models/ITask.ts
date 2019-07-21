@@ -1,50 +1,20 @@
 import { IAddress } from './IAddress';
 import { Guid } from 'guid-typescript';
-import { SchedulerLike } from 'rxjs';
 
 export enum TaskType { InPerson, Online }
 
 export interface ITask {
-    _id: Guid;
+    _id?: Guid;
     title: string;
     description: string;
     category: string;
     client: ClientSlim;
-    schedule: Schedule;
+    scheduled_date: Date;
     location: IAddress;
     estimated_hours: number;
-    time: number;
-    rating: number;
-    status: string;
     created: Date;
-    taskType: TaskType;
-    quote: Quotation;
-    recur?: Recurrence;
-    selected: boolean;
-}
-
-export class Task implements ITask {
-    schedule: Schedule;
-    taskType: TaskType;
-    _id: Guid;
-    title: string;
-    description: string;
-    category: string;
-    client: { id: Guid; name: string; };
-    location: IAddress;
-    estimated_hours: number;
-    time: number;
-    rating: number;
-    status: string;
-    created: Date;
-    quote: Quotation;
-    recur?: Recurrence;
-    selected: boolean;
-}
-
-export class Schedule {
-    date: Date;
-    time: number;
+    rate: Quotation;
+    selected?: boolean;
 }
 
 export class ClientSlim {
@@ -54,14 +24,15 @@ export class ClientSlim {
 
 export class Quotation {
     unit: string;
-    rate: number;
+    amount: number;
     currency: Currency;
+    date: Date;
 }
 
 export enum Currency {
-    USD,
-    CAD,
-    GBP
+    USD = 'USD',
+    CAD = 'CAD',
+    GBP = 'GBP'
 }
 
 export enum RateUnit {

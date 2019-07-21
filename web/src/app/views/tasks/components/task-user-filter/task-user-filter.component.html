@@ -7,13 +7,15 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a href="#">yada</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                Filter:
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                    <mat-button-toggle value="bold">All Tasks</mat-button-toggle>
+                    <mat-button-toggle value="italic">Posted Tasks</mat-button-toggle>
+                    <mat-button-toggle value="underline">Draft Tasks</mat-button-toggle>
+                    <mat-button-toggle value="underline">Tasks Assigned</mat-button-toggle>
+                    <mat-button-toggle value="underline">Offers Pending</mat-button-toggle>
+                    <mat-button-toggle value="underline">Tasks Completed</mat-button-toggle>
+                </mat-button-toggle-group>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

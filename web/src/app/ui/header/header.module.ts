@@ -6,6 +6,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TasksModule } from 'src/app/views/tasks/tasks.module';
 import { UserModule } from 'src/app/views/user/user.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { UserModule } from 'src/app/views/user/user.module';
     CoreModule,
     SharedModule,
     TasksModule,
-    UserModule
+    UserModule,
+    MatDialogModule
   ],
   declarations: [HeaderTemplateComponent],
   exports: [HeaderTemplateComponent]

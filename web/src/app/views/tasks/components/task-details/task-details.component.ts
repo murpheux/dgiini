@@ -73,8 +73,6 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
             'zipcode': this.formBuilder.control(this.model.location.zipcode, [Validators.required]),
             'country': this.formBuilder.control(this.model.location.country, [Validators.required]),
             'estimated_hours': this.formBuilder.control(this.model.estimated_hours, [Validators.required]),
-            'time': this.formBuilder.control(this.model.time, [Validators.required]),
-            'status': this.formBuilder.control(this.model.status, [Validators.required])
         });
     }
 

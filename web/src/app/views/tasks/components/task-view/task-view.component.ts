@@ -17,7 +17,12 @@ export class TaskViewComponent implements OnInit {
     @Input()
     set task(task: ITask) {
         this._task = task;
-        this.getUserTaskMessages();
+
+        if (this.currentUser) {
+            this.getUserTaskMessages();
+        } else {
+            this.getTaskMessages();
+        }
     }
 
     get task(): ITask {
@@ -33,6 +38,13 @@ export class TaskViewComponent implements OnInit {
 
     getUserTaskMessages() {
         this.messageService.getUserTaskMessages(this.task._id, this.currentUser._id).subscribe(success => {
+            this.messages = success.payload;
+            this.messageService.enrichMessages(this.messages);
+        });
+    }
+
+    getTaskMessages() {
+        this.messageService.getTaskMessages(this.task._id).subscribe(success => {
             this.messages = success.payload;
             this.messageService.enrichMessages(this.messages);
         });

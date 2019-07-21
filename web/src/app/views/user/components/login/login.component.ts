@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-login',
@@ -22,11 +23,12 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private notifyHeaderService: NotifyHeaderService,
-        private fb: FormBuilder
+        private formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<LoginComponent>
     ) { }
 
     ngOnInit() {
-        this.loginForm = this.fb.group({
+        this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
@@ -49,20 +51,6 @@ export class LoginComponent implements OnInit {
             });
     }
 
-    //   fakeSignIn() {
-    //     this.loading = true;
-    //     this.authService.login({username: 'empty', password: 'empty' }).subscribe(
-    //             result => {
-    //               if ( result.statusCode === 200) {
-    //                 this.notifyHeaderService.loggedIn();
-    //                 this.router.navigate([this.returnUrl]);
-    //               } else {
-    //                   this.loginMessage = result.data.errorMessage;
-    //                   this.inCorrectCredintials = true;
-    //               }
-    //               this.loading = false;
-    //             });
-    //   }
     get formControls() { return this.loginForm.controls; }
 
     onSubmit() {
@@ -79,6 +67,7 @@ export class LoginComponent implements OnInit {
                 if (result.code === 200) {
                     this.notifyHeaderService.loggedIn();
                     this.router.navigate([this.returnUrl]);
+                    this.dialogRef.close();
                 } else {
                     this.loginMessage = result.description;
                     this.inCorrectCredentials = true;

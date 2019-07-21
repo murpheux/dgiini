@@ -1,14 +1,32 @@
 <app-task-user-filter></app-task-user-filter>
-<div class="container">
-    <div class="row">
-        <div *ngIf="model" class="col-md-4 scrollable">
-            <div>{{model.length}} tasks</div>
-            <div *ngFor="let task of model">
-                <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
+<div *ngIf="model">
+    <div *ngIf="model.length === 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Looks like you haven’t posted a task or made any offers just yet. How about posting one now?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-success rounded-pill view-center" (click)="openDialog()">post a task</a>
+                </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
+    </div>
+    <div *ngIf="model.length > 0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 scrollable">
+                    <div>{{model.length}} tasks</div>
+                    <div *ngFor="let task of model">
+                        <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
+                </div>
+            </div>
         </div>
     </div>
 </div>

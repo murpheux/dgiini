@@ -25,6 +25,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { MatRadioModule } from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import {MatSliderModule} from '@angular/material/slider';
     MatRadioModule,
     MatSelectModule,
     MatSliderModule,
+    MatButtonToggleModule,
   ],
   exports: [
     FormsModule,
@@ -94,6 +96,7 @@ import {MatSliderModule} from '@angular/material/slider';
     MatRadioModule,
     MatSelectModule,
     MatSliderModule,
+    MatButtonToggleModule,
   ]
 })
 export class MaterialDesignModule { }

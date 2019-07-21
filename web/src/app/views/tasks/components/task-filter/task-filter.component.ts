@@ -28,7 +28,6 @@ export class TaskFilterComponent implements OnInit {
 
     ngOnInit() {
         this.getTaskCategories();
-
         this.cities = ['Calgary', 'Edmonton', 'Red Deer', 'Montreal', 'Toronto', 'Vancouver'];
     }
 

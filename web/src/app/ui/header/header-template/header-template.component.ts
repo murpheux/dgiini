@@ -20,13 +20,13 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     constructor(
         private notifyHeaderService: NotifyHeaderService,
         public dialog: MatDialog
-    ) {
+    ) { }
+
+    ngOnInit() {
         this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
             this.isLoggedIn = isLoggedIn;
         });
-    }
 
-    ngOnInit() {
         this.selectedLanguage = localStorage.getItem('locale');
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -43,14 +43,16 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
             width: '800px',
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-           // show notice if necessary
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
     openLoginDialog() {
         const logingRef = this.dialog.open(LoginComponent);
-        logingRef.afterClosed().subscribe(result => {});
+        logingRef.afterClosed().subscribe(result => {
+            this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            console.log(this.currentUser);
+        });
     }
 
     openRegisterDialog() {
