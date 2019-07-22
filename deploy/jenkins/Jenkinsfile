@@ -1,10 +1,11 @@
 pipeline {
-    agent none
+    agent {
+        node {
+            label 'linux'
+        }
+    }
     stages {
         stage('Preparation') {
-            agent {
-                label "linux"
-            }
             steps {
                 // Git repository
                 git 'scarlet:/projects.git/projects/dgiini'
@@ -29,7 +30,12 @@ pipeline {
                                 url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
                             ]
                         ]])
-                        sh "cd ${WORKSPACE}/web && export PATH=$PATH:/home/jenkins/.npm-global/bin # use by other script && yarn && yarn build-dev"
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            export PATH=$PATH:/home/jenkins/.npm-global/bin # use by other script
+                            yarn
+                            yarn build-dev
+                        '''
                     }
                     post {
                         always {
@@ -54,7 +60,12 @@ pipeline {
                                 url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
                             ]
                         ]])
-                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-task"
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            export PATH=$PATH:/home/jenkins/.npm-global/bin
+                            yarn
+                            yarn build-task
+                        '''
                     }
                     post {
                         always {
@@ -79,7 +90,12 @@ pipeline {
                                 url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
                             ]
                         ]])
-                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-auth"
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            export PATH=$PATH:/home/jenkins/.npm-global/bin
+                            yarn
+                            yarn build-auth
+                        '''
                     }
                     post {
                         always {
@@ -104,7 +120,12 @@ pipeline {
                                 url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
                             ]
                         ]])
-                        sh "cd ${WORKSPACE}/ms && export PATH=$PATH:/home/jenkins/.npm-global/bin && yarn && yarn build-msg"
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            export PATH=$PATH:/home/jenkins/.npm-global/bin
+                            yarn
+                            yarn build-msg
+                        '''
                     }
                     post {
                         always {

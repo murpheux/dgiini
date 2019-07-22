@@ -8,7 +8,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
                 Filter:
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle-group name="fontStyle" value="all" aria-label="Font Style">
                     <mat-button-toggle value="all" (change)="onToggleChanged($event.value)">All Tasks</mat-button-toggle>
                     <mat-button-toggle value="posted" (change)="onToggleChanged($event.value)">Posted Tasks</mat-button-toggle>
                     <mat-button-toggle value="draft" (change)="onToggleChanged($event.value)">Draft Tasks</mat-button-toggle>

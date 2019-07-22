@@ -63,4 +63,8 @@ export class TaskUserComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(result => { });
     }
+
+    hangleToggleChanged(filter: string) {
+        console.log(filter);
+    }
 }

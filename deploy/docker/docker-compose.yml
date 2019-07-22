@@ -1,8 +1,8 @@
-version: '3.3'
+version: '3.7'
 services:
 
     web:
-        image: nginx:1.16.0
+        image: nginx:1.17.1
         environment:
             - NODE_ENV=development
         ports:
@@ -11,28 +11,10 @@ services:
             - ../../webui:/var/www/html
         container_name: dgiini_web
         networks:
-            - webnet
+            - dgnet
 
-    apigw:
-        image: node:9.11.2-jessie
-        environment:
-            - NODE_ENV=development
-        ports:
-            - "8000:8000"
-        volumes:
-            - ../../api_gateway:/usr/src/app
-            - ../../certs:/usr/src/app/certs
-        container_name: dgiini_tyk
-        command: >
-            bash -c "cd /usr/src/app
-            && mkdir logs
-            && yarn install
-            && yarn start"
-        networks:
-            - gwnet
-
-    auth_service:
-        image: node:9.11.2-jessie
+    auth_api:
+        image: node:12.6.0-stretch
         environment:
             - NODE_ENV=development
         ports:
@@ -40,52 +22,49 @@ services:
         volumes:
             - ../../service:/usr/src/app
         container_name: qt_auth
-        # links:
-        #     - db
-        # depends_on:
-        #     - db
         command: >
             bash -c "cd /usr/src/app
-            && mkdir logs
-            && pip install --upgrade pip
-            && pip install -r requirements.txt
-            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:7000 auth_v1:api"
+            && yarn api_dev
         networks:
-            - svcnet
+            - dgnet
 
-    task_service:
-        image: node:9.11.2-jessie
+    task_api:
+        image: node:12.6.0-stretch
         environment:
             - NODE_ENV=development
         ports:
             - "7000:7000"
-            - "7001:7001"
         volumes:
             - ../../service:/usr/src/app
         container_name: qt_task
         command: >
             bash -c "cd /usr/src/app
-            && mkdir logs
-            && pip install --upgrade pip
-            && pip install -r requirements.txt
-            && python ./seed.py
-            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:7001 task_v1:api"
+            && yarn api_dev
         networks:
-            - svcnet
+            - dgnet
+
+    msg_api:
+        image: node:12.6.0-stretch
+        environment:
+            - NODE_ENV=development
+        ports:
+            - "7000:7000"
+        volumes:
+            - ../../service:/usr/src/app
+        container_name: qt_task
+        command: >
+            bash -c "cd /usr/src/app
+            && yarn api_dev
+        networks:
+            - dgnet
 
     db:
         image: mongo:4.1.13-bionic
         ports:
-            - "27017:27017"
+            - "27018:27017"
         container_name: qmongo
         networks:
-            - dbnet
+            - dgnet
 
 networks:
-    webnet:
-    gwnet:
-    svcnet:
-    dbnet:
-
-# volumes:
-#     db-data:
+    dgnet:

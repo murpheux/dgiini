@@ -72,13 +72,20 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div>
-                                <mat-form-field class="full-width" floatLabel="always">
-                                    <mat-label>When do you need it done?</mat-label>
-                                    <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
-                                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                                    <mat-datepicker #dp></mat-datepicker>
-                                </mat-form-field>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-width" floatLabel="always">
+                                        <mat-label>When do you need it done?</mat-label>
+                                        <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
+                                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                        <mat-datepicker #dp></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="ngx-timepicker-field-example">
+                                        <ngx-timepicker-field [buttonAlign]="'left'"></ngx-timepicker-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

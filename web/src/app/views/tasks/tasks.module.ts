@@ -23,6 +23,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 import { MessageModule } from '../message/message.module';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
@@ -38,7 +39,8 @@ import { MessageModule } from '../message/message.module';
         MaterialDesignModule,
         NgxUiLoaderModule,
         FontAwesomeModule,
-        MessageModule
+        MessageModule,
+        NgxMaterialTimepickerModule
     ],
     entryComponents: [
         TaskDeleteDialogComponent,

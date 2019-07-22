@@ -4172,6 +4172,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+luxon@^1.11.3:
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.17.1.tgz#7261aae6f7a2cc3cf83cbe24c62335cf3a48caad"
+  integrity sha512-+xo7Pj54xwyEzlMdXzDqm60Ewqbn0QqACwfIo6so9M1idUtYQrD7/PHjEFQQmLCBu8wUe2IDC2jrcJJ3Buk4Pw==
+
 magic-string@0.25.2, magic-string@^0.25.0:
   version "0.25.2"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.2.tgz#139c3a729515ec55e96e69e82a11fe890a293ad9"
@@ -4535,6 +4540,14 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.0.tgz#b9d15e4d71c6762908654b5183ed38b753340835"
   integrity sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==
+
+ngx-material-timepicker@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-material-timepicker/-/ngx-material-timepicker-4.0.1.tgz#8f7898b3f8a316782dcddb8c1694c99344e98d8a"
+  integrity sha512-JMs/ldTEjvUNk8DCkvDBhoI0OrNbv01Me9TWFfnvbusILEnZ/LPrSgkKow4dtbsp6JLt21LEAP+rD4FE3tTXwg==
+  dependencies:
+    luxon "^1.11.3"
+    tslib "^1.9.0"
 
 ngx-toastr@^10.0.4:
   version "10.0.4"
