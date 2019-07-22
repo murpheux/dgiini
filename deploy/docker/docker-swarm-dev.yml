@@ -21,8 +21,6 @@ services:
             - AUTH_API_PORT=8008
             - DB_HOST=scarlet
             - DB_PORT=27017
-        ports:
-            - "8008:80"
         volumes:
             - ../../msmsg:/usr/src/app
         command: >
@@ -36,15 +34,12 @@ services:
     auth_api:
         image: node:12.6.0-stretch
         environment:
-            - DGIINI_ENV=development
-            - DGIINI_AUTH=http://auth_api/api
-            - DGIINI_TASK=http://task_api/api
-            - DGIINI_MSG=http://msg_api/api
-            - DGIINI_AUTH_DB=db:27018
-            - DGIINI_TASK_DB=db:27018
-            - DGIINI_MSG_DB=db:27018
-        ports:
-            - "8004:80"
+            - NODE_ENV=development
+            - TASK_API_PORT=8000
+            - MSG_API_PORT=8004
+            - AUTH_API_PORT=8008
+            - DB_HOST=scarlet
+            - DB_PORT=27017
         volumes:
             - ../../service:/usr/src/app
         command: >
@@ -58,15 +53,12 @@ services:
     task_api:
         image: node:12.6.0-stretch
         environment:
-            - DGIINI_ENV=development
-            - DGIINI_AUTH=http://auth_api/api
-            - DGIINI_TASK=http://task_api/api
-            - DGIINI_MSG=http://msg_api/api
-            - DGIINI_AUTH_DB=db:27018
-            - DGIINI_TASK_DB=db:27018
-            - DGIINI_MSG_DB=db:27018
-        ports:
-            - "8000:80"
+            - NODE_ENV=development
+            - TASK_API_PORT=8000
+            - MSG_API_PORT=8004
+            - AUTH_API_PORT=8008
+            - DB_HOST=scarlet
+            - DB_PORT=27017
         volumes:
             - ../../service:/usr/src/app
         command: >
