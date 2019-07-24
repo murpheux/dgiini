@@ -9,7 +9,6 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
     styleUrls: ['./task-filter.component.scss']
 })
 export class TaskFilterComponent implements OnInit {
-    categories = new FormControl();
     categoryList: string[];
     cities: string[];
 

@@ -12,7 +12,7 @@ echo 'starting...'
 
 #install web, apigw and microservices
 echo 'deploying web...'
-./deploy_web.sh $1 $tstamp
+./deploy_web.sh $1
 
 echo 'deploying API gateway...'
 ./deploy_apigw.sh $1 $tstamp

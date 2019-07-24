@@ -123,7 +123,7 @@
                             <div>
                                 <div class="input-group mb-2">
                                     <span class="font-weight-bold">How long will the job take:</span>
-                                    <mat-slider thumbLabel [displayWith]="formatLabel" formControlName="esthrs" tickInterval="5" min="1" max="500"></mat-slider> {{ taskForm.task3FormGroup.esthrs }} hrs
+                                    <mat-slider thumbLabel [displayWith]="formatLabel" formControlName="esthrs" tickInterval="5" min="1" max="500"></mat-slider> {{ taskFormGroup.get('task3FormGroup').get('esthrs').value }} hrs
                                 </div>
                             </div>
                         </div>

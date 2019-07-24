@@ -35,6 +35,7 @@ services:
             - APP_NAME=auth_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
+            - COR_CLIENT_URL=*
         ports:
             - "8008:80"
         volumes:
@@ -62,6 +63,7 @@ services:
             - APP_NAME=task_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
+            - COR_CLIENT_URL=*
         ports:
             - "8000:80"
         volumes:
@@ -89,6 +91,7 @@ services:
             - APP_NAME=msg_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
+            - COR_CLIENT_URL=*
         ports:
             - "8004:80"
         volumes:
