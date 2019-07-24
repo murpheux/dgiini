@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 export class MessageSenderComponent implements OnInit {
     private _task: Guid;
+    public mouseoverSave = false;
 
     @Input() from: Guid;
     @Input() to: Guid;

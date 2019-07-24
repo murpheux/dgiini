@@ -1,21 +1,10 @@
-import { UrlConfig } from 'src/app/shared/models/url-config';
-
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+const TASK_BASE_URL = 'http://scarlet';
+const AUTH_BASE_URL = 'http://scarlet';
+const MSG_BASE_URL = 'http://scarlet';
 
 export const environment = {
-  production: true,
-  TASK_API: `${UrlConfig.TASK_API_BASE}`,
-  AUTH_API: `${UrlConfig.AUTH_API_BASE}`,
-  MSG_API: `${UrlConfig.MSG_API_BASE}`
+    production: false,
+    TASK_API: `${TASK_BASE_URL}/api`,
+    AUTH_API: `${AUTH_BASE_URL}/api`,
+    MSG_API: `${MSG_BASE_URL}/api`
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

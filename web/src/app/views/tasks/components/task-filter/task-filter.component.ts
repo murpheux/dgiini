@@ -49,6 +49,18 @@ export class TaskFilterComponent implements OnInit {
         this.hideChanged.emit(event.checked);
     }
 
+    formatLabel(value: number | null) {
+        if (!value) {
+          return 0;
+        }
+
+        if (value >= 1000) {
+          return Math.round(value / 1000) + 'k';
+        }
+
+        return value;
+      }
+
     onCategoriesChanged(event) {
         if (event.isUserInput) {
             const selectedCategories = this.selectedCategory ? this.selectedCategory : [];

@@ -20,7 +20,7 @@ const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
 const port = process.env.PORT || process.env.AUTH_API_PORT
 
-const CLIENT_URL = 'http://localhost:9000'
+const CLIENT_URL = process.env.COR_CLIENT_URL || 'http://localhost:9000'
 
 const app = express()
 app.use(compression()) // use compression

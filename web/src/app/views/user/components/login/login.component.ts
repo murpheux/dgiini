@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     loginMessage = '';
     loginForm: FormGroup;
     submitted = false;
+
     constructor(private authService: AuthService,
         private route: ActivatedRoute,
         private router: Router,

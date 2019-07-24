@@ -78,31 +78,43 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         });
     }
 
+    formatLabel(value: number | null) {
+        if (!value) {
+            return 0;
+        }
+
+        if (value >= 1000) {
+            return Math.round(value / 1000) + 'k';
+        }
+
+        return value;
+    }
+
     buildForms() {
 
         this.taskFormGroup = this.formBuilder.group({
-            'task1FormGroup' : this.formBuilder.group({
-                    'title': this.formBuilder.control(null,
-                        [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-                    'description': this.formBuilder.control(null,
-                        [Validators.required, Validators.minLength(25), Validators.maxLength(1000)])
-                }),
+            'task1FormGroup': this.formBuilder.group({
+                'title': this.formBuilder.control(null,
+                    [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
+                'description': this.formBuilder.control(null,
+                    [Validators.required, Validators.minLength(25), Validators.maxLength(1000)])
+            }),
 
-            'task2FormGroup' : this.formBuilder.group({
-                    'street': this.formBuilder.control(null, [Validators.required]),
-                    'city': this.formBuilder.control(this.currentCity, [Validators.required]),
-                    'state': this.formBuilder.control(this.currentState, [Validators.required]),
-                    'zipcode': this.formBuilder.control(null,
-                        [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
-                    'country': this.formBuilder.control(this.currentCountry, [Validators.required]),
-                    'taskdate': this.formBuilder.control(null, [Validators.required])
-                }),
+            'task2FormGroup': this.formBuilder.group({
+                'street': this.formBuilder.control(null, [Validators.required]),
+                'city': this.formBuilder.control(this.currentCity, [Validators.required]),
+                'state': this.formBuilder.control(this.currentState, [Validators.required]),
+                'zipcode': this.formBuilder.control(null,
+                    [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
+                'country': this.formBuilder.control(this.currentCountry, [Validators.required]),
+                'taskdate': this.formBuilder.control(null, [Validators.required])
+            }),
 
-            'task3FormGroup' : this.formBuilder.group({
-                    'rateunit': this.formBuilder.control(null, [Validators.required]),
-                    'rate': this.formBuilder.control(null, [Validators.required]),
-                    'esthrs': this.formBuilder.control(null, [Validators.required])
-                })
+            'task3FormGroup': this.formBuilder.group({
+                'rateunit': this.formBuilder.control(null, [Validators.required]),
+                'rate': this.formBuilder.control(null, [Validators.required]),
+                'esthrs': this.formBuilder.control(null, [Validators.required])
+            })
         });
     }
 
@@ -114,7 +126,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             title: formValues.task1FormGroup.title,
             description: formValues.task1FormGroup.description,
 
-            location : {
+            location: {
                 street: formValues.task2FormGroup.street,
                 city: formValues.task2FormGroup.city,
                 state: formValues.task2FormGroup.state,
@@ -122,14 +134,14 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 zipcode: formValues.task2FormGroup.zipcode
             },
 
-            rate : {
+            rate: {
                 unit: formValues.task3FormGroup.rateunit,
                 amount: formValues.task3FormGroup.rate,
                 currency: Currency.CAD,
                 date: currentDate
             },
 
-            client : {
+            client: {
                 id: this.currentUser._id,
                 name: this.currentUser.name
             },

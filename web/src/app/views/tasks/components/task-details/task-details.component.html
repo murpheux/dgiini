@@ -9,7 +9,7 @@
                 <button [hidden]="readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="setEditMode()">Edit</button>
                 <button [hidden]="!readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="handleUpdateTask()">Save</button>
                 <button [hidden]="!readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="handleCancel()">Cancel</button>
-                <button color="warn" id="btnDeleteTask" mat-stroked-button (click)="openConfirmationDialog(model.id)">Delete</button>
+                <button color="warn" id="btnDeleteTask" mat-stroked-button (click)="openConfirmationDialog(model._id)">Delete</button>
             </div>
         </div>
 

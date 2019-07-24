@@ -15,11 +15,13 @@ export interface ITask {
     created: Date;
     rate: Quotation;
     selected?: boolean;
+    status?: string;
 }
 
 export class ClientSlim {
     id: Guid;
     name: string;
+    photo?: string;
 }
 
 export class Quotation {
