@@ -17,8 +17,6 @@ export const environment = {
     apiUrl: '${apiURL}'
 };`;
 
-console.log(envConfigFile);
-
 writeFile(targetPath, envConfigFile, (err) => {
     if (err) { console.log(err); }
 });

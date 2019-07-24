@@ -11,25 +11,24 @@ pipeline {
                 git 'scarlet:/projects.git/projects/dgiini'
             }
         }
+        stage('checout from git') {
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: '*/dev']],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [[$class: 'CleanBeforeCheckout'], 
+                    [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
+                submoduleCfg: [],
+                userRemoteConfigs: [[
+                    credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
+                    url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                ]
+            ]])
+        }
         stage('Build') {
             parallel {
                 stage('Build web') {
-                    agent {
-                        label "linux"
-                    }
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: '*/dev']],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
-                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-                            ]
-                        ]])
                         sh '''
                             cd ${WORKSPACE}/web
                             export PATH=$PATH:/home/jenkins/.npm-global/bin # use by other script
@@ -47,22 +46,7 @@ pipeline {
                     }
                 }
                 stage('Build task_api') {
-                    agent {
-                        label "linux"
-                    }
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: '*/dev']],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
-                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-                            ]
-                        ]])
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
@@ -80,22 +64,7 @@ pipeline {
                     }
                 }
                 stage('Build auth_api') {
-                    agent {
-                        label "linux"
-                    }
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: '*/dev']],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
-                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-                            ]
-                        ]])
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
@@ -113,22 +82,7 @@ pipeline {
                     }
                 }
                 stage('Build msg_api') {
-                    agent {
-                        label "linux"
-                    }
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: [[name: '*/dev']],
-                            doGenerateSubmoduleConfigurations: false,
-                            extensions: [[$class: 'CleanBeforeCheckout'], 
-                                [$class: 'CloneOption', noTags: true, reference: '', shallow: true]],
-                            submoduleCfg: [],
-                            userRemoteConfigs: [[
-                                credentialsId: '886c7666-4207-4fed-9574-9cb2b0f4eca6',
-                                url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-                            ]
-                        ]])
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
