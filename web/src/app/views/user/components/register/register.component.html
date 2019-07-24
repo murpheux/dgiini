@@ -22,10 +22,7 @@
                             <div>
                                 <mat-form-field class="full-width" floatLabel="always">
                                     <mat-label>What are the details</mat-label>
-                                    <input matInput type="password" placeholder="confirm password" formControlName="confirmpassword" [errorStateMatcher]="CrossFieldErrorMatcher">
-                                    <mar-error *ngIf="userForm.hasError('passwordsDoNotMatch')">
-                                        Password do not match!
-                                    </mar-error>
+                                    <input matInput type="password" placeholder="confirm password" formControlName="confirmpassword" [errorStateMatcher]>
                                 </mat-form-field>
                             </div>
                         </div>
