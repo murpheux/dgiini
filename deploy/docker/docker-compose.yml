@@ -1,15 +1,18 @@
-version: '3.7'
+version: '3.3'
 services:
 
     web:
-        image: nginx:1.17.1
+        image: nginx:1.17.2
         environment:
-            - NODE_ENV=development
+            - NGINX_HOST=dgiini.com
+            - NGINX_PORT=80
         ports:
             - "9000:80"
         volumes:
-            - ../../dgiini:/var/www/html
+            - ../../dgiini:/usr/share/nginx/html
+            - ../nginx/dgiini.template:/etc/nginx/conf.d/dgiini.template
         container_name: web
+        #command: /bin/bash -c "envsubst < /etc/nginx/conf.d/dgiini.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
         networks:
             - dgnet
 
@@ -29,8 +32,7 @@ services:
         command: >
             bash -c "cd /usr/src/app
             && yarn
-            && node auth_api
-            && curl http://localhost:
+            && node auth_api"
         networks:
             - dgnet
 
@@ -50,7 +52,7 @@ services:
         command: >
             bash -c "cd /usr/src/app
             && yarn
-            && node msg_api
+            && node msg_api"
         networks:
             - dgnet
 
@@ -64,7 +66,7 @@ services:
         command: >
             bash -c "cd /usr/src/app
             && yarn
-            && node msg_api
+            && node msg_api"
         networks:
             - dgnet
 
