@@ -3,6 +3,10 @@ services:
 
     web:
         image: nginx:1.17.2
+        depends_on:
+            - auth_api
+            - task_api
+            - msg_api
         environment:
             - NGINX_HOST=dgiini.com
             - NGINX_PORT=80
@@ -18,6 +22,8 @@ services:
 
     auth_api:
         image: node:12.6.0-stretch
+        depends_on:
+            - db
         environment:
             - NODE_ENV=development
             - TASK_API_PORT=80
@@ -26,6 +32,11 @@ services:
             - DB_HOST=db
             - DB_PORT=27017
             - AUTH_DATABASE=dg_authdb
+            - APP_NAME=auth_api/microservices
+            - APP_VERSION=v0.1
+            - APP_BUILD=0.0.1.00237
+        ports:
+            - "8008:80"
         volumes:
             - ../../msauth:/usr/src/app
         container_name: auth_api
@@ -38,28 +49,48 @@ services:
 
     task_api:
         image: node:12.6.0-stretch
+        depends_on:
+            - db
         environment:
             - NODE_ENV=development
-            - TASK_API_PORT=8000
-            - MSG_API_PORT=8004
-            - AUTH_API_PORT=8008
+            - TASK_API_PORT=80
+            - MSG_API_PORT=80
+            - AUTH_API_PORT=80
             - DB_HOST=db
             - DB_PORT=27017
             - TASK_DATABASE=dg_taskdb
+            - APP_NAME=task_api/microservices
+            - APP_VERSION=v0.1
+            - APP_BUILD=0.0.1.00237
+        ports:
+            - "8000:80"
         volumes:
             - ../../mstask:/usr/src/app
         container_name: task_api
         command: >
             bash -c "cd /usr/src/app
             && yarn
-            && node msg_api"
+            && node task_api"
         networks:
             - dgnet
 
     msg_api:
         image: node:12.6.0-stretch
+        depends_on:
+            - db
         environment:
             - NODE_ENV=development
+            - TASK_API_PORT=80
+            - MSG_API_PORT=80
+            - AUTH_API_PORT=80
+            - DB_HOST=db
+            - DB_PORT=27017
+            - TASK_DATABASE=dg_msgdb
+            - APP_NAME=msg_api/microservices
+            - APP_VERSION=v0.1
+            - APP_BUILD=0.0.1.00237
+        ports:
+            - "8004:80"
         volumes:
             - ../../msmsg:/usr/src/app
         container_name: msg_api
