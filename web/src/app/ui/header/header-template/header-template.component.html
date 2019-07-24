@@ -44,9 +44,10 @@
                     <a class="dropdown-item" (click)="openLoginDialog()" *ngIf="!isLoggedIn">Sign in</a>
                     <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
                     <a class="dropdown-item" (click)="openRegisterDialog()" *ngIf="!isLoggedIn">Register</a>
+                    <a class="dropdown-item" (click)="openRegisterDialog()" *ngIf="isLoggedIn">Profile</a>
                 </div>
             </div>
-            <div class="ml-1 font-weight-bold appuser" *ngIf="isLoggedIn">{{ currentUser?.name }}</div>
+            <div class="ml-1 font-weight-bold appuser" *ngIf="isLoggedIn"><a [routerLink]="['./user/logout']">{{ currentUser?.name }}</a></div>
         </div>
     </div>
 </header>
