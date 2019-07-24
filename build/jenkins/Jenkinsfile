@@ -36,8 +36,8 @@ pipeline {
                             yarn
                             yarn build-docker
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r web/dist/* jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
-                            scp -r deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            scp -r ${workspace}/web/dist/* jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            scp -r ${workspace}/deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
                     post {
@@ -68,10 +68,10 @@ pipeline {
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
                             yarn
                             yarn build-task
-                            cp ms/dependency.json dist/mstask/package.json
-                            cp ms/dependency.json dist/mstask/package.json
+                            cp ${workspace}/ms/dependency.json dist/mstask/package.json
+                            cp ${workspace}/ms/dependency.json dist/mstask/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            scp -r ${workspace}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
                     post {
@@ -102,10 +102,10 @@ pipeline {
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
                             yarn
                             yarn build-auth
-                            cp ms/dependency.json dist/msauth/package.json
-                            cp ms/dependency.json dist/msauth/package.json
+                            cp ${workspace}/ms/dependency.json dist/msauth/package.json
+                            cp ${workspace}/ms/dependency.json dist/msauth/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            scp -r ${workspace}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
                     post {
@@ -136,10 +136,10 @@ pipeline {
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
                             yarn
                             yarn build-msg
-                            cp ms/dependency.json dist/msmsg/package.json
-                            cp ms/dependency.json dist/msmsg/package.json
+                            cp ${workspace}/ms/dependency.json dist/msmsg/package.json
+                            cp ${workspace}/ms/dependency.json dist/msmsg/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            scp -r ${workspace}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
                     post {
