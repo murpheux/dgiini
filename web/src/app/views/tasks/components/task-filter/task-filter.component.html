@@ -3,8 +3,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
     <span class="navbar-brand">Filter :: </span>
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <div class="filter collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
                 <span class="font-weight-bold">City: </span>
@@ -15,24 +14,18 @@
                 </mat-form-field>
             </li>
             <li class="nav-item">
-                <div>
-                    <span class="font-weight-bold">Distance:</span>
+                <div class="distance-set">
+                    <span class="font-weight-bold">|  Distance:</span>
                     <mat-slider thumbLabel (change)="onDistanceChanged()" [displayWith]="formatLabel" [(ngModel)]="distanceToHome" tickInterval="1" min="1" max="100"></mat-slider> {{distanceToHome}} km
                 </div>
             </li>
             <li class="nav-item">
-                <span class="font-weight-bold">Categories:</span>
-                <mat-form-field>
+                <span class="font-weight-bold">| Categories:</span>
+                <mat-form-field class="stretch-item">
                     <mat-select [(ngModel)]="selectedCategory" multiple>
                         <mat-option (onSelectionChange)="onCategoriesChanged($event)" *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </li>
-            <li class="nav-item">
-                <mat-label>-</mat-label>
-                <mat-slide-toggle (change)="onHideChanged($event)">
-                    <span class="font-weight-bold">Hide Assigned:</span>
-                </mat-slide-toggle>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

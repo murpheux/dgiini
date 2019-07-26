@@ -68,8 +68,8 @@ export class TaskViewComponent implements OnInit {
 
     handleMakeOffer() {
         const registerRef = this.dialog.open(TaskOfferComponent, {
-            height: '600px',
-            width: '800px',
+            height: '400px',
+            width: '400px',
         });
         registerRef.afterClosed().subscribe(result => {});
     }
