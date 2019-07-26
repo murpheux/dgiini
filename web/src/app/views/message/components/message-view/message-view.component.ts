@@ -14,4 +14,7 @@ export class MessageViewComponent implements OnInit {
     ngOnInit() {
     }
 
+    handleReply(messageid) {
+        console.log(messageid);
+    }
 }

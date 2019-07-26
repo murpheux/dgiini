@@ -41,10 +41,14 @@ router.post('/login', (req, res) => {
     const credential = req.body
     const validation = validateCredential(credential)
 
+    const paging = {
+        filter: { username: credential.username }
+    }
+
     mgaccess.get_connection(common.database_uri, database_name, options).then(
         db => {
             const invoke_getone = async() => {
-                var result = await mgaccess.getone(db, USER_COLL, { username: credential.username })
+                var result = await mgaccess.getusers(db, USER_COLL, paging)
                 return result
             }
 
@@ -54,7 +58,7 @@ router.post('/login', (req, res) => {
                         user.lastLogin = new Date()
                         mgaccess.updateone(db, USER_COLL, user._id, { lastLogin: user.lastLogin }).then(
                             user_up => {
-                                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+                                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
                             },
                             err => {
                                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, 'Unable to update entity', user)), '', user))
@@ -154,7 +158,7 @@ router.get('/users', (req, res) => {
     mgaccess.get_connection(common.database_uri, database_name, options).then(
         db => {
             const invoke_getlist = async() => {
-                var result = await mgaccess.getlist(db, USER_COLL, paging)
+                var result = await mgaccess.getusers(db, USER_COLL, paging)
                 return result
             }
 
@@ -194,6 +198,42 @@ router.get('/users/:username', (req, res) => {
                     user => {
                         if (user) {
                             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+                        } else {
+                            res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
+                        }
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+})
+
+router.get('/usersx/:username', (req, res) => {
+    const username = req.params.username
+    var validation = validator().validate(username).isNotEmpty().isEmail()
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getone = async() => {
+                    var result = await mgaccess.getusers(db, USER_COLL, { username: username })
+                    return result
+                }
+
+                invoke_getone().then(
+                    user => {
+                        if (user) {
+                            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
                         } else {
                             res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
                         }

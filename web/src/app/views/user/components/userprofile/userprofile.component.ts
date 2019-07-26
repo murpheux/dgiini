@@ -1,15 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { User } from 'src/app/shared/models/user';
+import { IProfile } from 'src/app/shared/models/profile';
 
 @Component({
-  selector: 'app-userprofile',
-  templateUrl: './userprofile.component.html',
-  styleUrls: ['./userprofile.component.scss']
+    selector: 'app-userprofile',
+    templateUrl: './userprofile.component.html',
+    styleUrls: ['./userprofile.component.scss']
 })
 export class UserprofileComponent implements OnInit {
+    currentUser: IProfile;
+    isClient: boolean;
+    isVendor: boolean;
 
-  constructor() { }
+    constructor(
+        private authService: AuthService,
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+
+        this.authService.isLoggedIn().subscribe(islogin => {
+            if (islogin) {
+                this.authService.getCurrentUser().subscribe(user => {
+                    this.currentUser = user;
+
+                    this.isClient = user.client !== undefined;
+                    this.isVendor = user.vendor !== undefined;
+                });
+            }
+        });
+    }
 
 }

@@ -9,7 +9,7 @@ import titleCase from 'title-case'
 
 import common from '../shared/common'
 import VALIDATION_MSG from '../shared/error_messages'
-import { build_response, options, build_paging } from '../shared/lib'
+import { build_response, options, build_paging, enrich_paging } from '../shared/lib'
 import winston from '../shared/winston'
 
 const mgaccess = require('../data/mongo_access')
@@ -34,12 +34,13 @@ mgaccess.setup_database(common.database_uri, database_name, options, collections
 
 // task list
 router.get('/tasks', (req, res) => {
-    const paging = build_paging(req)
+    let paging = build_paging(req)
+    paging = enrich_paging(paging)
 
     mgaccess.get_connection(common.database_uri, database_name, options).then(
         db => {
             const invoke_getlist = async() => {
-                var result = await mgaccess.getlist(db, TASK_COLL, paging)
+                var result = await mgaccess.getlisttask(db, TASK_COLL, paging)
                 return result
             }
 
@@ -107,13 +108,13 @@ router.get('/tasks/:id', (req, res) => {
         mgaccess.get_connection(common.database_uri, database_name, options).then(
             db => {
                 const invoke_getone = async() => {
-                    var result = await mgaccess.getone(db, TASK_COLL, { _id: id })
+                    var result = await mgaccess.getonetask(db, TASK_COLL, { _id: id })
                     return result
                 }
 
                 invoke_getone().then(
                     tasks => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
                     },
                     err => {
                         winston.error(err)

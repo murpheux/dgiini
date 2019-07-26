@@ -4,6 +4,19 @@ import mongodb from 'mongodb'
 const mongoClient = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
 
+const process_paging = (paging) => {
+
+    if (paging.filter['_id']) {
+        if (Array.isArray(paging.filter['_id'])) {
+            paging.filter['_id'] = { $in: paging.filter['_id'].map(m => ObjectId(m)) }
+        } else {
+            paging.filter['_id'] = ObjectId(paging.filter['_id'])
+        }
+    }
+
+    return paging
+}
+
 module.exports = {
 
     // init
@@ -127,6 +140,131 @@ module.exports = {
             const count = db.collection(collection).find(filter).count()
             resolve(count)
         })
+    },
+
+    // get user one
+    getusers: (db, collection, paging) => {
+        process_paging(paging)
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([
+                { $match: paging.filter },
+                { $lookup: { from: 'ratings', localField: '_id', foreignField: 'user', as: 'ratings' } },
+                { $lookup: { from: 'clients', localField: 'client', foreignField: '_id', as: 'clientInfo' } },
+                { $lookup: { from: 'vendors', localField: 'vendor', foreignField: '_id', as: 'vendorInfo' } },
+                {
+                    $project: {
+                        name: 1,
+                        username: 1,
+                        address: 1,
+                        isActive: 1,
+                        isBanned: 1,
+                        lastLogin: 1,
+                        created: 1,
+                        rating: { $avg: '$ratings.rating' },
+                        ratingcount: { $size: '$ratings' },
+                        client: { $arrayElemAt: ['$clientInfo', 0] },
+                        vendor: { $arrayElemAt: ['$vendorInfo', 0] },
+                        photo: 1
+                    }
+                }
+            ]).toArray()
+
+            resolve(doc)
+        })
+
+    },
+
+    getonetask: (db, collection, filter) => {
+        if (filter['_id']) { filter['_id'] = ObjectId(filter['_id']) }
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([
+                { $match: filter },
+                { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
+                {
+                    $project: {
+                        title: 1,
+                        description: 1,
+                        location: 1,
+                        rate: 1,
+                        client: 1,
+                        created: 1,
+                        category: 1,
+                        estimated_hours: 1,
+                        status: 1,
+                        bidcount: { $size: '$bids' },
+                        scheduled_date: 1,
+                        lastbid: { $arrayElemAt: ['$bids', -1] }
+                    }
+                }
+            ]).toArray()
+
+            resolve(doc)
+        })
+
+    },
+
+    getlisttask: (db, collection, paging) => {
+
+        paging = process_paging(paging)
+
+        if (paging.lastid) {
+            return new Promise((resolve, reject) => {
+                const doc = db.collection(collection)
+                    .aggregate([{ $match: { '_id': { '$gt': ObjectId(paging.lastid) } } },
+                        { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
+                        {
+                            $project: {
+                                title: 1,
+                                description: 1,
+                                location: 1,
+                                rate: 1,
+                                client: 1,
+                                created: 1,
+                                category: 1,
+                                estimated_hours: 1,
+                                status: 1,
+                                bidcount: { $size: '$bids' },
+                                scheduled_date: 1,
+                                lastbid: { $arrayElemAt: ['$bids', -1] }
+                            }
+                        }
+                    ]).limit(paging.page_limit)
+                    .toArray()
+
+                resolve(doc)
+            })
+        } else {
+            return new Promise((resolve, reject) => {
+                const doc = db.collection(collection)
+                    .aggregate([{ $match: paging.filter },
+                        { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
+                        {
+                            $project: {
+                                title: 1,
+                                description: 1,
+                                location: 1,
+                                rate: 1,
+                                client: 1,
+                                created: 1,
+                                category: 1,
+                                estimated_hours: 1,
+                                status: 1,
+                                bidcount: { $size: '$bids' },
+                                scheduled_date: 1,
+                                lastbid: { $arrayElemAt: ['$bids', -1] }
+                            }
+                        },
+                        { $skip: paging.page_limit * (paging.page - 1) },
+                        { $limit: paging.page_limit },
+                        { $sort: { '_id': 1 } }
+                    ]).toArray()
+
+                resolve(doc)
+            })
+        }
+
     }
 
 }

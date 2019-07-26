@@ -4,6 +4,10 @@
     max-height: 150px;
 }
 
+.task-icon {
+    font-size: 1em;
+}
+
 .task-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
@@ -18,7 +22,7 @@
 }
 
 .taskinfo {
-    margin-top: 20px;
+    margin-top: 15px;
     margin-left: -5px;
 }
 
@@ -46,4 +50,11 @@
     top: 10px;
     right: 10px;
     font-size: 20px;
+}
+
+.ramount-init {
+    text-decoration: line-through;
+    position: absolute;
+    top: 35px;
+    right: 10px;
 }

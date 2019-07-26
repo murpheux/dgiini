@@ -16,12 +16,17 @@ export interface ITask {
     rate: Quotation;
     selected?: boolean;
     status?: string;
+    lastbid: IBid;
 }
 
 export class ClientSlim {
     id: Guid;
     name: string;
     photo?: string;
+}
+
+export interface IBid {
+    amount: number;
 }
 
 export class Quotation {

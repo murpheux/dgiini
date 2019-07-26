@@ -9,10 +9,16 @@ import { ITask } from '../../models/ITask';
 export class TaskCardComponent implements OnInit {
     @Input() task: ITask;
     @Output() taskSelected = new EventEmitter();
+    public currentPrice: number;
 
     constructor() { }
 
     ngOnInit() {
+        if (this.task.lastbid) {
+            this.currentPrice = this.task.lastbid.amount;
+        } else {
+            this.currentPrice = this.task.rate.amount;
+        }
     }
 
     ontaskcardclick() {

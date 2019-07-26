@@ -1,3 +1,77 @@
-<p>
-  userprofile works!
-</p>
+<mat-card class=" card border-secondary mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div>
+                    <div class="message-image">
+                        <img mat-card-avatar class="message-image" [src]="currentUser.photo" />
+                    </div>
+                    <div>
+                        <p>{{ currentUser.username }}</p>
+                        <p>{{ currentUser.name }}</p>
+                        <p>Last Login: {{ currentUser.lastLogin | date }}</p>
+                        <p>Member Since: {{ currentUser.created | date }} </p>
+                        <p>Rating: {{ currentUser.rating }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div>
+                    <div>
+                        Badges
+                    </div>
+                    <div>
+                        About
+                    </div>
+                    <div>
+                        Portfolio
+                    </div>
+                    <div>
+                        Skills
+                    </div>
+                    <div>
+                        License Badges
+                    </div>
+                    <div>
+                        Patnership Badges
+                    </div>
+
+                    <div>
+                        Reviews
+                    </div>
+
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="As Client">
+                            <div *ngIf="isClient">
+                                <div>
+                                    <p>Card Number: {{ currentUser.client.credit_card.card_number }}</p>
+                                    <p>Name on Card: {{ currentUser.client.credit_card.name_on_card }}</p>
+                                    <p>Expiry: {{ currentUser.client.credit_card.expiry }}</p>
+                                    <p>Address: {{ currentUser.client.credit_card.billing_address }}</p>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="As Vendor">
+                            <div *ngIf="isVendor">
+                                <div>
+                                    <p>Bank Name: {{ currentUser.vendor.bank_info.inst_name }}</p>
+                                    <p>Transit No: {{ currentUser.vendor.bank_info.transit_no }}</p>
+                                    <p>Inst. Code: {{ currentUser.vendor.bank_info.inst_code }}</p>
+                                    <p>Address: {{ currentUser.vendor.bank_info.branch_add.street }} {{ currentUser.vendor.bank_info.branch_add.city }} {{ currentUser.vendor.bank_info.branch_add.state }} {{ currentUser.vendor.bank_info.branch_add.zipcode
+                                        }} {{ currentUser.vendor.bank_info.branch_add.country }}
+                                    </p>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</mat-card>

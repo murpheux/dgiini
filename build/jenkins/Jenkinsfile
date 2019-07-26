@@ -41,11 +41,6 @@ pipeline {
                             scp -r ${WORKSPACE}/deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
-                    post {
-                        always {
-                            echo 'Angular build complete'
-                        }
-                    }
                 }
                 stage('Build task_api') {
                     steps {
@@ -58,11 +53,6 @@ pipeline {
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
                             scp -r ${WORKSPACE}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
-                    }
-                    post {
-                        always {
-                            echo 'Task Api build complete!'
-                        }
                     }
                 }
                 stage('Build auth_api') {
@@ -77,11 +67,6 @@ pipeline {
                             scp -r ${WORKSPACE}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
                     }
-                    post {
-                        always {
-                            echo 'Auth Api build complete!'
-                        }
-                    }
                 }
                 stage('Build msg_api') {
                     steps {
@@ -94,11 +79,6 @@ pipeline {
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
                             scp -r ${WORKSPACE}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
                         '''
-                    }
-                    post {
-                        always {
-                            echo 'Msg Api build complete!'
-                        }
                     }
                 }
             }

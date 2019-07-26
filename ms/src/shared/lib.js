@@ -30,3 +30,20 @@ export const build_paging = req => {
         lastid: req.query.lastid
     }
 }
+
+export const enrich_paging = (paging) => {
+
+    if (paging.page_limit === 0) {
+        paging.page_limit = 100
+    }
+
+    if (paging.page === 0) {
+        paging.page = 1
+    }
+
+    if (!paging.sort_keys) {
+        paging.sort_keys = '_id'
+    }
+
+    return paging
+}

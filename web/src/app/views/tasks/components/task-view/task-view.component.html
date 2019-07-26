@@ -12,30 +12,48 @@
                 <button type="button" class="btn btn-primary">Make Offer</button>
             </div>
             <div>
-                <div>
-                    <div class="font-weight-bold">Posted By</div>
-                    <div>{{task.client.name}}</div>
-                </div>
-                <div>
-                    <div class="font-weight-bold">Location</div>
-                    <div>{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
-                </div>
-                <div>
-                    <div class="font-weight-bold">Due Date</div>
-                    <div>{{task.scheduled_date | date}}</div>
-                </div>
-            </div>
-            <div>
-                <span class="font-weight-bold">Details</span>
-                <div>{{task.description}}</div>
-                <div>
-                    <div>
-                        <img src="" />
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <mat-icon>person_pin</mat-icon>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="font-weight-bold">Posted By</div>
+                            <div>{{task.client.name}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <mat-icon>location_on</mat-icon>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="font-weight-bold">Location</div>
+                            <div>{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <mat-icon>calendar_today</mat-icon>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="font-weight-bold">Due Date</div>
+                            <div>{{task.scheduled_date | date}}</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <mat-icon>chrome_reader_mode</mat-icon>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="font-weight-bold">Details</span>
+                            <div>{{task.description}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div>
                 <div>
+                    <mat-icon> message</mat-icon>
                     <span class="font-weight-bold">Messages</span>
                     <p>Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
                 </div>

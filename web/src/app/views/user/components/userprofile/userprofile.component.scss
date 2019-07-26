@@ -1,0 +1,9 @@
+.message-image {
+    background-size: cover;
+}
+
+$mat-card-header-size: 150px !default;
+.mat-card-avatar {
+    height: $mat-card-header-size;
+    width: $mat-card-header-size;
+}
