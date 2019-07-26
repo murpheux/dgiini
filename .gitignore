@@ -3,6 +3,10 @@
 # compiled output
 /dist
 **/dist
+**/logs
+**/ms/yarn.lock
+**ms/package-lock.json
+**/ms/.cache
 /tmp
 /out-tsc
 
@@ -43,6 +47,3 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
-
-**/logs
