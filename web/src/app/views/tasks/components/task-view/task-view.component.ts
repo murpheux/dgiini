@@ -3,6 +3,8 @@ import { ITask } from '../../models/ITask';
 import { MessageService } from '../../../message/services/message.service';
 import { IMessage } from '../../../message/models/message';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskOfferComponent } from '../task-offer/task-offer.component';
 
 @Component({
     selector: 'app-task-view',
@@ -12,6 +14,7 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 export class TaskViewComponent implements OnInit {
     private _task: ITask;
     public messages: IMessage[];
+    public currentPrice: number;
     @Input() currentUser: any;
 
     @Input()
@@ -30,10 +33,16 @@ export class TaskViewComponent implements OnInit {
     }
 
     constructor(
-        private messageService: MessageService
+        private messageService: MessageService,
+        public dialog: MatDialog
     ) { }
 
     ngOnInit() {
+        if (this.task.lastbid) {
+            this.currentPrice = this.task.lastbid.amount;
+        } else {
+            this.currentPrice = this.task.rate.amount;
+        }
     }
 
     getUserTaskMessages() {
@@ -55,6 +64,14 @@ export class TaskViewComponent implements OnInit {
         message.from = this.currentUser;
 
         this.messages.unshift(message);
+    }
+
+    handleMakeOffer() {
+        const registerRef = this.dialog.open(TaskOfferComponent, {
+            height: '600px',
+            width: '800px',
+        });
+        registerRef.afterClosed().subscribe(result => {});
     }
 
 }

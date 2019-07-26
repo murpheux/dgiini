@@ -24,13 +24,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 import { MessageModule } from '../message/message.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { TaskOfferComponent } from './components/task-offer/task-offer.component';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
-        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent],
+        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, TaskOfferComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -43,7 +44,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
         NgxMaterialTimepickerModule
     ],
     entryComponents: [
-        TaskDeleteDialogComponent,
+        TaskDeleteDialogComponent, TaskOfferComponent
       ],
     exports: [TaskCategoriesComponent,
         TaskCreateComponent, TaskCardComponent,

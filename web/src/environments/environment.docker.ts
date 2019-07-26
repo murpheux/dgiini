@@ -1,6 +1,6 @@
-const TASK_BASE_URL = 'http://scarlet:8000';
-const AUTH_BASE_URL = 'http://scarlet:8008';
-const MSG_BASE_URL = 'http://scarlet:8004';
+const TASK_BASE_URL = 'http://70.77.10.241:8000';
+const AUTH_BASE_URL = 'http://70.77.10.241:8008';
+const MSG_BASE_URL = 'http://70.77.10.241:8004';
 
 export const environment = {
     production: false,
