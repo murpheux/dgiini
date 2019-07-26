@@ -149,7 +149,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             scheduled_date: new Date(formValues.task2FormGroup.taskdate),
             created: currentDate,
             category: 'Driver',
-            estimated_hours: formValues.task3FormGroup.esthrs
+            estimated_hours: formValues.task3FormGroup.esthrs,
         };
 
         const validator = new TaskValidator();

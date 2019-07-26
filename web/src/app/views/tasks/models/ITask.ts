@@ -16,7 +16,7 @@ export interface ITask {
     rate: Quotation;
     selected?: boolean;
     status?: string;
-    lastbid: IBid;
+    lastbid?: IBid;
 }
 
 export class ClientSlim {
