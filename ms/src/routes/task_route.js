@@ -6,6 +6,7 @@ import express from 'express'
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
 import titleCase from 'title-case'
+import mongodb from 'mongodb'
 
 import common from '../shared/common'
 import VALIDATION_MSG from '../shared/error_messages'
@@ -15,7 +16,9 @@ import winston from '../shared/winston'
 const mgaccess = require('../data/mongo_access')
 const router = express.Router()
 const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
+const ObjectId = mongodb.ObjectId
 const TASK_COLL = 'tasks'
+const BID_COLL = 'bids'
 
 const task_status = {
     OPEN: 'open',
@@ -200,6 +203,81 @@ router.delete('/tasks/:id', (req, res) => {
     }
 })
 
+// update 
+router.put('/bids', (req, res) => {
+    const bid = req.body
+    var validation = validator().validate(bid.id).isNotNull().and.isNotEmpty().isMongoObjectId()
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        const id = bid.id
+        delete bid['id']
+
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_updateone = async() => {
+                    var result = await mgaccess.updateone(db, BID_COLL, id, bid)
+                    return result
+                }
+
+                invoke_updateone().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+})
+
+// create 
+router.post('/bids', (req, res) => {
+    const bid = req.body
+    const validation = validateBid(bid)
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        // enrich
+        bid.created = new Date()
+        bid.user = ObjectId(bid.user)
+        bid.task = ObjectId(bid.task)
+
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_updateone = async() => {
+                    var result = await mgaccess.create(db, BID_COLL, bid)
+                    return result
+                }
+
+                invoke_updateone().then(
+                    task => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task.ops[0]))
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+
+})
+
 // create 
 router.post('/tasks', (req, res) => {
     const task = req.body
@@ -287,6 +365,15 @@ router.get('/categories', (req, res) => {
 
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', categories))
 })
+
+const validateBid = (bid) => {
+    const validation = validator()
+        .validate(bid.user).isNotEmpty().and.isMongoObjectId()
+        .validate(bid.task).isNotEmpty().and.isMongoObjectId()
+        .validate(bid.amount).isNumber().isPositive()
+
+    return validation
+}
 
 const validateTask = (task) => {
     const validation = validator()

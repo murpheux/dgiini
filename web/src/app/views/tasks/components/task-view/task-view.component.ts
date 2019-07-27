@@ -5,6 +5,9 @@ import { IMessage } from '../../../message/models/message';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskOfferComponent } from '../task-offer/task-offer.component';
+import { IProfile } from 'src/app/shared/models/profile';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-view',
@@ -15,7 +18,8 @@ export class TaskViewComponent implements OnInit {
     private _task: ITask;
     public messages: IMessage[];
     public currentPrice: number;
-    @Input() currentUser: any;
+    public owned: boolean;
+    @Input() currentUser: IProfile;
 
     @Input()
     set task(task: ITask) {
@@ -26,6 +30,18 @@ export class TaskViewComponent implements OnInit {
         } else {
             this.getTaskMessages();
         }
+
+        if (this.task.lastbid) {
+            this.currentPrice = this.task.lastbid.amount;
+        } else {
+            this.currentPrice = this.task.rate.amount;
+        }
+
+        if (task.client.id) {
+            this.owned = task.client.id === this.currentUser._id;
+        } else {
+            this.owned = (task.client as unknown as IProfile)._id === this.currentUser._id;
+        }
     }
 
     get task(): ITask {
@@ -34,7 +50,10 @@ export class TaskViewComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        public dialog: MatDialog
+        private dialog: MatDialog,
+        private notificationService: NotificationService,
+        private taskService: TaskService,
+
     ) { }
 
     ngOnInit() {
@@ -43,6 +62,8 @@ export class TaskViewComponent implements OnInit {
         } else {
             this.currentPrice = this.task.rate.amount;
         }
+
+        this.owned = this._task.client.id === this.currentUser._id;
     }
 
     getUserTaskMessages() {
@@ -70,8 +91,18 @@ export class TaskViewComponent implements OnInit {
         const registerRef = this.dialog.open(TaskOfferComponent, {
             height: '400px',
             width: '400px',
+            data: { user: this.currentUser, task: this.task }
         });
-        registerRef.afterClosed().subscribe(result => {});
+        registerRef.afterClosed().subscribe(result => {
+            this.currentPrice = this.task.lastbid.amount;
+        });
+    }
+
+    handleAcceptOffer() {
+        this.taskService.acceptBid(this.task.lastbid).subscribe(resp => {
+
+            this.notificationService.showSuccess('Offer accepted!');
+        });
     }
 
 }

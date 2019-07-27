@@ -28,8 +28,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private cd: ChangeDetectorRef,
-        private toastr: ToastrService
+        private cd: ChangeDetectorRef
     ) { }
 
     ngOnInit() {

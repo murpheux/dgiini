@@ -1,9 +1,12 @@
-- hosts: all
-	become: true
-	roles:
-		dgiini
-
--host: ahost
-	become: true
-	roles:
-		webserver
+- hosts: scarlet
+  become: true
+  roles:
+    all
+  tasks:
+  - name: Run db container
+    docker_container:
+      name: 'db'
+      image: 'mongo:4.1.13-bionic'
+      state: 'started'
+  - name: populate database
+    command: ./manage.py migrate

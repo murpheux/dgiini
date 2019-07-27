@@ -62,11 +62,10 @@ export class TaskCategoriesComponent implements OnInit {
             this.model = success.payload;
 
             if (this.model !== undefined && this.model.length !== 0) {
+                this.taskService.enrichTasks(this.model);
                 this.currentTask = this.model[0];
                 this.currentTask.selected = true;
             }
-
-            this.taskService.enrichTasks(this.model);
         });
     }
 
@@ -75,11 +74,10 @@ export class TaskCategoriesComponent implements OnInit {
             this.model = success.payload;
 
             if (this.model !== undefined && this.model.length !== 0) {
+                this.taskService.enrichTasks(this.model);
                 this.currentTask = this.model[0];
                 this.currentTask.selected = true;
             }
-
-            this.taskService.enrichTasks(this.model);
         });
     }
 

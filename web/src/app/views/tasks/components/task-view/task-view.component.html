@@ -10,7 +10,15 @@
                 <span>Budget</span>
                 <div *ngIf="task.lastbid" class="ramount text-danger">{{task.rate.amount | currency:'CAD' }}</div>
                 <div class="font-weight-bold">{{currentPrice | currency:'CAD' }}</div>
-                <button type="button" class="btn btn-primary" (click)="handleMakeOffer()">Make Offer</button>
+                <div *ngIf="task.lastbid?.accepted">
+                    <span class="statusBadge badge badge-success">Accepted!!</span>
+                </div>
+                <div *ngIf="!task.lastbid?.accepted">
+                    <button type="button" class="btn btn-primary" (click)="handleMakeOffer()">Make Offer</button>
+                    <br/>
+                    <br/>
+                    <button *ngIf="owned" type="button" class="btn btn-danger" (click)="handleAcceptOffer()">Accept Offer</button>
+                </div>
             </div>
             <div>
                 <div class="container">

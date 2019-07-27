@@ -1,5 +1,6 @@
 import { IAddress } from './IAddress';
 import { Guid } from 'guid-typescript';
+import { ITaskBid } from './ITaskBid';
 
 export enum TaskType { InPerson, Online }
 
@@ -16,17 +17,13 @@ export interface ITask {
     rate: Quotation;
     selected?: boolean;
     status?: string;
-    lastbid?: IBid;
+    lastbid?: ITaskBid;
 }
 
 export class ClientSlim {
     id: Guid;
     name: string;
     photo?: string;
-}
-
-export interface IBid {
-    amount: number;
 }
 
 export class Quotation {

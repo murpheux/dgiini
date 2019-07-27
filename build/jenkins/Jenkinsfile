@@ -5,10 +5,11 @@ pipeline {
         }
     }
     stages {
-        stage('Preparation') {
+        stage('preparation') {
             steps {
                 // Git repository
                 git 'scarlet:/projects.git/projects/dgiini'
+                deleteDir() /* clean up our workspace */
             }
         }
         stage('checout from git') {
@@ -27,7 +28,7 @@ pipeline {
                 ]])
             }
         }
-        stage('Build') {
+        stage('build') {
             parallel {
                 stage('Build web') {
                     steps {
@@ -81,6 +82,11 @@ pipeline {
                         '''
                     }
                 }
+            }
+        }
+        stage('clean') {
+            steps {
+                deleteDir() /* clean up our workspace */
             }
         }
     }

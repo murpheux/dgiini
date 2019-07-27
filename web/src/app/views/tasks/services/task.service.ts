@@ -7,12 +7,14 @@ import { ITask } from '../models/ITask';
 import { IResponse } from '../models/IResponse';
 import { Guid } from 'guid-typescript';
 import { AuthService } from '../../user/services/auth.service';
+import { ITaskBid } from '../models/ITaskBid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
     private serviceUrl = `${environment.TASK_API}/tasks`;
+    private bidServiceUrl = `${environment.TASK_API}/bids`;
 
     constructor(
         private http: HttpClient,
@@ -47,6 +49,16 @@ export class TaskService {
     saveTask(task: ITask) {
         const url = `${this.serviceUrl}`;
         return this.http.post(url, task);
+    }
+
+    saveBid(bid: ITaskBid): Observable<IResponse> {
+        const url = `${this.bidServiceUrl}`;
+        return this.http.post<IResponse>(url, bid);
+    }
+
+    acceptBid(bid: ITaskBid): Observable<IResponse> {
+        const url = `${this.bidServiceUrl}`;
+        return this.http.put<IResponse>(url, bid);
     }
 
     updateTask(id: Guid, task: ITask) {
