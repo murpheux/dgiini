@@ -99,9 +99,15 @@ export class TaskViewComponent implements OnInit {
     }
 
     handleAcceptOffer() {
-        this.taskService.acceptBid(this.task.lastbid).subscribe(resp => {
-
+        console.log(this.task.lastbid);
+        this.taskService.acceptBid(this.task.lastbid.id).subscribe(resp => {
             this.notificationService.showSuccess('Offer accepted!');
+        });
+    }
+
+    handleCancelTask() {
+        this.taskService.cancelTask(this.task._id).subscribe(resp => {
+            this.notificationService.showSuccess('Task Cancelled!');
         });
     }
 
