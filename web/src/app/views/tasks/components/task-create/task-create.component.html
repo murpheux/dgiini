@@ -142,7 +142,7 @@
                             <br/>Title: {{taskFormGroup.get('task1FormGroup').get('title').value}}
                             <br/>Description : {{taskFormGroup.get('task1FormGroup').get('description').value}}
                             <br/>Address :{{taskFormGroup.get('task2FormGroup').get('street').value}} {{taskFormGroup.get('task2FormGroup').get('city').value}}
-                            <br/>Scheduled Date :{{taskFormGroup.get('task2FormGroup').get('taskdate').value}}
+                            <br/>Scheduled Date :{{taskFormGroup.get('task2FormGroup').get('taskdate').value | date}}
                             <br/>Rate :{{taskFormGroup.get('task3FormGroup').get('rate').value}}
                             <br/>Rate Unit :{{taskFormGroup.get('task3FormGroup').get('rateunit').value}}
                             <br/>Est. Hrs. :{{taskFormGroup.get('task3FormGroup').get('esthrs').value}}
@@ -153,7 +153,7 @@
                     <div>
                         <button mat-button type="button" matStepperPrevious>Back</button>
                         <button mat-button type="button" (click)="stepper.reset()">Reset</button>
-                        <button mat-button class="button button-primary" type="submit">Save</button>
+                        <button mat-button class="button button-primary" type="submit">Post</button>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>

@@ -1,0 +1,20 @@
+<div>
+    <h3>Find the task you want</h3>
+    <div>
+        <form #searchForm="ngForm" [formGroup]="searchFormGroup" autocomplete="off" (ngSubmit)="handleSearch(searchForm.value)">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <mat-form-field class="full-width" floatLabel="always">
+                            <input matInput placeholder="enter seach" formControlName="search">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" [disabled]="searchFormGroup.invalid" class="btn btn-success">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

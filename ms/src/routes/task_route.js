@@ -358,7 +358,7 @@ router.get('/tasks/category/:category', (req, res) => {
 })
 
 
-const categories = ['Cleaning', 'Garden', 'Home', 'HandyMan', 'FurnitureAssembly', 'Mowing', 'SnowPlowing', 'Nursing', 'Childcare', 'Moving', 'Driver', 'Others']
+const categories = ['Cleaning', 'Gardening', 'Handy Man', 'Furniture Assembly', 'Lawn Mowing', 'Snow Plowing', 'Childcare', 'Moving', 'Others']
 
 // categories
 router.get('/categories', (req, res) => {

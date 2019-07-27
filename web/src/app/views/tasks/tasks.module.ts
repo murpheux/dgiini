@@ -25,13 +25,14 @@ import { TaskCardLinkComponent } from './components/task-card-link/task-card-lin
 import { MessageModule } from '../message/message.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TaskOfferComponent } from './components/task-offer/task-offer.component';
+import { TaskSearchComponent } from './components/task-search/task-search.component';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
-        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, TaskOfferComponent],
+        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, TaskOfferComponent, TaskSearchComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -48,7 +49,7 @@ import { TaskOfferComponent } from './components/task-offer/task-offer.component
       ],
     exports: [TaskCategoriesComponent,
         TaskCreateComponent, TaskCardComponent,
-        TaskCategoryNodeComponent, TaskShowcaseComponent],
+        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskSearchComponent],
     providers: [TaskService]
 })
 export class TasksModule {

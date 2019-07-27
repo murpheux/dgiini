@@ -3,6 +3,7 @@ import { IResponse } from '../../models/IResponse';
 import { ITask } from '../../models/ITask';
 import { TaskService } from '../../services/task.service';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-task-showcase',
@@ -16,14 +17,16 @@ export class TaskShowcaseComponent implements OnInit {
     mowingModel: ITask[];
     nursingModel: ITask[];
     cleaningModel: ITask[];
-    showcaseTabArray = ['Moving', 'Garden', 'Mowing', 'Nursing', 'Others'];
+    showcaseTabArray = ['Moving', 'Gardening', 'Lawn Mowing', 'Childcare', 'Others'];
 
     constructor(
         private taskService: TaskService
     ) { }
 
     ngOnInit() {
-        this.getMovingTasks();
+        this.getCategoryTask('Moving').then(ret => {
+            this.movingModel = ret;
+        });
     }
 
     getTasks() {
@@ -33,38 +36,15 @@ export class TaskShowcaseComponent implements OnInit {
         });
     }
 
-    getMovingTasks() {
-        this.taskService.getTasksByCategories(['Moving']).subscribe((response: IResponse) => {
-            this.movingModel = response.payload;
-            this.taskService.enrichTasks(this.movingModel);
-        });
-    }
+    getCategoryTask(category): Promise<ITask[]> {
 
-    getGardenTasks() {
-        this.taskService.getTasksByCategories(['Garden']).subscribe((response: IResponse) => {
-            this.gardenModel = response.payload;
-            this.taskService.enrichTasks(this.gardenModel);
-        });
-    }
+        return new Promise<ITask[]>((resolve, reject) => {
+            this.taskService.getTasksByCategories([category]).subscribe((response: IResponse) => {
+                    const model: ITask[] = response.payload;
+                    this.taskService.enrichTasks(model);
 
-    getMowingTasks() {
-        this.taskService.getTasksByCategories(['Mowing']).subscribe((response: IResponse) => {
-            this.mowingModel = response.payload;
-            this.taskService.enrichTasks(this.mowingModel);
-        });
-    }
-
-    getNursingTasks() {
-        this.taskService.getTasksByCategories(['Nursing']).subscribe((response: IResponse) => {
-            this.nursingModel = response.payload;
-            this.taskService.enrichTasks(this.nursingModel);
-        });
-    }
-
-    getCleaningTasks() {
-        this.taskService.getTasksByCategories(['Cleaning']).subscribe((response: IResponse) => {
-            this.cleaningModel = response.payload;
-            this.taskService.enrichTasks(this.cleaningModel);
+                    resolve(model);
+            });
         });
     }
 
@@ -74,31 +54,42 @@ export class TaskShowcaseComponent implements OnInit {
         switch (category) {
             case 'Moving': {
                 if (!this.movingModel) {
-                    this.getMovingTasks();
+                    this.getCategoryTask(category).then(ret => {
+                        this.movingModel = ret;
+                    });
                 }
                 break;
             }
-            case 'Garden': {
+            case 'Gardening': {
                 if (!this.gardenModel) {
-                    this.getGardenTasks();
+                    this.getCategoryTask(category).then(ret => {
+                        this.gardenModel = ret;
+                    });
                 }
                 break;
             }
-            case 'Mowing': {
+            case 'Lawn Mowing': {
                 if (!this.mowingModel) {
-                    this.getMowingTasks();
+                    this.getCategoryTask(category).then(ret => {
+                        this.mowingModel = ret;
+                    });
                 }
                 break;
             }
-            case 'Nursing': {
+            case 'Childcare': {
                 if (!this.nursingModel) {
-                    this.getNursingTasks();
+                    this.getCategoryTask(category).then(ret => {
+                        this.nursingModel = ret;
+                    });
                 }
                 break;
             }
             default: {
                 if (!this.cleaningModel) {
-                    this.getCleaningTasks();
+                    this.getCategoryTask(category).then(ret => {
+                        console.log(category);
+                        this.cleaningModel = ret;
+                    });
                 }
                 break;
             }
