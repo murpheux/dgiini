@@ -16,7 +16,7 @@ export class TaskCategoriesComponent implements OnInit {
     distanceToHome: number;
     selectedCategory: string[];
     defaultDistanceToHome = 55;
-    currentCity = 'Calgary';
+    currentCity: string;
     public currentUser: any;
 
     title = 'app';
@@ -50,6 +50,9 @@ export class TaskCategoriesComponent implements OnInit {
         });
 
         this.distanceToHome = this.defaultDistanceToHome;
+        this.authService.getCurrentCity().then(city => {
+            this.currentCity = city;
+        });
     }
 
 
@@ -89,6 +92,7 @@ export class TaskCategoriesComponent implements OnInit {
 
     handleCityChanged(city: string) {
         this.currentCity = city;
+        this.authService.setCurrentCity(city);
     }
 
     handleDistanceChanged(distance: number) {

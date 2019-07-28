@@ -27,6 +27,12 @@ export class TaskViewComponent implements OnInit {
 
         if (this.currentUser) {
             this.getUserTaskMessages();
+
+            if (task.client.id) {
+                this.owned = task.client.id === this.currentUser._id;
+            } else {
+                this.owned = (task.client as unknown as IProfile)._id === this.currentUser._id;
+            }
         } else {
             this.getTaskMessages();
         }
@@ -35,12 +41,6 @@ export class TaskViewComponent implements OnInit {
             this.currentPrice = this.task.lastbid.amount;
         } else {
             this.currentPrice = this.task.rate.amount;
-        }
-
-        if (task.client.id) {
-            this.owned = task.client.id === this.currentUser._id;
-        } else {
-            this.owned = (task.client as unknown as IProfile)._id === this.currentUser._id;
         }
     }
 
@@ -63,7 +63,9 @@ export class TaskViewComponent implements OnInit {
             this.currentPrice = this.task.rate.amount;
         }
 
-        this.owned = this._task.client.id === this.currentUser._id;
+        if (this.currentUser) {
+            this.owned = this._task.client.id === this.currentUser._id;
+        }
     }
 
     getUserTaskMessages() {

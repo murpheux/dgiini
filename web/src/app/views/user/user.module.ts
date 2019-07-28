@@ -9,9 +9,10 @@ import { AuthService } from './services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
+import { BecomevendorComponent } from './components/becomevendor/becomevendor.component';
 
 @NgModule({
-  declarations: [LoginComponent, LogoutComponent, RegisterComponent, UserprofileComponent],
+  declarations: [LoginComponent, LogoutComponent, RegisterComponent, UserprofileComponent, BecomevendorComponent],
   imports: [
     CommonModule,
     SharedModule,

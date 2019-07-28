@@ -10,5 +10,4 @@ import { IResponse } from '../../tasks/models/IResponse';
 export class HomeService {
 
     constructor(private http: HttpClient) { }
-
 }

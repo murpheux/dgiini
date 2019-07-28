@@ -24,9 +24,6 @@
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['./mytask']">
                             <mat-icon>note</mat-icon>my tasks</a>
                     </li>
-                    <!-- <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">How it works</a>
-                    </li> -->
                 </ul>
             </nav>
         </div>
@@ -45,6 +42,7 @@
                     <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
                     <a class="dropdown-item" (click)="openRegisterDialog()" *ngIf="!isLoggedIn">Register</a>
                     <a class="dropdown-item" [routerLink]="['./user/profile']" *ngIf=" isLoggedIn ">Profile</a>
+                    <a class="dropdown-item" [routerLink]="['./user/upgrade']" *ngIf=" isLoggedIn ">Become Vendor</a>
                 </div>
             </div>
             <div class="ml-1 font-weight-bold appuser " *ngIf="isLoggedIn "><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>

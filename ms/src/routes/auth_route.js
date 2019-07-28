@@ -15,6 +15,7 @@ import got from 'got'
 const mgaccess = require('../data/mongo_access')
 const router = express.Router()
 const database_name = process.env.AUTH_DATABASE || 'dg_authdb'
+const find_city_service = process.env.CITY_SERVICE || 'https://tools.keycdn.com/geo.json'
 const USER_COLL = 'users'
 const CLIENT_COLL = 'clients'
 const VENDOR_COLL = 'vendors'
@@ -402,24 +403,15 @@ router.post('/users/vendor', (req, res) => {
 router.get('/findcity/:ip', (req, res) => {
     const ip = req.params.ip
     const validation = validator().validate(ip).isNotEmpty().isIP()
-    const Location_Service_URL = 'https://tools.keycdn.com/geo.json'
-    const service_url = `${Location_Service_URL}?host=${ip}`
+    const service_url = `${find_city_service}?host=${ip}`
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        // got(service_url, { json: true }).then(
-        //     res => {
-        //         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', res.body))
-        //     }).catch(
-        //     err => {
-        //         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
-        //     })
-
         (async() => {
             try {
-                const response = await got(service_url, { json: true, headers: { accept: '*/*', 'user-agent': 'PostmanRuntime/7.15.0', connection: 'keep-alive' } })
-                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', res.body))
+                const response = await got(service_url, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
+                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', response.body))
             } catch (err) {
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
             }

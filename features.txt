@@ -1,0 +1,26 @@
+
+Implemented Features
+-------------
+- login with only username (email)
+- App detects current city automatically
+- submit task 
+- view profile info
+- view task
+- view mytask
+- Make Offer
+- Accept Offer
+- Send Message
+
+
+Pending
+--------
+- login with password
+- search
+- determine if client or vendor
+- upgrade to vendor
+- filter my task
+- Notify on accept bid
+- Reply message
+- Order message against replies
+- Apply distance filter to task
+- Register new user
