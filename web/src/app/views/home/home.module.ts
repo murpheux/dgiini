@@ -7,11 +7,17 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { TasksModule } from '../tasks/tasks.module';
+import { CustomersayComponent } from './customersay/customersay.component';
+import { HowworksComponent } from './howworks/howworks.component';
+import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    CarouselComponent
+    CarouselComponent,
+    CustomersayComponent,
+    HowworksComponent,
+    ContactusComponent
   ],
   imports: [
     CommonModule,

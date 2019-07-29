@@ -14,13 +14,13 @@
                     <span class="statusBadge badge badge-success">Accepted!!</span>
                 </div>
                 <div *ngIf="!task.lastbid?.accepted">
-                    <button type="button" class="btn btn-primary" (click)="handleMakeOffer()">Make Offer</button>
+                    <button type="button" class="btn btn-primary" (click)="handleMakeOffer()"><mat-icon>attach_money</mat-icon>Make Offer</button>
                     <br/>
                     <br/>
-                    <button *ngIf="owned" type="button" class="btn btn-primary" (click)="handleAcceptOffer()">Accept Offer</button>
+                    <button *ngIf="owned" type="button" class="btn btn-primary" (click)="handleAcceptOffer()"><mat-icon>money</mat-icon>Accept Offer</button>
                     <br/>
                     <br/>
-                    <button *ngIf="owned" type="button" class="btn btn-danger" (click)="handleCancelTask()">Cancel Task</button>
+                    <button *ngIf="owned" type="button" class="btn btn-danger" (click)="handleCancelTask()"><mat-icon>clear</mat-icon>Cancel Task</button>
                 </div>
             </div>
             <div>

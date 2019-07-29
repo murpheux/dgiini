@@ -1,5 +1,5 @@
-<app-task-filter [distanceToHome]="distanceToHome" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory"
-    [currentCity]="currentCity"></app-task-filter>
+<app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
+    (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
 <div class="container">
     <div class="row">
         <div *ngIf="model" class="col-md-4 scrollable">

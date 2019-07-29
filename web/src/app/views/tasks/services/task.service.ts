@@ -56,6 +56,16 @@ export class TaskService {
         return this.http.post<IResponse>(url, bid);
     }
 
+    searchTask(searchstr: string) {
+        const url = `${this.serviceUrl}/search/${searchstr}`;
+        return this.http.get<IResponse>(url);
+    }
+
+    searchUserTask(searchstr: string, user: Guid) {
+        const url = `${this.serviceUrl}/${user}/search/${searchstr}`;
+        return this.http.get<IResponse>(url);
+    }
+
     acceptBid(id: Guid): Observable<IResponse> {
         const url = `${this.bidServiceUrl}`;
         return this.http.put<IResponse>(url, { _id: id, acceptted: true });

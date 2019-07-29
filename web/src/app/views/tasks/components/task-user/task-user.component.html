@@ -1,4 +1,4 @@
-<app-task-user-filter (toggleChange)="hangleToggleChanged($event)"></app-task-user-filter>
+<app-task-user-filter [searchString]="searchString" (toggleChange)="hangleToggleChanged($event)" (searchClicked)="handleSearchClicked($event)"></app-task-user-filter>
 <div *ngIf="model">
     <div *ngIf="model.length === 0">
         <div class="container">

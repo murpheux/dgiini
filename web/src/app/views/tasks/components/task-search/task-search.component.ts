@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-task-search',
@@ -13,6 +14,7 @@ export class TaskSearchComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private taskService: TaskService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
@@ -23,7 +25,7 @@ export class TaskSearchComponent implements OnInit {
     }
 
     handleSearch(searchValues) {
-        console.log(searchValues);
+        this.router.navigate(['/tasks/search/' + searchValues.search]);
     }
 
 }

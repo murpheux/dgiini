@@ -25,8 +25,8 @@ export const build_paging = req => {
         order_dir: req.query.dir,
         sort_keys: req.query.sort_keys,
         filter: JSON.parse(req.query.filter || '{}'),
-        page: parseInt(req.query.page) || 0,
-        page_limit: parseInt(req.query.pagelimit) || 0,
+        page: parseInt(req.query.page) || 1,
+        page_limit: parseInt(req.query.pagelimit) || 40,
         lastid: req.query.lastid
     }
 }

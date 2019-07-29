@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
     selector: 'app-task-user-filter',
@@ -7,7 +7,10 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class TaskUserFilterComponent implements OnInit {
 
+    @Input() searchString: string;
+
     @Output() toggleChange = new EventEmitter<string>();
+    @Output() searchClicked = new EventEmitter();
 
     constructor() { }
 
@@ -16,6 +19,10 @@ export class TaskUserFilterComponent implements OnInit {
 
     onToggleChanged(value) {
         this.toggleChange.emit(value);
+    }
+
+    onSearchClicked() {
+        this.searchClicked.emit(this.searchString);
     }
 
 }

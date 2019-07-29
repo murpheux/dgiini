@@ -15,11 +15,13 @@ export class TaskFilterComponent implements OnInit {
     @Input() currentCity: string;
     @Input() selectedCategory: string[];
     @Input() distanceToHome: number;
+    @Input() searchString: string;
 
     @Output() cityChanged = new EventEmitter<string>();
     @Output() distanceChanged = new EventEmitter<number>();
     @Output() hideChanged = new EventEmitter<boolean>();
     @Output() categoriesChanged = new EventEmitter();
+    @Output() searchClicked = new EventEmitter();
 
     constructor(
         private taskService: TaskService
@@ -50,15 +52,15 @@ export class TaskFilterComponent implements OnInit {
 
     formatLabel(value: number | null) {
         if (!value) {
-          return 0;
+            return 0;
         }
 
         if (value >= 1000) {
-          return Math.round(value / 1000) + 'k';
+            return Math.round(value / 1000) + 'k';
         }
 
         return value;
-      }
+    }
 
     onCategoriesChanged(event) {
         if (event.isUserInput) {
@@ -76,6 +78,10 @@ export class TaskFilterComponent implements OnInit {
                 });
             }
         }
+    }
+
+    onSearchClicked() {
+        this.searchClicked.emit(this.searchString);
     }
 
 }

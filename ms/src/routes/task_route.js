@@ -315,6 +315,75 @@ router.post('/tasks', (req, res) => {
     }
 })
 
+// task/search
+router.get('/tasks/search/:searchstr', (req, res) => {
+    const searchstr = req.params.searchstr
+
+    const paging = build_paging(req)
+    paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
+
+    mgaccess.get_connection(common.database_uri, database_name, options).then(
+        db => {
+            const invoke_getlist = async() => {
+                var result = await mgaccess.getlisttask(db, TASK_COLL, paging)
+                return result
+            }
+
+            invoke_getlist().then(
+                tasks => {
+                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                },
+                err => {
+                    winston.error(err)
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                }
+            )
+        },
+        err => {
+            winston.error(err)
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+        }
+    )
+})
+
+router.get('/tasks/:id/search/:searchstr', (req, res) => {
+    const searchstr = req.params.searchstr
+    const id = req.params.id
+
+    const paging = build_paging(req)
+    paging.filter = { 'client.id': id, title: { $regex: '.*' + searchstr + '.*' } }
+
+    var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+
+        mgaccess.get_connection(common.database_uri, database_name, options).then(
+            db => {
+                const invoke_getlist = async() => {
+                    var result = await mgaccess.getlisttask(db, TASK_COLL, paging)
+                    return result
+                }
+
+                invoke_getlist().then(
+                    tasks => {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+                    },
+                    err => {
+                        winston.error(err)
+                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+                    }
+                )
+            },
+            err => {
+                winston.error(err)
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+            }
+        )
+    }
+})
+
 // task/category
 router.get('/tasks/category/:category', (req, res) => {
     let categories = req.params.category

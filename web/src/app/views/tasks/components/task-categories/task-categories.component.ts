@@ -15,6 +15,7 @@ export class TaskCategoriesComponent implements OnInit {
     currentTask: ITask;
     distanceToHome: number;
     selectedCategory: string[];
+    searchString: string;
     defaultDistanceToHome = 55;
     currentCity: string;
     public currentUser: any;
@@ -36,6 +37,9 @@ export class TaskCategoriesComponent implements OnInit {
 
                 this.selectedCategory = [category];
                 this.getTasksByCategory(category);
+            } else if (params['searchstr']) {
+                this.searchString = params['searchstr'];
+                this.searchTask(this.searchString);
             } else {
                 this.getTasks();
             }
@@ -55,6 +59,17 @@ export class TaskCategoriesComponent implements OnInit {
         });
     }
 
+    searchTask(searchstr: string) {
+        this.taskService.searchTask(searchstr).subscribe(success => {
+            this.model = success.payload;
+
+            if (this.model !== undefined && this.model.length !== 0) {
+                this.taskService.enrichTasks(this.model);
+                this.currentTask = this.model[0];
+                this.currentTask.selected = true;
+            }
+        });
+    }
 
     getTasksByCategory(category: string) {
         this.getTasksByCategories([category]);
@@ -107,6 +122,10 @@ export class TaskCategoriesComponent implements OnInit {
     }
 
     handleHideChanged(state: boolean) {
+    }
+
+    handleSearchClicked(searchString: string) {
+        this.searchTask(searchString);
     }
 
 }

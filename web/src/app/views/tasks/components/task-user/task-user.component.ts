@@ -49,6 +49,18 @@ export class TaskUserComponent implements OnInit {
         });
     }
 
+    searchUserTask(searchstr: string) {
+        this.taskService.searchUserTask(searchstr, this.currentUser._id).subscribe(success => {
+            this.model = success.payload;
+
+            if (this.model !== undefined && this.model.length !== 0) {
+                this.taskService.enrichTasks(this.model);
+                this.currentTask = this.model[0];
+                this.currentTask.selected = true;
+            }
+        });
+    }
+
     handleTaskSelected(task: ITask) {
         this.currentTask.selected = false;
         this.currentTask = task;
@@ -65,6 +77,9 @@ export class TaskUserComponent implements OnInit {
     }
 
     hangleToggleChanged(filter: string) {
-        console.log(filter);
+    }
+
+    handleSearchClicked(searchString: string) {
+        this.searchUserTask(searchString);
     }
 }
