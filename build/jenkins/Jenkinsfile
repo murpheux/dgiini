@@ -12,7 +12,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
-        stage('checout from git') {
+        stage('checkout from git') {
             steps {
                 checkout([
                     $class: 'GitSCM',
@@ -26,6 +26,15 @@ pipeline {
                         url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
                     ]
                 ]])
+            }
+        }
+        stage('install dependencies') {
+            steps {
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    export PATH=$PATH:/home/jenkins/.npm-global/bin
+                    yarn
+                '''
             }
         }
         stage('build') {
@@ -48,7 +57,6 @@ pipeline {
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn
                             yarn build-task
                             cp ${WORKSPACE}/ms/dependency.json dist/mstask/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
@@ -61,7 +69,6 @@ pipeline {
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn
                             yarn build-auth
                             cp ${WORKSPACE}/ms/dependency.json dist/msauth/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
@@ -74,7 +81,6 @@ pipeline {
                         sh '''
                             cd ${WORKSPACE}/ms
                             export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn
                             yarn build-msg
                             cp ${WORKSPACE}/ms/dependency.json dist/msmsg/package.json
                             ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
