@@ -16,6 +16,7 @@ export class TaskUserComponent implements OnInit {
     public model: ITask[];
     public currentTask: ITask;
     public currentUser: any;
+    public searchString: string;
 
     constructor(
         private taskService: TaskService,
