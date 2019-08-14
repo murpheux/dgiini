@@ -4,6 +4,7 @@
 import express from 'express'
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
+import asyncHandler from 'express-async-handler'
 
 import common from '../shared/common'
 import { build_response, options, build_paging } from '../shared/lib'
@@ -24,39 +25,22 @@ mgaccess.setup_database(common.database_uri, database_name, options, collections
 )
 
 // message
-router.get('/messages/:id', (req, res) => {
+router.get('/messages/:id', asyncHandler(async(req, res, next) => {
     const id = req.params.id
     var validation = validator().validate(id).isNotEmpty().and.isMongoObjectId()
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getone = async() => {
-                    var result = await mgaccess.getone(db, MESSAGE_COLL, { _id: id })
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getone = async() => await mgaccess.getone(db, MESSAGE_COLL, { _id: id })
 
-                invoke_getone().then(
-                    message => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const message = await invoke_getone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message))
     }
-})
+}))
 
-router.get('/messages/to/:sender', (req, res) => {
+router.get('/messages/to/:sender', asyncHandler(async(req, res, next) => {
     const sender = req.params.sender
     var validation = validator().validate(sender).isNotEmpty().and.isMongoObjectId()
 
@@ -66,33 +50,16 @@ router.get('/messages/to/:sender', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getlist = async() => {
-                    var result = await mgaccess.getlist(db, MESSAGE_COLL, paging)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-                invoke_getlist().then(
-                    messages => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const messages = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
     }
-})
+}))
 
 // my messages
-router.get('/messages/from/:sender', (req, res) => {
+router.get('/messages/from/:sender', asyncHandler(async(req, res, next) => {
     const sender = req.params.sender
     var validation = validator().validate(sender).isNotEmpty().and.isMongoObjectId()
 
@@ -103,33 +70,16 @@ router.get('/messages/from/:sender', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getlist = async() => {
-                    var result = await mgaccess.getlist(db, MESSAGE_COLL, paging)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-                invoke_getlist().then(
-                    messages => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const messages = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
     }
-})
+}))
 
 // user task message
-router.get('/messages/task/:taskid/:userid', (req, res) => {
+router.get('/messages/task/:taskid/:userid', asyncHandler(async(req, res, next) => {
     const taskid = req.params.taskid
     const userid = req.params.userid
 
@@ -143,33 +93,16 @@ router.get('/messages/task/:taskid/:userid', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getlist = async() => {
-                    var result = await mgaccess.getlist(db, MESSAGE_COLL, paging)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-                invoke_getlist().then(
-                    messages => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const messages = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
     }
-})
+}))
 
 // task message
-router.get('/messages/task/:id', (req, res) => {
+router.get('/messages/task/:id', asyncHandler(async(req, res, next) => {
     const id = req.params.id
     var validation = validator().validate(id).isNotNull().and.isNotEmpty().and.isMongoObjectId()
 
@@ -180,33 +113,16 @@ router.get('/messages/task/:id', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getlist = async() => {
-                    var result = await mgaccess.getlist(db, MESSAGE_COLL, paging)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-                invoke_getlist().then(
-                    messages => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const messages = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
     }
-})
+}))
 
 // new message
-router.post('/messages/task/:id', (req, res) => {
+router.post('/messages/task/:id', asyncHandler(async(req, res, next) => {
     const message = req.body
     const validation = validateMessage(message)
 
@@ -221,64 +137,30 @@ router.post('/messages/task/:id', (req, res) => {
         message.isRead = false
         message.sentdate = new Date()
 
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getlist = async() => {
-                    var result = await mgaccess.create(db, MESSAGE_COLL, message)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.create(db, MESSAGE_COLL, message)
 
-                invoke_getlist().then(
-                    message => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message.ops[0]))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const message = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message.ops[0]))
     }
-})
+}))
 
 
 // get messages
-router.post('/sendmessage', (req, res) => {
+router.post('/sendmessage', asyncHandler(async(req, res, next) => {
     const message = req.body
     const validation = validateMessage(message)
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.create(db, MESSAGE_COLL, message)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, MESSAGE_COLL, message)
 
-                invoke_updateone().then(
-                    tasks => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const message = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message))
     }
-})
+}))
 
 const validateMessage = (message) => {
     const validation = validator()

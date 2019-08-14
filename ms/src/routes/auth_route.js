@@ -5,12 +5,13 @@ import express from 'express'
 
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
+import asyncHandler from 'express-async-handler'
+import fetch from 'node-fetch'
 
 import common from '../shared/common'
 import { VALIDATION_MSG, NOTFOUND_MSG, PROVIDER_MSG } from '../shared/error_messages'
 import { build_response, options, build_paging } from '../shared/lib'
 import winston from '../shared/winston'
-import got from 'got'
 
 const mgaccess = require('../data/mongo_access')
 const router = express.Router()
@@ -38,7 +39,7 @@ validator.add('isProvince', 'Value is not a country', (province) => {
 })
 
 // login
-router.post('/login', (req, res) => {
+router.post('/login', asyncHandler(async(req, res, next) => {
     const credential = req.body
     const validation = validateCredential(credential)
 
@@ -46,44 +47,21 @@ router.post('/login', (req, res) => {
         filter: { username: credential.username }
     }
 
-    mgaccess.get_connection(common.database_uri, database_name, options).then(
-        db => {
-            const invoke_getone = async() => {
-                var result = await mgaccess.getusers(db, USER_COLL, paging)
-                return result
-            }
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getone = async() => await mgaccess.getusers(db, USER_COLL, paging)
 
-            invoke_getone().then(
-                user => {
-                    if (user) {
-                        user.lastLogin = new Date()
-                        mgaccess.updateone(db, USER_COLL, user._id, { lastLogin: user.lastLogin }).then(
-                            user_up => {
-                                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
-                            },
-                            err => {
-                                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, 'Unable to update entity', user)), '', user))
-                            }
-                        )
-                    } else {
-                        res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, 'User not registered', user))
-                    }
-                },
-                err => {
-                    winston.error(err)
-                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                }
-            )
-        },
-        err => {
-            winston.error(err)
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-        }
-    )
-})
+    const user = await invoke_getone()
+    if (user) {
+        user.lastLogin = new Date()
+        const user_up = await mgaccess.updateone(db, USER_COLL, user._id, { lastLogin: user.lastLogin })
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
+    } else {
+        res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, 'User not registered', user))
+    }
+}))
 
 // register
-router.post('/register', (req, res) => {
+router.post('/register', asyncHandler(async(req, res, next) => {
     let user = req.body
     user = updateNewUser(user)
 
@@ -92,33 +70,16 @@ router.post('/register', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.create(db, USER_COLL, user)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-                invoke_updateone().then(
-                    user => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
     }
-})
+}))
 
 // promote
-router.post('/promote', (req, res) => {
+router.post('/promote', asyncHandler(async(req, res, next) => {
     let user = req.body
     user = updateNewUser(user)
 
@@ -127,135 +88,69 @@ router.post('/promote', (req, res) => {
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.create(db, USER_COLL, user)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-                invoke_updateone().then(
-                    user => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
     }
-})
+}))
 
 // user list
-router.get('/users', (req, res) => {
+router.get('/users', asyncHandler(async(req, res, next) => {
     const paging = build_paging(req)
 
-    mgaccess.get_connection(common.database_uri, database_name, options).then(
-        db => {
-            const invoke_getlist = async() => {
-                var result = await mgaccess.getusers(db, USER_COLL, paging)
-                return result
-            }
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getlist = async() => await mgaccess.getusers(db, USER_COLL, paging)
 
-            invoke_getlist().then(
-                users => {
-                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
-                },
-                err => {
-                    winston.error(err)
-                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                }
-            )
-        },
-        err => {
-            winston.error(err)
-            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-        }
-    )
-})
+    const users = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+}))
 
 // user
-router.get('/users/:username', (req, res) => {
+router.get('/users/:username', asyncHandler(async(req, res, next) => {
     const username = req.params.username
     var validation = validator().validate(username).isNotEmpty().isEmail()
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getone = async() => {
-                    var result = await mgaccess.getone(db, USER_COLL, { username: username })
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getone = async() => await mgaccess.getone(db, USER_COLL, { username: username })
 
-                invoke_getone().then(
-                    user => {
-                        if (user) {
-                            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
-                        } else {
-                            res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
-                        }
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_getone()
+
+        if (user) {
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+        } else {
+            res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
+        }
     }
-})
+}))
 
-router.get('/usersx/:username', (req, res) => {
+router.get('/usersx/:username', asyncHandler(async(req, res, next) => {
     const username = req.params.username
     var validation = validator().validate(username).isNotEmpty().isEmail()
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_getone = async() => {
-                    var result = await mgaccess.getusers(db, USER_COLL, { username: username })
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getone = async() => await mgaccess.getusers(db, USER_COLL, { username: username })
 
-                invoke_getone().then(
-                    user => {
-                        if (user) {
-                            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
-                        } else {
-                            res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
-                        }
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_getone()
+
+        if (user) {
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
+        } else {
+            res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
+        }
     }
-})
+}))
 
 
 // update
-router.put('/users', (req, res) => {
+router.put('/users', asyncHandler(async(req, res, next) => {
     const user = req.body
     var validation = validator().validate(user.id).isNotNull().and.isNotEmpty().isMongoObjectId()
 
@@ -265,66 +160,31 @@ router.put('/users', (req, res) => {
         const id = user.id
         delete user['id']
 
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.updateone(db, USER_COLL, id, user)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.updateone(db, USER_COLL, id, user)
 
-                invoke_updateone().then(
-                    users => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const users = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
     }
-})
+}))
 
 // delete
-router.delete('/users/:id', (req, res) => {
+router.delete('/users/:id', asyncHandler(async(req, res, next) => {
     const id = req.params.id
     var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.deleteOne(db, USER_COLL, id)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.deleteOne(db, USER_COLL, id)
 
-                invoke_updateone().then(
-                    users => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const users = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
     }
-})
+}))
 
 const updateNewUser = (user) => {
-
     user.isActive = true
     user.isBanned = false
     user.lastLogin = null
@@ -334,73 +194,39 @@ const updateNewUser = (user) => {
 }
 
 // create client
-router.post('/users/client', (req, res) => {
+router.post('/users/client', asyncHandler(async(req, res, next) => {
     const user = req.body
     const validation = validateClient(user)
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.create(db, USER_COLL, user)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-                invoke_updateone().then(
-                    user => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
     }
-})
+}))
 
 // create vendor
-router.post('/users/vendor', (req, res) => {
+router.post('/users/vendor', asyncHandler(async(req, res, next) => {
     const user = req.body
     const validation = validateClient(user)
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
-        mgaccess.get_connection(common.database_uri, database_name, options).then(
-            db => {
-                const invoke_updateone = async() => {
-                    var result = await mgaccess.create(db, USER_COLL, user)
-                    return result
-                }
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-                invoke_updateone().then(
-                    user => {
-                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
-                    },
-                    err => {
-                        winston.error(err)
-                        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-                    }
-                )
-            },
-            err => {
-                winston.error(err)
-                res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
-            }
-        )
+        const user = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
     }
-})
+}))
 
 // task/category
-router.get('/findcity/:ip', (req, res) => {
+router.get('/findcity/:ip', asyncHandler(async(req, res, next) => {
     const ip = req.params.ip
     const validation = validator().validate(ip).isNotEmpty().isIP()
     const service_url = `${find_city_service}?host=${ip}`
@@ -410,15 +236,16 @@ router.get('/findcity/:ip', (req, res) => {
     } else {
         (async() => {
             try {
-                const response = await got(service_url, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
-                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', response.body))
+                const response = await fetch(service_url) //, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
+                const json = await response.json()
+                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', json))
             } catch (err) {
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
             }
         })()
 
     }
-})
+}))
 
 const validateUser = (user) => {
     const validation = validator()
