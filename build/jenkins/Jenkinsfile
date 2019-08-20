@@ -1,15 +1,19 @@
 pipeline {
     agent {
         node {
-            label 'scarlet'
+            label 'linux'
         }
+    }
+    tools {
+        nodejs "node"
+        git "Default"
     }
     stages {
         stage('preparation') {
             steps {
-                // Git repository
-                git 'scarlet:/projects.git/projects/dgiini'
                 deleteDir() /* clean up our workspace */
+                // Git repository
+                //git 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
             }
         }
         stage('checkout from git') {
@@ -32,60 +36,55 @@ pipeline {
             steps {
                 sh '''
                     cd ${WORKSPACE}/ms
-                    export PATH=$PATH:/home/jenkins/.npm-global/bin
-                    yarn
+                    npm install
                 '''
             }
         }
-        stage('build') {
+        stage('build app') {
             parallel {
                 stage('Build web') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/web
-                            export PATH=$PATH:/home/jenkins/.npm-global/bin # use by other script
-                            yarn
-                            yarn build-docker
-                            ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ${WORKSPACE}/web/dist/* jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
-                            scp -r ${WORKSPACE}/deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            npm install
+                            npm run build-docker
                         '''
+                        sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
+                        sh 'scp -r ${WORKSPACE}/web/dist/* jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
+                        sh 'scp -r ${WORKSPACE}/deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
                 }
                 stage('Build task_api') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn build-task
-                            cp ${WORKSPACE}/ms/dependency.json dist/mstask/package.json
-                            ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ${WORKSPACE}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            npm run build-task
                         '''
+                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/mstask/package.json'
+                        sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
+                        sh 'scp -r ${WORKSPACE}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
                 }
                 stage('Build auth_api') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn build-auth
-                            cp ${WORKSPACE}/ms/dependency.json dist/msauth/package.json
-                            ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ${WORKSPACE}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            npm run build-auth
                         '''
+                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/msauth/package.json'
+                        sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
+                        sh 'scp -r ${WORKSPACE}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
                 }
                 stage('Build msg_api') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            export PATH=$PATH:/home/jenkins/.npm-global/bin
-                            yarn build-msg
-                            cp ${WORKSPACE}/ms/dependency.json dist/msmsg/package.json
-                            ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"
-                            scp -r ${WORKSPACE}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/
+                            npm run build-msg
                         '''
+                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/msmsg/package.json'
+                        sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
+                        sh 'scp -r ${WORKSPACE}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
                 }
             }
