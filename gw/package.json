@@ -1,11 +1,23 @@
 {
-  "name": "apigw",
-  "description": "Express Gateway Instance Bootstraped from Command Line",
-  "repository": {},
-  "license": "UNLICENSED",
-  "version": "1.0.0",
-  "main": "server.js",
-  "dependencies": {
-    "express-gateway": "^1.16.7"
-  }
+    "name": "apigw",
+    "description": "Express Gateway Instance Bootstraped from Command Line",
+    "repository": {},
+    "license": "UNLICENSED",
+    "version": "1.0.0",
+    "main": "server.js",
+    "scripts": {
+        "build-gw": "parcel build server.js --out-dir dist/apigw --target node"
+    },
+    "staticFiles": {
+        "staticPath": [{
+            "staticPath": "config",
+            "staticOutDir": "config"
+        }]
+    },
+    "dependencies": {
+        "express-gateway": "^1.16.7"
+    },
+    "devDependencies": {
+        "parcel-plugin-static-files-copy": "^2.2.1"
+    }
 }

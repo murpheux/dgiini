@@ -54,13 +54,24 @@ pipeline {
                         sh 'scp -r ${WORKSPACE}/deploy jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
                 }
+                stage('Build apigw') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/gw
+                            npm run build-gw
+                        '''
+                        sh 'cp ${WORKSPACE}/gw/package.json dist/apigw/'
+                        sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
+                        sh 'scp -r ${WORKSPACE}/gw/dist/apigw jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
+                    }
+                }
                 stage('Build task_api') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
                             npm run build-task
                         '''
-                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/mstask/package.json'
+                        sh 'cp ${WORKSPACE}/ms/package.json dist/mstask/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
@@ -71,7 +82,7 @@ pipeline {
                             cd ${WORKSPACE}/ms
                             npm run build-auth
                         '''
-                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/msauth/package.json'
+                        sh 'cp ${WORKSPACE}/ms/package.json dist/msauth/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
@@ -82,7 +93,7 @@ pipeline {
                             cd ${WORKSPACE}/ms
                             npm run build-msg
                         '''
-                        sh 'cp ${WORKSPACE}/ms/dependency.json dist/msmsg/package.json'
+                        sh 'cp ${WORKSPACE}/ms/package.json dist/msmsg/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }

@@ -11,7 +11,7 @@ import { AuthService } from '../../user/services/auth.service';
     providedIn: 'root'
 })
 export class MessageService {
-    private serviceUrl = `${environment.MSG_API}/messages`;
+    private serviceUrl = `${environment.APIGW_API}/msg/v1/messages`;
 
     constructor(
         private http: HttpClient,

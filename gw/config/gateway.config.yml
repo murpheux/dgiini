@@ -1,30 +1,91 @@
-http:
+https:
   port: 7000
+  hostname: localhost
+  tls:
+    "default":
+        key: cert/dgiini.key.pem
+        cert: cert/dgiini.cert.pem
 admin:
   port: 9876
   host: localhost
 apiEndpoints:
-  api:
+  taskApiDefault:
     host: 'localhost'
-    paths: '/api'
+    paths: '/api/task/v1/'
+    methods: GET
+  taskApi:
+    host: 'localhost'
+    paths: '/api/task/v1/*'
+  authApiDefault:
+    host: 'localhost'
+    paths: '/api/auth/v1/'
+    methods: GET
+  authApi:
+    host: 'localhost'
+    paths: '/api/auth/v1/*'
+  msgApiDefault:
+    host: 'localhost'
+    paths: '/api/msg/v1/'
+    methods: GET
+  msgApi:
+    host: 'localhost'
+    paths: '/api/msg/v1/*'
 serviceEndpoints:
   taskService:
     url: 'http://localhost:8000'
+  authService:
+    url: 'http://localhost:8008'
+  msgService:
+    url: 'http://localhost:8004'
 policies:
   - basic-auth
   - cors
   - expression
   - key-auth
+  - jwt
   - log
   - oauth2
   - proxy
   - rate-limit
 pipelines:
-  - name: tkPipeline
+  taskDefaultPipeline:
     apiEndpoints:
-      - api
+      - taskApiDefault
     policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
       - proxy:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
+  taskPipeline:
+    apiEndpoints:
+      - taskApi
+    policies:
+      - log:
+        - action:
+            message: ${req.ip} - ${req.method} ${req.originalUrl}
+      - jwt:
+        - action:
+            secretOrPublicKeyFile: './cert/gen.cert.pem'
+      - proxy:
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  authPipeline:
+    apiEndpoints:
+      - authApi
+    policies:
+      - proxy:
+        - action:
+            serviceEndpoint: authService
+  msgPipeline:
+    apiEndpoints:
+      - msgApi
+    policies:
+      - proxy:
+        - action:
+            serviceEndpoint: msgService

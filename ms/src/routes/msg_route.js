@@ -140,8 +140,8 @@ router.post('/messages/task/:id', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.create(db, MESSAGE_COLL, message)
 
-        const message = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message.ops[0]))
+        const result = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.ops[0]))
     }
 }))
 

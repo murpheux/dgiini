@@ -49,14 +49,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // ping
-app.get('/api/', (req, res) => {
+app.get('/api/task/v1/', (req, res) => {
     let payload = {
         'Service': `${common.app_name} ${common.version} ${common.build}`
     }
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', task_router)
+app.use('/api/task/v1/', task_router)
 
 // 404
 app.use((req, res) => {

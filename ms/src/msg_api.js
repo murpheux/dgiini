@@ -44,14 +44,14 @@ app.use(morgan(log_format, { stream: winston.stream }))
 app.use(cors({ origin: CLIENT_URL }))
 
 // ping
-app.get('/api/', (req, res) => {
+app.get('/api/msg/v1/', (req, res) => {
     let payload = {
         'Service': `${common.app_name} ${common.version} ${common.build}`
     }
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', msg_router)
+app.use('/api/msg/v1/', msg_router)
 
 // 404
 app.use((req, res) => {

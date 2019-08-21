@@ -8,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { Guid } from 'guid-typescript';
 @Injectable()
 export class AuthService {
-    private serviceUrl = `${environment.AUTH_API}`;
+    private serviceUrl = `${environment.APIGW_API}/auth/v1`;
     private loginSubject = new Subject<boolean>();
 
     private CURRENT_USER = 'currentUser';
