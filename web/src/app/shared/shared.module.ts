@@ -17,6 +17,7 @@ import { NoHttpCacheInterceptor } from './interceptors/no-http-cache-interceptor
 import { AuthGuard } from './guards/auth-guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
@@ -35,7 +36,8 @@ import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive
   ],
   imports: [
     CommonModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    FontAwesomeModule
   ],
   entryComponents: [
     ConfirmDialogComponent,

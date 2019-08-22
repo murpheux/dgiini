@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { LocationService } from '../../services/location.service';
 import { User } from 'src/app/shared/models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     submitted = false;
 
-    constructor(private authService: AuthService,
+    constructor(private locationService: LocationService,
         private route: ActivatedRoute,
         private router: Router,
         private notifyHeaderService: NotifyHeaderService,
@@ -33,13 +33,13 @@ export class LoginComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
-        this.authService.logout();
+        this.locationService.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
         this.loading = true;
-        this.authService.login(this.model).subscribe(
+        this.locationService.login(this.model).subscribe(
             result => {
                 if (result.code === 200) {
                     this.notifyHeaderService.loggedIn();
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
         this.loading = true;
 
-        this.authService.login(this.model).subscribe(
+        this.locationService.login(this.model).subscribe(
             result => {
                 if (result.code === 200) {
                     this.notifyHeaderService.loggedIn();

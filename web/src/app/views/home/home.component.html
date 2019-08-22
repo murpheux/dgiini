@@ -1,4 +1,4 @@
-<div class="container-fluid landin-page">
+<div class="container-fluid landin-page" *ngIf="authService.auth0Client$ | async">
     <div class="f-flex flex-row flex-wrap">
 
         <div class="mt-5 cards-group">

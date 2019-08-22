@@ -46,7 +46,7 @@ app.use(cors({ origin: CLIENT_URL }))
 // ping
 app.get('/api/msg/v1/', (req, res) => {
     let payload = {
-        'Service': `${common.app_name} ${common.version} ${common.build}`
+        'Service': `msg ${common.app_name} ${common.version} ${common.build}`
     }
     res.status(HttpStatus.OK).json(payload)
 })

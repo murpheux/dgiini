@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { ITask } from '../../models/ITask';
 import { IUser } from 'src/app/views/user/models/user';
 import { MatDialog } from '@angular/material/dialog';
@@ -23,13 +23,13 @@ export class TaskUserComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
-        private authService: AuthService
+        private locationService: LocationService
     ) { }
 
     ngOnInit() {
-        this.authService.isLoggedIn().subscribe(islogin => {
+        this.locationService.isLoggedIn().subscribe(islogin => {
             if (islogin) {
-                this.authService.getCurrentUser().subscribe(user => {
+                this.locationService.getCurrentUser().subscribe(user => {
                     this.currentUser = user;
                     this.getUserTasks(user);
                 });

@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
 // ping
 app.get('/api/task/v1/', (req, res) => {
     let payload = {
-        'Service': `${common.app_name} ${common.version} ${common.build}`
+        'Service': `task ${common.app_name} ${common.version} ${common.build}`
     }
     res.status(HttpStatus.OK).json(payload)
 })

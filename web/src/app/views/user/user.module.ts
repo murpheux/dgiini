@@ -5,7 +5,7 @@ import { MaterialDesignModule } from 'src/app/material-design/material-design.mo
 import { UserRoutingModule } from './user-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AuthService } from './services/auth.service';
+import { LocationService } from './services/location.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
@@ -20,7 +20,7 @@ import { BecomevendorComponent } from './components/becomevendor/becomevendor.co
     UserRoutingModule,
     MaterialDesignModule
   ],
-  providers: [AuthService],
+  providers: [LocationService],
   exports: [ LoginComponent, LogoutComponent, RegisterComponent ]
 })
 export class UserModule { }

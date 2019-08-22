@@ -65,15 +65,28 @@ pipelines:
     apiEndpoints:
       - taskApi
     policies:
-      - log:
-        - action:
-            message: ${req.ip} - ${req.method} ${req.originalUrl}
-      - jwt:
-        - action:
-            secretOrPublicKeyFile: './cert/gen.cert.pem'
+      # - log:
+      #   - action:
+      #       message: ${req.ip} - ${req.method} ${req.originalUrl}
+      # - jwt:
+      #   - action:
+      #       secretOrPublicKeyFile: './cert/gen.cert.pem'
       - proxy:
         - action:
             serviceEndpoint: taskService
+            changeOrigin: true
+  authDefaultPipeline:
+    apiEndpoints:
+      - authApiDefault
+    policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
+      - proxy:
+        - action:
+            serviceEndpoint: authService
             changeOrigin: true
   authPipeline:
     apiEndpoints:
@@ -82,6 +95,19 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: authService
+  msgDefaultPipeline:
+    apiEndpoints:
+      - msgApiDefault
+    policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
+      - proxy:
+        - action:
+            serviceEndpoint: msgService
+            changeOrigin: true
   msgPipeline:
     apiEndpoints:
       - msgApi

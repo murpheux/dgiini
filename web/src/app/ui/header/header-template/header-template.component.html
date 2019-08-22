@@ -13,39 +13,44 @@
                             <mat-icon>home</mat-icon> home</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link btn btn-success rounded-pill" (click)="openDialog()">
-                            <mat-icon> local_post_office</mat-icon>post a task</a>
+                        <a class="nav-link" (click)="openDialog()">
+                            <mat-icon>local_post_office</mat-icon>post a task</a>
                     </li>
                     <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">
-                            <mat-icon> local_library</mat-icon>browse tasks</a>
+                            <mat-icon>local_library</mat-icon>browse tasks</a>
                     </li>
-                    <li *ngIf="isLoggedIn" class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <li *ngIf="authService.loggedIn" class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                         <a class="nav-link" routerLinkActive="active" [routerLink]="['./mytask']">
                             <mat-icon>note</mat-icon>my tasks</a>
                     </li>
                 </ul>
             </nav>
         </div>
-        <div class="d-flex flex-row sign-in-partial">
+        <div class="d-flex flex-row sign-in-partial" *ngIf="!authService.loggedIn">
             <div class="dropdown ml-1">
                 <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img *ngIf="!isLoggedIn" src="assets/images/default-avatar.png">
-                <span *ngIf="isLoggedIn && currentUser">
-                        <img *ngIf="currentUser.photo" [src]="currentUser.photo">
-                        <img *ngIf="!currentUser.photo" src="assets/images/default-avatar.png">
-                </span>
-                
-            </button>
+                    <img src="assets/images/default-avatar.png">
+                </button>
                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" (click)="openLoginDialog()" *ngIf="!isLoggedIn">Sign in</a>
-                    <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
-                    <a class="dropdown-item" (click)="openRegisterDialog()" *ngIf="!isLoggedIn">Register</a>
-                    <a class="dropdown-item" [routerLink]="['./user/profile']" *ngIf=" isLoggedIn ">Profile</a>
-                    <a class="dropdown-item" [routerLink]="['./user/upgrade']" *ngIf=" isLoggedIn ">Become Vendor</a>
+                    <a class="dropdown-item" (click)="login()">Sign in</a>
+                    <a class="dropdown-item" (click)="openRegisterDialog()">Register</a>
                 </div>
             </div>
-            <div class="ml-1 font-weight-bold appuser " *ngIf="isLoggedIn "><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>
+            <div class="ml-1 font-weight-bold appuser"><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>
+        </div>
+        <div class="d-flex flex-row sign-in-partial" *ngIf="authService.userProfile$ | async as profile">
+            <div class="dropdown ml-1">
+                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <img [src]="profile.picture">
+            </button>
+                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" [routerLink]="['./profile']">Profile</a>
+                    <a class="dropdown-item" [routerLink]="['./user/upgrade']">Become Vendor</a>
+                    <a class="dropdown-item" (click)="logout()">Sign out</a>
+                </div>
+            </div>
+            <div class="ml-1 font-weight-bold appuser"><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>
         </div>
     </div>
 </header>

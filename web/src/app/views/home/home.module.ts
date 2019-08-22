@@ -7,9 +7,18 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { TasksModule } from '../tasks/tasks.module';
+import json from 'highlight.js/lib/languages/json';
 import { CustomersayComponent } from './customersay/customersay.component';
 import { HowworksComponent } from './howworks/howworks.component';
 import { ContactusComponent } from './contactus/contactus.component';
+import { CallbackComponent } from '../user/pages/callback/callback.component';
+import { ProfileComponent } from '../user/pages/profile/profile.component';
+import { LoadingComponent } from '../user/components/loading/loading.component';
+import { HighlightModule } from 'ngx-highlightjs';
+
+export function hljsLanguages() {
+    return [{ name: 'json', func: json }];
+}
 
 @NgModule({
   declarations: [
@@ -17,14 +26,20 @@ import { ContactusComponent } from './contactus/contactus.component';
     CarouselComponent,
     CustomersayComponent,
     HowworksComponent,
-    ContactusComponent
+    ContactusComponent,
+    CallbackComponent,
+    ProfileComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
     MaterialDesignModule,
-    TasksModule
+    TasksModule,
+    HighlightModule.forRoot({
+        languages: hljsLanguages
+    }),
   ],
   exports: [
     HomeComponent,

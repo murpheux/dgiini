@@ -3,7 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { LocationService } from 'src/app/views/user/services/location.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -27,7 +27,7 @@ export class TaskCategoriesComponent implements OnInit {
         private taskService: TaskService,
         private route: ActivatedRoute,
         private router: Router,
-        private authService: AuthService
+        private locationService: LocationService
     ) { }
 
     ngOnInit() {
@@ -45,16 +45,16 @@ export class TaskCategoriesComponent implements OnInit {
             }
         });
 
-        this.authService.isLoggedIn().subscribe(islogin => {
+        this.locationService.isLoggedIn().subscribe(islogin => {
             if (islogin) {
-                this.authService.getCurrentUser().subscribe(user => {
+                this.locationService.getCurrentUser().subscribe(user => {
                     this.currentUser = user;
                 });
             }
         });
 
         this.distanceToHome = this.defaultDistanceToHome;
-        this.authService.getCurrentCity().then(city => {
+        this.locationService.getCurrentCity().then(city => {
             this.currentCity = city;
         });
     }
@@ -107,7 +107,7 @@ export class TaskCategoriesComponent implements OnInit {
 
     handleCityChanged(city: string) {
         this.currentCity = city;
-        this.authService.setCurrentCity(city);
+        this.locationService.setCurrentCity(city);
     }
 
     handleDistanceChanged(distance: number) {

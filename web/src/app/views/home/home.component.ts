@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocationService } from '../user/services/location.service';
 import { AuthService } from '../user/services/auth.service';
 
 @Component({
@@ -10,12 +11,13 @@ export class HomeComponent implements OnInit {
     currentCity: string;
 
     constructor(
+        private locationService: LocationService,
         private authService: AuthService
     ) { }
 
     ngOnInit() {
 
-       this.authService.getCurrentCity().then(data => {
+       this.locationService.getCurrentCity().then(data => {
            this.currentCity = data;
        });
     }

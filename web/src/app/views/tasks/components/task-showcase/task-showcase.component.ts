@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IResponse } from '../../models/IResponse';
 import { ITask } from '../../models/ITask';
 import { TaskService } from '../../services/task.service';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { Observable } from 'rxjs';
 
 @Component({

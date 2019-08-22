@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITask } from '../../models/ITask';
 import { MessageService } from '../../../message/services/message.service';
 import { IMessage } from '../../../message/models/message';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskOfferComponent } from '../task-offer/task-offer.component';
 import { IProfile } from 'src/app/shared/models/profile';

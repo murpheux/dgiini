@@ -2,9 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { faUser, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { LoginComponent } from 'src/app/views/user/components/login/login.component';
 import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-header-template',
@@ -14,27 +16,17 @@ import { RegisterComponent } from 'src/app/views/user/components/register/regist
 export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
-    isLoggedIn = false;
-    currentUser: any;
+    isCollapsed = true;
+    // faUser = faUser;
+    // faPowerOff = faPowerOff;
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
-        public dialog: MatDialog
+        public authService: AuthService,
+        private dialog: MatDialog
     ) { }
 
     ngOnInit() {
-        this.subscription = this.notifyHeaderService.getSignInStatus().subscribe(isLoggedIn => {
-            this.isLoggedIn = isLoggedIn;
-        });
-
-        this.selectedLanguage = localStorage.getItem('locale');
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (this.currentUser) {
-            this.isLoggedIn = true;
-        } else {
-            this.isLoggedIn = false;
-        }
     }
 
     openDialog() {
@@ -46,13 +38,12 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => { });
     }
 
-    openLoginDialog() {
-        const logingRef = this.dialog.open(LoginComponent);
-        logingRef.afterClosed().subscribe(result => {
-            this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    login() {
+        this.authService.login();
+    }
 
-            // console.log(this.currentUser);
-        });
+    logout() {
+        this.authService.logout();
     }
 
     openRegisterDialog() {

@@ -6,7 +6,7 @@ import { ITask, TaskType, RateUnit, Currency } from '../../models/ITask';
 import { TaskValidator } from '../../models/Validators/TaskValidator';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 
@@ -39,7 +39,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         private router: Router,
         private cd: ChangeDetectorRef,
         private notificationService: NotificationService,
-        private authService: AuthService,
+        private locationService: LocationService,
         public dialogRef: MatDialogRef<TaskCreateComponent>
     ) { }
 
@@ -69,9 +69,9 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.countries = ['Canada', 'United States'];
         this.currentCountry = this.countries[0];
 
-        this.authService.isLoggedIn().subscribe(islogin => {
+        this.locationService.isLoggedIn().subscribe(islogin => {
             if (islogin) {
-                this.authService.getCurrentUser().subscribe(user => {
+                this.locationService.getCurrentUser().subscribe(user => {
                     this.currentUser = user;
                 });
             }

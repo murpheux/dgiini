@@ -20,7 +20,6 @@ import { faStar, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { TaskUserComponent } from './components/task-user/task-user.component';
 import { TaskUserFilterComponent } from './components/task-user-filter/task-user-filter.component';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 import { MessageModule } from '../message/message.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
@@ -40,7 +39,6 @@ import { TaskSearchComponent } from './components/task-search/task-search.compon
         CoreModule,
         MaterialDesignModule,
         NgxUiLoaderModule,
-        FontAwesomeModule,
         MessageModule,
         NgxMaterialTimepickerModule
     ],

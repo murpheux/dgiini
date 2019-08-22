@@ -6,7 +6,7 @@ import { map, catchError } from 'rxjs/operators';
 import { ITask } from '../models/ITask';
 import { IResponse } from '../models/IResponse';
 import { Guid } from 'guid-typescript';
-import { AuthService } from '../../user/services/auth.service';
+import { LocationService } from '../../user/services/location.service';
 import { ITaskBid } from '../models/ITaskBid';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class TaskService {
 
     constructor(
         private http: HttpClient,
-        private authService: AuthService
+        private locationService: LocationService
     ) { }
 
     getTaskCategories(): Observable<IResponse> {
@@ -92,7 +92,7 @@ export class TaskService {
         const userList = tasks.map(m => m.client.id)
             .filter((value, index, self) => self.indexOf(value) === index);
 
-        this.authService.getUserList(userList).subscribe(res => {
+        this.locationService.getUserList(userList).subscribe(res => {
             tasks.forEach(m => {
                 res.payload.filter(user => {
                     m.client = m.client.id === user._id ? user : m.client;

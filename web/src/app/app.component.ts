@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './views/user/services/auth.service';
 
 export class Message {
     constructor(
@@ -13,6 +14,16 @@ export class Message {
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'dgiini app';
+
+    constructor(
+        private authService: AuthService,
+    ) { }
+
+    ngOnInit(): void {
+        // On initial load, check authentication state with authorization server
+        // Set up local auth streams if user is already authenticated
+        this.authService.localAuthSetup();
+    }
 }
