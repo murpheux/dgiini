@@ -6,6 +6,7 @@ import { ITask } from '../../models/ITask';
 import { IUser } from 'src/app/views/user/models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from '../task-create/task-create.component';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-task-user',
@@ -23,18 +24,16 @@ export class TaskUserComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
-        private locationService: LocationService
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
-        this.locationService.isLoggedIn().subscribe(islogin => {
-            if (islogin) {
-                this.locationService.getCurrentUser().subscribe(user => {
-                    this.currentUser = user;
-                    this.getUserTasks(user);
-                });
-            }
-        });
+        if (this.authService.loggedIn) {
+            this.authService.userProfile$.subscribe(profile => {
+                this.currentUser = profile;
+                this.getUserTasks(profile);
+            });
+        }
     }
 
     getUserTasks(user: any) {

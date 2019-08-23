@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { User } from 'src/app/shared/models/user';
 import { IProfile } from 'src/app/shared/models/profile';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-userprofile',
@@ -14,21 +15,19 @@ export class UserprofileComponent implements OnInit {
     isVendor: boolean;
 
     constructor(
-        private locationService: LocationService,
+        private authService: AuthService,
     ) { }
 
     ngOnInit() {
 
-        this.locationService.isLoggedIn().subscribe(islogin => {
-            if (islogin) {
-                this.locationService.getCurrentUser().subscribe(user => {
-                    this.currentUser = user;
+        if (this.authService.loggedIn) {
+            this.authService.userProfile$.subscribe(user => {
+                this.currentUser = user;
 
-                    this.isClient = user.client !== undefined;
-                    this.isVendor = user.vendor !== undefined;
-                });
-            }
-        });
+                this.isClient = user.client !== undefined;
+                this.isVendor = user.vendor !== undefined;
+            });
+        }
     }
 
 }

@@ -16,38 +16,38 @@ export class LocationService {
 
     constructor(private http: HttpClient) { }
 
-    login(user: User): Observable<IResponse> {
-        return this.http.post<IResponse>(`${this.serviceUrl}/login`,
-            { username: user.username, password: user.password }).pipe(
-                (map(
-                    result => {
-                        // login successful if there's a jwt token in the response
-                        if (result && result.payload) {
-                            localStorage.setItem(this.CURRENT_USER, JSON.stringify(result.payload));
-                        }
+    // login(user: User): Observable<IResponse> {
+    //     return this.http.post<IResponse>(`${this.serviceUrl}/login`,
+    //         { username: user.username, password: user.password }).pipe(
+    //             (map(
+    //                 result => {
+    //                     // login successful if there's a jwt token in the response
+    //                     if (result && result.payload) {
+    //                         localStorage.setItem(this.CURRENT_USER, JSON.stringify(result.payload));
+    //                     }
 
-                        return result;
-                    }))
-            );
-    }
+    //                     return result;
+    //                 }))
+    //         );
+    // }
 
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem(this.CURRENT_USER);
-    }
+    // logout() {
+    //     // remove user from local storage to log user out
+    //     localStorage.removeItem(this.CURRENT_USER);
+    // }
 
-    isLoggedIn(): Observable<boolean> {
-        return new Observable(observer => { observer.next(localStorage.getItem(this.CURRENT_USER) !== null); });
-    }
+    // isLoggedIn(): Observable<boolean> {
+    //     return new Observable(observer => { observer.next(localStorage.getItem(this.CURRENT_USER) !== null); });
+    // }
 
-    getCurrentUser(): Observable<any> {
-        return new Observable(observer => { observer.next(JSON.parse(localStorage.getItem(this.CURRENT_USER))); });
-    }
+    // getCurrentUser(): Observable<any> {
+    //     return new Observable(observer => { observer.next(JSON.parse(localStorage.getItem(this.CURRENT_USER))); });
+    // }
 
-    getUserList(userids: Guid[]): Observable<IResponse> {
-        const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(u => '"' + u + '"')}]}`;
-        return this.http.get<IResponse>(url);
-    }
+    // getUserList(userids: Guid[]): Observable<IResponse> {
+    //     const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(u => '"' + u + '"')}]}`;
+    //     return this.http.get<IResponse>(url);
+    // }
 
     getMyIPAddress(): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'text/plain'}); 

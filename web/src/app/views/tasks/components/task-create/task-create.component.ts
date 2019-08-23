@@ -8,6 +8,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         private router: Router,
         private cd: ChangeDetectorRef,
         private notificationService: NotificationService,
-        private locationService: LocationService,
+        private authService: AuthService,
         public dialogRef: MatDialogRef<TaskCreateComponent>
     ) { }
 
@@ -69,13 +70,11 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.countries = ['Canada', 'United States'];
         this.currentCountry = this.countries[0];
 
-        this.locationService.isLoggedIn().subscribe(islogin => {
-            if (islogin) {
-                this.locationService.getCurrentUser().subscribe(user => {
-                    this.currentUser = user;
-                });
-            }
-        });
+        if (this.authService.loggedIn) {
+            this.authService.userProfile$.subscribe(profile => {
+                this.currentUser = profile;
+            });
+        }
     }
 
     formatLabel(value: number | null) {

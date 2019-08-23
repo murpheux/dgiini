@@ -4,6 +4,7 @@ import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -18,7 +19,7 @@ export class TaskCategoriesComponent implements OnInit {
     searchString: string;
     defaultDistanceToHome = 55;
     currentCity: string;
-    public currentUser: any;
+    public userProfile: any;
 
     title = 'app';
     faCoffee = faCoffee;
@@ -27,7 +28,8 @@ export class TaskCategoriesComponent implements OnInit {
         private taskService: TaskService,
         private route: ActivatedRoute,
         private router: Router,
-        private locationService: LocationService
+        private locationService: LocationService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -45,13 +47,11 @@ export class TaskCategoriesComponent implements OnInit {
             }
         });
 
-        this.locationService.isLoggedIn().subscribe(islogin => {
-            if (islogin) {
-                this.locationService.getCurrentUser().subscribe(user => {
-                    this.currentUser = user;
-                });
-            }
-        });
+        if (this.authService.loggedIn) {
+            this.authService.userProfile$.subscribe(profile => {
+                    this.userProfile = profile;
+            });
+        }
 
         this.distanceToHome = this.defaultDistanceToHome;
         this.locationService.getCurrentCity().then(city => {

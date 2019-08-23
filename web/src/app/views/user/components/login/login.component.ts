@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     submitted = false;
 
-    constructor(private locationService: LocationService,
+    constructor(private authService: AuthService,
         private route: ActivatedRoute,
         private router: Router,
         private notifyHeaderService: NotifyHeaderService,
@@ -33,23 +34,23 @@ export class LoginComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', Validators.required]
         });
-        this.locationService.logout();
+        this.authService.logout();
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
         this.loading = true;
-        this.locationService.login(this.model).subscribe(
-            result => {
-                if (result.code === 200) {
-                    this.notifyHeaderService.loggedIn();
-                    this.router.navigate([this.returnUrl]);
-                } else {
-                    this.loginMessage = result.description;
-                    this.inCorrectCredentials = true;
-                }
-                this.loading = false;
-            });
+        // this.authService.login(this.model).subscribe(
+        //     result => {
+        //         if (result.code === 200) {
+        //             this.notifyHeaderService.loggedIn();
+        //             this.router.navigate([this.returnUrl]);
+        //         } else {
+        //             this.loginMessage = result.description;
+        //             this.inCorrectCredentials = true;
+        //         }
+        //         this.loading = false;
+        //     });
     }
 
     get formControls() { return this.loginForm.controls; }
@@ -63,18 +64,18 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
         this.loading = true;
 
-        this.locationService.login(this.model).subscribe(
-            result => {
-                if (result.code === 200) {
-                    this.notifyHeaderService.loggedIn();
-                    this.router.navigate([this.returnUrl]);
-                    this.dialogRef.close();
-                } else {
-                    this.loginMessage = result.description;
-                    this.inCorrectCredentials = true;
-                }
-                this.loading = false;
-            });
+        // this.authService.login(this.model).subscribe(
+        //     result => {
+        //         if (result.code === 200) {
+        //             this.notifyHeaderService.loggedIn();
+        //             this.router.navigate([this.returnUrl]);
+        //             this.dialogRef.close();
+        //         } else {
+        //             this.loginMessage = result.description;
+        //             this.inCorrectCredentials = true;
+        //         }
+        //         this.loading = false;
+        //     });
         // stop here if form is invalid
     }
 }

@@ -92,12 +92,12 @@ export class TaskService {
         const userList = tasks.map(m => m.client.id)
             .filter((value, index, self) => self.indexOf(value) === index);
 
-        this.locationService.getUserList(userList).subscribe(res => {
-            tasks.forEach(m => {
-                res.payload.filter(user => {
-                    m.client = m.client.id === user._id ? user : m.client;
-                });
-            });
-        });
+        // this.locationService.getUserList(userList).subscribe(res => {
+        //     tasks.forEach(m => {
+        //         res.payload.filter(user => {
+        //             m.client = m.client.id === user._id ? user : m.client;
+        //         });
+        //     });
+        // });
     }
 }
