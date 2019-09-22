@@ -29,9 +29,28 @@
                         ],
                         "styles": [
                             "src/styles.scss",
-                            "node_modules/highlight.js/styles/monokai-sublime.css"
+                            "node_modules/highlight.js/styles/monokai-sublime.css",
+                            "src/style/bootstrap-grid.css",
+                            "src/style/icons.css",
+                            "src/style/animate.min.css",
+                            "src/style/style.css",
+                            "src/style/responsive.css",
+                            "src/style/chosen.css",
+                            "src/style/colors/colors.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "src/js/jquery.min.js",
+                            "src/js/modernizr.js",
+                            "src/js/script.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
+                            "src/js/wow.min.js",
+                            "src/js/isotop.js",
+                            "src/js/slick.min.js",
+                            "src/js/parallax.js",
+                            "src/js/select-chosen.js",
+                            "src/js/counter.js",
+                            "src/js/rslider.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

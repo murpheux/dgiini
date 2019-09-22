@@ -1,26 +1,10 @@
-<div class="container-fluid landin-page" *ngIf="authService.auth0Client$ | async">
-    <div class="f-flex flex-row flex-wrap">
-
-        <div class="mt-5 cards-group">
-            <app-carousel></app-carousel>
-        </div>
-        <div>
-            <app-task-search></app-task-search>
-        </div>
-        <div class="mt-5 cards-group">
-            <app-task-category-node></app-task-category-node>
-        </div>
-        <div class="mt-5 cards-group">
-            <app-task-showcase></app-task-showcase>
-        </div>
-        <div>
-            <app-customersay></app-customersay>
-        </div>
-        <div>
-            <app-howworks></app-howworks>
-        </div>
-        <div>
-            <app-contactus></app-contactus>
-        </div>
-    </div>
+<div>
+    <app-carousel></app-carousel>
+    <app-task-category-node></app-task-category-node>
+    <app-featured-task></app-featured-task>
+    <app-vendorclient></app-vendorclient>
+    <app-howworks></app-howworks>
+    <app-task-stats></app-task-stats>
+    <app-faq></app-faq>
+    <app-you-skilled></app-you-skilled>
 </div>

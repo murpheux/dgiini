@@ -25,13 +25,16 @@ import { MessageModule } from '../message/message.module';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { TaskOfferComponent } from './components/task-offer/task-offer.component';
 import { TaskSearchComponent } from './components/task-search/task-search.component';
+import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
+import { TaskStatsComponent } from './components/task-stats/task-stats.component';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
-        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, TaskOfferComponent, TaskSearchComponent],
+        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, 
+        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -45,8 +48,8 @@ import { TaskSearchComponent } from './components/task-search/task-search.compon
     entryComponents: [
         TaskDeleteDialogComponent, TaskOfferComponent
       ],
-    exports: [TaskCategoriesComponent,
-        TaskCreateComponent, TaskCardComponent,
+    exports: [TaskCategoriesComponent, TaskStatsComponent,
+        TaskCreateComponent, TaskCardComponent, FeaturedTaskComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskSearchComponent],
     providers: [TaskService]
 })

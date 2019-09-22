@@ -1,15 +1,22 @@
-<app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
-    (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
-<div class="container">
-    <div class="row">
-        <div *ngIf="model" class="col-md-4 scrollable">
-            <div>{{model.length}} tasks</div>
-            <div *ngFor="let task of model">
-                <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
+<app-band></app-band>
+<section>
+    <div class="block less-top">
+        <div class="">
+            <div class="row">
+                <aside class="col-lg-2 column margin_widget">
+                    <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
+                        (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
+                </aside>
+                <div *ngIf="model" class="col-lg-3 column scrollable">
+                    <div>{{model.length}} tasks</div>
+                    <div *ngFor="let task of model">
+                        <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
+                    </div>
+                </div>
+                <div class="col-lg-7 column">
+                    <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
+                </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
-        </div>
     </div>
-</div>
+</section>

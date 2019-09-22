@@ -180,8 +180,8 @@ router.post('/tasks', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_updateone = async() => await mgaccess.create(db, TASK_COLL, task)
 
-        const task = invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', task.ops[0]))
+        const result = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.ops[0]))
     }
 }))
 

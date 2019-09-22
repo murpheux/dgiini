@@ -18,12 +18,13 @@ import { AuthGuard } from './guards/auth-guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BandComponent } from './components/band/band.component';
 
 @NgModule({
   declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective],
+    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent],
   exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent],
+    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, BandComponent],
   providers: [
     UtilService,
     LoadingService,

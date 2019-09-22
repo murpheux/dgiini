@@ -1,6 +1,8 @@
-<mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="task-card card border-secondary mb-3">
-    <mat-card-content>
-        <div class="title font-weight-bold text-primary">{{task.title | titlecase | slice:0:25}}</div>
+<mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="field_w_search mb-3">
+    <mat-card-content style="background-color: red;">
+        <div>
+            <h3 class="sb-title open">{{task.title | titlecase | slice:0:25}}</h3>
+        </div>
         <div class="descr">{{task.description}}</div>
         <div *ngIf="task.lastbid" class="ramount-init font-weight-bold text-danger">{{task.rate.amount | currency:'CAD':'symbol':'1.0-0'}}</div>
         <div class="ramount font-weight-bold">{{currentPrice | currency:'CAD':'symbol':'1.0-0'}}</div>

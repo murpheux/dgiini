@@ -4,17 +4,20 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { TasksModule } from '../tasks/tasks.module';
 import json from 'highlight.js/lib/languages/json';
-import { CustomersayComponent } from './customersay/customersay.component';
-import { HowworksComponent } from './howworks/howworks.component';
-import { ContactusComponent } from './contactus/contactus.component';
+import { CustomersayComponent } from './components/customersay/customersay.component';
+import { HowworksComponent } from './components/howworks/howworks.component';
+import { ContactusComponent } from './components/contactus/contactus.component';
 import { CallbackComponent } from '../user/pages/callback/callback.component';
 import { ProfileComponent } from '../user/pages/profile/profile.component';
 import { LoadingComponent } from '../user/components/loading/loading.component';
 import { HighlightModule } from 'ngx-highlightjs';
+import { VendorclientComponent } from './components/vendorclient/vendorclient.component';
+import { FaqComponent } from './components/faq/faq.component';
+import { YouSkilledComponent } from './components/you-skilled/you-skilled.component';
 
 export function hljsLanguages() {
     return [{ name: 'json', func: json }];
@@ -29,7 +32,10 @@ export function hljsLanguages() {
     ContactusComponent,
     CallbackComponent,
     ProfileComponent,
-    LoadingComponent
+    LoadingComponent,
+    VendorclientComponent,
+    FaqComponent,
+    YouSkilledComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +48,7 @@ export function hljsLanguages() {
     }),
   ],
   exports: [
-    HomeComponent,
+    HomeComponent
   ]
 
 })

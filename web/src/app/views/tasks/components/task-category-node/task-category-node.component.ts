@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
 })
 export class TaskCategoryNodeComponent implements OnInit {
     categoryRow: any[] = [];
+    taskMap = { 'Cleaning': 'sun-o', 'Gardening': 'tree', 'Handy Man': 'wrench',
+        'Furniture Assembly': 'line-chart', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
+        'Childcare': 'child', 'Moving': 'truck' };
 
     constructor(
         private taskService: TaskService,
@@ -27,8 +30,8 @@ export class TaskCategoryNodeComponent implements OnInit {
     }
 
     distributeCategories(categories: string[]) {
-        this.categoryRow[0] = categories.slice(0, 6);
-        this.categoryRow[1] = categories.slice(6, 12);
+        this.categoryRow[0] = categories.slice(0, 4);
+        this.categoryRow[1] = categories.slice(4, 8);
     }
 
     handleCategory(category) {

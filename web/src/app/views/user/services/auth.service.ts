@@ -10,12 +10,13 @@ import { environment } from 'src/environments/environment';
     providedIn: 'root'
 })
 export class AuthService {
-    // Create an observable of Auth0 instance of client
+    requestedScopes = 'openid profile email read:messages write:messages';
     auth0Client$ = (from(
         createAuth0Client({
             domain: environment.AUTH0_DOMAIN,
             client_id: environment.AUTH0_CLIENTID,
-            redirect_uri: `${window.location.origin}/callback`
+            redirect_uri: `${window.location.origin}/callback`,
+            scope: this.requestedScopes
         })
     ) as Observable<Auth0Client>).pipe(
         shareReplay(1), // Every subscription receives the same shared value
@@ -29,13 +30,19 @@ export class AuthService {
         concatMap((client: Auth0Client) => from(client.isAuthenticated())),
         tap(res => this.loggedIn = res)
     );
+
     handleRedirectCallback$ = this.auth0Client$.pipe(
         concatMap((client: Auth0Client) => from(client.handleRedirectCallback()))
     );
-    // Create subject and public observable of user profile data
+
     private userProfileSubject$ = new BehaviorSubject<any>(null);
+    private userTokenSubject$ = new BehaviorSubject<any>(null);
+    private userClaimsSubject$ = new BehaviorSubject<any>(null);
+
     userProfile$ = this.userProfileSubject$.asObservable();
-    // Create a local property for login status
+    userToken$ = this.userTokenSubject$.asObservable();
+    userClaims$ = this.userClaimsSubject$.asObservable();
+
     loggedIn: boolean = null;
 
     constructor(private router: Router) { }
@@ -46,6 +53,20 @@ export class AuthService {
         return this.auth0Client$.pipe(
             concatMap((client: Auth0Client) => from(client.getUser(options))),
             tap(user => this.userProfileSubject$.next(user))
+        );
+    }
+
+    getClaims$(options?): Observable<any> {
+        return this.auth0Client$.pipe(
+            concatMap((client: Auth0Client) => from(client.getIdTokenClaims(options))),
+            tap(claims => this.userClaimsSubject$.next(claims))
+        );
+    }
+
+    getToken$(options?): Observable<any> {
+        return this.auth0Client$.pipe(
+            concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
+            tap(token => this.userTokenSubject$.next(token))
         );
     }
 
@@ -96,10 +117,8 @@ export class AuthService {
                 targetRoute = cbRes.appState && cbRes.appState.target ? cbRes.appState.target : '/';
             }),
             concatMap(() => {
-                // Redirect callback complete; get user and login status
                 return combineLatest(
-                    this.getUser$(),
-                    this.isAuthenticated$
+                    [ this.getUser$(), this.getClaims$(), this.getToken$(), this.isAuthenticated$ ]
                 );
             })
         );

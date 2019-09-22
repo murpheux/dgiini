@@ -17,8 +17,6 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isCollapsed = true;
-    // faUser = faUser;
-    // faPowerOff = faPowerOff;
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
@@ -27,6 +25,9 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        this.authService.userToken$.subscribe(s => {
+            // console.log(JSON.stringify(s));
+        });
     }
 
     openDialog() {

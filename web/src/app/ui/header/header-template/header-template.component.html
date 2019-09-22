@@ -1,56 +1,79 @@
-<header>
-    <div class="d-flex flex-row flex-wrap justify-content-around">
-        <div>
-            <a href="/">
-                <img src="assets/images/logo.png" class="img-fluid applogo">
-            </a>
+<div class="responsive-header five">
+    <div class="responsive-menubar">
+        <div class="res-logo">
+            <a href="index.html" title=""><img src="http://placehold.it/178x40" alt="" /></a>
         </div>
-        <div>
-            <nav class="navbar top-nav navbar-expand-lg navbar-light">
-                <ul class="navbar-nav d-flex flex-row justify-content-center flex-wrap">
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./home']">
-                            <mat-icon>home</mat-icon> home</a>
+        <div class="menu-resaction">
+            <div class="res-openmenu">
+                <img src="assets/images/icon.png" alt="" /> Menu
+            </div>
+            <div class="res-closemenu">
+                <img src="assets/images/icon2.png" alt="" /> Close
+            </div>
+        </div>
+    </div>
+    <div class="responsive-opensec">
+        <div class="btn-extars">
+            <a href="#" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
+            <ul class="account-btns">
+                <li class="signup-popup"><a title=""><i class="la la-key"></i> Sign Up</a></li>
+                <li class="signin-popup"><a title=""><i class="la la-external-link-square"></i> Login</a></li>
+            </ul>
+        </div>
+        <!-- Btn Extras -->
+        <form class="res-search">
+            <input type="text" placeholder="Job title, keywords or company name" />
+            <button type="submit"><i class="la la-search"></i></button>
+        </form>
+        <div class="responsivemenu">
+            <ul>
+                <li class="menu-item-has-children">
+                    <a href="#" title="">
+                        <mat-icon>home</mat-icon> Home</a>
+                </li>
+                <li class="menu-item-has-children">
+                    <a href="#" title="">Browse Tasks</a>
+                </li>
+                <li class="menu-item-has-children">
+                    <a href="#" title="">Advance Search</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<header class="style5">
+    <div class="menu-sec">
+        <div class="container fluid">
+            <nav>
+                <ul>
+                    <li class="menu-item-has-children">
+                        <a title="" [routerLink]="['./home']"><i class="la la-home"></i> Home</a>
                     </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" (click)="openDialog()">
-                            <mat-icon>local_post_office</mat-icon>post a task</a>
+                    <li class="menu-item-has-children">
+                        <a title="" routerLinkActive="active" [routerLink]="['./tasks']"><i class="la la-tasks"></i> Browse Tasks</a>
                     </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./tasks']">
-                            <mat-icon>local_library</mat-icon>browse tasks</a>
+                    <li *ngIf="authService.loggedIn" class="menu-item-has-children">
+                        <a href="#" title="" [routerLink]="['./mytask']">My Tasks</a>
                     </li>
-                    <li *ngIf="authService.loggedIn" class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./mytask']">
-                            <mat-icon>note</mat-icon>my tasks</a>
+                    <li class="menu-item-has-children">
+                        <a href="#" title="" [routerLink]="['./search/yada']"><i class="la la-search"></i> Advance Search</a>
                     </li>
                 </ul>
             </nav>
-        </div>
-        <div class="d-flex flex-row sign-in-partial" *ngIf="!authService.loggedIn">
-            <div class="dropdown ml-1">
-                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="assets/images/default-avatar.png">
-                </button>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" (click)="login()">Sign in</a>
-                    <a class="dropdown-item" (click)="openRegisterDialog()">Register</a>
-                </div>
+            <!-- Menus -->
+            <div class="logo">
+                <a href="#" title=""><img src="assets/images/logo.png" alt="" /></a>
             </div>
-            <div class="ml-1 font-weight-bold appuser"><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>
-        </div>
-        <div class="d-flex flex-row sign-in-partial" *ngIf="authService.userProfile$ | async as profile">
-            <div class="dropdown ml-1">
-                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img [src]="profile.picture">
-            </button>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" [routerLink]="['./profile']">Profile</a>
-                    <a class="dropdown-item" [routerLink]="['./user/upgrade']">Become Vendor</a>
-                    <a class="dropdown-item" (click)="logout()">Sign out</a>
-                </div>
+            <!-- Logo -->
+            <div class="btn-extars">
+                <a title="" class="post-job-btn" (click)="openDialog()"><i class="la la-plus"></i>Post Tasks</a>
+                <ul class="account-btns">
+                    <li class="signup-popup"><a title="" (click)="openRegisterDialog()"><i class="la la-key"></i> Sign Up</a></li>
+                    <li class="signin-popup"><a title="" (click)="login()"><i class="la la-external-link-square"></i> Login</a></li>
+                </ul>
             </div>
-            <div class="ml-1 font-weight-bold appuser"><a [routerLink]="[ './user/profile'] ">{{ currentUser?.name }}</a></div>
+            <!-- Btn Extras -->
         </div>
     </div>
 </header>
