@@ -1,5 +1,5 @@
 {
-    "name": "mraskr",
+    "name": "dgiini",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
@@ -48,7 +48,6 @@
         "guid-typescript": "^1.0.9",
         "hammerjs": "^2.0.8",
         "highlight.js": "^9.15.10",
-        "jquery": "~3.3.1",
         "jszip": "^3.2.1",
         "jszip-utils": "0.0.2",
         "ngx-highlightjs": "^3.0.3",
@@ -56,12 +55,10 @@
         "ngx-toastr": "^10.0.4",
         "ngx-ui-loader": "^7.2.2",
         "node-sass": "^4.12.0",
-        "popper": "^1.0.1",
         "rxjs": "~6.5.2",
         "stream": "^0.0.2",
         "tslib": "^1.9.0",
         "web-animations-js": "github:angular/web-animations-js#release_pr208",
-        "wow.js": "^1.2.2",
         "zone.js": "~0.9.1"
     },
     "devDependencies": {
