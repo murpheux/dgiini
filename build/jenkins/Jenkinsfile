@@ -60,7 +60,7 @@ pipeline {
                             cd ${WORKSPACE}/gw
                             npm run build-gw
                         '''
-                        sh 'cp ${WORKSPACE}/gw/package.json dist/apigw/'
+                        sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/gw/dist/apigw jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
@@ -71,7 +71,7 @@ pipeline {
                             cd ${WORKSPACE}/ms
                             npm run build-task
                         '''
-                        sh 'cp ${WORKSPACE}/ms/package.json dist/mstask/'
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/mstask jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
@@ -82,7 +82,7 @@ pipeline {
                             cd ${WORKSPACE}/ms
                             npm run build-auth
                         '''
-                        sh 'cp ${WORKSPACE}/ms/package.json dist/msauth/'
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/msauth jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
@@ -93,7 +93,7 @@ pipeline {
                             cd ${WORKSPACE}/ms
                             npm run build-msg
                         '''
-                        sh 'cp ${WORKSPACE}/ms/package.json dist/msmsg/'
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/ms/dist/msmsg jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'
                     }
