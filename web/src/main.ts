@@ -16,7 +16,7 @@ if (localStorage.getItem('locale') === null) {
   filename += locale === 'en' ? '' : `.${locale}`;
   filename += '.xlf';
   declare const require;
-  const translations = require(`raw-loader!./locale/${filename}`);
+  const translations = require(`raw-loader!./locale/${filename}`).default;
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
   providers: [
