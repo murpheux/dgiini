@@ -4,6 +4,8 @@
     font-size: 1em;
 }
 
-.message_back {
-    background-color: rgb(211, 210, 210);
+.message {
+    padding: 10px 10px 10px 10px;
+    background-color: lighten(#cba135, 65%);
+    color: #0f0f0f;
 }

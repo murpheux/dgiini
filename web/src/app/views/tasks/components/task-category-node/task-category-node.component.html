@@ -12,7 +12,7 @@
                             <div *ngFor="let category of categoryRow[0]" class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                                 <div class="p-category style2 gray">
                                     <a routerLink="/tasks/category/{{category}}" title="">
-                                        <i class="la la-{{ taskMap[category] }}"></i>
+                                        <i class="la la-{{ fa_imageMap[category] }}"></i>
                                         <span>{{ category }}</span>
                                         <p>(22 open positions)</p>
                                     </a>
@@ -23,7 +23,7 @@
                             <div *ngFor="let category of categoryRow[1]" class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                                 <div class="p-category style2 gray">
                                     <a routerLink="/tasks/category/{{category}}" title="">
-                                        <i class="la la-{{ taskMap[category] }}"></i>
+                                        <i class="la la-{{ fa_imageMap[category] }}"></i>
                                         <span>{{ category }}</span>
                                         <p>(22 open positions)</p>
                                     </a>

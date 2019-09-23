@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from 'src/app/views/user/services/location.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TaskService } from 'src/app/views/tasks/services/task.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-carousel',
@@ -8,15 +11,28 @@ import { LocationService } from 'src/app/views/user/services/location.service';
 })
 export class CarouselComponent implements OnInit {
 
+    searchFormGroup: FormGroup;
     currentCity: string;
+
     constructor(
         private locationService: LocationService,
+        private formBuilder: FormBuilder,
+        private taskService: TaskService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
         this.locationService.getCurrentCity().then(city => {
             this.currentCity = city;
         });
+
+        this.searchFormGroup = this.formBuilder.group({
+            'search': this.formBuilder.control('', [Validators.required])
+        });
+    }
+
+    handleSearch(searchValues) {
+        this.router.navigate(['/tasks/search/' + searchValues.search]);
     }
 
 }

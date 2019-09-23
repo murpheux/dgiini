@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class TaskCategoryNodeComponent implements OnInit {
     categoryRow: any[] = [];
-    taskMap = { 'Cleaning': 'sun-o', 'Gardening': 'tree', 'Handy Man': 'wrench',
+    fa_imageMap = { 'Cleaning': 'sun-o', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'line-chart', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
         'Childcare': 'child', 'Moving': 'truck' };
 

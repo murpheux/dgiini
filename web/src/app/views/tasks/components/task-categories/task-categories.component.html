@@ -8,7 +8,7 @@
                         (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
                 </aside>
                 <div *ngIf="model" class="col-lg-3 column scrollable">
-                    <div>{{model.length}} tasks</div>
+                    <div class="list-count mb-2 p-2">{{model.length}} tasks</div>
                     <div *ngFor="let task of model">
                         <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
                     </div>

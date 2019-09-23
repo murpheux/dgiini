@@ -38,19 +38,7 @@
                             "src/style/chosen.css",
                             "src/style/colors/colors.css"
                         ],
-                        "scripts": [
-                            "src/js/jquery.min.js",
-                            "src/js/modernizr.js",
-                            "src/js/script.js",
-                            "node_modules/bootstrap/dist/js/bootstrap.min.js",
-                            "src/js/wow.min.js",
-                            "src/js/isotop.js",
-                            "src/js/slick.min.js",
-                            "src/js/parallax.js",
-                            "src/js/select-chosen.js",
-                            "src/js/counter.js",
-                            "src/js/rslider.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

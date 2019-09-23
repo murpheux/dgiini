@@ -16,15 +16,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="offset-md-2 col-md-10 message_back">
+            <div class="offset-md-2 col-md-8 message rounded">
                 {{ message.message }}
             </div>
         </div>
         <div class="row">
             <div col-md-3>
-                <button (click)="handleReply('message._id')"><mat-icon class="task-icon">reply</mat-icon></button>
+                <button (click)="handleReply('message._id')"><i class="la la-reply-all"></i>reply</button>
             </div>
-            <div class="offset-md-6 col-md-3 small">
+            <div class="col-md-7"></div>
+            <div class="col-md-2 small text-right font-italic c-red">
                 {{message.sentdate | date:'medium'}}
             </div>
         </div>

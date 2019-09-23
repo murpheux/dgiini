@@ -31,6 +31,16 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
+    getFeaturedTasks(): Observable<IResponse> {
+        const url = `${this.serviceUrl}`;
+        return this.http.get<IResponse>(url);
+    }
+
+    getRecentTasks(): Observable<IResponse> {
+        const url = `${this.serviceUrl}`;
+        return this.http.get<IResponse>(url);
+    }
+
     getUserTasks(user: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}/user/${user}`;
         return this.http.get<IResponse>(url);

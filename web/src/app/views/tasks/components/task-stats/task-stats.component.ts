@@ -1,15 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskService } from '../../services/task.service';
 
 @Component({
-  selector: 'app-task-stats',
-  templateUrl: './task-stats.component.html',
-  styleUrls: ['./task-stats.component.scss']
+    selector: 'app-task-stats',
+    templateUrl: './task-stats.component.html',
+    styleUrls: ['./task-stats.component.scss']
 })
 export class TaskStatsComponent implements OnInit {
 
-  constructor() { }
+    constructor(
+        private taskService: TaskService,
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.getStatistics();
+    }
 
+    getStatistics() {
+
+    }
 }

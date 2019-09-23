@@ -1,73 +1,78 @@
-<mat-card class="card border-secondary mb-3">
+<mat-card class="card view-card mb-3">
     <mat-card-header>
         <mat-card-subtitle>
-            <h3 id="#header">{{task.title | titlecase}}</h3><span class="statusBadge badge badge-success">{{task.status | titlecase}}</span>
+            <div class="d-flex bd-highlight mb-3">
+                <div class="p-2 bd-highlight">
+                    <h3 id="#header">{{task.title | titlecase}}</h3>
+                </div>
+                <div class="p-2 bd-highlight"><span class="badge badge-success">{{task.status | titlecase}}</span></div>
+            </div>
         </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <div>
-            <div class="budget border border-success rounded-lg w-25 p-3 float-right text-center">
-                <span>Budget</span>
+            <div class="budget border border-warning rounded-lg w-25 p-3 float-right text-center">
+                <div>
+                    <h2>Budget</h2>
+                </div>
                 <div *ngIf="task.lastbid" class="ramount text-danger">{{task.rate.amount | currency:'CAD' }}</div>
-                <div class="font-weight-bold">{{currentPrice | currency:'CAD' }}</div>
+                <div class="c-gold">
+                    <h2>{{currentPrice | currency:'CAD' }}</h2>
+                </div>
                 <div *ngIf="task.lastbid?.accepted">
                     <span class="statusBadge badge badge-success">Accepted!!</span>
                 </div>
                 <div *ngIf="!task.lastbid?.accepted">
-                    <button type="button" class="btn btn-primary" (click)="handleMakeOffer()"><mat-icon>attach_money</mat-icon>Make Offer</button>
-                    <br/>
-                    <br/>
+                    <button type="button" class="btn btn-danger b-center" (click)="handleMakeOffer()"><i class="la la-dollar"></i>Make Offer</button>
                     <button *ngIf="owned" type="button" class="btn btn-primary" (click)="handleAcceptOffer()"><mat-icon>money</mat-icon>Accept Offer</button>
-                    <br/>
-                    <br/>
                     <button *ngIf="owned" type="button" class="btn btn-danger" (click)="handleCancelTask()"><mat-icon>clear</mat-icon>Cancel Task</button>
                 </div>
             </div>
-            <div>
+            <div class="ml-3">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-sm-1">
+                    <div class="row mb-2">
+                        <div class="col-md-1">
                             <mat-icon>person_pin</mat-icon>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="font-weight-bold">Posted By</div>
-                            <div>{{task.client.name}}</div>
+                        <div class="col-md-4">
+                            <div class="font-weight-bold c-gold">Posted By</div>
+                            <div class="c-red">{{task.client.name}}</div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-1">
+                    <div class="row mb-2">
+                        <div class="col-md-1">
                             <mat-icon>location_on</mat-icon>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="font-weight-bold">Location</div>
-                            <div>{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
+                        <div class="col-md-4">
+                            <div class="font-weight-bold c-gold">Location</div>
+                            <div class="c-red">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-1">
+                    <div class="row mb-2">
+                        <div class="col-md-1">
                             <mat-icon>calendar_today</mat-icon>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="font-weight-bold">Due Date</div>
-                            <div>{{task.scheduled_date | date}}</div>
+                        <div class="col-md-4">
+                            <div class="font-weight-bold c-gold">Due Date</div>
+                            <div class="c-red">{{task.scheduled_date | date}}</div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-1">
+                    <div class="row mb-2">
+                        <div class="col-md-1">
                             <mat-icon>chrome_reader_mode</mat-icon>
                         </div>
-                        <div class="col-sm-4">
-                            <span class="font-weight-bold">Details</span>
-                            <div>{{task.description}}</div>
+                        <div class="col-md-4">
+                            <span class="font-weight-bold c-gold">Details</span>
+                            <div class="c-red">{{task.description}}</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="ml-3">
                 <div>
                     <mat-icon> message</mat-icon>
-                    <span class="font-weight-bold">Messages</span>
-                    <p>Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
+                    <span class="font-weight-bold c-gold">Messages</span>
+                    <p class="c-red">Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
                 </div>
                 <div *ngIf="currentUser">
                     <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [from]="currentUser._id" [to]="task.client._id" [task]="task._id"></app-message-sender>
@@ -78,6 +83,4 @@
             </div>
         </div>
     </mat-card-content>
-    <mat-card-actions>
-    </mat-card-actions>
 </mat-card>
