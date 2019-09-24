@@ -33,7 +33,7 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
         ports:
-            - "7000:80"
+            - "7000:7000"
         volumes:
             - ../../apigw:/usr/src/app
         container_name: apigw
