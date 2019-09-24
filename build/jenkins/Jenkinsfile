@@ -58,7 +58,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/gw
-                            whoami
+                            npm install
                             npm run build-gw
                         '''
                         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
