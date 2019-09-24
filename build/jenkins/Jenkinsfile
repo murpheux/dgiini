@@ -62,6 +62,7 @@ pipeline {
                             npm run build-gw
                         '''
                         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/config/gateway.config.yml'
                         sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
                         sh 'ssh jenkins@scarlet "mkdir -p ~/release/release_${BUILD_NUMBER}/"'
                         sh 'scp -r ${WORKSPACE}/gw/dist/apigw jenkins@scarlet:~/release/release_${BUILD_NUMBER}/'

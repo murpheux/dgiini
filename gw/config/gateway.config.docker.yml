@@ -1,0 +1,117 @@
+https:
+  port: 443
+  hostname: apigw
+  tls:
+    "default":
+        key: cert/dgiini.key.pem
+        cert: cert/dgiini.cert.pem
+admin:
+  port: 9876
+  host: apigw
+apiEndpoints:
+  taskApiDefault:
+    host: 'localhost'
+    paths: '/api/task/v1/'
+    methods: GET
+  taskApi:
+    host: 'localhost'
+    paths: '/api/task/v1/*'
+  authApiDefault:
+    host: 'localhost'
+    paths: '/api/auth/v1/'
+    methods: GET
+  authApi:
+    host: 'localhost'
+    paths: '/api/auth/v1/*'
+  msgApiDefault:
+    host: 'localhost'
+    paths: '/api/msg/v1/'
+    methods: GET
+  msgApi:
+    host: 'localhost'
+    paths: '/api/msg/v1/*'
+serviceEndpoints:
+  taskService:
+    url: 'http://task_api'
+  authService:
+    url: 'http://auth_api'
+  msgService:
+    url: 'http://msg_api'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - jwt
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  taskDefaultPipeline:
+    apiEndpoints:
+      - taskApiDefault
+    policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
+      - proxy:
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  taskPipeline:
+    apiEndpoints:
+      - taskApi
+    policies:
+      # - log:
+      #   - action:
+      #       message: ${req.ip} - ${req.method} ${req.originalUrl}
+      # - jwt:
+      #   - action:
+      #       secretOrPublicKeyFile: './cert/gen.cert.pem'
+      - proxy:
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  authDefaultPipeline:
+    apiEndpoints:
+      - authApiDefault
+    policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
+      - proxy:
+        - action:
+            serviceEndpoint: authService
+            changeOrigin: true
+  authPipeline:
+    apiEndpoints:
+      - authApi
+    policies:
+      - proxy:
+        - action:
+            serviceEndpoint: authService
+  msgDefaultPipeline:
+    apiEndpoints:
+      - msgApiDefault
+    policies:
+      - rate-limit:
+        - action:
+            max: 10
+            windowsMs: 120000
+            rateLimitBy: '${req.hostname}'
+      - proxy:
+        - action:
+            serviceEndpoint: msgService
+            changeOrigin: true
+  msgPipeline:
+    apiEndpoints:
+      - msgApi
+    policies:
+      - proxy:
+        - action:
+            serviceEndpoint: msgService
