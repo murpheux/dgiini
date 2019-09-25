@@ -63,6 +63,11 @@ pipelines:
       # - jwt:
       #   - action:
       #       secretOrPublicKeyFile: './cert/gen.cert.pem'
+      - cors:
+        - action:
+            origin: '*'
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: ['Content-Type', 'Authorization']
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -84,6 +89,11 @@ pipelines:
     apiEndpoints:
       - authApi
     policies:
+      - cors:
+        - action:
+            origin: '*'
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: ['Content-Type', 'Authorization']
       - proxy:
         - action:
             serviceEndpoint: authService
@@ -104,6 +114,11 @@ pipelines:
     apiEndpoints:
       - msgApi
     policies:
+      - cors:
+        - action:
+          origin: '*'
+          methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+          allowedHeaders: ['Content-Type', 'Authorization']
       - proxy:
         - action:
             serviceEndpoint: msgService
