@@ -1,9 +1,11 @@
 pipeline {
     environment {
-        //This variable need be tested as string
         doError = '1'
     }
     agent any
+    parameters {
+        string(defaultValue: "dapo.onawole@gmail.com", description: 'email for notifications', name: 'notification_email')
+    }
     tools {
         nodejs "node"
         git "Default"
