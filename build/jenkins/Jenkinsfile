@@ -113,13 +113,13 @@ pipeline {
                     subject: "${JOB_NAME} ${BUILD_NUMBER} succeeded",
                     to: env.notification_email)
 
-                    if (env.archive_war =='yes')
-                    {
-                        // ArchiveArtifact plugin
-                        archiveArtifacts '**/java-calculator-*-SNAPSHOT.jar'
-                    }
-                    // Cucumber report plugin
-                    cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
+                    // if (env.archive_war =='yes')
+                    // {
+                    //     // ArchiveArtifact plugin
+                    //     archiveArtifacts '**/java-calculator-*-SNAPSHOT.jar'
+                    // }
+                    // // Cucumber report plugin
+                    // cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
                     //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '/home/reports', reportFiles: 'reports.html', reportName: 'Performance Test Report', reportTitles: ''])
             }
             //}
@@ -133,7 +133,7 @@ pipeline {
                  replyTo: '',
                  subject: "${JOB_NAME} ${BUILD_NUMBER} failed",
                  to: env.notification_email)
-                 cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
+                 //cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
             //publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '/home/tester/reports', reportFiles: 'reports.html', reportName: 'Performance Test Report', reportTitles: ''])
         }
     }
