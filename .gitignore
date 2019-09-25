@@ -7,6 +7,7 @@
 **/ms/yarn.lock
 **ms/package-lock.json
 **/ms/.cache
+**/gw/.cache
 /tmp
 /out-tsc
 
