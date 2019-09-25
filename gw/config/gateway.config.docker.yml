@@ -1,34 +1,26 @@
 https:
   port: 443
-  hostname: apigw
   tls:
     "default":
         key: cert/dgiini.key.pem
         cert: cert/dgiini.cert.pem
 admin:
   port: 9876
-  host: apigw
 apiEndpoints:
   taskApiDefault:
-    host: 'localhost'
     paths: '/api/task/v1/'
     methods: GET
   taskApi:
-    host: 'localhost'
     paths: '/api/task/v1/*'
   authApiDefault:
-    host: 'localhost'
     paths: '/api/auth/v1/'
     methods: GET
   authApi:
-    host: 'localhost'
     paths: '/api/auth/v1/*'
   msgApiDefault:
-    host: 'localhost'
     paths: '/api/msg/v1/'
     methods: GET
   msgApi:
-    host: 'localhost'
     paths: '/api/msg/v1/*'
 serviceEndpoints:
   taskService:

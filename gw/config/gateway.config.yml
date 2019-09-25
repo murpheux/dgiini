@@ -1,34 +1,34 @@
 https:
   port: 7000
-  hostname: localhost
+  # hostname: 10.10.2.7
   tls:
     "default":
         key: cert/dgiini.key.pem
         cert: cert/dgiini.cert.pem
 admin:
   port: 9876
-  host: localhost
+  # host: 10.10.2.7
 apiEndpoints:
   taskApiDefault:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/task/v1/'
     methods: GET
   taskApi:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/task/v1/*'
   authApiDefault:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/auth/v1/'
     methods: GET
   authApi:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/auth/v1/*'
   msgApiDefault:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/msg/v1/'
     methods: GET
   msgApi:
-    host: 'localhost'
+    # host: 10.10.2.7
     paths: '/api/msg/v1/*'
 serviceEndpoints:
   taskService:
