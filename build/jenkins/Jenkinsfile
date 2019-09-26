@@ -3,9 +3,6 @@ pipeline {
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
     }
     agent any
-    // parameters {
-    //     string(defaultValue: "dapo.onawole@gmail.com", description: 'email for notifications', name: 'notification_email')
-    // }
     tools {
         nodejs "node"
         git "Default"
@@ -102,25 +99,23 @@ pipeline {
         }
         stage('Zip/Artifacts') {
             steps {
-                script{
-                    zip zipFile: 'deploy.zip', archive: false, dir: deploy
-                    archiveArtifacts artifacts: 'deploy.zip', fingerprint: true
+                zip zipFile: 'deploy.zip', archive: false, dir: 'deploy'
+                archiveArtifacts artifacts: 'deploy.zip', fingerprint: true
 
-                    zip zipFile: 'web.zip', archive: false, dir: web/dist/dgiini
-                    archiveArtifacts artifacts: 'web.zip', fingerprint: true
-                    
-                    zip zipFile: 'apigw.zip', archive: false, dir: gw/dist/apigw
-                    archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
+                zip zipFile: 'web.zip', archive: false, dir: 'web/dist/dgiini'
+                archiveArtifacts artifacts: 'web.zip', fingerprint: true
+                
+                zip zipFile: 'apigw.zip', archive: false, dir: 'gw/dist/apigw'
+                archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
 
-                    zip zipFile: 'mstask.zip', archive: false, dir: ms/dist/mstask
-                    archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
+                zip zipFile: 'mstask.zip', archive: false, dir: 'ms/dist/mstask'
+                archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
 
-                    zip zipFile: 'msauth.zip', archive: false, dir: ms/dist/msauth
-                    archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
+                zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
+                archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
 
-                    zip zipFile: 'msmsg.zip', archive: false, dir: ms/dist/msmsg
-                    archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
-                }
+                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
+                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
             }
         }
         stage('clean') {
@@ -129,41 +124,4 @@ pipeline {
             }
         }
     }
-    // post {
-    //     success {
-    //         //node('node1'){
-    //         echo "Test succeeded"
-    //         script {
-    //             mail(bcc: '',
-    //                 body: "Run ${JOB_NAME}-#${BUILD_NUMBER} succeeded. To get more details, visit the build results page: ${BUILD_URL}.",
-    //                 cc: '',
-    //                 from: 'jenkins-admin@gmail.com',
-    //                 replyTo: '',
-    //                 subject: "${JOB_NAME} ${BUILD_NUMBER} succeeded",
-    //                 to: env.NOTIFICATION_EMAIL)
-
-    //                 // if (env.archive_war =='yes')
-    //                 // {
-    //                 //     // ArchiveArtifact plugin
-    //                 //     archiveArtifacts '**/java-calculator-*-SNAPSHOT.jar'
-    //                 // }
-    //                 // // Cucumber report plugin
-    //                 // cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
-    //                 //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '/home/reports', reportFiles: 'reports.html', reportName: 'Performance Test Report', reportTitles: ''])
-    //         }
-    //         //}
-    //     }
-    //     failure {
-    //         echo "Test failed"
-    //         mail(bcc: '',
-    //             body: "Run ${JOB_NAME}-#${BUILD_NUMBER} succeeded. To get more details, visit the build results page: ${BUILD_URL}.",
-    //             cc: '',
-    //             from: 'jenkins-admin@gmail.com',
-    //             replyTo: '',
-    //             subject: "${JOB_NAME} ${BUILD_NUMBER} failed",
-    //             to: env.NOTIFICATION_EMAIL)
-    //             //cucumber fileIncludePattern: '**/java-calculator/target/cucumber-report.json', sortingMethod: 'ALPHABETICAL'
-    //             //publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '/home/tester/reports', reportFiles: 'reports.html', reportName: 'Performance Test Report', reportTitles: ''])
-    //     }
-    // }
 }
