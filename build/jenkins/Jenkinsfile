@@ -123,10 +123,13 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
-        stage('Notification') {
-            steps {
-                slackSend baseUrl: 'https://hooks.slack.com/services/', botUser: true, channel: '#build', color: 'good', iconEmoji: ':ghost:', message: 'Build successfully completed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin', username: 'slack-build'
-            }
+    }
+    post {
+        success {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: ':ghost:', message: 'Build successfully completed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+        }
+        failure {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: ':ghost:', message: 'Build failed! - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
         }
     }
 }
