@@ -123,7 +123,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
-        state('Notification') {
+        stage('Notification') {
             steps {
                 slackSend channel: 'build', color: 'good', message: 'Build successfully completed - dgiini!!', tokenCredentialId: 'build-admin'
             }
