@@ -21,17 +21,29 @@ pipeline {
                 sh '''
                     cd ${WORKSPACE}/ms
                     npm install
+
+                    cd ${WORKSPACE}/web
+                    npm install
                 '''
             }
         }
         stage('Code analyse') {
             steps {
-                sh 'echo "Run some lints"'
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run lint
+
+                    cd ${WORKSPACE}/web
+                    npm run lint
+                '''
             }
         }
         stage('Unit test') {
             steps {
-                sh 'echo "Tests will back"'
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run test
+                '''
             }
         }
         stage('build app') {
@@ -40,7 +52,6 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/web
-                            npm install
                             npm run build-docker
                         '''
                     }

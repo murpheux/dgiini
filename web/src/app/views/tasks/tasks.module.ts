@@ -33,7 +33,7 @@ import { TaskStatsComponent } from './components/task-stats/task-stats.component
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
-        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent, 
+        TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent,
         TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
     imports: [
         CommonModule,

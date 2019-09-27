@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HighlightModule } from 'ngx-highlightjs';
-import { hljsLanguages } from 'src/app/app.module';
+// import { hljsLanguages } from 'src/app/app.module';
 
 import { ProfileComponent } from './profile.component';
 
@@ -13,7 +13,7 @@ describe('ProfileComponent', () => {
       declarations: [ProfileComponent],
       imports: [
         HighlightModule.forRoot({
-          languages: hljsLanguages
+          // languages: hljsLanguages
         })
       ]
     }).compileComponents();

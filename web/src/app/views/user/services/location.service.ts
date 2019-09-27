@@ -50,7 +50,7 @@ export class LocationService {
     // }
 
     getMyIPAddress(): Observable<any> {
-        const headers = new HttpHeaders({ 'Content-Type': 'text/plain'}); 
+        const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
         const url = `${environment.IP_SERVICE}`;
         return this.http.get('/api', {responseType: 'text', headers});
     }
