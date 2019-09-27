@@ -67,7 +67,7 @@ pipelines:
         - action:
               origin: '*'
               methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-              allowedHeaders: ['Content-Type', 'Authorization']
+              allowedHeaders: '*'
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -93,7 +93,7 @@ pipelines:
         - action:
               origin: '*'
               methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-              allowedHeaders: ['Content-Type', 'Authorization']
+              allowedHeaders: '*'
       - proxy:
         - action:
             serviceEndpoint: authService
@@ -118,7 +118,7 @@ pipelines:
         - action:
             origin: '*'
             methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-            allowedHeaders: ['Content-Type', 'Authorization']
+            allowedHeaders: '*'
       - proxy:
         - action:
             serviceEndpoint: msgService
