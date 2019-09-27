@@ -123,5 +123,10 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
+        state('Notification') {
+            steps {
+                slackSend channel: 'build', color: 'good', message: 'Build successfully completed - dgiini!!', tokenCredentialId: 'build-admin'
+            }
+        }
     }
 }
