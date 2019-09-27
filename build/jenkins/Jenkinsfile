@@ -125,7 +125,7 @@ pipeline {
         }
         stage('Notification') {
             steps {
-                slackSend channel: 'build', color: 'good', message: 'Build successfully completed - dgiini!!', tokenCredentialId: 'build-admin'
+                slackSend baseUrl: 'https://hooks.slack.com/services/', botUser: true, channel: '#build', color: 'good', iconEmoji: ':ghost:', message: 'Build successfully completed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin', username: 'slack-build'
             }
         }
     }
