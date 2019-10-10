@@ -1,1 +1,1 @@
-ssh -l murpheux -p 53801 gru build dgiini
+ssh -l murpheux -p 53801 gru build dgiini -p deploy=false -p branch=dev

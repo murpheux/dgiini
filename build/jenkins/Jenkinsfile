@@ -1,8 +1,14 @@
 pipeline {
+    agent any
     environment {
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
+        REPO_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+        ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
     }
-    agent any
+    parameters {
+        booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy if true')
+        stringParam(name: 'branch', defaultValue: 'dev', description: 'Repository branch')
+    }
     tools {
         nodejs "node"
         git "Default"
@@ -13,7 +19,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: 'dev', url: 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+                git branch: $branch, url: ${REPO_URL}
             }
         }
         stage('install dependencies') {
@@ -46,6 +52,11 @@ pipeline {
                 '''
             }
         }
+        stage('Create version file') {
+            steps {
+                writeFile file: 'build_version', text: '{"version": "${BUILD_NUMBER}"}'
+            }
+        }
         stage('build app') {
             parallel {
                 stage('Build web') {
@@ -64,6 +75,7 @@ pipeline {
                             npm run build-gw
                         '''
                         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/gw/dist/apigw/'
                         sh 'cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml'
                         sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
                     }
@@ -75,6 +87,7 @@ pipeline {
                             npm run build-task
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/mstask/'
                     }
                 }
                 stage('Build auth_api') {
@@ -84,6 +97,7 @@ pipeline {
                             npm run build-auth
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
                     }
                 }
                 stage('Build msg_api') {
@@ -93,6 +107,7 @@ pipeline {
                             npm run build-msg
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
                     }
                 }
             }
@@ -123,13 +138,27 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
+        stage('Deploy') {
+            when { deploy true }
+            steps {
+                // deploy with ansible
+                ansiblePlaybook colorized: true, 
+                    credentialsId: 'jenkins',
+                    limit: "scarlet",
+                    installation: 'ansible',
+                    inventory: 'inventory.ini', 
+                    playbook: 'playbook.yml', 
+                    sudo: true,
+                    sudoUser: 'jenkins'
+            }
+        }
     }
     post {
         success {
-            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: ':ghost:', message: 'Build successfully completed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: 'Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
         }
         failure {
-            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: ':ghost:', message: 'Build failed! - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: 'Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
         }
     }
 }
