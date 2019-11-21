@@ -13,8 +13,8 @@ import { ITaskBid } from '../models/ITaskBid';
   providedIn: 'root'
 })
 export class TaskService {
-    private serviceUrl = `${environment.APIGW_API}/task/v1/tasks`;
-    private bidServiceUrl = `${environment.APIGW_API}/task/v1/bids`;
+    private serviceUrl = `${environment.gateway.api}/task/v1/tasks`;
+    private bidServiceUrl = `${environment.gateway.api}/task/v1/bids`;
 
     constructor(
         private http: HttpClient,
@@ -22,7 +22,7 @@ export class TaskService {
     ) { }
 
     getTaskCategories(): Observable<IResponse> {
-        const url = `${environment.APIGW_API}/task/v1/categories`;
+        const url = `${environment.gateway.api}/task/v1/categories`;
         return this.http.get<IResponse>(url);
     }
 

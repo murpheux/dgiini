@@ -142,6 +142,31 @@ module.exports = {
         })
     },
 
+    // get user by role
+    getusersbyrole: (db, collection, paging, role) => {
+        process_paging(paging)
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([
+                { $match: { roles: { $elemMatch: { $eq: role } } } }
+            ]).toArray()
+
+            resolve(doc)
+        })
+    },
+
+    getvendorsbyskill: (db, collection, paging, skill) => {
+        process_paging(paging)
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([
+                { $match: { skills: { $elemMatch: { $eq: skill } } } }
+            ]).toArray()
+
+            resolve(doc)
+        })
+    },
+
     // get user one
     getusers: (db, collection, paging) => {
         process_paging(paging)

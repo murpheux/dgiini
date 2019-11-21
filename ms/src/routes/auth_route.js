@@ -62,37 +62,87 @@ router.post('/login', asyncHandler(async(req, res, next) => {
 
 // register
 router.post('/register', asyncHandler(async(req, res, next) => {
-    let user = req.body
-    user = updateNewUser(user)
-
+    const user = req.body
     const validation = validateClient(user)
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
+        // enrich
+        user.isActive = true
+        user.isBanned = false
+        user.lastLogin = null
+        user.created = new Date()
+
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-        const user = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+        const result = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
+    }
+}))
+
+router.post('/register/client', asyncHandler(async(req, res, next) => {
+    const user = req.body
+    const validation = validateClient(user)
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        // enrich
+        user.isActive = true
+        user.isBanned = false
+        user.lastLogin = null
+        user.created = new Date()
+
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
+
+        const result = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
+    }
+}))
+
+router.post('/register/vendor', asyncHandler(async(req, res, next) => {
+    const user = req.body
+    const validation = validateVendor(user)
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        // enrich
+        user.isActive = true
+        user.isBanned = false
+        user.lastLogin = null
+        user.created = new Date()
+
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
+
+        const result = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
     }
 }))
 
 // promote
 router.post('/promote', asyncHandler(async(req, res, next) => {
     let user = req.body
-    user = updateNewUser(user)
-
     const validation = validateClient(user)
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
+        // enrich
+        user.isActive = true
+        user.isBanned = false
+        user.lastLogin = null
+        user.created = new Date()
+
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
-        const user = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+        const result = await invoke_updateone()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
     }
 }))
 
@@ -102,6 +152,30 @@ router.get('/users', asyncHandler(async(req, res, next) => {
 
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)
     const invoke_getlist = async() => await mgaccess.getusers(db, USER_COLL, paging)
+
+    const users = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+}))
+
+// vendor list
+router.get('/users/role/:role', asyncHandler(async(req, res, next) => {
+    const role = req.params.role
+    const paging = build_paging(req)
+
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getlist = async() => await mgaccess.getusersbyrole(db, USER_COLL, paging, role)
+
+    const users = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+}))
+
+//suggest vendor
+router.get('/vendors/:skill', asyncHandler(async(req, res, next) => {
+    const skill = req.params.skill
+    const paging = build_paging(req)
+
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getlist = async() => await mgaccess.getvendorsbyskill(db, USER_COLL, paging, skill)
 
     const users = await invoke_getlist()
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
@@ -184,15 +258,6 @@ router.delete('/users/:id', asyncHandler(async(req, res, next) => {
     }
 }))
 
-const updateNewUser = (user) => {
-    user.isActive = true
-    user.isBanned = false
-    user.lastLogin = null
-    user.created = new Date()
-
-    return user
-}
-
 // create client
 router.post('/users/client', asyncHandler(async(req, res, next) => {
     const user = req.body
@@ -271,7 +336,13 @@ const validateClient = (user) => {
 const validateVendor = (user) => {
     const validation = validateUser(user)
     validation
-        .validate(user.username).isNotEmpty().and.isEmail()
+        .validate(user.roles).isNotNull().and.passes(value => Array.isArray(value) && value.length >= 1, 'roles not array!')
+        .validate(user.skill_summary).isNotNull()
+        .validate(user.work_cities).passes(value => Array.isArray(value), 'cities not array!')
+        .validate(user.email).isNotNull().and.isEmail()
+        .validate(user.social).isNull().or.passes(value => Array.isArray(value), 'social not array!')
+        .validate(user.vehicles).isNull().or.passes(value => Array.isArray(value), 'vehicles not array!')
+        .validate(user.jobdone_photos).isNull().or.passes(value => Array.isArray(value), 'jobphotos not array!')
 
     return validation
 }

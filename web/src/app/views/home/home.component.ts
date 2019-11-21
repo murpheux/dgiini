@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../user/services/location.service';
-import { AuthService } from '../user/services/auth.service';
 
 @Component({
     selector: 'app-home',
@@ -12,7 +11,6 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private locationService: LocationService,
-        private authService: AuthService
     ) { }
 
     ngOnInit() {

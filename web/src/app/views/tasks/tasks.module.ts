@@ -27,6 +27,7 @@ import { TaskOfferComponent } from './components/task-offer/task-offer.component
 import { TaskSearchComponent } from './components/task-search/task-search.component';
 import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
 import { TaskStatsComponent } from './components/task-stats/task-stats.component';
+import { VendorCardComponent } from '../vendor/components/vendor-card/vendor-card.component';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
@@ -34,7 +35,7 @@ import { TaskStatsComponent } from './components/task-stats/task-stats.component
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
         TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent,
-        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
+        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent, VendorCardComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,

@@ -5,7 +5,11 @@
                 <div class="p-2 bd-highlight">
                     <h3 id="#header">{{task.title | titlecase}}</h3>
                 </div>
-                <div class="p-2 bd-highlight"><span class="badge badge-success">{{task.status | titlecase}}</span></div>
+                <div class="p-2 bd-highlight">
+                    <button type="button" class="btn btn-success">
+                    {{task.status | titlecase}}
+                </button>
+                </div>
             </div>
         </mat-card-subtitle>
     </mat-card-header>

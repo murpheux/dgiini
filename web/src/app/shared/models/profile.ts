@@ -23,6 +23,7 @@ export interface IClient {
 }
 
 export interface IVendor {
+    selected?: boolean;
     bank_info: IBankInstitute;
 }
 

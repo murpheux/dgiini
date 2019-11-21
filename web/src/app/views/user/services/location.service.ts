@@ -8,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { Guid } from 'guid-typescript';
 @Injectable()
 export class LocationService {
-    private serviceUrl = `${environment.APIGW_API}/auth/v1`;
+    private serviceUrl = `${environment.gateway.api}/auth/v1`;
     private loginSubject = new Subject<boolean>();
 
     private CURRENT_USER = 'currentUser';
@@ -51,7 +51,7 @@ export class LocationService {
 
     getMyIPAddress(): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
-        const url = `${environment.IP_SERVICE}`;
+        const url = `${environment.services.ipify}`;
         return this.http.get('/api', {responseType: 'text', headers});
     }
 

@@ -13,8 +13,14 @@
                         <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
                     </div>
                 </div>
-                <div class="col-lg-7 column">
+                <div class="col-lg-5 column">
                     <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
+                </div>
+                <div *ngIf="vendorModel" class="col-lg-2 column scrollable">
+                    <div class="list-count mb-2 p-2">Recommended Vendors</div>
+                    <div *ngFor="let vendor of vendorModel">
+                        <app-vendor-card [vendor]="vendor"></app-vendor-card>
+                    </div>
                 </div>
             </div>
         </div>

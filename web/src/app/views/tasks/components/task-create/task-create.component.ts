@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { Guid } from 'guid-typescript';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     countries: string[];
     cities: string[];
     states: string[];
+    categoryList: string[];
     options: string[];
     options_keys: any;
 
@@ -33,6 +35,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     currentState: string;
     currentCountry: string;
     currentUser: any;
+    selectedCategory: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -70,6 +73,10 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.countries = ['Canada', 'United States'];
         this.currentCountry = this.countries[0];
 
+        this.taskService.getTaskCategories().subscribe(response => {
+            this.categoryList = response.payload;
+        });
+
         if (this.authService.loggedIn) {
             this.authService.userProfile$.subscribe(profile => {
                 this.currentUser = profile;
@@ -96,7 +103,8 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 'title': this.formBuilder.control(null,
                     [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
                 'description': this.formBuilder.control(null,
-                    [Validators.required, Validators.minLength(25), Validators.maxLength(1000)])
+                    [Validators.required, Validators.minLength(25), Validators.maxLength(1000)]),
+                'category': this.formBuilder.control(this.selectedCategory, [Validators.required])
             }),
 
             'task2FormGroup': this.formBuilder.group({
@@ -105,11 +113,15 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 'state': this.formBuilder.control(this.currentState, [Validators.required]),
                 'zipcode': this.formBuilder.control(null,
                     [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
-                'country': this.formBuilder.control(this.currentCountry, [Validators.required]),
-                'taskdate': this.formBuilder.control(null, [Validators.required])
+                'country': this.formBuilder.control(this.currentCountry, [Validators.required])
             }),
 
             'task3FormGroup': this.formBuilder.group({
+                'taskdate': this.formBuilder.control(null, [Validators.required]),
+                'tasktime': this.formBuilder.control('8:00 AM', [Validators.required])
+            }),
+
+            'task4FormGroup': this.formBuilder.group({
                 'rateunit': this.formBuilder.control(null, [Validators.required]),
                 'rate': this.formBuilder.control(null, [Validators.required]),
                 'esthrs': this.formBuilder.control(null, [Validators.required])
@@ -124,6 +136,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         const task: ITask = {
             title: formValues.task1FormGroup.title,
             description: formValues.task1FormGroup.description,
+            category: formValues.task1FormGroup.category,
 
             location: {
                 street: formValues.task2FormGroup.street,
@@ -134,21 +147,23 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             },
 
             rate: {
-                unit: formValues.task3FormGroup.rateunit,
-                amount: formValues.task3FormGroup.rate,
+                unit: formValues.task4FormGroup.rateunit,
+                amount: formValues.task4FormGroup.rate,
                 currency: Currency.CAD,
                 date: currentDate
             },
 
             client: {
-                id: this.currentUser._id,
-                name: this.currentUser.name
+                // TODO: remove next line
+                id: Guid.create(),
+                name: 'Clement Onawole'
+                // id: this.currentUser._id,
+                // name: this.currentUser.name
             },
 
-            scheduled_date: new Date(formValues.task2FormGroup.taskdate),
+            scheduled_date: new Date(`${formValues.task3FormGroup.taskdate} ${formValues.task3FormGroup.tasktime}`),
             created: currentDate,
-            category: 'Driver',
-            estimated_hours: formValues.task3FormGroup.esthrs,
+            estimated_hours: formValues.task4FormGroup.esthrs,
         };
 
         const validator = new TaskValidator();

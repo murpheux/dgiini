@@ -7,6 +7,7 @@ import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/
 import { LoginComponent } from 'src/app/views/user/components/login/login.component';
 import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-header-template',
@@ -17,6 +18,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isCollapsed = true;
+    // profile: any;
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
@@ -25,27 +27,36 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        this.authService.userToken$.subscribe(s => {
-            // console.log(JSON.stringify(s));
-        });
+        // const uprofile = localStorage.getItem(Constants.AUTH_USER_PROFILE);
+
+        // if (uprofile) {
+        //     this.profile = JSON.parse(uprofile);
+        //     console.log('this was done!');
+        // }
     }
 
     openDialog() {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
-            height: '600px',
+            height: '620px',
             width: '800px',
         });
 
         dialogRef.afterClosed().subscribe(result => { });
     }
 
-    login() {
-        this.authService.login();
-    }
+    // login() {
+    //     this.authService.login();
+    // }
 
-    logout() {
-        this.authService.logout();
-    }
+    // logout() {
+    //     // clear loggedin storage
+    //     localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
+    //     localStorage.removeItem(Constants.AUTH_USER_CLAIM);
+    //     localStorage.removeItem(Constants.AUTH_USER_PROFILE);
+    //     localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
+
+    //     this.authService.logout();
+    // }
 
     openRegisterDialog() {
         const registerRef = this.dialog.open(RegisterComponent, {

@@ -15,6 +15,11 @@
             <div>
                 <mat-icon class="task-icon">calendar_today</mat-icon> {{task.scheduled_date | date }}</div>
         </div>
+        <div class="badge badge-light cat-ind">
+            <button type="button" class="btn btn-success">
+                {{task.category}}
+            </button>
+        </div>
         <div class="footer font-weight-bold small text-success">{{task.status | uppercase}} : 12 offers</div>
     </mat-card-content>
 </mat-card>

@@ -17,3 +17,26 @@
 .quarter-width {
     width: 25%;
 }
+
+$ht: 520px;
+.mcard {
+    height: $ht;
+}
+
+.innerStepper {
+    height: $ht - 40px;
+}
+
+//::ng-deep .mat-horizontal-stepper-header-container {}
+::ng-deep .mat-horizontal-stepper-content {
+    height: $ht - 160px;
+}
+
+// ::ng-deep mat-stepper-horizontal, mat-stepper-horizontal {
+//     height: $ht;
+// }
+.mat-control {
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+}

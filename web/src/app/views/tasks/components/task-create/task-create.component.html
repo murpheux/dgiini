@@ -1,9 +1,11 @@
+<div>
+    <h3>//// New Task</h3>
+</div>
 <div class="container">
     <app-loader *ngIf="!taskFormGroup"></app-loader>
-
-    <mat-card>
+    <mat-card class="mcard">
         <form #taskForm="ngForm" [formGroup]="taskFormGroup" autocomplete="off" (ngSubmit)="handleSave(taskForm.value)">
-            <mat-horizontal-stepper linear #stepper>
+            <mat-horizontal-stepper linear #stepper class="innerStepper">
                 <mat-step formGroupName="task1FormGroup" [stepControl]="taskFormGroup.get('task1FormGroup')">
                     <ng-template matStepLabel>What do you need done?</ng-template>
                     <div class="d-flex flex-row">
@@ -17,13 +19,21 @@
                             <div>
                                 <mat-form-field class="full-width" floatLabel="always">
                                     <mat-label>What are the details</mat-label>
-                                    <textarea matInput placeholder="enter details" formControlName="description" matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=8></textarea>
+                                    <textarea matInput placeholder="enter details" formControlName="description" matAutosizeMinRows=3 matAutosizeMaxRows=5></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                <mat-form-field class="full-width" floatLabel="always">
+                                    <mat-label>Select Task Category</mat-label>
+                                    <mat-select formControlName="category">
+                                        <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button type="button" mat-button matStepperNext>Next</button>
+                    <div class="mat-control d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
                     </div>
                 </mat-step>
                 <mat-step formGroupName="task2FormGroup" [stepControl]="taskFormGroup.get('task2FormGroup')">
@@ -32,11 +42,11 @@
                         <div class="flex-fill">
                             <div>
                                 <mat-label>Location</mat-label>
-                                <p>Note: Address will not be shared with prospect until bid has been accepted!</p>
+                                <p class="small font-italic">Note: Address will not be shared with prospect until bid has been accepted!</p>
                                 <div>
                                     <mat-form-field class="full-width" floatLabel="always">
                                         <mat-label>Street</mat-label>
-                                        <input type="text" matInput placeholder="enter street" formControlName="street" />
+                                        <input matInput placeholder="enter street" formControlName="street" />
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -61,7 +71,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="full-width" floatLabel="always">
                                         <mat-label>Postal Code</mat-label>
-                                        <input type="text" matInput placeholder="enter postal code" formControlName="zipcode" />
+                                        <input matInput placeholder="enter postal code" formControlName="zipcode" />
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-8">
@@ -72,29 +82,37 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <mat-form-field class="full-width" floatLabel="always">
-                                        <mat-label>When do you need it done?</mat-label>
-                                        <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
-                                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                                        <mat-datepicker #dp></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="ngx-timepicker-field-example">
-                                        <ngx-timepicker-field [buttonAlign]="'left'"></ngx-timepicker-field>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
-                    <div>
-                        <button type="button" mat-button matStepperPrevious>Back</button>
-                        <button type="button" mat-button matStepperNext>Next</button>
+                    <div class="mat-control d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
                     </div>
                 </mat-step>
                 <mat-step formGroupName="task3FormGroup" [stepControl]="taskFormGroup.get('task3FormGroup')">
+                    <ng-template matStepLabel>When do you need it done?</ng-template>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <mat-form-field class="full-width" floatLabel="always">
+                                <mat-label>When do you need it done?</mat-label>
+                                <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
+                                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                <mat-datepicker #dp></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="matrcol-md-6">
+                            <div class="ngx-timepicker-field-example">
+                                <ngx-timepicker-field [controlOnly]="true" formControlName="tasktime"></ngx-timepicker-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mat-control d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
+                    </div>
+                </mat-step>
+                <mat-step formGroupName="task4FormGroup" [stepControl]="taskFormGroup.get('task4FormGroup')">
                     <ng-template matStepLabel>Where do you need it done?</ng-template>
                     <div class="d-flex flex-row">
                         <div class="flex-fill">
@@ -123,37 +141,38 @@
                             <div>
                                 <div class="input-group mb-2">
                                     <span class="font-weight-bold">How long will the job take:</span>
-                                    <mat-slider thumbLabel [displayWith]="formatLabel" formControlName="esthrs" tickInterval="5" min="1" max="500"></mat-slider> {{ taskFormGroup.get('task3FormGroup').get('esthrs').value }} hrs
+                                    <mat-slider class="flex-fill" thumbLabel [displayWith]="formatLabel" formControlName="esthrs" tickInterval="5" min="1" max="50"></mat-slider> {{ taskFormGroup.get('task4FormGroup').get('esthrs').value }} hrs
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <button type="button" mat-button matStepperPrevious>Back</button>
-                        <button type="button" mat-button matStepperNext>Next</button>
+                    <div class="mat-control d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
+                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
                     </div>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>Done</ng-template>
+                    <ng-template matStepLabel>Confirm</ng-template>
                     Confirm entry ...
                     <div>
                         <div>
-                            <h4>Following details submitted, please confirm and hit submit</h4>
+                            <h4>Following details submitted, please confirm and hit post</h4>
                             <br/>Title: {{taskFormGroup.get('task1FormGroup').get('title').value}}
                             <br/>Description : {{taskFormGroup.get('task1FormGroup').get('description').value}}
-                            <br/>Address :{{taskFormGroup.get('task2FormGroup').get('street').value}} {{taskFormGroup.get('task2FormGroup').get('city').value}}
-                            <br/>Scheduled Date :{{taskFormGroup.get('task2FormGroup').get('taskdate').value | date}}
-                            <br/>Rate :{{taskFormGroup.get('task3FormGroup').get('rate').value}}
-                            <br/>Rate Unit :{{taskFormGroup.get('task3FormGroup').get('rateunit').value}}
-                            <br/>Est. Hrs. :{{taskFormGroup.get('task3FormGroup').get('esthrs').value}}
+                            <br/>Category : {{taskFormGroup.get('task1FormGroup').get('category').value}}
+                            <br/>Address :{{taskFormGroup.get('task2FormGroup').get('street').value}} {{taskFormGroup.get('task2FormGroup').get('city').value}}, {{taskFormGroup.get('task2FormGroup').get('country').value}} {{taskFormGroup.get('task2FormGroup').get('zipcode').value}}
+                            <br/>Scheduled Date :{{taskFormGroup.get('task3FormGroup').get('taskdate').value | date}}, {{taskFormGroup.get('task3FormGroup').get('tasktime').value}}
+                            <br/>Rate :{{taskFormGroup.get('task4FormGroup').get('rate').value}}
+                            <br/>Rate Unit :{{taskFormGroup.get('task4FormGroup').get('rateunit').value}}
+                            <br/>Est. Hrs. :{{taskFormGroup.get('task4FormGroup').get('esthrs').value}}
                             <br/>
                         </div>
 
                     </div>
-                    <div>
-                        <button mat-button type="button" matStepperPrevious>Back</button>
-                        <button mat-button type="button" (click)="stepper.reset()">Reset</button>
-                        <button mat-button class="button button-primary" type="submit">Post</button>
+                    <div class="mat-control d-flex justify-content-end">
+                        <button mat-button type="button" class="btn btn-danger b-center" matStepperPrevious>Back</button>
+                        <button mat-button type="button" class="btn btn-danger b-center" (click)="stepper.reset()">Reset</button>
+                        <button mat-button class="btn btn-primary b-center" type="submit">Post</button>
                     </div>
                 </mat-step>
             </mat-horizontal-stepper>

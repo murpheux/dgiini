@@ -1,4 +1,4 @@
-.task-card {
+.vendor-card {
     max-height: 170px;
     border: 2px solid #e8ecec;
     -webkit-border-radius: 8px;
@@ -46,24 +46,4 @@
 
 .descr {
     margin-top: 10px;
-}
-
-.ramount {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    font-size: 20px;
-}
-
-.ramount-init {
-    text-decoration: line-through;
-    position: absolute;
-    top: 35px;
-    right: 10px;
-}
-
-.cat-ind {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
 }

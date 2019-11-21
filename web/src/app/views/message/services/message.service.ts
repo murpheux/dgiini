@@ -11,7 +11,7 @@ import { LocationService } from '../../user/services/location.service';
     providedIn: 'root'
 })
 export class MessageService {
-    private serviceUrl = `${environment.APIGW_API}/msg/v1/messages`;
+    private serviceUrl = `${environment.gateway.api}/msg/v1/messages`;
 
     constructor(
         private http: HttpClient,

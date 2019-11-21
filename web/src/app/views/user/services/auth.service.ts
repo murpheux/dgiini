@@ -13,8 +13,8 @@ export class AuthService {
     requestedScopes = 'openid profile email read:messages write:messages';
     auth0Client$ = (from(
         createAuth0Client({
-            domain: environment.AUTH0_DOMAIN,
-            client_id: environment.AUTH0_CLIENTID,
+            domain: environment.auth0.domain,
+            client_id: environment.auth0.clientId,
             redirect_uri: `${window.location.origin}/callback`,
             scope: this.requestedScopes
         })
@@ -22,10 +22,7 @@ export class AuthService {
         shareReplay(1), // Every subscription receives the same shared value
         catchError(err => throwError(err))
     );
-    // Define observables for SDK methods that return promises by default
-    // For each Auth0 SDK method, first ensure the client instance is ready
-    // concatMap: Using the client instance, call SDK method; SDK returns a promise
-    // from: Convert that resulting promise into an observable
+
     isAuthenticated$ = this.auth0Client$.pipe(
         concatMap((client: Auth0Client) => from(client.isAuthenticated())),
         tap(res => this.loggedIn = res)
@@ -71,32 +68,23 @@ export class AuthService {
     }
 
     localAuthSetup() {
-        // This should only be called on app initialization
-        // Set up local authentication streams
         const checkAuth$ = this.isAuthenticated$.pipe(
             concatMap((loggedIn: boolean) => {
                 if (loggedIn) {
-                    // If authenticated, get user and set in app
-                    // NOTE: you could pass options here if needed
+
                     return this.getUser$();
                 }
-                // If not authenticated, return stream that emits 'false'
                 return of(loggedIn);
             })
         );
+
         const checkAuthSub = checkAuth$.subscribe((response: { [key: string]: any } | boolean) => {
-            // If authenticated, response will be user object
-            // If not authenticated, response will be 'false'
             this.loggedIn = !!response;
-            // Clean up subscription
             checkAuthSub.unsubscribe();
         });
     }
 
     login(redirectPath: string = '/') {
-        // A desired redirect path can be passed to login method
-        // (e.g., from a route guard)
-        // Ensure Auth0 client instance exists
         this.auth0Client$.subscribe((client: Auth0Client) => {
             // Call method to log in
             client.loginWithRedirect({
@@ -107,8 +95,7 @@ export class AuthService {
     }
 
     handleAuthCallback() {
-        // Only the callback component should call this method
-        // Call when app reloads after user logs in with Auth0
+
         let targetRoute: string; // Path to redirect to after login processsed
         const authComplete$ = this.handleRedirectCallback$.pipe(
             // Have client, now call method to handle auth callback redirect
@@ -122,22 +109,18 @@ export class AuthService {
                 );
             })
         );
-        // Subscribe to authentication completion observable
-        // Response will be an array of user and login status
+
         const authCompleteSub = authComplete$.subscribe(([user, loggedIn]) => {
             // Redirect to target route after callback processing
             this.router.navigate([targetRoute]);
-            // Clean up subscription
             authCompleteSub.unsubscribe();
         });
     }
 
     logout() {
-        // Ensure Auth0 client instance exists
         this.auth0Client$.subscribe((client: Auth0Client) => {
-            // Call method to log out
             client.logout({
-                client_id: environment.AUTH0_CLIENTID,
+                client_id: environment.auth0.clientId,
                 returnTo: window.location.origin
             });
         });

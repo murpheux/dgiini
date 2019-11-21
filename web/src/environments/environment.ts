@@ -1,13 +1,20 @@
-const APIGW_BASE_URL = 'https://localhost:7000';
-const IP_SERVICE = 'http://api.ipify.org';
 
 export const environment = {
     production: false,
 
-    APIGW_API: `${APIGW_BASE_URL}/api`,
-    IP_SERVICE: `${IP_SERVICE}`,
+    gateway: {
+        api: 'https://localhost:7000/api',
+    },
+
+    // 3rd party services
+    services: {
+        ipify: 'http://api.ipify.org',
+    },
 
     // AUTH0
-    AUTH0_CLIENTID: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
-    AUTH0_DOMAIN: 'murpheux.auth0.com',
+    auth0: {
+        domain: 'murpheux.auth0.com',
+        clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
+        callbackURL: 'http://localhost:9000'
+    }
 };

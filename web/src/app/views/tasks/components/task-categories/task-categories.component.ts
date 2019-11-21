@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { IVendor } from 'src/app/shared/models/profile';
+import { VendorService } from 'src/app/views/vendor/services/vendor.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -13,7 +15,9 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 })
 export class TaskCategoriesComponent implements OnInit {
     model: ITask[];
+    vendorModel: IVendor[];
     currentTask: ITask;
+    currentVendor: IVendor;
     distanceToHome: number;
     selectedCategory: string[];
     searchString: string;
@@ -29,7 +33,8 @@ export class TaskCategoriesComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private locationService: LocationService,
-        private authService: AuthService
+        private authService: AuthService,
+        private vendorService: VendorService
     ) { }
 
     ngOnInit() {
@@ -45,11 +50,12 @@ export class TaskCategoriesComponent implements OnInit {
             } else {
                 this.getTasks();
             }
+
         });
 
         if (this.authService.loggedIn) {
             this.authService.userProfile$.subscribe(profile => {
-                    this.userProfile = profile;
+                this.userProfile = profile;
             });
         }
 
@@ -57,6 +63,8 @@ export class TaskCategoriesComponent implements OnInit {
         this.locationService.getCurrentCity().then(city => {
             this.currentCity = city;
         });
+
+        this.getFeaturedVendor();
     }
 
     searchTask(searchstr: string) {
@@ -87,6 +95,18 @@ export class TaskCategoriesComponent implements OnInit {
         });
     }
 
+    getFeaturedVendor() {
+        this.vendorService.getFeaturedVendor().subscribe(success => {
+            this.vendorModel = success.payload;
+        });
+    }
+
+    getRecommendedVendor(task: ITask) {
+        this.vendorService.getRecommendedVendor(task).subscribe(success => {
+            this.vendorModel = success.payload;
+        });
+    }
+
     getTasks() {
         this.taskService.getTasks().subscribe(success => {
             this.model = success.payload;
@@ -102,7 +122,14 @@ export class TaskCategoriesComponent implements OnInit {
     handleTaskSelected(task: ITask) {
         this.currentTask.selected = false;
         this.currentTask = task;
+        this.getRecommendedVendor(task);
         this.currentTask.selected = true;
+    }
+
+    handleVendorSelected(vendor: IVendor) {
+        this.currentVendor.selected = false;
+        this.currentVendor = vendor;
+        this.currentVendor.selected = true;
     }
 
     handleCityChanged(city: string) {
