@@ -1,8 +1,11 @@
 pipeline {
     agent any
     environment {
+        APP_NAME = 'dgiini'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        IMAGE_VERSION="v_${BUILD_NUMBER}"
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
-        REPO_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+        GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
         ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
     }
     parameters {
@@ -19,7 +22,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: $branch, url: ${REPO_URL}
+                git branch: $branch, url: ${GIT_URL}
             }
         }
         stage('install dependencies') {
