@@ -20,7 +20,8 @@
         "lint": "eslint src",
         "test": "mocha --require @babel/register",
         "serve": "nodemon --exec babel-node --",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "postinstall": "node version.js"
     },
     "dependencies": {
         "app-root-path": "^2.2.1",
@@ -58,6 +59,8 @@
         "chokidar": "^3.0.0",
         "concurrently": "^4.1.1",
         "eslint": "^5.16.0",
+        "fs-extra": "^8.1.0",
+        "git-describe": "^4.0.4",
         "mocha": "^6.1.4",
         "nodemon": "^1.19.0",
         "parcel-bundler": "^1.12.3",

@@ -1,8 +1,8 @@
 // IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!
 /* tslint:disable */
 export const VERSION = {
-    "dirty": false,
-    "raw": "v0.0.1-3-g82bb2b16",
+    "dirty": true,
+    "raw": "v0.0.1-3-g82bb2b16-dirty",
     "hash": "g82bb2b16",
     "distance": 3,
     "tag": "v0.0.1",
@@ -20,8 +20,8 @@ export const VERSION = {
         "build": [],
         "version": "0.0.1"
     },
-    "suffix": "3-g82bb2b16",
+    "suffix": "3-g82bb2b16-dirty",
     "semverString": "0.0.1+3.g82bb2b16",
-    "version": "0.0.1-dev.0"
-};
+    "version": "1.0.0"
+}
 /* tslint:enable */
