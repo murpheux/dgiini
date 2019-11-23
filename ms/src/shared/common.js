@@ -2,7 +2,6 @@
 
 exports.app_name = process.env.APP_NAME
 exports.version = process.env.APP_VERSION
-exports.build = process.env.APP_BUILD
 
 const database_host = process.env.DB_HOST || 'localhost'
 const database = process.env.TASK_DATABASE || 'nodata'

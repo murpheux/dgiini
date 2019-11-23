@@ -13,7 +13,7 @@ import HttpStatus from 'http-status-codes'
 import winston from './shared/winston'
 import common from './shared/common'
 
-import * as version from './version'
+import * as gen from './version'
 import auth_router from './routes/auth_route'
 
 // eslint-disable-next-line no-unused-vars
@@ -47,7 +47,7 @@ app.use(cors({ origin: CLIENT_URL }))
 // ping
 app.get('/api/auth/v1/', (req, res) => {
     let payload = {
-        'Service': `auth ${common.app_name} ${version.semverString} ${common.build}`
+        'Service': `auth ${common.app_name} ${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
 })

@@ -40,13 +40,17 @@ export class MessageSenderComponent implements OnInit {
     handleSubmit(formValues: any) {
 
         // update model
-        const message = { from: this.from, to: this.to,
-            message: this.message, task: this.task
+        const msg = <IMessage> {
+            from: this.from,
+            to: this.to,
+            message: this.message,
+            task: this.task
         };
 
-        this.messageService.sendMessageForTask(message).subscribe(success => {
+        console.log(JSON.stringify(msg));
+        this.messageService.sendMessageForTask(this.task, msg).subscribe(success => {
             this.message = '';
-            this.messageSent.emit(message);
+            this.messageSent.emit(msg);
 
             this.notification.showSuccess('message sent!');
         });

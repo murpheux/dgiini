@@ -1,10 +1,10 @@
 // IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!
 /* tslint:disable */
 export const VERSION = {
-    "dirty": false,
-    "raw": "v0.0.1-3-g82bb2b16",
-    "hash": "g82bb2b16",
-    "distance": 3,
+    "dirty": true,
+    "raw": "v0.0.1-4-gc3142960-dirty",
+    "hash": "gc3142960",
+    "distance": 4,
     "tag": "v0.0.1",
     "semver": {
         "options": {
@@ -20,8 +20,8 @@ export const VERSION = {
         "build": [],
         "version": "0.0.1"
     },
-    "suffix": "3-g82bb2b16",
-    "semverString": "0.0.1+3.g82bb2b16",
+    "suffix": "4-gc3142960-dirty",
+    "semverString": "0.0.1+4.gc3142960",
     "version": "0.0.1-dev.0"
 };
 /* tslint:enable */

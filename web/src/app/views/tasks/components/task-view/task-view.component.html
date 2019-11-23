@@ -26,10 +26,22 @@
                 <div *ngIf="task.lastbid?.accepted">
                     <span class="statusBadge badge badge-success">Accepted!!</span>
                 </div>
-                <div *ngIf="!task.lastbid?.accepted">
-                    <button type="button" class="btn btn-danger b-center" (click)="handleMakeOffer()"><i class="la la-dollar"></i>Make Offer</button>
-                    <button *ngIf="owned" type="button" class="btn btn-primary" (click)="handleAcceptOffer()"><mat-icon>money</mat-icon>Accept Offer</button>
-                    <button *ngIf="owned" type="button" class="btn btn-danger" (click)="handleCancelTask()"><mat-icon>clear</mat-icon>Cancel Task</button>
+                <div *ngIf="!task.lastbid?.accepted" class="container">
+                    <div class="row mb-2">
+                        <div class="col">
+                            <button type="button" class="btn btn-danger b-center Use btn-block" (click)="handleMakeOffer()"><i class="la la-dollar"></i>Make Offer</button>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <button *ngIf="owned" type="button" class="btn btn-primary Use btn-block" (click)="handleAcceptOffer()"><mat-icon>money</mat-icon>Accept Offer</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button *ngIf="owned" type="button" class="btn btn-danger Use btn-block" (click)="handleCancelTask()"><mat-icon>clear</mat-icon>Cancel Task</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="ml-3">
@@ -79,7 +91,7 @@
                     <p class="c-red">Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
                 </div>
                 <div *ngIf="currentUser">
-                    <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [from]="currentUser._id" [to]="task.client._id" [task]="task._id"></app-message-sender>
+                    <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [from]="currentUser._id" [to]="task.client.id" [task]="task._id"></app-message-sender>
                 </div>
                 <div>
                     <app-message-list [messages]="messages"></app-message-list>

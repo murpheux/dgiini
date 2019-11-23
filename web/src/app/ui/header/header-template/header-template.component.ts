@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { faUser, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
-import { LoginComponent } from 'src/app/views/user/components/login/login.component';
 import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
@@ -18,7 +17,6 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isCollapsed = true;
-    // profile: any;
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
@@ -27,12 +25,6 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-        // const uprofile = localStorage.getItem(Constants.AUTH_USER_PROFILE);
-
-        // if (uprofile) {
-        //     this.profile = JSON.parse(uprofile);
-        //     console.log('this was done!');
-        // }
     }
 
     openDialog() {
@@ -48,15 +40,15 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     //     this.authService.login();
     // }
 
-    // logout() {
-    //     // clear loggedin storage
-    //     localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
-    //     localStorage.removeItem(Constants.AUTH_USER_CLAIM);
-    //     localStorage.removeItem(Constants.AUTH_USER_PROFILE);
-    //     localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
+    logout() {
+        // clear loggedin storage
+        localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
+        localStorage.removeItem(Constants.AUTH_USER_CLAIM);
+        localStorage.removeItem(Constants.AUTH_USER_PROFILE);
+        localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
 
-    //     this.authService.logout();
-    // }
+        this.authService.logout();
+    }
 
     openRegisterDialog() {
         const registerRef = this.dialog.open(RegisterComponent, {

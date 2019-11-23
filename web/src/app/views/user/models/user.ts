@@ -4,9 +4,15 @@ import { Guid } from 'guid-typescript';
 
 export interface IUser {
     _id: Guid;
+    name: string;
     username: string;
     password: string;
     source: string;
+
+    created: Date;
+    lastLogin: Date;
+    rating: number;
+    photo: [];
 }
 
 export interface IClient extends IUser {
@@ -30,9 +36,15 @@ export interface IVendor extends IUser {
     skillsummary: string;
     sin: string;
     rating: number;
+
+    selected: boolean;
 }
 
 export class Client implements IClient {
+    created: Date;
+    lastLogin: Date;
+    photo;
+    name: string;
     password: string;
     address: Address;    email: string;
     creditCard: ICreditCard;
@@ -43,8 +55,15 @@ export class Client implements IClient {
 }
 
 export class Vendor implements IVendor {
+    rating: number;
+    lastLogin: Date;
+    created: Date;
+    photo;
+    selected: boolean;
+    name: string;
     password: string;
-    address: Address;    email: string;
+    address: Address;
+    email: string;
     bankAccount: IBankInfo;
     creditCard: ICreditCard;
     jobDonePhotos;
@@ -53,7 +72,6 @@ export class Vendor implements IVendor {
     residentCity: string;
     skillsummary: string;
     sin: string;
-    rating: number;
     _id: Guid;
     username: string;
     source: string;
@@ -64,7 +82,7 @@ export interface IBankInfo {
     bankName: string;
     transitNo: string;
     insitutionNo: number;
-    addres: Address;
+    address: Address;
 }
 
 export interface ICreditCard {

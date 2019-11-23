@@ -70,8 +70,8 @@
                 <a title="" class="post-job-btn" (click)="openDialog()"><i class="la la-plus"></i>Post Task</a>
                 <ul class="account-btns">
                     <li class="nav-item">
-                        <div></div>
-                        <span class="user-info" *ngIf="profile">
+                        <div *ngIf="authService.userProfile$ | async as profile">
+                            <span class="user-info" *ngIf="profile">
                                 <!-- Profile image should be set to the profile picture from the id token -->
                                 <img
                                 alt="Profile picture"
@@ -82,6 +82,7 @@
                                 <!-- Show the user's full name from the id token here -->
                                 <h6 class="d-inline-block">{{ profile.name }}</h6>
                             </span>
+                        </div>
                     </li>
                     <li *ngIf="!authService.loggedIn" class="signup-popup"><a title="" (click)="authService.login()"><i class="la la-key"></i> Sign Up</a></li>
                     <li *ngIf="!authService.loggedIn" class="signin-popup"><a title="" (click)="authService.login()"><i class="la la-external-link-square"></i> Login</a></li>
@@ -89,7 +90,7 @@
                         <a title="" routerLink="/profile"><i class="la la-user"></i> Profile</a>
                     </li>
                     <li *ngIf="authService.loggedIn">
-                        <a (click)="authService.logout()"><i class="la la-external-link-square"></i> Log out</a>
+                        <a (click)="logout()"><i class="la la-external-link-square"></i> Log out</a>
                     </li>
                 </ul>
             </div>

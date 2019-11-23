@@ -23,8 +23,8 @@ export class MessageService {
         return this.http.post<IResponse>(url, message);
     }
 
-    sendMessageForTask(message: IMessage): Observable<IResponse> {
-        const url = `${this.serviceUrl}/task/${message.task}`;
+    sendMessageForTask(task: Guid, message: IMessage): Observable<IResponse> {
+        const url = `${this.serviceUrl}/task/${task}`;
         return this.http.post<IResponse>(url, message);
     }
 

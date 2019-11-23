@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-md-10">
                     <em *ngIf="messageForm.controls.message?.invalid && (messageForm.controls.message?.touched || mouseoverSave)">Required</em>
-                    <textarea name="message" matInput placeholder="..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=5 matAutosizeMaxRows=8 required></textarea>
+                    <textarea name="message" matInput placeholder="..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=2 required></textarea>
                 </div>
             </div>
             <div class="row">

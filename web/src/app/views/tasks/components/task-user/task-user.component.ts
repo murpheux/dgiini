@@ -7,6 +7,7 @@ import { IUser } from 'src/app/views/user/models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-task-user',
@@ -29,14 +30,13 @@ export class TaskUserComponent implements OnInit {
 
     ngOnInit() {
         if (this.authService.loggedIn) {
-            this.authService.userProfile$.subscribe(profile => {
-                this.currentUser = profile;
-                this.getUserTasks(profile);
-            });
+            this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+            this.getUserTasks(this.currentUser);
         }
     }
 
     getUserTasks(user: any) {
+        console.log(user._id);
         this.taskService.getUserTasks(user._id).subscribe(success => {
             this.model = success.payload;
 

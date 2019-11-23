@@ -6,6 +6,7 @@ export interface IMessage {
     to: Guid;
     message: string;
     sentdate?: Date;
+    replyto?: Guid;
     task: Guid;
     attachment?: IMessageAttachement[];
 }

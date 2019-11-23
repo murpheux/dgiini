@@ -13,6 +13,7 @@ import HttpStatus from 'http-status-codes'
 import winston from './shared/winston'
 import common from './shared/common'
 
+import * as gen from './version'
 const msg_router = require('./routes/msg_route')
 
 // eslint-disable-next-line no-unused-vars
@@ -46,7 +47,7 @@ app.use(cors({ origin: CLIENT_URL }))
 // ping
 app.get('/api/msg/v1/', (req, res) => {
     let payload = {
-        'Service': `msg ${common.app_name} ${common.version} ${common.build}`
+        'Service': `msg ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
 })

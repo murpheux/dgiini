@@ -9,7 +9,6 @@ import { Constants } from '../shared/models/constants';
     styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit, AfterViewChecked {
-    private hasLoadedLogInUser: boolean;
 
     constructor(
         private authService: AuthService,
@@ -17,30 +16,30 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     ) { }
 
     ngOnInit() {
-
-        if (this.authService.loggedIn) {
-            this.authService.userToken$.subscribe(token => {
-                localStorage.setItem(Constants.AUTH_LOGGEDIN_USER, token);
-            });
-
-            this.authService.userClaims$.subscribe(claim => {
-                localStorage.setItem(Constants.AUTH_USER_CLAIM, JSON.stringify(claim));
-            });
-
-            this.authService.userProfile$.subscribe(profile => {
-                localStorage.setItem(Constants.AUTH_USER_PROFILE, JSON.stringify(profile));
-
-                // get user info from db
-                // this.userService.getUserByEmail(profile.email).subscribe(response => {
-                //     localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload));
-                // });
-            });
-
-            this.hasLoadedLogInUser = true;
-        }
     }
 
     ngAfterViewChecked() {
+        if (this.authService.loggedIn) {
+
+            if (!localStorage.getItem(Constants.AUTH_LOGGEDIN_USER)) {
+                this.authService.userToken$.subscribe(token => {
+                    localStorage.setItem(Constants.AUTH_LOGGEDIN_USER, token);
+                });
+
+                this.authService.userClaims$.subscribe(claim => {
+                    localStorage.setItem(Constants.AUTH_USER_CLAIM, JSON.stringify(claim));
+                });
+
+                this.authService.userProfile$.subscribe(profile => {
+                    localStorage.setItem(Constants.AUTH_USER_PROFILE, JSON.stringify(profile));
+
+                    // get user info from db
+                    this.userService.getUserByEmail(profile.email).subscribe(response => {
+                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, response.payload);
+                    });
+                });
+            }
+        }
     }
 
 }

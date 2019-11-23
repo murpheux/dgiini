@@ -5,8 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { AuthService } from 'src/app/views/user/services/auth.service';
-import { IVendor } from 'src/app/shared/models/profile';
 import { VendorService } from 'src/app/views/vendor/services/vendor.service';
+import { IVendor } from 'src/app/views/user/models/user';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-task-categories',
@@ -54,9 +55,7 @@ export class TaskCategoriesComponent implements OnInit {
         });
 
         if (this.authService.loggedIn) {
-            this.authService.userProfile$.subscribe(profile => {
-                this.userProfile = profile;
-            });
+            this.userProfile = localStorage.getItem(Constants.AUTH_USER_PROFILE);
         }
 
         this.distanceToHome = this.defaultDistanceToHome;

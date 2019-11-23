@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IVendor } from 'src/app/shared/models/profile';
+import { IVendor } from 'src/app/views/user/models/user';
 
 @Component({
   selector: 'app-vendor-card',

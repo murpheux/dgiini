@@ -5,9 +5,9 @@ import { IMessage } from '../../../message/models/message';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskOfferComponent } from '../task-offer/task-offer.component';
-import { IProfile } from 'src/app/shared/models/profile';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TaskService } from '../../services/task.service';
+import { IUser } from 'src/app/views/user/models/user';
 
 @Component({
     selector: 'app-task-view',
@@ -19,11 +19,12 @@ export class TaskViewComponent implements OnInit {
     public messages: IMessage[];
     public currentPrice: number;
     public owned: boolean;
-    @Input() currentUser: IProfile;
+    @Input() currentUser: IUser;
 
     @Input()
     set task(task: ITask) {
         this._task = task;
+        console.log(task);
 
         if (this.currentUser) {
             this.getUserTaskMessages();
@@ -31,7 +32,7 @@ export class TaskViewComponent implements OnInit {
             if (task.client.id) {
                 this.owned = task.client.id === this.currentUser._id;
             } else {
-                this.owned = (task.client as unknown as IProfile)._id === this.currentUser._id;
+                this.owned = (task.client as unknown as IUser)._id === this.currentUser._id;
             }
         } else {
             this.getTaskMessages();

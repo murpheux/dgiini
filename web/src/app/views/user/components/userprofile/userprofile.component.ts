@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LocationService } from '../../services/location.service';
 import { User } from 'src/app/shared/models/user';
-import { IProfile } from 'src/app/shared/models/profile';
 import { AuthService } from '../../services/auth.service';
+import { IUser } from '../../models/user';
 
 @Component({
     selector: 'app-userprofile',
@@ -10,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
     styleUrls: ['./userprofile.component.scss']
 })
 export class UserprofileComponent implements OnInit {
-    currentUser: IProfile;
+    currentUser: IUser;
     isClient: boolean;
     isVendor: boolean;
 

@@ -10,10 +10,10 @@ import cors from 'cors'
 import uuid from 'uuid/v4'
 import HttpStatus from 'http-status-codes'
 
-
 import winston from './shared/winston'
 import common from './shared/common'
 
+import * as gen from './version'
 import task_router from './routes/task_route'
 
 // eslint-disable-next-line no-unused-vars
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV === 'production') {
 // ping
 app.get('/api/task/v1/', (req, res) => {
     let payload = {
-        'Service': `task ${common.app_name} ${common.version} ${common.build}`
+        'Service': `task ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
 })

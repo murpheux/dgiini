@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, ChangeDetectorRef, AfterViewInit, Optional, Inject } from '@angular/core';
-import { IProfile } from 'src/app/shared/models/profile';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ITask } from '../../models/ITask';
 import { TaskService } from '../../services/task.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { IUser } from 'src/app/views/user/models/user';
 
 export interface DialogData {
     task: ITask;
-    user: IProfile;
+    user: IUser;
 }
 
 @Component({
@@ -17,7 +17,7 @@ export interface DialogData {
     styleUrls: ['./task-offer.component.scss']
 })
 export class TaskOfferComponent implements OnInit, AfterViewInit {
-    user: IProfile;
+    user: IUser;
     task: ITask;
     offerFormGroup: FormGroup;
 
