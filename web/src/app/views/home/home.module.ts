@@ -12,12 +12,12 @@ import { CustomersayComponent } from './components/customersay/customersay.compo
 import { HowworksComponent } from './components/howworks/howworks.component';
 import { ContactusComponent } from './components/contactus/contactus.component';
 import { CallbackComponent } from '../user/pages/callback/callback.component';
-import { ProfileComponent } from '../user/pages/profile/profile.component';
 import { LoadingComponent } from '../user/components/loading/loading.component';
 import { HighlightModule } from 'ngx-highlightjs';
 import { VendorclientComponent } from './components/vendorclient/vendorclient.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { YouSkilledComponent } from './components/you-skilled/you-skilled.component';
+import { UserModule } from '../user/user.module';
 
 export function hljsLanguages() {
     return [{ name: 'json', func: json }];
@@ -31,7 +31,6 @@ export function hljsLanguages() {
     HowworksComponent,
     ContactusComponent,
     CallbackComponent,
-    ProfileComponent,
     LoadingComponent,
     VendorclientComponent,
     FaqComponent,
@@ -43,6 +42,7 @@ export function hljsLanguages() {
     SharedModule,
     MaterialDesignModule,
     TasksModule,
+    UserModule,
     HighlightModule.forRoot({
         languages: hljsLanguages
     }),

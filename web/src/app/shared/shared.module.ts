@@ -5,7 +5,6 @@ import { UtilService } from './services/util.service';
 import { CommingSoonComponent } from './components/comming-soon/comming-soon.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialDesignModule } from '../material-design/material-design.module';
-import { ProjectStatusComponent } from './components/project-status/project-status.component';
 import { OverlayLoaderComponent } from './components/overlay-loader/overlay-loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GlobalErrorHandler } from './models/global-error-handler';
@@ -22,9 +21,9 @@ import { BandComponent } from './components/band/band.component';
 
 @NgModule({
   declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent],
+    OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent],
   exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    ProjectStatusComponent, OverlayLoaderComponent, ContentLoaderComponent, BandComponent],
+    OverlayLoaderComponent, ContentLoaderComponent, BandComponent],
   providers: [
     UtilService,
     LoadingService,

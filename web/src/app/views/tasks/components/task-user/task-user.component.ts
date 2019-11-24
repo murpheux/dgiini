@@ -36,7 +36,6 @@ export class TaskUserComponent implements OnInit {
     }
 
     getUserTasks(user: any) {
-        console.log(user._id);
         this.taskService.getUserTasks(user._id).subscribe(success => {
             this.model = success.payload;
 

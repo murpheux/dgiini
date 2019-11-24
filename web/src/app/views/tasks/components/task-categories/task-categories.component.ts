@@ -6,7 +6,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { VendorService } from 'src/app/views/vendor/services/vendor.service';
-import { IVendor } from 'src/app/views/user/models/user';
+import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
@@ -24,7 +24,7 @@ export class TaskCategoriesComponent implements OnInit {
     searchString: string;
     defaultDistanceToHome = 55;
     currentCity: string;
-    public userProfile: any;
+    currentUser: IUser;
 
     title = 'app';
     faCoffee = faCoffee;
@@ -55,7 +55,7 @@ export class TaskCategoriesComponent implements OnInit {
         });
 
         if (this.authService.loggedIn) {
-            this.userProfile = localStorage.getItem(Constants.AUTH_USER_PROFILE);
+            this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
         }
 
         this.distanceToHome = this.defaultDistanceToHome;

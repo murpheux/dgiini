@@ -1,7 +1,7 @@
 <div class="responsive-header five">
     <div class="responsive-menubar">
         <div class="res-logo">
-            <a href="index.html" title=""><img src="http://placehold.it/178x40" alt="" /></a>
+            <a [routerLink]="['./home']" title=""><img src="assets/images/dg_logo.png" alt="" /></a>
         </div>
         <div class="menu-resaction">
             <div class="res-openmenu">
@@ -14,7 +14,7 @@
     </div>
     <div class="responsive-opensec">
         <div class="btn-extars">
-            <a href="#" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
+            <a (click)="openDialog()" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
             <ul class="account-btns">
                 <li class="signup-popup"><a title=""><i class="la la-key"></i> Sign Up</a></li>
                 <li class="signin-popup"><a title=""><i class="la la-external-link-square"></i> Login</a></li>
@@ -22,20 +22,20 @@
         </div>
         <!-- Btn Extras -->
         <form class="res-search">
-            <input type="text" placeholder="Job title, keywords or company name" />
+            <input type="text" placeholder="Task title or keywords" />
             <button type="submit"><i class="la la-search"></i></button>
         </form>
         <div class="responsivemenu">
             <ul>
                 <li class="menu-item-has-children">
-                    <a href="#" title="">
+                    <a [routerLink]="['./home']" title="">
                         <mat-icon>home</mat-icon> Home</a>
                 </li>
                 <li class="menu-item-has-children">
-                    <a href="#" title="">Browse Tasks</a>
+                    <a routerLinkActive="active" [routerLink]="['./tasks']" title=""><i class="la la-tasks"></i> Browse Tasks</a>
                 </li>
                 <li class="menu-item-has-children">
-                    <a href="#" title="">Advance Search</a>
+                    <a [routerLink]="['./search/-']" title=""><i class="la la-search"></i> Advance Search</a>
                 </li>
             </ul>
         </div>
@@ -54,7 +54,7 @@
                         <a title="" routerLinkActive="active" [routerLink]="['./tasks']"><i class="la la-tasks"></i> Browse Tasks</a>
                     </li>
                     <li *ngIf="authService.loggedIn" class="menu-item-has-children">
-                        <a href="#" title="" [routerLink]="['./mytask']">My Tasks</a>
+                        <a title="" [routerLink]="['./tasks/mytask']">My Tasks</a>
                     </li>
                     <li class="menu-item-has-children">
                         <a title="" [routerLink]="['./search/-']"><i class="la la-search"></i> Advance Search</a>
@@ -63,7 +63,7 @@
             </nav>
             <!-- Menus -->
             <div class="logo">
-                <a href="#" title=""><img src="assets/images/dg_logo.png" alt="" /></a>
+                <a [routerLink]="['./home']" title=""><img src="assets/images/dg_logo.png" alt="" /></a>
             </div>
             <!-- Logo -->
             <div class="btn-extars">
@@ -87,7 +87,7 @@
                     <li *ngIf="!authService.loggedIn" class="signup-popup"><a title="" (click)="authService.login()"><i class="la la-key"></i> Sign Up</a></li>
                     <li *ngIf="!authService.loggedIn" class="signin-popup"><a title="" (click)="authService.login()"><i class="la la-external-link-square"></i> Login</a></li>
                     <li *ngIf="authService.loggedIn">
-                        <a title="" routerLink="/profile"><i class="la la-user"></i> Profile</a>
+                        <a title="" routerLink="/user/profile"><i class="la la-user"></i> Profile</a>
                     </li>
                     <li *ngIf="authService.loggedIn">
                         <a (click)="logout()"><i class="la la-external-link-square"></i> Log out</a>

@@ -15,6 +15,5 @@ export class MessageViewComponent implements OnInit {
     }
 
     handleReply(messageid) {
-        console.log(messageid);
     }
 }

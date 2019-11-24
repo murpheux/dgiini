@@ -15,16 +15,8 @@ const routes: Routes = [
     loadChildren: () => import('./views/user/user.module').then(m => m.UserModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-  {
     path: 'new',
     loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule)
-  },
-  {
-    path: 'browse',
-      loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule)
   },
   {
     path: 'tasks',

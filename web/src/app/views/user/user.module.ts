@@ -8,6 +8,8 @@ import { LocationService } from './services/location.service';
 import { RegisterComponent } from './components/register/register.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { BecomevendorComponent } from './components/becomevendor/becomevendor.component';
+import { UserService } from './services/user.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent],
@@ -18,7 +20,7 @@ import { BecomevendorComponent } from './components/becomevendor/becomevendor.co
     UserRoutingModule,
     MaterialDesignModule
   ],
-  providers: [LocationService],
-  exports: [ RegisterComponent ]
+  providers: [LocationService, UserService, AuthService ],
+  exports: [ RegisterComponent, UserprofileComponent ]
 })
 export class UserModule { }

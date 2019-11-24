@@ -47,39 +47,39 @@
             <div class="ml-3">
                 <div class="container">
                     <div class="row mb-2">
-                        <div class="col-md-1">
+                        <div class="col-lg-1">
                             <mat-icon>person_pin</mat-icon>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <div class="font-weight-bold c-gold">Posted By</div>
-                            <div class="c-red">{{task.client.name}}</div>
+                            <div class="">{{task.client.name}}</div>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-1">
+                        <div class="col-lg-1">
                             <mat-icon>location_on</mat-icon>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <div class="font-weight-bold c-gold">Location</div>
-                            <div class="c-red">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
+                            <div class="">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
                         </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-1">
+                    <div class="row lg-2">
+                        <div class="col-lg-1">
                             <mat-icon>calendar_today</mat-icon>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <div class="font-weight-bold c-gold">Due Date</div>
-                            <div class="c-red">{{task.scheduled_date | date}}</div>
+                            <div class="">{{task.scheduled_date | date}}</div>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-1">
+                        <div class="col-lg-1">
                             <mat-icon>chrome_reader_mode</mat-icon>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4">
                             <span class="font-weight-bold c-gold">Details</span>
-                            <div class="c-red">{{task.description}}</div>
+                            <div class="">{{task.description}}</div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                 <div>
                     <mat-icon> message</mat-icon>
                     <span class="font-weight-bold c-gold">Messages</span>
-                    <p class="c-red">Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
+                    <p class="">Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
                 </div>
                 <div *ngIf="currentUser">
                     <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [from]="currentUser._id" [to]="task.client.id" [task]="task._id"></app-message-sender>

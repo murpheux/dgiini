@@ -1,8 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { IUser, IClient, Client, CreditCard } from '../../models/user';
-import { Address } from '../../../tasks/models/IAddress';
+import { IUser, IClient } from '../../models/user';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 /** Error when the parent is invalid */
@@ -41,9 +40,10 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     }
 
     initializeContent() {
-        this.model = new Client();
-        this.model.address = new Address();
-        this.model.creditCard = new CreditCard();
+        this.model = <IClient> {
+            address: {},
+            creditCard: {}
+        };
     }
 
     buildForms() {

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/shared/models/user';
 import { IResponse } from '../../tasks/models/IResponse';
 import { Observable, Subject } from 'rxjs';
 import { Guid } from 'guid-typescript';
@@ -70,8 +69,6 @@ export class LocationService {
                 } else {
                     this.getMyIPAddress().subscribe(resp => {
                         const publicIPAddress = resp;
-
-                        console.log(publicIPAddress);
 
                         if (publicIPAddress) {
                             this.getCityByIPAddress(publicIPAddress).subscribe(inres => {

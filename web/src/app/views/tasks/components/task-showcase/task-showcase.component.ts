@@ -87,7 +87,6 @@ export class TaskShowcaseComponent implements OnInit {
             default: {
                 if (!this.cleaningModel) {
                     this.getCategoryTask(category).then(ret => {
-                        console.log(category);
                         this.cleaningModel = ret;
                     });
                 }

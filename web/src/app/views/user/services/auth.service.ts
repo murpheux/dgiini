@@ -40,7 +40,8 @@ export class AuthService {
     userToken$ = this.userTokenSubject$.asObservable();
     userClaims$ = this.userClaimsSubject$.asObservable();
 
-    loggedIn: boolean = null;
+    // TODO: change to null
+    loggedIn: boolean = true;
 
     constructor(private router: Router) { }
 

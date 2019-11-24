@@ -2,18 +2,18 @@
     <form #messageForm="ngForm" autocomplete="off" (ngSubmit)="handleSubmit(messageForm.value)">
         <div class="container">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-lg-2">
                     <div class="message-image">
-                        <img *ngIf="currentUser" mat-card-avatar class="message-image" [src]="currentUser.photo" />
+                        <img *ngIf="currentUser" mat-card-avatar class="message-image" [src]="currentUser.picture" />
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-lg-10">
                     <em *ngIf="messageForm.controls.message?.invalid && (messageForm.controls.message?.touched || mouseoverSave)">Required</em>
                     <textarea name="message" matInput placeholder="..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=2 required></textarea>
                 </div>
             </div>
             <div class="row">
-                <div class="offset-md-8 col-md-4">
+                <div class="offset-lg-8 col-lg-4">
                     <button type="button" class="btn btn-danger" (click)="handleCancel()"><mat-icon>clear</mat-icon>Clear</button>
                     <span (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false">
             <button type="submit" [disabled]="messageForm.invalid" class="btn btn-success float-right"><mat-icon>send</mat-icon>Send</button>

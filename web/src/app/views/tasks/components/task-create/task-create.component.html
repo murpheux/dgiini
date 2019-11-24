@@ -51,14 +51,14 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <mat-form-field>
                                         <mat-select formControlName="city">
                                             <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <mat-form-field>
                                         <mat-select formControlName="state">
                                             <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
@@ -68,13 +68,13 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-4">
+                                <div class="col-lg-4">
                                     <mat-form-field class="full-width" floatLabel="always">
                                         <mat-label>Postal Code</mat-label>
                                         <input matInput placeholder="enter postal code" formControlName="zipcode" />
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-8">
+                                <div class="col-lg-8">
                                     <mat-form-field>
                                         <mat-select formControlName="country">
                                             <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
@@ -93,7 +93,7 @@
                 <mat-step formGroupName="task3FormGroup" [stepControl]="taskFormGroup.get('task3FormGroup')">
                     <ng-template matStepLabel>When do you need it done?</ng-template>
                     <div class="form-row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <mat-form-field class="full-width" floatLabel="always">
                                 <mat-label>When do you need it done?</mat-label>
                                 <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
@@ -101,7 +101,7 @@
                                 <mat-datepicker #dp></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="matrcol-md-6">
+                        <div class="matrcol-lg-6">
                             <div class="ngx-timepicker-field-example">
                                 <ngx-timepicker-field [controlOnly]="true" formControlName="tasktime"></ngx-timepicker-field>
                             </div>

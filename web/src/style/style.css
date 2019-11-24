@@ -12441,7 +12441,7 @@ Author:         Creative Layer
  }
  
  .responsive-header.five {
-     background: #d80303 !important;
+     background: #ffffff !important;
  }
  
  .responsive-header.five .res-openmenu {
@@ -12488,7 +12488,7 @@ Author:         Creative Layer
  
  .res-openmenu {
      float: left;
-     color: #fff;
+     color: #d80303;
      font-size: 15px;
      font-family: Open Sans;
      padding: 12px 27px;
@@ -12529,7 +12529,7 @@ Author:         Creative Layer
      position: absolute;
      left: 0;
      top: 100%;
-     background: #0b1b46;
+     background: #d80303;
      padding: 0 30px;
      overflow-y: scroll;
      height: 620px;
@@ -12538,8 +12538,8 @@ Author:         Creative Layer
  .responsive-opensec .btn-extars {
      float: left;
      width: 100%;
-     border-top: 1px solid #38425f;
-     border-bottom: 1px solid #38425f;
+     border-top: 1px solid #ffffff;
+     border-bottom: 1px solid #ffffff;
      padding: 20px 0;
  }
  
@@ -12547,7 +12547,7 @@ Author:         Creative Layer
      float: left;
      width: 100%;
      margin-top: 40px;
-     background: #040e2b;
+     background: #ffffff;
      position: relative;
      -webkit-border-radius: 8px;
      -moz-border-radius: 8px;
@@ -12596,7 +12596,7 @@ Author:         Creative Layer
      width: 100%;
      font-family: Open Sans;
      font-size: 22px;
-     color: #96a0bd;
+     color: #ffffff;
      padding-right: 30px;
      position: relative;
  }
@@ -12781,7 +12781,7 @@ Author:         Creative Layer
  }
  
  .forsticky.new-header .account-btns>li a {
-     color: #222222;
+     color: #ffffff;
  }
  
  .newbg {

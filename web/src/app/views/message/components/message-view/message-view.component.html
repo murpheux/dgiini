@@ -1,7 +1,7 @@
 <div *ngIf="message">
     <div class="container">
         <div class="row">
-            <div class="text-primary col-md-12">
+            <div class="text-primary col-lg-12">
                 <a href="#">{{message.from.name}}</a>
                 <div *ngIf="message.from.rating">
                     <mat-icon class="rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]">star</mat-icon>
@@ -11,21 +11,21 @@
             </div>
         </div>
         <div class="row">
-            <div class="message-image col-md-2">
+            <div class="message-image col-lg-2">
                 <img *ngIf="message.from.photo" mat-card-avatar class="message-image" [src]="message.from.photo" />
             </div>
         </div>
         <div class="row">
-            <div class="offset-md-2 col-md-8 message rounded">
+            <div class="offset-lg-2 col-lg-8 message rounded">
                 {{ message.message }}
             </div>
         </div>
         <div class="row">
-            <div col-md-3>
+            <div col-lg-3>
                 <button (click)="handleReply('message._id')"><i class="la la-reply-all"></i>reply</button>
             </div>
-            <div class="col-md-7"></div>
-            <div class="col-md-2 small text-right font-italic c-red">
+            <div class="col-lg-5"></div>
+            <div class="col-lg-4 small text-right font-italic">
                 {{message.sentdate | date:'medium'}}
             </div>
         </div>

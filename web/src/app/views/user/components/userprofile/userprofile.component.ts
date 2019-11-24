@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { LocationService } from '../../services/location.service';
-import { User } from 'src/app/shared/models/user';
 import { AuthService } from '../../services/auth.service';
 import { IUser } from '../../models/user';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-userprofile',
@@ -11,8 +11,6 @@ import { IUser } from '../../models/user';
 })
 export class UserprofileComponent implements OnInit {
     currentUser: IUser;
-    isClient: boolean;
-    isVendor: boolean;
 
     constructor(
         private authService: AuthService,
@@ -21,12 +19,7 @@ export class UserprofileComponent implements OnInit {
     ngOnInit() {
 
         if (this.authService.loggedIn) {
-            this.authService.userProfile$.subscribe(user => {
-                this.currentUser = user;
-
-                this.isClient = user.client !== undefined;
-                this.isVendor = user.vendor !== undefined;
-            });
+            this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
         }
     }
 

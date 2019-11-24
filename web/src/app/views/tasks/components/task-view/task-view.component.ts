@@ -24,7 +24,6 @@ export class TaskViewComponent implements OnInit {
     @Input()
     set task(task: ITask) {
         this._task = task;
-        console.log(task);
 
         if (this.currentUser) {
             this.getUserTaskMessages();
@@ -102,7 +101,6 @@ export class TaskViewComponent implements OnInit {
     }
 
     handleAcceptOffer() {
-        console.log(this.task.lastbid);
         this.taskService.acceptBid(this.task.lastbid.id).subscribe(resp => {
             this.notificationService.showSuccess('Offer accepted!');
         });

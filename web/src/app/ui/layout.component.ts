@@ -35,11 +35,14 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
 
                     // get user info from db
                     this.userService.getUserByEmail(profile.email).subscribe(response => {
-                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, response.payload);
+                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload));
                     });
                 });
             }
         }
+
+        // TODO: remove
+        this.authService.loggedIn = true;
     }
 
 }
