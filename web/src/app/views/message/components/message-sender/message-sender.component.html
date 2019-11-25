@@ -2,21 +2,21 @@
     <form #messageForm="ngForm" autocomplete="off" (ngSubmit)="handleSubmit(messageForm.value)">
         <div class="container">
             <div class="row">
-                <div class="col-lg-2">
+                <div class="col-lg-1 col-md-2 col-sm-4">
                     <div class="message-image">
                         <img *ngIf="currentUser" mat-card-avatar class="message-image" [src]="currentUser.picture" />
                     </div>
                 </div>
-                <div class="col-lg-10">
-                    <em *ngIf="messageForm.controls.message?.invalid && (messageForm.controls.message?.touched || mouseoverSave)">Required</em>
-                    <textarea name="message" matInput placeholder="..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=2 required></textarea>
+                <div class="col-lg-11 col-md-10 col-sm-8">
+                    <em class="small font-italic" *ngIf="messageForm.controls.message?.invalid && (messageForm.controls.message?.touched || mouseoverSave)">Required</em>
+                    <textarea name="message" matInput placeholder="type message here..." [(ngModel)]="message" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=2 required></textarea>
                 </div>
             </div>
             <div class="row">
-                <div class="offset-lg-8 col-lg-4">
-                    <button type="button" class="btn btn-danger" (click)="handleCancel()"><mat-icon>clear</mat-icon>Clear</button>
+                <div class="offset-lg-8 offset-md-6 offset-sm-4 col-lg-4 col-md-6 col-sm-8 float-right">
+                    <button type="button" class="btn btn-danger float-right" (click)="handleCancel()"><i class="la la-close"></i>Clear</button>
                     <span (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false">
-            <button type="submit" [disabled]="messageForm.invalid" class="btn btn-success float-right"><mat-icon>send</mat-icon>Send</button>
+            <button type="submit" [disabled]="messageForm.invalid" class="btn btn-success float-right mr-1"><i class="la la-send"></i>Send</button>
           </span>
                 </div>
             </div>

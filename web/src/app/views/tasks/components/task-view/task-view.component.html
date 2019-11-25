@@ -15,7 +15,7 @@
     </mat-card-header>
     <mat-card-content>
         <div>
-            <div class="budget border border-warning rounded-lg w-25 p-3 float-right text-center">
+            <div style="width: 250px" class="budget border border-warning rounded-lg p-3 float-right text-center">
                 <div>
                     <h2>Budget</h2>
                 </div>
@@ -29,17 +29,17 @@
                 <div *ngIf="!task.lastbid?.accepted" class="container">
                     <div class="row mb-2">
                         <div class="col">
-                            <button type="button" class="btn btn-danger b-center Use btn-block" (click)="handleMakeOffer()"><i class="la la-dollar"></i>Make Offer</button>
+                            <button type="button" class="btn btn-secondary b-center Use btn-block" (click)="handleMakeOffer()"><i class="la la-dollar"></i>Bid</button>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col">
-                            <button *ngIf="owned" type="button" class="btn btn-primary Use btn-block" (click)="handleAcceptOffer()"><mat-icon>money</mat-icon>Accept Offer</button>
+                            <button type="button" class="btn btn-secondary Use btn-block" (click)="handleAcceptOffer()"><i class="la la-check"></i>Accept</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button *ngIf="owned" type="button" class="btn btn-danger Use btn-block" (click)="handleCancelTask()"><mat-icon>clear</mat-icon>Cancel Task</button>
+                            <button *ngIf="owned" type="button" class="btn btn-secondary Use btn-block" (click)="handleCancelTask()"><i class="la la-close"></i>Cancel</button>
                         </div>
                     </div>
                 </div>

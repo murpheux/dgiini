@@ -160,14 +160,39 @@ module.exports = {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection).aggregate([
-                { $match: { skills: { $elemMatch: { $eq: skill } } } }
+                { $match: { skills: { $elemMatch: { $eq: skill } } } },
+                { $lookup: { from: 'ratings', localField: '_id', foreignField: 'user', as: 'ratings' } },
+                { $lookup: { from: 'logins', localField: 'username', foreignField: 'email', as: 'logins' } },
+                {
+                    $project: {
+                        name: 1,
+                        email: -1,
+                        username: 1,
+                        address: 1,
+                        isActive: 1,
+                        isBanned: 1,
+                        lastLogin: { $arrayElemAt: ['$logins.date', -1] },
+                        created: 1,
+                        roles: -1,
+                        dob: -1,
+                        rating: { $avg: '$ratings.rating' },
+                        ratingcount: { $size: '$ratings' },
+                        picture: 1,
+                        skill_summary: -1,
+                        work_cities: -1,
+                        skills: -1,
+                        qualificiations: -1,
+                        vehicles: -1,
+                        how_heard: -1
+                    }
+                }
             ]).toArray()
 
             resolve(doc)
         })
     },
 
-    // get user one
+    // get users
     getusers: (db, collection, paging) => {
         process_paging(paging)
 
@@ -175,22 +200,21 @@ module.exports = {
             const doc = db.collection(collection).aggregate([
                 { $match: paging.filter },
                 { $lookup: { from: 'ratings', localField: '_id', foreignField: 'user', as: 'ratings' } },
-                { $lookup: { from: 'clients', localField: 'client', foreignField: '_id', as: 'clientInfo' } },
-                { $lookup: { from: 'vendors', localField: 'vendor', foreignField: '_id', as: 'vendorInfo' } },
+                { $lookup: { from: 'logins', localField: 'username', foreignField: 'email', as: 'logins' } },
                 {
                     $project: {
                         name: 1,
                         username: 1,
+                        email: 1,
                         address: 1,
                         isActive: 1,
                         isBanned: 1,
-                        lastLogin: 1,
+                        lastLogin: { $arrayElemAt: ['$logins.date', -1] },
                         created: 1,
+                        roles: -1,
                         rating: { $avg: '$ratings.rating' },
                         ratingcount: { $size: '$ratings' },
-                        client: { $arrayElemAt: ['$clientInfo', 0] },
-                        vendor: { $arrayElemAt: ['$vendorInfo', 0] },
-                        photo: 1
+                        picture: 1
                     }
                 }
             ]).toArray()

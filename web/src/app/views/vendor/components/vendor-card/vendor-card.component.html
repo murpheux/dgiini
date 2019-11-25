@@ -1,20 +1,18 @@
 <mat-card (click)="onvendorcardclick()" [ngClass]="vendor.selected ? 'task-active' : ''" class="vendor-card mb-3">
     <mat-card-content>
-        <div>
-            <h3 class="sb-title open font-weight-bold">{{vendor.name | titlecase}}</h3>
+        <div class="d-flex bd-highlight">
+            <div class="p-2 flex-shrink-1 bd-highlight">
+                <img *ngIf="vendor.picture" mat-card-avatar class="vendor-image" [src]="vendor.picture" />
+            </div>
+            <div class="p-2 w-100 bd-highlight">
+                <h3 class="sb-title open font-weight-bold">{{vendor.name | titlecase}}</h3>
+                <div class="">{{vendor.email}}</div>
+            </div>
         </div>
-        <div class="descr">{{vendor.email}}</div>
-        <!-- <div *ngIf="task.lastbid" class="ramount-init font-weight-bold text-danger">{{vendor.rate.amount | currency:'CAD':'symbol':'1.0-0'}}</div>
-        <div class="ramount font-weight-bold">{{currentPrice | currency:'CAD':'symbol':'1.0-0'}}</div>
-        <div class="task-header-image float-right">
-            <img *ngIf="vendor.photo" mat-card-avatar [src]="vendor.photo" />
+        <div class="">Skill: {{vendor.skills}}</div>
+        <div *ngIf="vendor.rating">
+            <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]"></i>
         </div>
-        <div class="taskinfo">
-            <div>
-                <mat-icon class="task-icon">location_on</mat-icon> {{vendor.location.city}}, {{vendor.location.zipcode}}</div>
-            <div>
-                <mat-icon class="task-icon">calendar_today</mat-icon> {{vendor.scheduled_date | date }}</div>
-        </div>
-        <div class="footer font-weight-bold small text-success">{{vendor.status | uppercase}} : 12 offers</div> -->
+        <div class="">{{vendor.rating || '- Unrated -'}}</div>
     </mat-card-content>
 </mat-card>

@@ -1,32 +1,35 @@
 <div *ngIf="message">
-    <div class="container">
-        <div class="row">
-            <div class="text-primary col-lg-12">
+    <div class="d-flex bd-highlight">
+        <div class="p-2 flex-shrink-1 bd-highlight">
+            <div class="row">
+                <img *ngIf="message.from.picture" mat-card-avatar class="message-image" [src]="message.from.picture" />
+            </div>
+            <div class="row">
                 <a href="#">{{message.from.name}}</a>
+            </div>
+            <div class="row">
                 <div *ngIf="message.from.rating">
-                    <mat-icon class="rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]">star</mat-icon>
-                    {{ message.from.rating }} // [{{ message.from.ratingcount }}]
-                    <!-- <mat-icon class="rating_gold" *ngFor="let i of ratingExces">star_half</mat-icon>[{{ message.from.ratingcount }}] -->
+                    <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]"></i>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="message-image col-lg-2">
-                <img *ngIf="message.from.photo" mat-card-avatar class="message-image" [src]="message.from.photo" />
+            <div class="row">
+                {{ message.from.rating }} from {{ message.from.ratingcount }}
             </div>
         </div>
-        <div class="row">
-            <div class="offset-lg-2 col-lg-8 message rounded">
-                {{ message.message }}
+        <div class="p-2 w-100 bd-highlight">
+            <div class="row">
+                <div class="col-12 message rounded">
+                    {{ message.message }}
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div col-lg-3>
-                <button (click)="handleReply('message._id')"><i class="la la-reply-all"></i>reply</button>
-            </div>
-            <div class="col-lg-5"></div>
-            <div class="col-lg-4 small text-right font-italic">
-                {{message.sentdate | date:'medium'}}
+            <div class="row">
+                <div class="col-lg-3">
+                    <button (click)="handleReply('message._id')"><i class="la la-reply-all"></i>reply</button>
+                </div>
+                <div class="col-lg-5"></div>
+                <div class="col-lg-4 small text-right font-italic">
+                    {{message.sentdate | date:'medium'}}
+                </div>
             </div>
         </div>
     </div>

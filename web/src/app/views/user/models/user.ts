@@ -33,7 +33,7 @@ export interface IVendor extends IUser {
     vehicicle: IVehicle[];
     qualifications: string[];
     residentCity: string;
-    skillsummary: string;
+    skill_summary: string;
     sin: string;
     rating: number;
 

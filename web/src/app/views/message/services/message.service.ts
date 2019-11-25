@@ -5,7 +5,7 @@ import { IResponse } from '../../tasks/models/IResponse';
 import { environment } from 'src/environments/environment';
 import { IMessage } from '../models/message';
 import { Guid } from 'guid-typescript';
-import { LocationService } from '../../user/services/location.service';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class MessageService {
 
     constructor(
         private http: HttpClient,
-        private locationService: LocationService
+        private userService: UserService
         ) { }
 
     sendMessage(message: IMessage): Observable<IResponse> {
@@ -49,12 +49,12 @@ export class MessageService {
         const userList = messages.map(m => m.from)
             .filter((value, index, self) => self.indexOf(value) === index);
 
-        // this.locationService.getUserList(userList).subscribe(res => {
-        //     messages.forEach(m => {
-        //         res.payload.filter(user => {
-        //             m.from = m.from === user._id ? user : m.from;
-        //         });
-        //     });
-        // });
+        this.userService.getUserList(userList).subscribe(res => {
+            messages.forEach(m => {
+                res.payload.filter(user => {
+                    m.from = m.from === user._id ? user : m.from;
+                });
+            });
+        });
     }
 }

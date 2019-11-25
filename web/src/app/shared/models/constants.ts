@@ -4,4 +4,6 @@ export class Constants {
     public static readonly AUTH_USER_CLAIM = 'AuthUserToken';
     public static readonly AUTH_USER_PROFILE = 'AuthUserProfile';
     public static readonly AUTH_LOCAL_PROFILE = 'AuthLocalProfile';
+
+    public static readonly LOC_CURRENT_CITY = 'LocCurrentCity';
 }
