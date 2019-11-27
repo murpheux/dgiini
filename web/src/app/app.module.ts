@@ -7,6 +7,7 @@ import { UiModule } from './ui/ui.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NotifyHeaderService } from './services/notify-header.service';
 import 'hammerjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import 'hammerjs';
     AppRoutingModule,
     UiModule,
     ToastrModule.forRoot(),
+    FontAwesomeModule,
   ],
   providers: [
     NotifyHeaderService

@@ -2,6 +2,7 @@ import { ITask } from '../../tasks/models/ITask';
 import { Guid } from 'guid-typescript';
 
 export interface IMessage {
+    _id?: Guid;
     from: any;
     to: Guid;
     message: string;

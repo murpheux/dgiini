@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ITask } from '../../models/ITask';
+import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-task-card',
@@ -10,6 +11,9 @@ export class TaskCardComponent implements OnInit {
     @Input() task: ITask;
     @Output() taskSelected = new EventEmitter();
     public currentPrice: number;
+
+    faCalendar = faCalendar;
+    faMapMarkerAlt = faMapMarkerAlt;
 
     constructor() { }
 

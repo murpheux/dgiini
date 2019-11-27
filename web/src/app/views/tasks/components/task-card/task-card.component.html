@@ -11,9 +11,9 @@
         </div>
         <div class="taskinfo">
             <div>
-                <mat-icon class="task-icon">location_on</mat-icon> {{task.location.city}}, {{task.location.zipcode}}</div>
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{task.location.city}}, {{task.location.zipcode}}</div>
             <div>
-                <mat-icon class="task-icon">calendar_today</mat-icon> {{task.scheduled_date | date }}</div>
+                <fa-icon [icon]="faCalendar"></fa-icon> {{task.scheduled_date | date }}</div>
         </div>
         <div class="badge badge-light cat-ind">
             <button type="button" class="btn btn-success">

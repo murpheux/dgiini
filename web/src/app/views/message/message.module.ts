@@ -10,6 +10,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { MessageViewComponent } from './components/message-view/message-view.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [MessageSenderComponent, MessageListComponent, MessageViewComponent],
@@ -19,6 +20,7 @@ import { MessageViewComponent } from './components/message-view/message-view.com
     SharedModule,
     CoreModule,
     MaterialDesignModule,
+    FontAwesomeModule,
     NgxUiLoaderModule,
   ],
   exports: [MessageSenderComponent, MessageListComponent],

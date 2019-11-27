@@ -8,6 +8,10 @@ import { TaskOfferComponent } from '../task-offer/task-offer.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TaskService } from '../../services/task.service';
 import { IUser } from 'src/app/views/user/models/user';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faDollarSign, faCheck, faTimes, faFileAlt, faUserCircle, faMapMarkedAlt, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
     selector: 'app-task-view',
@@ -19,6 +23,17 @@ export class TaskViewComponent implements OnInit {
     public messages: IMessage[];
     public currentPrice: number;
     public owned: boolean;
+    public messageToReply: IMessage;
+
+    faDollarSign = faDollarSign;
+    faCheck = faCheck;
+    faTimes = faTimes;
+    faUserCircle = faUserCircle;
+    faMapMarkedAlt = faMapMarkedAlt;
+    faCalendar = faCalendar;
+    faInfoCircle = faInfoCircle;
+    faFileAlt = faFileAlt;
+
     @Input() currentUser: IUser;
 
     @Input()
@@ -87,6 +102,10 @@ export class TaskViewComponent implements OnInit {
         message.from = this.currentUser;
 
         this.messages.unshift(message);
+    }
+
+    handleMessagedToReply(message: IMessage) {
+        this.messageToReply = message;
     }
 
     handleMakeOffer() {

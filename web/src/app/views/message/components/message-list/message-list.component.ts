@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IMessage } from '../../models/message';
 
 @Component({
@@ -8,10 +8,15 @@ import { IMessage } from '../../models/message';
 })
 export class MessageListComponent implements OnInit {
     @Input() messages: IMessage[];
+    @Output() messageToReply = new EventEmitter();
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    handleMessagedToReply(message: IMessage) {
+        this.messageToReply.emit(message);
     }
 
 }

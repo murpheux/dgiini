@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IMessage } from '../../models/message';
+import { faReply } from '@fortawesome/free-solid-svg-icons';
+import { Guid } from 'guid-typescript';
 
 @Component({
     selector: 'app-message-view',
@@ -8,12 +10,16 @@ import { IMessage } from '../../models/message';
 })
 export class MessageViewComponent implements OnInit {
     @Input() message: IMessage;
+    @Output() messageToReply = new EventEmitter();
+
+    faReply = faReply;
 
     constructor() { }
 
     ngOnInit() {
     }
 
-    handleReply(messageid) {
+    handleReply() {
+        this.messageToReply.emit(this.message);
     }
 }

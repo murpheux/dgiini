@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './views/user/services/auth.service';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 export class Message {
     constructor(
@@ -16,6 +17,7 @@ export class Message {
 })
 export class AppComponent implements OnInit {
     title = 'dgiini app';
+    faCoffee = faCoffee;
 
     constructor(
         private authService: AuthService,

@@ -22,12 +22,13 @@ import { TaskUserFilterComponent } from './components/task-user-filter/task-user
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 import { MessageModule } from '../message/message.module';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TaskOfferComponent } from './components/task-offer/task-offer.component';
 import { TaskSearchComponent } from './components/task-search/task-search.component';
 import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
 import { TaskStatsComponent } from './components/task-stats/task-stats.component';
 import { VendorCardComponent } from '../vendor/components/vendor-card/vendor-card.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
@@ -43,6 +44,7 @@ import { VendorCardComponent } from '../vendor/components/vendor-card/vendor-car
         CoreModule,
         MaterialDesignModule,
         NgxUiLoaderModule,
+        FontAwesomeModule,
         MessageModule,
         NgxMaterialTimepickerModule
     ],

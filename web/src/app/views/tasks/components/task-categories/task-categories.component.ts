@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 import { VendorService } from 'src/app/views/vendor/services/vendor.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
+import { IMessage } from 'src/app/views/message/models/message';
 
 @Component({
     selector: 'app-task-categories',
@@ -25,9 +26,6 @@ export class TaskCategoriesComponent implements OnInit {
     defaultDistanceToHome = 55;
     currentCity: string;
     currentUser: IUser;
-
-    title = 'app';
-    faCoffee = faCoffee;
 
     constructor(
         private taskService: TaskService,
