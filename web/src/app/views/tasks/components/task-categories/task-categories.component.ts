@@ -37,19 +37,25 @@ export class TaskCategoriesComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.route.params.subscribe(params => {
-            if (params['category']) {
-                const category = params['category'];
+        this.locationService.getCurrentCity().then(city => {
+            this.currentCity = city;
 
-                this.selectedCategory = [category];
-                this.getTasksByCategory(category);
-            } else if (params['searchstr']) {
-                this.searchString = params['searchstr'];
-                this.searchTask(this.searchString);
-            } else {
-                this.getTasks();
-            }
+            this.route.params.subscribe(params => {
+                if (params['category']) {
+                    const category = params['category'];
 
+                    this.selectedCategory = [category];
+                    this.getTasksByCategory(category, this.currentCity);
+                } else if (params['searchstr']) {
+                    this.searchString = params['searchstr'];
+                    this.searchTask(this.searchString);
+                } else {
+                    this.taskService.getTaskCategories().subscribe(response => {
+                        this.selectedCategory = response.payload; // select all categories
+                        this.getTasksByCategories(this.selectedCategory, this.currentCity);
+                    });
+                }
+            });
         });
 
         if (this.authService.loggedIn) {
@@ -57,11 +63,6 @@ export class TaskCategoriesComponent implements OnInit {
         }
 
         this.distanceToHome = this.defaultDistanceToHome;
-        this.locationService.getCurrentCity().then(city => {
-            this.currentCity = city;
-        });
-
-        this.getFeaturedVendor();
     }
 
     searchTask(searchstr: string) {
@@ -76,18 +77,22 @@ export class TaskCategoriesComponent implements OnInit {
         });
     }
 
-    getTasksByCategory(category: string) {
-        this.getTasksByCategories([category]);
+    getTasksByCategory(category: string, city: string) {
+        this.getTasksByCategories([category], city);
     }
 
-    getTasksByCategories(categories: string[]) {
-        this.taskService.getTasksByCategories(categories).subscribe(success => {
+    getTasksByCategories(categories: string[], city: string) {
+        this.taskService.getTasksByCategoriesAndCity(categories, city).subscribe(success => {
             this.model = success.payload;
 
             if (this.model !== undefined && this.model.length !== 0) {
                 this.taskService.enrichTasks(this.model);
                 this.currentTask = this.model[0];
                 this.currentTask.selected = true;
+            }
+
+            if (this.model && this.model.length > 0) {
+                this.getRecommendedVendor(this.model[0]);
             }
         });
     }
@@ -104,17 +109,17 @@ export class TaskCategoriesComponent implements OnInit {
         });
     }
 
-    getTasks() {
-        this.taskService.getTasks().subscribe(success => {
-            this.model = success.payload;
+    // getTasks() {
+    //     this.taskService.getTasks().subscribe(success => {
+    //         this.model = success.payload;
 
-            if (this.model !== undefined && this.model.length !== 0) {
-                this.taskService.enrichTasks(this.model);
-                this.currentTask = this.model[0];
-                this.currentTask.selected = true;
-            }
-        });
-    }
+    //         if (this.model !== undefined && this.model.length !== 0) {
+    //             this.taskService.enrichTasks(this.model);
+    //             this.currentTask = this.model[0];
+    //             this.currentTask.selected = true;
+    //         }
+    //     });
+    // }
 
     handleTaskSelected(task: ITask) {
         this.currentTask.selected = false;
@@ -132,6 +137,8 @@ export class TaskCategoriesComponent implements OnInit {
     handleCityChanged(city: string) {
         this.currentCity = city;
         this.locationService.setCurrentCity(city);
+
+        this.getTasksByCategories(this.selectedCategory, city);
     }
 
     handleDistanceChanged(distance: number) {
@@ -139,9 +146,9 @@ export class TaskCategoriesComponent implements OnInit {
 
     handleCategoryChanged(categories: string[]) {
         if (categories.length === 0) {
-            this.getTasks();
+            this.getTasksByCategories([], this.currentCity);
         } else {
-            this.getTasksByCategories(categories);
+            this.getTasksByCategories(categories, this.currentCity);
         }
     }
 

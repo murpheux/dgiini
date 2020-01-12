@@ -51,6 +51,20 @@ router.get('/tasks', asyncHandler(async(req, res, next) => {
     // res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
 }))
 
+router.get('/tasks/city/:city', asyncHandler(async(req, res, next) => {
+    const city = req.params.city
+
+    let paging = build_paging(req)
+    paging = enrich_paging(paging)
+    paging.filter = { 'location.city': city }
+
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
+
+    const tasks = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+}))
+
 // user task
 router.get('/tasks/user/:id', asyncHandler(async(req, res, next) => {
     const id = req.params.id
@@ -190,10 +204,11 @@ router.get('/tasks/search/:searchstr', asyncHandler(async(req, res, next) => {
     const searchstr = req.params.searchstr
 
     const paging = build_paging(req)
-    paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
+        // paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
+    paging.filter = { $text: { $search: '"' + searchstr + '"' } }
 
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)
-    const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
+    const invoke_getlist = async() => await mgaccess.searchTask(db, TASK_COLL, paging)
 
     const tasks = await invoke_getlist()
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
@@ -229,11 +244,36 @@ router.get('/tasks/category/:category', asyncHandler(async(req, res, next) => {
     categories = JSON.parse(categories)
 
     categories.forEach(category => {
-        category = titleCase(category)
+        category = category.toUpperCase() // titleCase(category)
     })
 
     const paging = build_paging(req)
     paging.filter = { category: { $in: categories } }
+
+    if (validation.hasErrors()) {
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+    } else {
+        const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+        const invoke_getlist = async() => await mgaccess.getlist(db, TASK_COLL, paging)
+
+        const tasks = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+    }
+}))
+
+router.get('/tasks/city/:city/category/:category', asyncHandler(async(req, res, next) => {
+    let categories = req.params.category
+    let city = req.params.city
+    var validation = validator().validate(categories).isNotEmpty()
+
+    categories = JSON.parse(categories)
+
+    categories.forEach(category => {
+        category = category.toUpperCase()
+    })
+
+    const paging = build_paging(req)
+    paging.filter = { 'location.city': city, category: { $in: categories } }
 
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))

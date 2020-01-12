@@ -254,6 +254,17 @@ module.exports = {
 
     },
 
+    searchTask: (db, collection, paging) => {
+
+        return new Promise((resolve, reject) => {
+            db.collection(collection).find(paging.filter)
+                .toArray((err, data) => {
+                    err ? reject(err) : resolve(data)
+                })
+        })
+
+    },
+
     getlisttask: (db, collection, paging) => {
 
         paging = process_paging(paging)

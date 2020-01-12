@@ -36,10 +36,6 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => { });
     }
 
-    // login() {
-    //     this.authService.login();
-    // }
-
     logout() {
         // clear loggedin storage
         localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);

@@ -30,6 +30,7 @@ apiEndpoints:
   msgApi:
     # host: 10.10.2.7
     paths: '/api/msg/v1/*'
+
 serviceEndpoints:
   taskService:
     url: 'http://localhost:8000'
@@ -37,6 +38,7 @@ serviceEndpoints:
     url: 'http://localhost:8008'
   msgService:
     url: 'http://localhost:8004'
+
 policies:
   - basic-auth
   - cors
@@ -47,11 +49,16 @@ policies:
   - oauth2
   - proxy
   - rate-limit
+
 pipelines:
   taskDefaultPipeline:
     apiEndpoints:
       - taskApiDefault
     policies:
+      # - body-parser:
+      # - log: # policy name
+      #   - action:    # array of condition/actions objects
+      #     message: ${req.ip} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
       - rate-limit:
         - action:
             max: 10
@@ -61,10 +68,17 @@ pipelines:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
+            # prependPath: true
+            # ignorePath: false
+            # stripPath: true
   taskPipeline:
     apiEndpoints:
       - taskApi
     policies:
+      # - body-parser:
+      # - log: # policy name
+      #   - action:    # array of condition/actions objects
+      #     message: ${req.ip} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
       # - log:
       #   - action:
       #       message: ${req.ip} - ${req.method} ${req.originalUrl}
@@ -75,6 +89,9 @@ pipelines:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
+            # prependPath: true
+            # ignorePath: false
+            # stripPath: true
   authDefaultPipeline:
     apiEndpoints:
       - authApiDefault
