@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IMessage } from '../../models/message';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 import { Guid } from 'guid-typescript';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-message-view',
@@ -14,7 +15,9 @@ export class MessageViewComponent implements OnInit {
 
     faReply = faReply;
 
-    constructor() { }
+    constructor(
+        private authService: AuthService
+    ) { }
 
     ngOnInit() {
     }

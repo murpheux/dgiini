@@ -11,8 +11,8 @@
         </div>
         <div class="">Skill: {{vendor.skills}}</div>
         <div *ngIf="vendor.rating">
-            <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]"></i>
+            <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3]"></i><i class="la la-star-half rating_gold"></i>
         </div>
-        <div class="">{{vendor.rating || '- Unrated -'}}</div>
+        <div *ngIf="!vendor.rating">- Unrated -</div>
     </mat-card-content>
 </mat-card>

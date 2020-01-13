@@ -12,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faDollarSign, faCheck, faTimes, faFileAlt, faUserCircle, faMapMarkedAlt, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-task-view',
@@ -68,7 +69,7 @@ export class TaskViewComponent implements OnInit {
         private dialog: MatDialog,
         private notificationService: NotificationService,
         private taskService: TaskService,
-
+        private authService: AuthService
     ) { }
 
     ngOnInit() {

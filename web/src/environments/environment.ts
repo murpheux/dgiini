@@ -18,5 +18,9 @@ export const environment = {
         callbackURL: 'http://localhost:9000'
     },
 
-    version: '0.0.1'
+    version: '0.0.1',
+
+    keys: {
+        gmap: ''
+    }
 };

@@ -29,12 +29,12 @@
                 <div *ngIf="!task.lastbid?.accepted" class="container">
                     <div class="row mb-2">
                         <div class="col">
-                            <button type="button" class="btn btn-secondary b-center Use btn-block" (click)="handleMakeOffer()"><fa-icon [icon]="faDollarSign"></fa-icon> Bid</button>
+                            <button [hidden]="!authService.loggedIn" type="button" class="btn btn-secondary b-center Use btn-block" (click)="handleMakeOffer()"><fa-icon [icon]="faDollarSign"></fa-icon> Bid</button>
                         </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col">
-                            <button type="button" class="btn btn-secondary Use btn-block" (click)="handleAcceptOffer()"><fa-icon [icon]="faCheck"></fa-icon> Accept</button>
+                            <button [hidden]="!authService.loggedIn" type="button" class="btn btn-secondary Use btn-block" (click)="handleAcceptOffer()"><fa-icon [icon]="faCheck"></fa-icon> Accept</button>
                         </div>
                     </div>
                     <div class="row">
@@ -61,7 +61,8 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="font-weight-bold c-gold">Location</div>
-                            <div class="">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
+                            <div *ngIf="authService.loggedIn" class="">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
+                            <div *ngIf="!authService.loggedIn" class="">{{task.location.city}} {{task.location.zipcode}}</div>
                         </div>
                     </div>
                     <div class="row lg-2">
@@ -83,6 +84,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="ml-3">
+                <app-google-map [latitude]="location.latitude" [longitude]="location.longitude" [mapTypeId]="location.mapType"></app-google-map>
             </div>
             <div class="ml-3">
                 <div>

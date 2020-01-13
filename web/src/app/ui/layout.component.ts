@@ -42,7 +42,7 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
         }
 
         // TODO: remove
-        this.authService.loggedIn = true;
+        // this.authService.loggedIn = true;
     }
 
 }

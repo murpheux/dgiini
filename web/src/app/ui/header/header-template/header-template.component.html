@@ -34,9 +34,9 @@
                 <li class="menu-item-has-children">
                     <a routerLinkActive="active" [routerLink]="['./tasks']" title=""><i class="la la-tasks"></i> Browse Tasks</a>
                 </li>
-                <li class="menu-item-has-children">
+                <!-- <li class="menu-item-has-children">
                     <a [routerLink]="['./search/-']" title=""><i class="la la-search"></i> Advance Search</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -56,9 +56,9 @@
                     <li *ngIf="authService.loggedIn" class="menu-item-has-children">
                         <a title="" [routerLink]="['./tasks/mytask']">My Tasks</a>
                     </li>
-                    <li class="menu-item-has-children">
+                    <!-- <li class="menu-item-has-children">
                         <a title="" [routerLink]="['./search/-']"><i class="la la-search"></i> Advance Search</a>
-                    </li>
+                    </li> -->
                 </ul>
             </nav>
             <!-- Menus -->
@@ -67,7 +67,7 @@
             </div>
             <!-- Logo -->
             <div class="btn-extars">
-                <a title="" class="post-job-btn" (click)="openDialog()"><i class="la la-plus"></i>Post Task</a>
+                <a *ngIf="authService.loggedIn" title="" class="post-job-btn" (click)="openDialog()"><i class="la la-plus"></i>Post Task</a>
                 <ul class="account-btns">
                     <li class="nav-item">
                         <div *ngIf="authService.userProfile$ | async as profile">

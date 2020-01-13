@@ -9,12 +9,12 @@
             </div>
             <div class="row">
                 <div *ngIf="message.from.rating">
-                    <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3, 4]"></i>
+                    <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3]"></i><i class="la la-star-half rating_gold"></i>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 {{ message.from.rating }} from {{ message.from.ratingcount }}
-            </div>
+            </div> -->
         </div>
         <div class="p-2 w-100 bd-highlight">
             <div class="row">
@@ -24,7 +24,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-3">
-                    <button (click)="handleReply('message._id')"><fa-icon [icon]="faReply"></fa-icon> reply</button>
+                    <button *ngIf="authService.loggedIn" (click)="handleReply('message._id')"><fa-icon [icon]="faReply"></fa-icon> reply</button>
                 </div>
                 <div class="col-lg-5"></div>
                 <div class="col-lg-4 small text-right font-italic">
