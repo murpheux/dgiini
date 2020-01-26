@@ -77,7 +77,7 @@ pipeline {
                         sh '''
                             cd ${WORKSPACE}/gw
                             npm install
-                            npm run build-gw
+                            npm run build
                         '''
                         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/gw/dist/apigw/'
@@ -89,7 +89,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            npm run build-task
+                            OUT_DIR=dist/mstask npm run build src/task_api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/mstask/'
@@ -99,7 +99,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            npm run build-auth
+                            OUT_DIR=dist/msauth npm run build auth_api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
@@ -109,7 +109,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            npm run build-msg
+                            OUT_DIR=dist/msmsg npm run build msg_api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'

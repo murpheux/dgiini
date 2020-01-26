@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ILocation } from '../../models/ILocation';
 
 @Component({
@@ -7,17 +7,14 @@ import { ILocation } from '../../models/ILocation';
     styleUrls: ['./google-map.component.scss']
 })
 export class GoogleMapComponent implements OnInit {
-    location: ILocation;
+
+    @Input() latitude: number;
+    @Input() longitude: number;
+    @Input() mapTypeId: string;
 
     constructor() { }
 
     ngOnInit() {
-        this.location = {
-            latitude: -28.68352,
-            longitude: -147.20785,
-            mapType: 'normal',
-            zoom: 5
-        };
     }
 
 }

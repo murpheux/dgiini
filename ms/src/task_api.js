@@ -9,6 +9,9 @@ import morgan from 'morgan'
 import cors from 'cors'
 import uuid from 'uuid/v4'
 import HttpStatus from 'http-status-codes'
+import fs from 'fs'
+import yaml from 'yaml'
+import swaggerui from 'swagger-ui-express'
 
 import winston from './shared/winston'
 import common from './shared/common'
@@ -25,6 +28,13 @@ const CLIENT_URL = process.env.COR_CLIENT_URL || 'http://localhost:9000'
 
 const app = express()
 app.use(compression()) // use compression
+
+if (process.env.NODE_ENV === 'development') {
+    const file = fs.readFileSync('swagger.yaml', 'utf8')
+    const swagger_config = yaml.parse(file)
+
+    app.use('/api/docs/v1', swaggerui.serve, swaggerui.setup(swagger_config))
+}
 
 // check configuration
 if (config.error) { throw config.error }

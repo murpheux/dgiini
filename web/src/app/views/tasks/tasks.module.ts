@@ -27,8 +27,8 @@ import { TaskOfferComponent } from './components/task-offer/task-offer.component
 import { TaskSearchComponent } from './components/task-search/task-search.component';
 import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
 import { TaskStatsComponent } from './components/task-stats/task-stats.component';
-import { VendorCardComponent } from '../vendor/components/vendor-card/vendor-card.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VendorModule } from '../vendor/vendor.module';
 
 @NgModule({
     declarations: [TaskDetailsComponent,
@@ -36,7 +36,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
         TaskUserComponent, TaskUserFilterComponent, TaskCardLinkComponent,
-        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent, VendorCardComponent],
+        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -46,6 +46,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         NgxUiLoaderModule,
         FontAwesomeModule,
         MessageModule,
+        VendorModule,
         NgxMaterialTimepickerModule
     ],
     entryComponents: [
@@ -59,7 +60,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 export class TasksModule {
 
     contructor() {
-        library.add(faCoffee);
+        library.add(faCoffee, faStar);
     }
 
 }

@@ -204,7 +204,7 @@ router.get('/tasks/search/:searchstr', asyncHandler(async(req, res, next) => {
     const searchstr = req.params.searchstr
 
     const paging = build_paging(req)
-        // paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
+    // paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
     paging.filter = { $text: { $search: '"' + searchstr + '"' } }
 
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)

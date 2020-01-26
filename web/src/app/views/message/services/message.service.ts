@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IResponse } from '../../tasks/models/IResponse';
-import { environment } from 'src/environments/environment';
 import { IMessage } from '../models/message';
 import { Guid } from 'guid-typescript';
+import { environment } from '../../../../environments/environment';
 import { UserService } from '../../user/services/user.service';
 
 @Injectable({

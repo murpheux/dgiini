@@ -8,6 +8,7 @@ export interface IUser {
     username: string;
     password: string;
     source: string;
+    role: string;
 
     created: Date;
     lastLogin: Date;
@@ -34,6 +35,8 @@ export interface IVendor extends IUser {
     qualifications: string[];
     residentCity: string;
     skill_summary: string;
+    skills: string[];
+    picture: string;
     sin: string;
     rating: number;
 

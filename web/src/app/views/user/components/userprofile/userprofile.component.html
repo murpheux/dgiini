@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-2">
                 <div class="message-image">
-                    <img mat-card-avatar class="message-image" [src]="currentUser.picture" />
+                    <img mat-card-avatar class="message-image" [src]="currentUser.photo" />
                 </div>
             </div>
             <div class="col-lg-10">
@@ -43,7 +43,7 @@
 
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab label="As Client">
-                            <div *ngIf="isClient">
+                            <div *ngIf="currentUser.role === 'client'">
                                 <div>
                                     <p>Card Number: {{ currentUser.client.credit_card.card_number }}</p>
                                     <p>Name on Card: {{ currentUser.client.credit_card.name_on_card }}</p>
@@ -53,7 +53,7 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="As Vendor">
-                            <div *ngIf="isVendor">
+                            <div *ngIf="currentUser.role === 'vendor'">
                                 <div>
                                     <p>Bank Name: {{ currentUser.vendor.bank_info.inst_name }}</p>
                                     <p>Transit No: {{ currentUser.vendor.bank_info.transit_no }}</p>

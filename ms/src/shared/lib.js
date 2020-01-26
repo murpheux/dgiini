@@ -5,9 +5,8 @@ export const options = {
     socketTimeoutMS: 480000,
     keepAlive: 300000,
     sslValidate: false,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 }
 
 export const build_response = (code, desc, payload) => {

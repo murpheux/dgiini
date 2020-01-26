@@ -1,6 +1,6 @@
 export interface ILocation {
     latitude: number;
     longitude: number;
-    mapType: string;
-    zoom: number;
+    mapType?: string;
+    zoom?: number;
 }

@@ -13,6 +13,7 @@ import { faDollarSign, faCheck, faTimes, faFileAlt, faUserCircle, faMapMarkedAlt
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { ILocation } from 'src/app/shared/models/ILocation';
 
 @Component({
     selector: 'app-task-view',
@@ -25,6 +26,7 @@ export class TaskViewComponent implements OnInit {
     public currentPrice: number;
     public owned: boolean;
     public messageToReply: IMessage;
+    location: ILocation;
 
     faDollarSign = faDollarSign;
     faCheck = faCheck;
@@ -69,7 +71,7 @@ export class TaskViewComponent implements OnInit {
         private dialog: MatDialog,
         private notificationService: NotificationService,
         private taskService: TaskService,
-        private authService: AuthService
+        public authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -82,6 +84,13 @@ export class TaskViewComponent implements OnInit {
         if (this.currentUser) {
             this.owned = this._task.client.id === this.currentUser._id;
         }
+
+        this.location = {
+            latitude: -28.68352,
+            longitude: -147.20785,
+            mapType: 'normal',
+            zoom: 5
+        };
     }
 
     getUserTaskMessages() {

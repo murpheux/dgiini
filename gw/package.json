@@ -6,15 +6,13 @@
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
-        "build-gw": "parcel build server.js --out-dir dist/apigw --target node"
+        "build": "parcel build server.js --out-dir dist/apigw --target node"
     },
     "staticFiles": {
-        "staticPath": [
-            {
-                "staticPath": "config",
-                "staticOutDir": "config"
-            }
-        ]
+        "staticPath": [{
+            "staticPath": "config",
+            "staticOutDir": "config"
+        }]
     },
     "dependencies": {
         "express-gateway": "^1.16.7"

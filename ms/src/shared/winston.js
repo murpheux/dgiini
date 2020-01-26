@@ -1,20 +1,25 @@
 const appRoot = require('app-root-path')
 const winston = require('winston')
 const fs = require('fs')
-const log_file = process.env.LOG_TARGET || 'logfile.log'
 
-// prepare environment
-const dir = 'logs'
+const log_file = process.env.LOG_TARGET || 'logfile.log'
+const default_log_folder = 'logs'
+const dir = process.env.LOG_PATH || default_log_folder
+let log_path_file = `${appRoot}/logs/${log_file}`
 
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
+}
+
+if (dir !== default_log_folder) {
+    log_path_file = `${dir}/${log_file}`
 }
 
 // define the custom settings for each transport (file, console)
 const options = {
     file: {
         level: 'error',
-        filename: `${appRoot}/logs/${log_file}`,
+        filename: log_path_file,
         handleExceptions: true,
         json: true,
         maxsize: 5242880, // 5MB

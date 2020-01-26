@@ -1,12 +1,26 @@
-const TASK_BASE_URL = 'http://scarlet';
-const AUTH_BASE_URL = 'http://scarlet';
-const MSG_BASE_URL = 'http://scarlet';
-const IP_SERVICE = 'http://api.ipify.org';
 
 export const environment = {
     production: false,
-    TASK_API: `${TASK_BASE_URL}/api`,
-    AUTH_API: `${AUTH_BASE_URL}/api`,
-    MSG_API: `${MSG_BASE_URL}/api`,
-    IP_SERVICE: `${IP_SERVICE}`
+
+    gateway: {
+        api: 'https://localhost:7000/api',
+    },
+
+    // 3rd party services
+    services: {
+        ipify: 'http://api.ipify.org',
+    },
+
+    // AUTH0
+    auth0: {
+        domain: 'murpheux.auth0.com',
+        clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
+        callbackURL: 'http://localhost:9000'
+    },
+
+    version: '0.0.1',
+
+    keys: {
+        gmap: ''
+    }
 };
