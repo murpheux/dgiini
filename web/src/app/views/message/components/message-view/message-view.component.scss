@@ -1,11 +1,262 @@
-.rating_gold {
-    fill: gold;
-    color: gold;
-    font-size: 1em;
+.browse-tasks {
+    background-color: #F7F7F7;
 }
 
-.message {
-    padding: 10px 10px 10px 10px;
-    background-color: lighten(#cba135, 65%);
-    color: #0f0f0f;
+.browse-tasks .container-fluid {
+    padding-top: 80px;
+}
+
+.browse-tasks .filters {
+    width: 100%;
+    position: fixed;
+    top: 76px;
+    z-index: 1000;
+}
+
+.browse-tasks .filters .filter {
+    padding: 5px 10px;
+    padding-top: 13px
+}
+
+.browse-tasks .filters .filter .input-group .input-group-prepend .input-group-text {
+    background-color: white !important;
+    width: 40px !important;
+    border-color: white !important;
+}
+
+.browse-tasks .filters .filter .input-group:focus-within .input-group-prepend .input-group-text {
+    color: var(--theme-color);
+    border-color: white;
+}
+
+.browse-tasks .filters .filter .form-control {
+    border-color: white !important
+}
+
+.browse-tasks .filters .filter .form-control:focus {
+    border-color: white !important
+}
+
+.browse-tasks .task-box {
+    border: 1px solid #d4d4d4;
+    border-radius: 5px;
+    padding: 10px 10px;
+    background-color: white;
+}
+
+.browse-tasks .task-detail-box {
+    border: 1px solid #d4d4d4;
+    border-top-color: transparent;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    background-color: white;
+}
+
+.browse-tasks .nav-item .nav-link {
+    background-color: #F7F7F7;
+    color: var(--purple-color);
+    font-weight: bold;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-color: #d4d4d4;
+}
+
+.browse-tasks .nav-item .nav-link.active {
+    background-color: white;
+    color: var(--theme-color);
+    border-color: #d4d4d4;
+    border-bottom-color: white;
+    border-top: 2px solid;
+    border-top-color: var(--theme-color);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.find-by-distance .dropdown-menu {
+    padding: 0px 20px;
+}
+
+.browse-tasks .task-detail-box .tab-pane {
+    padding: 10px 10px
+}
+
+.proposal .user-info .user-img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+}
+
+.proposal .user-info .user-details {
+    margin-left: 60px;
+}
+
+.browse-tasks .heading {
+    font-size: 20px !important;
+}
+
+.browse-tasks .price {
+    font-size: 22px !important;
+    font-weight: bold;
+}
+
+.browse-tasks p {
+    font-size: 14px !important;
+}
+
+.browse-tasks .recommended-taskers {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background-color: white;
+    padding: 15px 15px;
+}
+
+.browse-tasks .recommended-taskers .user-info .user-img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+}
+
+.browse-tasks .recommended-taskers .user-info .user-details {
+    margin-left: 60px;
+    padding-top: 5px;
+}
+
+.browse-tasks .recommended-taskers .user-info .user-details .fa-times {
+    cursor: pointer;
+}
+
+.browse-tasks .recommended-taskers .user-info .user-details p {
+    line-height: 18px;
+}
+
+.browse-tasks .recommended-taskers .user-info .user-skills a {
+    text-decoration: none;
+    margin-right: 5px;
+    color: var(--dark-color);
+}
+
+.browse-tasks .task-box .task-list {
+    max-height: 800px;
+    overflow: auto;
+}
+
+.browse-tasks .task-box .task-list::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Hide scrollbar for IE and Edge */
+
+.browse-tasks .task-box .task-list {
+    -ms-overflow-style: none;
+}
+
+.browse-tasks .task-box .task-list .task {
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 8px;
+}
+
+.browse-tasks .task-box .task-list hr {
+    margin: 1px 0px;
+}
+
+.browse-tasks .task-box .task-list .task i {
+    width: 16px;
+}
+
+.browse-tasks .task-box .task-list .task .badge {
+    font-size: 13px !important;
+}
+
+.browse-tasks .task-box .task-list .task .badge-secondary {
+    font-size: 13px !important;
+    background-color: transparent;
+    color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+    font-weight: 400;
+}
+
+
+/* For Active Task */
+
+.browse-tasks .task-box .task-list .task.active {
+    background-color: var(--border-color);
+    border-radius: 5px 5px;
+}
+
+.browse-tasks .task-box .task-list .task:focus {
+    background-color: var(--border-color);
+    border-radius: 5px 5px;
+    outline: transparent !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .browse-tasks .filters {
+        top: 63px;
+    }
+    .browse-tasks .filters .input-group,
+    .browse-tasks .filters .form-group {
+        margin-bottom: 5px;
+    }
+    .browse-tasks .container-fluid {
+        padding-top: 120px !important;
+    }
+    .browse-tasks .col-md-6 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .browse-tasks .task-box {
+        margin-top: 60px
+    }
+}
+
+.form-control-range {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 5px;
+    /* Specified height */
+    background: #e0e0e0b6;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 1;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.form-control-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 15px;
+    /* Set a specific slider handle width */
+    height: 15px;
+    /* Slider handle height */
+    background: var(--theme-color);
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+    border-radius: 999px;
+}
+
+.form-control-range::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: var(--theme-color);
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
 }

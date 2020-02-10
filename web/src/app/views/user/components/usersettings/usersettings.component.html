@@ -1,0 +1,229 @@
+<section class="page-wrapper">
+    <div class="page-heading text-white">
+      <div class="container">
+        <h3>Settings</h3>
+        <p>Manage your account while using dgiini.</p>
+        <i class="fas fa-cog shadow-icon"></i>
+      </div>
+    </div>
+  
+    <div class="container settings">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="setting-box">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                    aria-controls="v-pills-home" aria-selected="true"><i class="far fa-user"></i> Profile</a>
+                  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                    aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-shield-alt"></i> Trust &
+                    Verification</a>
+                  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab"
+                    aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-key"></i> Password</a>
+                  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
+                    aria-controls="v-pills-settings" aria-selected="false"><i class="far fa-bell"></i> Notifications</a>
+                </div>
+              </div>
+              <div class="col-md-9 border-left">
+                <div class="tab-content" id="v-pills-tabContent">
+                  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                    aria-labelledby="v-pills-home-tab">
+                    <h4><i class="far fa-user"></i> Profile Details</h4>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="firstname">First Name</label>
+                          <input type="text" class="form-control" id="firstname" placeholder="First Name">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="lastname">Last Name</label>
+                          <input type="text" class="form-control" id="lastname" placeholder="Last Name">
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group mb-2">
+                          <label for="address">Address</label>
+                          <input type="text" class="form-control" id="address" placeholder="Address">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="country">Country</label>
+                          <input type="text" class="form-control" id="country" placeholder="Country">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="state">State/ Province</label>
+                          <input type="text" class="form-control" id="state" placeholder="State">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="city">City</label>
+                          <input type="text" class="form-control" id="city" placeholder="City">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="zip">Zip Code</label>
+                          <input type="number" class="form-control" id="zip" placeholder="Zip Code">
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="phone">Phone Number</label>
+                          <input type="number" class="form-control" id="phone" placeholder="Phone Number">
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <button class="btn btn-web float-right">Save Changes</button>
+                    <div class="clearfix"></div>
+                  </div>
+                  <!--End Profile Tab-->
+                  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <h4><i class="fas fa-shield-alt"></i> Trust & Verification</h4>
+                    <hr>
+                    <div class="text-center">
+                      <h4 class="text-web">
+                        Current Trust Score: 80
+                      </h4>
+                    </div>
+                    <hr>
+                    <h6 class="font-weight-bold text-web">What is a trust score?</h6>
+                    <p class="text-justify">
+                      The dgiini Trust Score is at the core of how we handle verification, trust, and payments. The Trust Score is a value
+                      that indicates to what extent we have been able to verify who a user says they are. Employers and taskers who are
+                      the safest to work with are those who put in more effort to verify themselves to become highly trusted users.
+                    </p>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                      <div class="p-2 flex-grow-1"><h5>Upload Profile Picture</h5></div>
+                      <div class="p-2"><p>20 Points</p></div>
+                      <div class="p-2"><button class="btn btn-outline-web btn-sm">Upload Now</button></div>
+                      <div class="p-2"><h4 class="badge badge-warning">Not Verified</h4></div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                      <div class="p-2 flex-grow-1"><h5>Email Address</h5></div>
+                      <div class="p-2"><p>20 Points</p></div>
+                      <div class="p-2"><h4 class="badge badge-success">Verified</h4></div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                      <div class="p-2 flex-grow-1"><h5>Phone Number</h5></div>
+                      <div class="p-2 flex-grow"><p>20 Points</p></div>
+                      <div class="p-2 flex-grow"><h4 class="badge badge-success">Verified</h4></div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                      <div class="p-2 flex-grow-1"><h5>Verify ID</h5></div>
+                      <div class="p-2"><p>20 Points</p></div>
+                      <div class="p-2"><h4 class="badge badge-success">Verified</h4></div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                      <div class="p-2 flex-grow-1"><h5>Authenticate Credit or Debit Card</h5></div>
+                      <div class="p-2"><p>20 Points</p></div>
+                      <div class="p-2"><h4 class="badge badge-success">Verified</h4></div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <h4><i class="fas fa-key"></i> Change Password</h4>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="firstname">Current Password</label>
+                          <input type="password" class="form-control" id="firstname" placeholder="Current Password">
+                        </div>
+                      </div>
+                      <div class="col-md-6"></div>
+                      <div class="clearfix"></div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="lastname">New Password</label>
+                          <input type="password" class="form-control" id="lastname" placeholder="New Password">
+                        </div>
+                      </div>
+                      <div class="col-md-6"></div>
+                      <div class="clearfix"></div>
+                      <div class="col-md-6">
+                        <div class="form-group mb-2">
+                          <label for="lastname">Confirm Password</label>
+                          <input type="password" class="form-control" id="lastname" placeholder="Confirm Password">
+                        </div>
+                      </div>
+  
+                    </div>
+                    <hr>
+                    <button class="btn btn-web float-right">Change Password</button>
+                    <div class="clearfix"></div>
+                  </div> <!-- End Password Tab -->
+                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <h4><i class="far fa-bell"></i> Email & Notifications</h4>
+                    <hr>
+  
+                    <h5>Notification of latest task posted</h5>
+                    <label class="switch">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                    </label>
+                    <span class="font-weight-bold ml-3 pt-1">When a task gets posted that matches my selected skills</span>
+                    
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <h5>Individual Notifications</h5>
+                    <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                    </label>
+                    <span class="font-weight-bold ml-3 pt-1">You are awarded a project</span>
+  
+                    <div class="clearfix"></div>
+  
+                    <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                    </label>
+                    <span class="font-weight-bold ml-3 pt-1">We notify you of the latest activity regarding Services.</span>
+                  
+                    <div class="clearfix"></div>
+                    <hr>
+                    
+                    <h5>Other Notifications</h5>
+                    <label class="switch">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                    </label>
+                    <span class="font-weight-bold ml-3 pt-1">Marketing emails</span>
+                    
+                    <div class="clearfix"></div>
+                    
+                    <label class="switch">
+                      <input type="checkbox" checked>
+                      <span class="slider round"></span>
+                    </label>
+                    <span class="font-weight-bold ml-3 pt-1">Referral Program Notifications</span>
+                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- End Col-ms-12 -->
+      </div> <!-- End Row -->
+    </div> <!-- End Container -->
+  </section>

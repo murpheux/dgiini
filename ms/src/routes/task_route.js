@@ -102,6 +102,14 @@ router.get('/tasks/:id', asyncHandler(async(req, res, next) => {
     }
 }))
 
+router.get('/tasks/stats/full', asyncHandler(async(req, res, next) => {
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getstats = async() => await mgaccess.getTaskStatistics(db, TASK_COLL, undefined)
+
+    const tasks = await invoke_getstats()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
+}))
+
 
 // update
 router.put('/tasks', asyncHandler(async(req, res, next) => {
@@ -199,12 +207,12 @@ router.post('/tasks', asyncHandler(async(req, res, next) => {
     }
 }))
 
+
 // task/search
 router.get('/tasks/search/:searchstr', asyncHandler(async(req, res, next) => {
     const searchstr = req.params.searchstr
 
     const paging = build_paging(req)
-    // paging.filter = { title: { $regex: '.*' + searchstr + '.*' } }
     paging.filter = { $text: { $search: '"' + searchstr + '"' } }
 
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)

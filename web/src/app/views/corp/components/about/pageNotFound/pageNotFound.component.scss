@@ -1,0 +1,9 @@
+@import "../../../../../../colors.css";
+.page-wrapper ul {
+    list-style-type: none;
+}
+
+.page-wrapper ul li a {
+    color: var(--theme-color);
+    text-decoration: none;
+}

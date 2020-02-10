@@ -1,0 +1,13 @@
+.page-wrapper .transactions .nav-link {
+    color: var(--dark-color)
+}
+
+.page-wrapper .transactions .nav-link:hover {
+    color: var(--dark-color);
+}
+
+.page-wrapper .transactions .nav-link.active {
+    color: var(--theme-color);
+    border-top-color: var(--theme-color);
+    border-bottom-color: white;
+}

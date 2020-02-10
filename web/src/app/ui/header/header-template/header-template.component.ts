@@ -7,6 +7,7 @@ import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/
 import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
+import { TaskService } from 'src/app/views/tasks/services/task.service';
 
 @Component({
     selector: 'app-header-template',
@@ -17,14 +18,26 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isCollapsed = true;
+    categories: string[] = [];
+    fa_imageMap = { 'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
+        'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
+        'Childcare': 'baby-carriage', 'Moving': 'truck' };
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
         public authService: AuthService,
+        public taskService: TaskService,
         private dialog: MatDialog
     ) { }
 
     ngOnInit() {
+        this.getTaskCategories();
+    }
+
+    getTaskCategories() {
+        this.taskService.getTaskCategories().subscribe(response => {
+            this.categories = response.payload.slice(0, 8);
+        });
     }
 
     openDialog() {

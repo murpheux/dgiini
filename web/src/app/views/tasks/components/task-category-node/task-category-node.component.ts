@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
     styleUrls: ['./task-category-node.component.scss']
 })
 export class TaskCategoryNodeComponent implements OnInit {
-    categoryRow: any[] = [];
-    fa_imageMap = { 'Cleaning': 'sun-o', 'Gardening': 'tree', 'Handy Man': 'wrench',
-        'Furniture Assembly': 'line-chart', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        'Childcare': 'child', 'Moving': 'truck' };
+    categories: string[] = [];
+    fa_imageMap = { 'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
+        'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
+        'Childcare': 'baby-carriage', 'Moving': 'truck' };
 
     constructor(
         private taskService: TaskService,
@@ -24,14 +24,8 @@ export class TaskCategoryNodeComponent implements OnInit {
 
     getTaskCategories() {
         this.taskService.getTaskCategories().subscribe(response => {
-            const categories = response.payload;
-            this.distributeCategories(categories);
+            this.categories = response.payload.slice(0, 8);
         });
-    }
-
-    distributeCategories(categories: string[]) {
-        this.categoryRow[0] = categories.slice(0, 4);
-        this.categoryRow[1] = categories.slice(4, 8);
     }
 
     handleCategory(category) {

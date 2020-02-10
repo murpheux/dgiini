@@ -24,4 +24,9 @@ export class UserService {
         const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(u => '"' + u + '"')}]}`;
         return this.http.get<IResponse>(url);
     }
+
+    getUserStatstics(): Observable<IResponse> {
+        const url = `${this.serviceUrl}/users/stats/full`;
+        return this.http.get<IResponse>(url);
+    }
 }

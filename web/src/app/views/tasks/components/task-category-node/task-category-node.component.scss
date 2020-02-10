@@ -1,8 +1,90 @@
-.task-cat {
-    img {
-        height: 100px;
-        width: 100px;
-        border-radius: 60px;
-        border: #62778e solid 2px;
+/***********************************************************************
+*****************************  Category  *******************************
+************************************************************************/
+
+.categories .category-box {
+    min-height: 160px;
+    padding: 20px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid var(--theme-color);
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.categories .category-box a {
+    text-decoration: none;
+}
+
+.categories .category-box p {
+    color: var(--dark-color) !important
+}
+
+.categories .category-box .box-background {
+    position: absolute;
+    opacity: 0;
+    font-size: 140px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black !important;
+    transition: all 0.5s ease-in-out;
+}
+
+.categories .category-box i {
+    font-size: 50px;
+    color: var(--theme-color)
+}
+
+.categories .category-box .category-border {
+    width: 40px;
+    border-color: var(--theme-color) !important;
+    transition: all 0.5s ease-in-out;
+}
+
+.categories .category-box .title {
+    font-size: 24px;
+    color: white
+}
+
+.categories .category-box .jobs-open {
+    font-size: 14px;
+    color: white
+}
+
+.categories .category-box:hover {
+    min-height: 160px;
+    padding: 20px 20px;
+    border-radius: 10px;
+    background-color: var(--theme-color);
+}
+
+.categories .category-box:hover i {
+    color: white;
+}
+
+.categories .category-box:hover p {
+    color: white !important;
+}
+
+.categories .category-box:hover .category-border {
+    width: 60%;
+    border-color: white !important;
+    ;
+}
+
+.categories .category-box:hover .box-background {
+    opacity: 0.04;
+    color: black !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .categories .col-md-3 {
+        width: 50%;
+    }
+    .categories .category-box {
+        height: 200px;
     }
 }

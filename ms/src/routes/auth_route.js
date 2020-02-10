@@ -157,6 +157,14 @@ router.get('/users', asyncHandler(async(req, res, next) => {
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
 }))
 
+router.get('/users/stats/full', asyncHandler(async(req, res, next) => {
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getstats = async() => await mgaccess.getUserStatistics(db, USER_COLL, undefined)
+
+    const tasks = await invoke_getstats()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
+}))
+
 // vendor list
 router.get('/users/role/:role', asyncHandler(async(req, res, next) => {
     const role = req.params.role

@@ -23,7 +23,7 @@ export class FeaturedTaskComponent implements OnInit {
     getFeaturedTasks() {
         this.taskService.getFeaturedTasks().subscribe(response => {
             const tasks = response.payload;
-            this.featuredTasks = tasks.slice(0, 6);
+            this.featuredTasks = tasks.slice(0, 5);
         });
     }
 

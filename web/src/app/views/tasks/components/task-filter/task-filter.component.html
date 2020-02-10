@@ -1,10 +1,60 @@
-<div class="widget">
+<div class="filters">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="filter bg-dark">
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">
+              <i class="fas fa-search"></i>
+            </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search Task" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2">
+              <i class="fas fa-map-marker-alt"></i>
+            </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Location" [value]="currentCity" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group text-white">
+                            <span for="formControlRange">Find By Distance</span>
+                            <span class="float-right">100 km</span>
+                            <input type="range" class="form-control-range mt-1" id="formControlRange">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <button type="button" class="btn btn-web float-right" data-toggle="modal" data-target="#categoryModal">
+          Select Categories
+        </button>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="widget">
     <div class="search_widget_job">
         <div class="field_w_search">
             <input type="text" placeholder="Search Keywords" [formControl]="searchControl" />
             <i class="la la-search"></i>
         </div>
-        <!-- Search Widget -->
         <div class="field_w_search">
             <mat-form-field class="city-full-width field_w_search">
                 <input type="text" placeholder="-" [value]="currentCity" aria-label="Number" matInput [formControl]="cityControl" [matAutocomplete]="auto">
@@ -16,7 +66,6 @@
                 </mat-autocomplete>
             </mat-form-field>
         </div>
-        <!-- Search Widget -->
     </div>
 </div>
 <div class="widget border">
@@ -32,4 +81,4 @@
     <div class="range_slider">
         <mat-slider thumbLabel (change)="onDistanceChanged()" [displayWith]="formatLabel" [(ngModel)]="distanceToHome" tickInterval="50" min="50" max="100"></mat-slider> {{ distanceToHome }} km
     </div>
-</div>
+</div> -->

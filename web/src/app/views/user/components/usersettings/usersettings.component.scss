@@ -1,0 +1,115 @@
+@import "../../../../../colors.css";
+.settings {
+    background-color: #F7F7F7;
+    padding-top: 30px;
+}
+
+.settings .setting-box {
+    background-color: transparent;
+    padding: 20px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.settings .setting-box .nav .nav-link {
+    color: var(--theme-color) !important;
+}
+
+.settings .setting-box .nav .nav-link i {
+    width: 20px
+}
+
+.settings .setting-box .nav .nav-link.active {
+    color: white !important;
+    background-color: var(--theme-color) !important;
+}
+
+.settings .tab-content {
+    background-color: white;
+    padding: 20px 20px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    ;
+}
+
+
+/* The switch - the box around the slider */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 29px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px !important;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--theme-color);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "OFF";
+    padding: 3px 2px;
+    font-weight: bold;
+    ;
+    height: 23px;
+    width: 25px;
+    left: 2px;
+    bottom: 1.6px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 0px;
+    font-size: 10px;
+    color: var(--theme-color);
+}
+
+input:checked+.slider {
+    background-color: var(--success-color);
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px var(--success-color);
+}
+
+input:checked+.slider:before {
+    content: "ON";
+    padding: 3px 5px;
+    color: var(--success-color);
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(19px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 2px;
+}
+
+.slider.round:before {
+    border-radius: 2px
+}

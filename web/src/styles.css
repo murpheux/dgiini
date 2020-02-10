@@ -1,0 +1,105 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./colors.css";
+
+.bg-web{background-color: var(--theme-color);}
+/* Outline Button */
+.btn-outline-web{color: var(--theme-color) !important;border-color:var(--theme-color)}
+.btn-outline-web:hover{color: white !important;background-color: var(--theme-color)}
+.btn-outline-default{color:white; border-color: white}
+.btn-outline-default:hover{color:black; background-color: white}
+/* Simple Button */
+.btn-web{color: white;background-color: var(--theme-color)}
+.btn-web:hover{color: white;background-color:var(--btn-hover)}
+.btn:focus{border-color: var(--theme-color);box-shadow  : var(--theme-color) !important}
+/* Inputs */
+input.form-control:focus,
+textarea.form-control:focus,
+select.form-control:focus{
+    border-color: var(--theme-color);
+    box-shadow  : var(--theme-color) !important;
+}
+/* Badges */
+.badge-web{background-color: var(--purple-color);font-size:14px;color:white}
+.badge-danger{background-color: var(--theme-color);font-size:14px}
+.badge-warning{color: black ;font-size:14px;}
+.badge-success{background-color: var(--success-color);font-size:14px}
+.badge-outline-success{border: 1px solid var(--success-color); font-size:14px; color: var(--success-color)}
+.badge-primary{background-color: var(--primary-color);font-size:14px}
+.badge-info{background-color: var(--info-color);font-size:14px}
+.badge-secondary{font-size:14px}
+.badge-default{border:1px solid #acacac !important; border-radius: 999px; font-size:14px}
+.badge-default:hover{background-color: var(--golden-color); cursor: pointer; color: white}
+.badge-rating{background-color: #ffa534; font-size: 14px; color: white; font-weight: 500;}
+/* Typography */
+.text-web{color:var(--theme-color)}
+.text-gold{color:var(--golden-color)}
+.web-border{
+    width:80px; 
+    border: 2px solid !important;
+    border-color:var(--golden-color) !important; 
+    border-radius: 999px;
+}
+.fa-star{
+    color : #ffa534 !important;
+    font-size: 14px;
+}
+
+
+body{
+    font-family: 'Arial', sans-serif;
+}
+
+
+.page-wrapper{
+    background-color: #F7F7F7;
+    margin-top: 76px;
+    padding-bottom: 100px;
+}
+.page-wrapper .page-heading{
+    background-color: var(--theme-color);
+    background-image: linear-gradient(to bottom right, var(--theme-color), var(--golden-color));
+    background-image: linear-gradient(-90deg, var(--golden-color), var(--theme-color));
+    padding:20px 0px;
+    transition: all 0.5s ease-in-out;
+}
+
+
+.page-wrapper .page-heading .shadow-icon{
+    position: absolute;
+    top:85px;
+    right: 120px;
+    font-size: 100px;
+    color: rgba(255,255,255,0.2);
+    transition: all 0.5s ease-in-out;
+}
+
+.page-wrapper .dginni-box{
+    background-color: white;
+    padding: 20px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+.page-wrapper .dginni-box .heading{
+    font-size: 20px;
+    font-weight: bold;
+}
+.page-wrapper .dginni-box .heading i{
+    font-size: 20px;
+    margin-top:4px
+}
+
+
+/* Check-Boxes*/
+.form-check-input:checked + .form-check-label {color: var(--theme-color)}
+input[type="checkbox"]:checked + label::after {
+   content: '';
+   position: absolute;
+   width: 1ex;
+   height: 1ex;
+   background: rgba(0, 0, 0, 0);
+   top: 7px;
+   left: 2px;
+   border: 3px solid var(--theme-color);
+   background-color: var(--theme-color);
+   border-radius: 2px;
+}

@@ -1,4 +1,30 @@
-<mat-card (click)="onvendorcardclick()" [ngClass]="vendor.selected ? 'task-active' : ''" class="vendor-card mb-3">
+<img *ngIf="vendor.picture" alt="User Image" class="user-img" [src]="vendor.picture" />
+<div class="user-details">
+    <p class="m-0 font-weight-bold">{{vendor.name | titlecase}} <i class="fas fa-times float-right"></i></p>
+    <p class="m-0">@username</p>
+</div>
+<div class="user-skills mt-3">
+    <p class="m-0 font-weight-bold">
+        Skills:
+        <span class="badge badge-default">Furniture Assembly</span>
+        <span class="badge badge-default">Moving</span>
+    </p>
+    <p class="m-0">
+        <a href="#"><i class="fab fa-facebook-square"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+    </p>
+    <p class="m-0 mt-1 font-weight-bold">
+        Rating:
+        <span *ngIf="vendor.rating">
+            <i class="fas fa-star" *ngFor="let m of [0, 1, 2, 3]"></i><i class="fas fa-star rating_gold"></i>
+        </span>
+        <span *ngIf="!vendor.rating">- Unrated -</span>
+        <span *ngIf="vendor.rating" class="badge badge-rating">5.0</span>
+    </p>
+</div>
+<hr>
+
+<!-- <mat-card (click)="onvendorcardclick()" [ngClass]="vendor.selected ? 'task-active' : ''" class="vendor-card mb-3">
     <mat-card-content>
         <div class="d-flex bd-highlight">
             <div class="p-2 flex-shrink-1 bd-highlight">
@@ -11,8 +37,8 @@
         </div>
         <div class="">Skill: {{vendor.skills}}</div>
         <div *ngIf="vendor.rating">
-            <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3]"></i><i class="la la-star-half rating_gold"></i>
+            <i *ngIf="vendor.rating" class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3]"></i><i class="la la-star-half rating_gold"></i>
         </div>
         <div *ngIf="!vendor.rating">- Unrated -</div>
     </mat-card-content>
-</mat-card>
+</mat-card> -->

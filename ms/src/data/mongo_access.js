@@ -254,6 +254,69 @@ module.exports = {
 
     },
 
+    getTaskStatistics: (db, collection, filter) => {
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([{
+                    $facet: {
+                        'totalTask': [
+                            { $match: {} },
+                            { $count: 'totalTask' },
+                        ],
+                        'openedTask': [
+                            { $match: { status: { $eq: 'open' } } },
+                            { $count: 'openedTask' }
+                        ],
+                        'filledTask': [
+                            { $match: { status: { $eq: 'completed' } } },
+                            { $count: 'filledTask' }
+                        ]
+                    }
+                },
+                {
+                    $project: {
+                        'total': { $arrayElemAt: ['$totalTask.totalTask', 0] },
+                        'opened': { $arrayElemAt: ['$openedTask.openedTask', 0] },
+                        'filled': { $arrayElemAt: ['$filledTask.filledTask', 0] }
+                    }
+                }
+            ]).toArray()
+
+            resolve(doc)
+        })
+
+    },
+
+    getUserStatistics: (db, collection, filter) => {
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([{
+                    $facet: {
+                        'client': [
+                            { $match: {} },
+                            { $count: 'client' },
+                        ],
+                        'vendor': [
+                            { $match: { roles: { $eq: 'vendor' } } },
+                            { $count: 'vendor' }
+                        ]
+                    }
+                },
+                {
+                    $project: {
+                        'client': { $arrayElemAt: ['$client.client', 0] },
+                        'vendor': { $arrayElemAt: ['$vendor.vendor', 0] }
+                    }
+                }
+            ]).toArray()
+
+            resolve(doc)
+        })
+
+    },
+
+
+
     searchTask: (db, collection, paging) => {
 
         return new Promise((resolve, reject) => {

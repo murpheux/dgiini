@@ -52,7 +52,14 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan(log_format, { stream: winston.stream }))
-app.use(cors({ origin: CLIENT_URL }))
+
+var whitelist = [CLIENT_URL, 'http://localhost:9002', undefined]
+var corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) { callback(null, true) } else { callback(new Error('Request blocked by CORS')) }
+    }
+}
+app.use(cors(corsOptions))
 
 if (process.env.NODE_ENV === 'production') {
     //running in production

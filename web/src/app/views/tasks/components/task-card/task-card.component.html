@@ -1,4 +1,30 @@
-<mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="task-card mb-3">
+<div class="task" #task>
+    {{ task.title }}
+    <p class="font-weight-bold m-0">
+        Task Title
+        <span style="font-size: 16px;" class="float-right">CA$ 200</span>
+    </p>
+    <p class="text-muted text-truncate m-0">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+    <p class="m-0">
+        <i class="fas fa-map-marker-alt"></i> Location
+        <span class="float-right"><i class="fas fa-calendar"></i> Jan 17, 2020</span>
+    </p>
+    <p class="m-0">
+        <span class="badge badge-outline-success">Open</span>
+        <span class="text-muted">12 Offers</span>
+        <span class="badge badge-secondary float-right">Cleaning</span>
+    </p>
+</div>
+
+
+
+
+
+
+
+<!-- <mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="task-card mb-3">
     <mat-card-content>
         <div>
             <h3 class="sb-title open font-weight-bold">{{task.title | titlecase | slice:0:25}}</h3>
@@ -22,4 +48,4 @@
         </div>
         <div class="footer font-weight-bold small text-success">{{task.status | uppercase}} : 12 offers</div>
     </mat-card-content>
-</mat-card>
+</mat-card> -->

@@ -1,45 +1,31 @@
-.panel {
-    border: 1px solid #1e69f4;
-    border-radius: 0 !important;
-    transition: box-shadow 0.5s;
+/***********************************************************************
+*****************************  How It Works  ***************************
+************************************************************************/
+
+.how-it-works {
+    background-color: white;
+    padding: 80px 0px;
+    overflow: auto;
 }
 
-.panel:hover {
-    box-shadow: 5px 0px 40px rgba(0, 0, 0, .2);
+.how-it-works p {
+    font-size: 18px;
 }
 
-.panel-footer .btn:hover {
-    border: 1px solid #1e69f4;
-    background-color: #fff !important;
-    color: #1e69f4;
+.how-it-works i {
+    color: var(--theme-color)
 }
 
-.panel-heading {
-    color: #fff !important;
-    background-color: #1e69f4 !important;
-    padding: 25px;
-    border-bottom: 1px solid transparent;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+.how-it-works i.fa-arrow-right {
+    color: var(--golden-color)
 }
 
-.panel-footer {
-    background-color: white !important;
+.how-it-works h4,
+.how-it-works .border {
+    display: none;
 }
 
-.panel-footer h3 {
-    font-size: 32px;
-}
-
-.panel-footer h4 {
-    color: #aaa;
+.how-it-works .text-muted {
     font-size: 14px;
-}
-
-.panel-footer .btn {
-    margin: 15px 0;
-    background-color: #1e69f4;
-    color: #fff;
+    color: var(--dark-color)
 }

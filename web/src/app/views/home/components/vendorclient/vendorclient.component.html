@@ -1,24 +1,28 @@
-<section>
-    <div class="block no-padding">
-        <div class="container fluid">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div data-velocity="-.1" style="background: url(http://placehold.it/1920x1000) repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer blackish"></div>
-                    <!-- PARALLAX BACKGROUND IMAGE -->
-                    <div class="who-am">
-                        <h3>I AM TASKER!</h3>
-                        <p>One of our One of our tasks has some kind of flexibility jobs has some kind of flexibility option such as telecommuting, a part-time schedule or a flexible or flextime.</p>
-                        <a title="" (click)="openDialog()">Post new task</a>
-                    </div>
+<section class="tasker-client" id="clientTaskerBox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 tasker" #tasker>
+                <div class="float-left">
+                    <h1><i class="fas fa-user-cog"></i> I'M A TASKER</h1>
+                    <p class="text-justify">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-outline-web" (click)="showTaskerSteps()">Lets Get Started</button>
                 </div>
-                <div class="col-lg-6">
-                    <div data-velocity="-.1" style="background: url(http://placehold.it/1920x1000) repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible layer color green2"></div>
-                    <!-- PARALLAX BACKGROUND IMAGE -->
-                    <div class="who-am flip">
-                        <h3>I AM CLIENT!</h3>
-                        <p>One of our One of our tasks has some kind of flexibility jobs has some kind of flexibility option such as telecommuting, a part-time schedule or a flexible or flextime.</p>
-                        <a title="" [routerLink]="['./tasks']">Browse Tasks</a>
-                    </div>
+            </div>
+
+            <div class="col-md-6 client" #client>
+                <div class="float-right">
+                    <h1 class="float-right"><i class="fas fa-user"></i> I'M A CLIENT</h1>
+                    <p class="text-justify float-right">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-outline-default float-right border" (click)="showClientSteps()">Lets Get
+                        Started</button>
                 </div>
             </div>
         </div>

@@ -1,101 +1,90 @@
-<div class="responsive-header five">
-    <div class="responsive-menubar">
-        <div class="res-logo">
-            <a [routerLink]="['./home']" title=""><img src="assets/images/dg_logo.png" alt="" /></a>
-        </div>
-        <div class="menu-resaction">
-            <div class="res-openmenu">
-                <img src="assets/images/icon.png" alt="" /> Menu
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
+    <a class="navbar-brand" routerLink="/">
+        <img src="assets/images/logo.png" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="btn-group nav-item">
+                <a class="nav-link" routerLink="/browse">
+                    <i class="fas fa-search"></i> Browse Tasks
+                </a>
+                <a class="nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Task Categories</span>
+                </a>
+                <div class="dropdown-menu">
+                    <i class="fas fa-caret-up d-none"></i>
+                    <a *ngFor="let category of categories" class="dropdown-item" routerLink="/browse/{{ category }}"><i class="fas fa-{{ fa_imageMap[category] }} text-web"></i> {{ category }}</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/mytask"><i class="fas fa-list"></i> My Tasks</a>
+            </li>
+        </ul>
+        <span class="navbar-text ">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="btn btn-outline-web" data-toggle="modal" data-target="#postTaskModal"><i class="fas fa-plus"></i>
+              Post Task</a>
+          </li>
+          <li class="nav-item dropdown profile-icon profile-dropdown ml-3">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <img src="assets/images/user.jpg" class="profile-img border rounded-circle" alt="">
+              <span class="username">Guest</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="dropdown-header px-0"><i class="fas fa-balance-scale-left"></i> Financial</h5>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/finance">Financial Dashboard</a>
+                        <a routerLink="/user/transactions">Transaction History</a>
+                        <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-chart-bar"></i> User Insight</h5>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/statistics">User Statistics</a>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="dropdown-header px-0"><i class="far fa-user"></i> Account</h4>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/profile">My Profile</a>
+                        <a routerLink="/user/settings">User Setting</a>
+                        <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-question-circle"></i> Help</h5>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/support">Get Support</a>
+                        <a routerLink="/">Invite Friend</a>
+                        <a routerLink="/">Logout</a>
+                    </div>
+                </div>
             </div>
-            <div class="res-closemenu">
-                <img src="assets/images/icon2.png" alt="" /> Close
-            </div>
         </div>
+        </li>
+        </ul>
+        </span>
+        <span class="navbar-text d-none">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="btn btn-outline-web" data-toggle="modal" data-target="#postTaskModal"><i class="fas fa-plus"></i>
+              Post Task</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-web" routerLink="/">Join Us</a>
+          </li>
+        </ul>
+      </span>
     </div>
-    <div class="responsive-opensec">
-        <div class="btn-extars">
-            <a (click)="openDialog()" title="" class="post-job-btn"><i class="la la-plus"></i>Post Jobs</a>
-            <ul class="account-btns">
-                <li class="signup-popup"><a title=""><i class="la la-key"></i> Sign Up</a></li>
-                <li class="signin-popup"><a title=""><i class="la la-external-link-square"></i> Login</a></li>
-            </ul>
-        </div>
-        <!-- Btn Extras -->
-        <form class="res-search">
-            <input type="text" placeholder="Task title or keywords" />
-            <button type="submit"><i class="la la-search"></i></button>
-        </form>
-        <div class="responsivemenu">
-            <ul>
-                <li class="menu-item-has-children">
-                    <a [routerLink]="['./home']" title="">
-                        <mat-icon>home</mat-icon> Home</a>
-                </li>
-                <li class="menu-item-has-children">
-                    <a routerLinkActive="active" [routerLink]="['./tasks']" title=""><i class="la la-tasks"></i> Browse Tasks</a>
-                </li>
-                <!-- <li class="menu-item-has-children">
-                    <a [routerLink]="['./search/-']" title=""><i class="la la-search"></i> Advance Search</a>
-                </li> -->
-            </ul>
-        </div>
-    </div>
+</nav>
+
+
+<div class="top-scroll d-none" id="topScroll" (click)="scrollToTop()">
+    <i class="fas fa-chevron-up"></i>
 </div>
-
-<header class="style5">
-    <div class="menu-sec">
-        <div class="container fluid">
-            <nav>
-                <ul>
-                    <li class="menu-item-has-children">
-                        <a title="" [routerLink]="['./home']"><i class="la la-home"></i> Home</a>
-                    </li>
-                    <li class="menu-item-has-children">
-                        <a title="" routerLinkActive="active" [routerLink]="['./tasks']"><i class="la la-tasks"></i> Browse Tasks</a>
-                    </li>
-                    <li *ngIf="authService.loggedIn" class="menu-item-has-children">
-                        <a title="" [routerLink]="['./tasks/mytask']">My Tasks</a>
-                    </li>
-                    <!-- <li class="menu-item-has-children">
-                        <a title="" [routerLink]="['./search/-']"><i class="la la-search"></i> Advance Search</a>
-                    </li> -->
-                </ul>
-            </nav>
-            <!-- Menus -->
-            <div class="logo">
-                <a [routerLink]="['./home']" title=""><img src="assets/images/dg_logo.png" alt="" /></a>
-            </div>
-            <!-- Logo -->
-            <div class="btn-extars">
-                <a *ngIf="authService.loggedIn" title="" class="post-job-btn" (click)="openDialog()"><i class="la la-plus"></i>Post Task</a>
-                <ul class="account-btns">
-                    <li class="nav-item">
-                        <div *ngIf="authService.userProfile$ | async as profile">
-                            <span class="user-info" *ngIf="profile">
-                                <!-- Profile image should be set to the profile picture from the id token -->
-                                <img
-                                alt="Profile picture"
-                                class="nav-user-profile d-inline-block rounded-circle mr-3"
-                                style="width: 27px"
-                                [src]="profile.picture"
-                                />
-                                <!-- Show the user's full name from the id token here -->
-                                <h6 class="d-inline-block">{{ profile.name }}</h6>
-                            </span>
-                        </div>
-                    </li>
-                    <li *ngIf="!authService.loggedIn" class="signup-popup"><a title="" (click)="authService.login()"><i class="la la-key"></i> Sign Up</a></li>
-                    <li *ngIf="!authService.loggedIn" class="signin-popup"><a title="" (click)="authService.login()"><i class="la la-external-link-square"></i> Login</a></li>
-                    <li *ngIf="authService.loggedIn">
-                        <a title="" routerLink="/user/profile"><i class="la la-user"></i> Profile</a>
-                    </li>
-                    <li *ngIf="authService.loggedIn">
-                        <a (click)="logout()"><i class="la la-external-link-square"></i> Log out</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Btn Extras -->
-
-        </div>
-    </div>
-</header>

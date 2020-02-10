@@ -10,9 +10,14 @@ import { UserprofileComponent } from './components/userprofile/userprofile.compo
 import { BecomevendorComponent } from './components/becomevendor/becomevendor.component';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
+import { UsersettingsComponent } from './components/usersettings/usersettings.component';
+import { SupportComponent } from './components/support/support.component';
+import { FinanceComponent } from './components/finance/finance.component';
+import { UserstatsComponent } from './components/userstats/userstats.component';
+import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
-  declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent],
+  declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent, UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
   imports: [
     CommonModule,
     SharedModule,

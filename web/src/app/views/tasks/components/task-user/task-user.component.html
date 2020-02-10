@@ -1,43 +1,325 @@
-<app-band></app-band>
-<section>
-    <div class="block less-top">
-        <div class="">
-            <app-task-user-filter [searchString]="searchString" (toggleChange)="hangleToggleChanged($event)" (searchClicked)="handleSearchClicked($event)"></app-task-user-filter>
-            <div *ngIf="model">
-                <div *ngIf="model.length === 0">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p>Looks like you haven’t posted a task or made any offers just yet. How about posting one now?</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a class="btn btn-success rounded-pill view-center" (click)="openDialog()">post a task</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="model.length > 0">
-                    <div class="">
-                        <div class="row">
-                            <aside class="col-lg-2 column margin_widget">
-                                <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
-                                            (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
-                            </aside>
-                            <div class="col-lg-3 scrollable">
-                                <div class="list-count mb-2 p-2">{{model.length}} tasks</div>
-                                <div *ngFor="let task of model">
-                                    <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
-                                </div>
-                            </div>
-                            <div class="col-lg-7">
-                                <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="page-wrapper">
+    <div class="page-heading text-white">
+        <div class="container">
+            <h3>My Tasks</h3>
+            <p>Monitor your tasks while using dgiini.</p>
+            <i class="fas fa-tasks shadow-icon"></i>
         </div>
     </div>
+
+    <div class="container tasks">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="task-box">
+                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="all-tasks-tab" data-toggle="tab" href="#all-tasks" role="tab" aria-controls="home" aria-selected="true">
+                  All Tasks <span class="badge badge-secondary">7</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="posted-tasks-tab" data-toggle="tab" href="#posted-tasks" role="tab" aria-controls="profile" aria-selected="false">
+                  Posted Tasks <span class="badge badge-secondary">3</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="drafted-tasks-tab" data-toggle="tab" href="#drafted-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Draft <span class="badge badge-secondary">0</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="assigned-tasks-tab" data-toggle="tab" href="#assigned-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Assigned <span class="badge badge-secondary">2</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="offer-pending-tab" data-toggle="tab" href="#offer-pending" role="tab" aria-controls="contact" aria-selected="false">
+                  Offer Pending <span class="badge badge-secondary">1</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="completed-tasks-tab" data-toggle="tab" href="#completed-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Completed <span class="badge badge-secondary">6</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cancelled-tasks-tab" data-toggle="tab" href="#cancelled-tasks" role="tab" aria-controls="cancelled-tasks" aria-selected="false">
+                  Cancelled <span class="badge badge-secondary">0</span>
+                </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="all-tasks" role="tabpanel" aria-labelledby="all-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Moving</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-primary">Assigned</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Furniture Assembly</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Lawn Moving</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-info">Drafted</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Child Care</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-danger">Cancelled</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Gardening</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Handy Man</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="posted-tasks" role="tabpanel" aria-labelledby="posted-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Moving</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Furniture Assembly</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="drafted-tasks" role="tabpanel" aria-labelledby="drafted-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="assigned-tasks" role="tabpanel" aria-labelledby="assigned-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-primary">Assigned</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Moving</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-primary">Assigned</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="offer-pending" role="tabpanel" aria-labelledby="offer-pending-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Offer Pendind</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="completed-tasks" role="tabpanel" aria-labelledby="completed-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="cancelled-tasks" role="tabpanel" aria-labelledby="cancelled-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Col-ms-12 -->
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Container -->
 </section>

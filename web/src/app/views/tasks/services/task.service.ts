@@ -26,6 +26,11 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
+    getTaskStatistics(): Observable<IResponse> {
+        const url = `${this.serviceUrl}/stats/full`;
+        return this.http.get<IResponse>(url);
+    }
+
     getTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
         return this.http.get<IResponse>(url);

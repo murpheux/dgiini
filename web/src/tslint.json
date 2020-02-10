@@ -1,6 +1,8 @@
 {
     "extends": "../tslint.json",
     "rules": {
+        "no-any": true,
+        "no-null-keyword": true,
         "directive-selector": [
             true,
             "attribute",

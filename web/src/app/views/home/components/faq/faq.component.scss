@@ -1,0 +1,51 @@
+/***********************************************************************
+*****************************  faq  **********************************
+************************************************************************/
+
+.faq {
+    background-color: white;
+    padding: 40px 0px;
+}
+
+.faq .question-box {
+    padding: 20px 0px;
+}
+
+.faq .question-box .card-header {
+    padding: 1px 1px;
+    background-color: white;
+    border-left: 4px solid var(--theme-color);
+}
+
+.faq .question-box .card-header .btn-link {
+    color: var(--theme-color);
+    padding-bottom: 10px;
+}
+
+.faq .question-box .card-header .btn-link.collapsed {
+    color: black !important;
+    padding-bottom: 10px;
+}
+
+.faq .question-box .card {
+    border-radius: 0px !important;
+    margin-bottom: 5px;
+    -webkit-box-shadow: 5px 5px 10px -7px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 5px 5px 10px -7px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 10px -7px rgba(0, 0, 0, 0.5);
+}
+
+.faq .question-box .card .card-body {
+    border-left: 4px solid var(--theme-color);
+}
+
+.faq .suggested-tasker {
+    border: 1px solid var(--golden-color);
+    border-radius: 10px;
+    ;
+}
+
+.faq .suggested-tasker img {
+    width: 120px;
+    height: 120px;
+}

@@ -1,4 +1,33 @@
-<div *ngIf="message">
+<div *ngIf="message" class="proposal">
+    <div class="user-info">
+        <img *ngIf="message.from.picture" alt="User Image" class="user-img" [src]="message.from.picture" />
+        <p class="user-details">
+            <span class="font-weight-bold">
+                {{message.from.name}}
+<span class="badge badge-web"><i class="fas fa-trophy"></i> Badge</span>
+            <span class="float-right font-weight-bold price">CA$ 150</span>
+            </span>
+            <br>
+            <span>
+                <span *ngIf="message.from.rating">
+                    <i class="fas fa-star" *ngFor="let m of [0, 1, 2, 3]"></i><i class="fas fa-star"></i>
+                </span>
+            <span class="badge badge-rating mt-1">5.0</span>
+            <span class="text-muted">10 Reviews</span>
+            </span>
+        </p>
+    </div>
+    <p class="text-justify">
+        {{ message.message }}
+    </p>
+    <div class="clearfix">
+        <button class="btn btn-danger btn-sm float-right"><i class="fas fa-times"></i> Reject</button>
+        <button class="btn btn-success btn-sm float-right ml-1 mr-1"><i class="fas fa-check"></i> Accept</button>
+    </div>
+</div>
+
+
+<!-- <div *ngIf="message">
     <div class="d-flex bd-highlight">
         <div class="p-2 flex-shrink-1 bd-highlight">
             <div class="row">
@@ -12,9 +41,6 @@
                     <i class="la la-star rating_gold" *ngFor="let m of [0, 1, 2, 3]"></i><i class="la la-star-half rating_gold"></i>
                 </div>
             </div>
-            <!-- <div class="row">
-                {{ message.from.rating }} from {{ message.from.ratingcount }}
-            </div> -->
         </div>
         <div class="p-2 w-100 bd-highlight">
             <div class="row">
@@ -34,4 +60,4 @@
         </div>
     </div>
     <hr/>
-</div>
+</div> -->

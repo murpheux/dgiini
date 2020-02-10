@@ -1,0 +1,29 @@
+/***********************************************************************
+*****************************  Stats  **********************************
+************************************************************************/
+
+.stats {
+    background-image: url("/assets/images/stats.jpg");
+    overflow: auto;
+}
+
+.stats .bg-color {
+    background-color: rgb(190, 4, 4);
+    padding: 40px 0px;
+}
+
+.stats h1 {
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    border-radius: 999px;
+    font-size: 28px;
+    padding: 30px 0px;
+}
+
+@media only screen and (max-width: 600px) {
+    .stats .col-md-3 {
+        width: 50%;
+        margin-bottom: 20px;
+    }
+}
