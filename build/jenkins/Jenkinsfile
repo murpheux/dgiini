@@ -24,7 +24,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: $branch, url: ${GIT_URL}
+                git branch: $branch, url: "${GIT_URL}"
             }
         }
         stage('install dependencies') {
@@ -143,20 +143,20 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
-        stage('Deploy') {
-            when { deploy true }
-            steps {
-                // deploy with ansible
-                ansiblePlaybook colorized: true, 
-                    credentialsId: 'jenkins',
-                    limit: "scarlet",
-                    installation: 'ansible',
-                    inventory: 'inventory.ini', 
-                    playbook: 'playbook.yml', 
-                    sudo: true,
-                    sudoUser: 'jenkins'
-            }
-        }
+        // stage('Deploy') {
+        //     when { deploy true }
+        //     steps {
+        //         // deploy with ansible
+        //         ansiblePlaybook colorized: true, 
+        //             credentialsId: 'jenkins',
+        //             limit: "scarlet",
+        //             installation: 'ansible',
+        //             inventory: 'inventory.ini', 
+        //             playbook: 'playbook.yml', 
+        //             sudo: true,
+        //             sudoUser: 'jenkins'
+        //     }
+        // }
     }
     post {
         success {
