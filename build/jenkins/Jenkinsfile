@@ -10,10 +10,10 @@ pipeline {
         GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
         //ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
     }
-    parameters {
-        booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy if true')
-        string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
-    }
+    // parameters {
+    //     booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy if true')
+    //     string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
+    // }
     tools {
         nodejs "node"
         git "Default"
@@ -24,7 +24,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: "${params.branch}", url: "${GIT_URL}"
+                git branch: "develop", url: "${GIT_URL}"
             }
         }
         stage('install dependencies') {
@@ -99,7 +99,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msauth npm run build auth_api.js
+                            OUT_DIR=dist/msauth npm run build src/auth_api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
@@ -109,7 +109,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msmsg npm run build msg_api.js
+                            OUT_DIR=dist/msmsg npm run build src/msg_api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
