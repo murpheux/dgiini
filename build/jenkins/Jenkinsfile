@@ -24,7 +24,7 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: $branch, url: "${GIT_URL}"
+                git branch: "${params.branch}", url: "${GIT_URL}"
             }
         }
         stage('install dependencies') {
