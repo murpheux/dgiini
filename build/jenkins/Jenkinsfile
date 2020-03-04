@@ -8,7 +8,7 @@ pipeline {
         IMAGE_VERSION="v_${BUILD_NUMBER}"
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-        ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
+        //ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
     }
     parameters {
         booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy if true')
