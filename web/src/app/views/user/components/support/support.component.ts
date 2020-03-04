@@ -12,4 +12,8 @@ export class SupportComponent implements OnInit {
   ngOnInit() {
   }
 
+  previousContactTab() {}
+
+  nextContactTab() {}
+
 }
