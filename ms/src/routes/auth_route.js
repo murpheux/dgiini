@@ -18,10 +18,8 @@ const router = express.Router()
 const database_name = process.env.AUTH_DATABASE || 'dg_authdb'
 const find_city_service = process.env.CITY_SERVICE || 'https://tools.keycdn.com/geo.json'
 const USER_COLL = 'users'
-const CLIENT_COLL = 'clients'
-const VENDOR_COLL = 'vendors'
 
-const collections = [USER_COLL, CLIENT_COLL, VENDOR_COLL]
+const collections = [USER_COLL]
 mgaccess.setup_database(common.database_uri, database_name, options, collections)
 winston.info(`Collection ${collections} created!`)
 
@@ -99,7 +97,7 @@ router.post('/register/client', asyncHandler(async(req, res, next) => {
         const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
         const result = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
     }
 }))
 
@@ -120,7 +118,7 @@ router.post('/register/vendor', asyncHandler(async(req, res, next) => {
         const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
         const result = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
     }
 }))
 
@@ -142,7 +140,7 @@ router.post('/promote', asyncHandler(async(req, res, next) => {
         const invoke_updateone = async() => await mgaccess.create(db, USER_COLL, user)
 
         const result = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
     }
 }))
 
@@ -154,7 +152,7 @@ router.get('/users', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.getusers(db, USER_COLL, paging)
 
     const users = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
 }))
 
 router.get('/users/stats/full', asyncHandler(async(req, res, next) => {
@@ -162,7 +160,7 @@ router.get('/users/stats/full', asyncHandler(async(req, res, next) => {
     const invoke_getstats = async() => await mgaccess.getUserStatistics(db, USER_COLL, undefined)
 
     const tasks = await invoke_getstats()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
 }))
 
 // vendor list
@@ -174,7 +172,7 @@ router.get('/users/role/:role', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.getusersbyrole(db, USER_COLL, paging, role)
 
     const users = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
 }))
 
 //suggest vendor
@@ -186,7 +184,7 @@ router.get('/vendors/:skill', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.getvendorsbyskill(db, USER_COLL, paging, skill)
 
     const users = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
 }))
 
 // user
@@ -203,7 +201,7 @@ router.get('/users/:username', asyncHandler(async(req, res, next) => {
         const user = await invoke_getone()
 
         if (user) {
-            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user))
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, user))
         } else {
             res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
         }
@@ -214,16 +212,19 @@ router.get('/usersx/:username', asyncHandler(async(req, res, next) => {
     const username = req.params.username
     var validation = validator().validate(username).isNotEmpty().isEmail()
 
+    const paging = build_paging(req)
+    paging.filter = { username: username }
+
     if (validation.hasErrors()) {
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
-        const invoke_getone = async() => await mgaccess.getusers(db, USER_COLL, { username: username })
+        const invoke_getone = async() => await mgaccess.getusers(db, USER_COLL, paging)
 
         const user = await invoke_getone()
 
         if (user) {
-            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, user[0]))
         } else {
             res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
         }
@@ -311,7 +312,7 @@ router.get('/findcity/:ip', asyncHandler(async(req, res, next) => {
             try {
                 const response = await fetch(service_url) //, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
                 const json = await response.json()
-                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', json))
+                res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, json))
             } catch (err) {
                 res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
             }

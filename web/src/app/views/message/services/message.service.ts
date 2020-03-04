@@ -49,12 +49,14 @@ export class MessageService {
         const userList = messages.map(m => m.from)
             .filter((value, index, self) => self.indexOf(value) === index);
 
-        this.userService.getUserList(userList).subscribe(res => {
-            messages.forEach(m => {
-                res.payload.filter(user => {
-                    m.from = m.from === user._id ? user : m.from;
+        if (userList) {
+            this.userService.getUserList(userList).subscribe(res => {
+                messages.forEach(m => {
+                    res.payload.data.filter(user => {
+                        m.from = m.from === user._id ? user : m.from;
+                    });
                 });
             });
-        });
+        }
     }
 }

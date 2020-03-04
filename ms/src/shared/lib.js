@@ -9,11 +9,14 @@ export const options = {
     useUnifiedTopology: true
 }
 
-export const build_response = (code, desc, payload) => {
+export const build_response = (code, desc, count, data) => {
     const json = {
         'code': code,
         'description': desc,
-        'payload': payload
+        'payload': {
+            'count': count,
+            'data': data
+        }
     }
 
     return json

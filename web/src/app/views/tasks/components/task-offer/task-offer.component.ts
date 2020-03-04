@@ -56,7 +56,7 @@ export class TaskOfferComponent implements OnInit, AfterViewInit {
         };
 
         this.taskService.saveBid(bid).subscribe(success => {
-            this.task.lastbid = success.payload;
+            this.task.lastbid = success.payload.data;
 
             this.notificationService.showSuccess('bid submitted!');
             this.dialogRef.close();

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,9 +19,11 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     isCollapsed = true;
     categories: string[] = [];
-    fa_imageMap = { 'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
+    fa_imageMap = {
+        'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        'Childcare': 'baby-carriage', 'Moving': 'truck' };
+        'Childcare': 'baby-carriage', 'Moving': 'truck'
+    };
 
     constructor(
         private notifyHeaderService: NotifyHeaderService,
@@ -36,14 +38,14 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
 
     getTaskCategories() {
         this.taskService.getTaskCategories().subscribe(response => {
-            this.categories = response.payload.slice(0, 8);
+            this.categories = response.payload.data.slice(0, 8);
         });
     }
 
     openDialog() {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
-            height: '620px',
-            width: '800px',
+            // height: '620px',
+            // width: '800px',
         });
 
         dialogRef.afterClosed().subscribe(result => { });
@@ -64,7 +66,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
             height: '600px',
             width: '800px',
         });
-        registerRef.afterClosed().subscribe(result => {});
+        registerRef.afterClosed().subscribe(result => { });
     }
 
     changeLang(lang: string) {

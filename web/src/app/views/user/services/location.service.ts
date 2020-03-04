@@ -36,7 +36,7 @@ export class LocationService {
 
                         if (publicIPAddress) {
                             this.getCityByIPAddress(publicIPAddress).subscribe(inres => {
-                                currentCity = inres.payload.data.geo.city;
+                                currentCity = inres.payload.data.data.geo.city;
                                 localStorage.setItem(Constants.LOC_CURRENT_CITY, currentCity);
                             });
                         }

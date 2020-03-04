@@ -1,33 +1,26 @@
-<section class="page-wrapper">
-    <div class="browse-tasks">
-
-        <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
+<section #sArea class="page-wrapper">
+       <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
             (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
 
+    <div class="browse-tasks">
         <div class="container-fluid">
             <div class="row">
-
-                <div class="col-md-3">
-                    <div *ngIf="taskList" class="task-box">
-                        <p class="font-weight-bold float-right m-0 mb-2 text-web">{{taskList.length}} Tasks Found</p>
+                <div #scrollAreaGrp class="col-md-3">
+                    <div #scrollArea *ngIf="taskList" class="task-box">
+                        <p class="font-weight-bold float-right m-0 mb-2 text-web">{{taskCount}} Tasks Found</p>
                         <div class="clearfix"></div>
                         <div class="border mb-2"></div>
-                        <div class="task-list">
-                            <div *ngFor="let task of taskList">
+                        <div class="task-list" (overflow)="handleOverflow($event)" (scroll)="handleScroll($event)">
+                            <div *ngFor="let task of taskList; let i = index" [ngClass]="i===taskList.length -1 ? 'lastOfMe': ''">
                                 <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
                                 <hr>
                             </div>
                         </div>
-                        <!-- Task List End -->
                     </div>
-                    <!-- Task Box End -->
                 </div>
-                <!-- End Col-md-3 -->
                 <div class="col-md-6">
                     <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
                 </div>
-                <!-- End Col-md-6 -->
-
                 <div class="col-md-3">
                     <div class="recommended-taskers">
                         <h5 class="font-weight-bold heading text-web">Recommended Taskers</h5>
@@ -35,107 +28,9 @@
                         <div *ngFor="let vendor of vendorModel" class="user-info">
                             <app-vendor-card [vendor]="vendor"></app-vendor-card>
                         </div>
-                        <!--User Info End-->
-
                     </div>
                 </div>
             </div>
-            <!-- End Row -->
         </div>
-        <!-- End Container Fluid -->
-
     </div>
-    <!-- End Browse Tasks -->
 </section>
-<!-- End Page-Wrapper -->
-
-
-<!-- Category Modal -->
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Categories</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Cleaning</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                            <label class="form-check-label" for="exampleCheck2">Gardening</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck3">
-                            <label class="form-check-label" for="exampleCheck3">Handy Man</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck4">
-                            <label class="form-check-label" for="exampleCheck4">Furniture Assembly</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck5">
-                            <label class="form-check-label" for="exampleCheck5">Lawn Moving</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck6">
-                            <label class="form-check-label" for="exampleCheck6">Snow Plowing</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck7">
-                            <label class="form-check-label" for="exampleCheck7">Child Care</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck8">
-                            <label class="form-check-label" for="exampleCheck8">Moving</label>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-web">Apply Filter</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Category Modal -->
-
-
-<!-- <section>
-    <div class="block less-top">
-        <div class="">
-            <div class="row">
-                <aside class="col-lg-2 column margin_widget">
-                    <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
-                        (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
-                </aside>
-                <div *ngIf="taskList" class="col-lg-3 column scrollable">
-                    <div class="list-count mb-2 p-2">{{taskList.length}} tasks</div>
-                    <div *ngFor="let task of taskList">
-                        <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
-                    </div>
-                </div>
-                <div class="col-lg-5 column">
-                    <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
-                </div>
-                <div *ngIf="vendorModel" class="col-lg-2 column scrollable">
-                    <div class="list-count mb-2 p-2">Recommended Vendors</div>
-                    <div *ngFor="let vendor of vendorModel">
-                        <app-vendor-card [vendor]="vendor"></app-vendor-card>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->

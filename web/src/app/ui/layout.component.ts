@@ -19,10 +19,11 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        if (this.authService.loggedIn) {
+        if (true) { //(this.authService.loggedIn) {
 
             if (!localStorage.getItem(Constants.AUTH_LOGGEDIN_USER)) {
                 this.authService.userToken$.subscribe(token => {
+                    token = 'ABX';
                     localStorage.setItem(Constants.AUTH_LOGGEDIN_USER, token);
                 });
 
@@ -31,11 +32,12 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
                 });
 
                 this.authService.userProfile$.subscribe(profile => {
+                    profile = {email: 'dapo.onawole@gmail.com'}
                     localStorage.setItem(Constants.AUTH_USER_PROFILE, JSON.stringify(profile));
 
                     // get user info from db
                     this.userService.getUserByEmail(profile.email).subscribe(response => {
-                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload));
+                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data));
                     });
                 });
             }

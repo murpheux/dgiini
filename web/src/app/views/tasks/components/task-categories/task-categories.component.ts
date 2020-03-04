@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,15 +8,15 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 import { VendorService } from 'src/app/views/vendor/services/vendor.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
-import { IMessage } from 'src/app/views/message/models/message';
 
 @Component({
     selector: 'app-task-categories',
     templateUrl: './task-categories.component.html',
     styleUrls: ['./task-categories.component.scss']
 })
-export class TaskCategoriesComponent implements OnInit {
+export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterViewChecked {
     taskList: ITask[];
+    taskCount: number;
     vendorModel: IVendor[];
     currentTask: ITask;
     currentVendor: IVendor;
@@ -26,7 +26,11 @@ export class TaskCategoriesComponent implements OnInit {
     defaultDistanceToHome = 55;
     currentCity: string;
     currentUser: IUser;
-    @ViewChildren('task') tasks: QueryList<any>;
+
+    // @ViewChildren('task') tasks: QueryList<any>;
+    @ViewChild('scrollAreaGrp', { static: true}) scrollDiv: ElementRef;
+
+    private _intersectionObserver?: IntersectionObserver;
 
     constructor(
         private taskService: TaskService,
@@ -34,7 +38,8 @@ export class TaskCategoriesComponent implements OnInit {
         private router: Router,
         private locationService: LocationService,
         private authService: AuthService,
-        private vendorService: VendorService
+        private vendorService: VendorService,
+        private _element: ElementRef
     ) { }
 
     ngOnInit() {
@@ -52,7 +57,7 @@ export class TaskCategoriesComponent implements OnInit {
                     this.searchTask(this.searchString);
                 } else {
                     this.taskService.getTaskCategories().subscribe(response => {
-                        this.selectedCategory = response.payload; // select all categories
+                        this.selectedCategory = response.payload.data; // select all categories
                         this.getTasksByCategories(this.selectedCategory, this.currentCity);
                     });
                 }
@@ -66,29 +71,76 @@ export class TaskCategoriesComponent implements OnInit {
         this.distanceToHome = this.defaultDistanceToHome;
     }
 
-    ngAfterViewInit(){
-        this.tasks.forEach(
-          task => task.nativeElement.addEventListener('click', function(){ 
-            let item: any;
-            let element: any = document.getElementsByClassName('task');
-            for (item of element) {
-              item.classList.remove('active');
-            }
-            task.nativeElement.classList.add('active');
-          })
-        );
-      }
+    ngAfterViewInit() {
+        // this.tasks.forEach(
+        //   task => task.nativeElement.addEventListener('click', () => {
+        //     let item: any;
+        //     const element: any = document.getElementsByClassName('task');
+        //     for (item of element) {
+        //       item.classList.remove('active');
+        //     }
+        //     task.nativeElement.classList.add('active');
+        //   })
+        // );
 
-    searchTask(searchstr: string) {
-        this.taskService.searchTask(searchstr).subscribe(success => {
-            this.taskList = success.payload;
+        const lastCard = this.scrollDiv.nativeElement.querySelector('.lastOfMe');
 
-            if (this.taskList !== undefined && this.taskList.length !== 0) {
-                this.taskService.enrichTasks(this.taskList);
-                this.currentTask = this.taskList[0];
-                this.currentTask.selected = true;
+        if (lastCard) {
+            console.log(JSON.stringify(lastCard));
+        }
+
+        // const options = {
+        //     root: document.querySelector('#scrollArea'),
+        //     rootMargin: '0px',
+        //     threshold: 1.0
+        // };
+
+        // this._intersectionObserver = new IntersectionObserver(entries => {
+        //     this.checkForIntersection(entries);
+        // }, options);
+
+        // this._intersectionObserver.observe(lastCard);
+    }
+
+    ngAfterViewChecked(): void {
+        // const lastCard = this.scrollDiv.nativeElement.querySelector('.lastOfMe');
+        // const lastCard = this.scrollDiv.nativeElement.querySelector('.task-list div:last-child');
+
+        // if (lastCard) {
+        //     console.log(JSON.stringify(lastCard));
+        // }
+    }
+
+    private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
+        entries.forEach((entry: IntersectionObserverEntry) => {
+            if (this.checkIfIntersecting(entry)) {
+                console.log('event triggered!');
+
+                this._intersectionObserver.unobserve(<Element>(this._element.nativeElement));
+                this._intersectionObserver.disconnect();
             }
         });
+    }
+
+    private checkIfIntersecting (entry: IntersectionObserverEntry) {
+        return (<any>entry).isIntersecting && entry.target === this._element.nativeElement;
+    }
+
+    searchTask(searchstr: string) {
+        if (searchstr) {
+            this.taskService.searchTask(searchstr).subscribe(success => {
+                this.taskList = success.payload.data;
+                this.taskCount = success.payload.count;
+
+                if (this.taskList !== undefined && this.taskList.length !== 0) {
+                    this.taskService.enrichTasks(this.taskList);
+                    this.currentTask = this.taskList[0];
+                    this.currentTask.selected = true;
+                }
+            });
+        } else {
+            this.getTasksByCategories(this.selectedCategory, this.currentCity);
+        }
     }
 
     getTasksByCategory(category: string, city: string) {
@@ -97,7 +149,8 @@ export class TaskCategoriesComponent implements OnInit {
 
     getTasksByCategories(categories: string[], city: string) {
         this.taskService.getTasksByCategoriesAndCity(categories, city).subscribe(success => {
-            this.taskList = success.payload;
+            this.taskList = success.payload.data;
+            this.taskCount = success.payload.count;
 
             if (this.taskList !== undefined && this.taskList.length !== 0) {
                 this.taskService.enrichTasks(this.taskList);
@@ -113,27 +166,15 @@ export class TaskCategoriesComponent implements OnInit {
 
     getFeaturedVendor() {
         this.vendorService.getFeaturedVendor().subscribe(success => {
-            this.vendorModel = success.payload;
+            this.vendorModel = success.payload.data;
         });
     }
 
     getRecommendedVendor(task: ITask) {
         this.vendorService.getRecommendedVendor(task).subscribe(success => {
-            this.vendorModel = success.payload;
+            this.vendorModel = success.payload.data;
         });
     }
-
-    // getTasks() {
-    //     this.taskService.getTasks().subscribe(success => {
-    //         this.model = success.payload;
-
-    //         if (this.model !== undefined && this.model.length !== 0) {
-    //             this.taskService.enrichTasks(this.model);
-    //             this.currentTask = this.model[0];
-    //             this.currentTask.selected = true;
-    //         }
-    //     });
-    // }
 
     handleTaskSelected(task: ITask) {
         this.currentTask.selected = false;
@@ -173,4 +214,6 @@ export class TaskCategoriesComponent implements OnInit {
         this.searchTask(searchString);
     }
 
+    handleScroll(event: any) {
+    }
 }

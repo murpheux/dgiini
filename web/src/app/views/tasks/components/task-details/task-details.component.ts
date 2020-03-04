@@ -54,7 +54,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     getTask(id: Guid): void {
         this.taskService.getTask(id).subscribe(response => {
-                this.model = response.payload.result;
+                this.model = response.payload.data.result;
                 this.buildForms();
             });
     }
@@ -82,18 +82,18 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.model.description = this.taskFormGroup.value.description;
 
         this.taskService.updateTask(this.model._id, this.model).subscribe(d => {
-            this.model = null;
+            this.model = undefined;
             this.router.navigate(['tasks']);
         });
     }
 
     handleCancel() {
-        this.model = null;
+        this.model = undefined;
         this.router.navigate(['tasks']);
     }
 
     handleBack() {
-        this.model = null;
+        this.model = undefined;
         this.router.navigate(['tasks']);
     }
 
@@ -116,7 +116,7 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
             if (result) {
                 this.handleDeleteTask(id);
             } else {
-                this.dialogRef = null;
+                this.dialogRef = undefined;
             }
         });
     }

@@ -24,7 +24,7 @@ export class TaskCategoryNodeComponent implements OnInit {
 
     getTaskCategories() {
         this.taskService.getTaskCategories().subscribe(response => {
-            this.categories = response.payload.slice(0, 8);
+            this.categories = response.payload.data.slice(0, 8);
         });
     }
 

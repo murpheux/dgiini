@@ -28,8 +28,8 @@
         </ul>
         <span class="navbar-text ">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="btn btn-outline-web" data-toggle="modal" data-target="#postTaskModal"><i class="fas fa-plus"></i>
+          <li class="nav-item" (click)="openDialog()">
+            <a class="btn btn-outline-web"><i class="fas fa-plus"></i>
               Post Task</a>
           </li>
           <li class="nav-item dropdown profile-icon profile-dropdown ml-3">
@@ -59,7 +59,9 @@
                         <div class="border mb-2"></div>
                         <a routerLink="/user/support">Get Support</a>
                         <a routerLink="/">Invite Friend</a>
-                        <a routerLink="/">Logout</a>
+                        <a *ngIf="authService.loggedIn" (click)="logout()">Logout</a>
+                        <a (click)="logout()">Logout</a>
+                        <a *ngIf="!authService.loggedIn" (click)="authService.login()">Login</a>
                     </div>
                 </div>
             </div>
@@ -83,8 +85,3 @@
       </span>
     </div>
 </nav>
-
-
-<div class="top-scroll d-none" id="topScroll" (click)="scrollToTop()">
-    <i class="fas fa-chevron-up"></i>
-</div>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, startWith } from 'rxjs/operators';
 
 @Component({
@@ -11,12 +11,15 @@ import { debounceTime, distinctUntilChanged, map, switchMap, startWith } from 'r
     styleUrls: ['./task-filter.component.scss']
 })
 export class TaskFilterComponent implements OnInit {
-    categoryList: string[];
+    categoryCol1: string[];
+    categoryCol2: string[];
     cities: string[];
+    searchPreloading = false;
 
     searchControl: FormControl = new FormControl();
     cityControl: FormControl = new FormControl();
     filteredOptions: Observable<string[]>;
+    formCtrlSub: Subscription;
 
     @Input() currentCity: string;
     @Input() selectedCategory: string[];
@@ -50,7 +53,6 @@ export class TaskFilterComponent implements OnInit {
             startWith(''),
             map(value => this._filter(value))
         );
-
     }
 
     chechInSelected(category: string) {
@@ -68,8 +70,10 @@ export class TaskFilterComponent implements OnInit {
 
     getTaskCategories() {
         this.taskService.getTaskCategories().subscribe(response => {
-            this.categoryList = response.payload;
-            // this.selectedCategory = this.categoryList;
+            const categoryList: string[] = response.payload.data;
+
+            this.categoryCol1 = categoryList.slice(0, categoryList.length / 2);
+            this.categoryCol2 = categoryList.slice(categoryList.length / 2);
         });
     }
 
@@ -100,10 +104,10 @@ export class TaskFilterComponent implements OnInit {
     }
 
     onCategoriesChanged(event: any) {
-        if (event.currentTarget) {
+        if (event.target) {
             this.selectedCategory = this.selectedCategory ? this.selectedCategory : [];
 
-            if (event.currentTarget.checked) {
+            if (event.target.checked) {
                 this.selectedCategory.push(event.currentTarget.id);
                 this.categoriesChanged.emit(this.selectedCategory);
             } else {
@@ -120,5 +124,9 @@ export class TaskFilterComponent implements OnInit {
 
     onSearchClicked() {
         this.searchClicked.emit(this.searchString);
+    }
+
+    onValueChange(event: any) {
+        this.distanceToHome = event.target.value;
     }
 }

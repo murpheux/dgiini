@@ -27,13 +27,13 @@
             <hr class="mb-0">
             <div class="d-flex text">
                 <div class="p-1 flex-fill">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-user"></i> Posted By</span><br> Full Name
+                    <span class="font-weight-bold text-dark"><i class="fas fa-user"></i> Posted By</span><br> {{task.client.name}}
                 </div>
                 <div class="p-1 flex-fill text-center">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-calendar"></i> Date</span><br> 17, Jan 2020
+                    <span class="font-weight-bold text-dark"><i class="fas fa-calendar"></i> Date</span><br> {{task.scheduled_date | date}}
                 </div>
                 <div class="p-1 flex-fill text-right">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-map-marker-alt"></i> Location</span><br> Calgary, T2X 0T4
+                    <span class="font-weight-bold text-dark"><i class="fas fa-map-marker-alt"></i> Location</span><br> {{task.location.city}} {{task.location.state}}
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -43,7 +43,6 @@
             </div>
             <app-message-sender></app-message-sender>
         </div>
-        <!-- End Job Details -->
         <div>
 
         </div>
@@ -55,117 +54,5 @@
             <hr>
             <app-message-list [messages]="messages" (messageToReply)="handleMessagedToReply($event)"></app-message-list>
         </div>
-        <!-- End Proposals -->
     </div>
-    <!-- End Tab Content -->
-
 </div>
-<!-- End Task Details -->
-
-
-<!-- <mat-card class="card view-card mb-3">
-    <mat-card-header>
-        <mat-card-subtitle>
-            <div class="d-flex bd-highlight mb-3">
-                <div class="p-2 bd-highlight">
-                    <h3 id="#header">{{task.title | titlecase}}</h3>
-                </div>
-                <div class="p-2 bd-highlight">
-                    <button type="button" class="btn btn-success">
-                    {{task.status | titlecase}}
-                </button>
-                </div>
-            </div>
-        </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <div>
-            <div style="width: 250px" class="budget border border-warning rounded-lg p-3 float-right text-center">
-                <div>
-                    <h2>Budget</h2>
-                </div>
-                <div *ngIf="task.lastbid" class="ramount text-danger">{{task.rate.amount | currency:'CAD' }}</div>
-                <div class="c-gold">
-                    <h2>{{currentPrice | currency:'CAD' }}</h2>
-                </div>
-                <div *ngIf="task.lastbid?.accepted">
-                    <span class="statusBadge badge badge-success">Accepted!!</span>
-                </div>
-                <div *ngIf="!task.lastbid?.accepted" class="container">
-                    <div class="row mb-2">
-                        <div class="col">
-                            <button [hidden]="!authService.loggedIn" type="button" class="btn btn-secondary b-center Use btn-block" (click)="handleMakeOffer()"><fa-icon [icon]="faDollarSign"></fa-icon> Bid</button>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col">
-                            <button [hidden]="!authService.loggedIn" type="button" class="btn btn-secondary Use btn-block" (click)="handleAcceptOffer()"><fa-icon [icon]="faCheck"></fa-icon> Accept</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button *ngIf="owned" type="button" class="btn btn-secondary Use btn-block" (click)="handleCancelTask()"><fa-icon [icon]="faTimes"></fa-icon> Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ml-3">
-                <div class="container">
-                    <div class="row mb-2">
-                        <div class="col-lg-1">
-                            <fa-icon [icon]="faUserCircle"></fa-icon>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="font-weight-bold c-gold">Posted By</div>
-                            <div class="">{{task.client.name}}</div>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-lg-1">
-                            <fa-icon [icon]="faMapMarkedAlt"></fa-icon>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="font-weight-bold c-gold">Location</div>
-                            <div *ngIf="authService.loggedIn" class="">{{task.location.street}} {{task.location.city}} {{task.location.state}}</div>
-                            <div *ngIf="!authService.loggedIn" class="">{{task.location.city}} {{task.location.zipcode}}</div>
-                        </div>
-                    </div>
-                    <div class="row lg-2">
-                        <div class="col-lg-1">
-                            <fa-icon [icon]="faCalendar"></fa-icon>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="font-weight-bold c-gold">Due Date</div>
-                            <div class="">{{task.scheduled_date | date}}</div>
-                        </div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-lg-1">
-                            <fa-icon [icon]="faFileAlt"></fa-icon>
-                        </div>
-                        <div class="col-lg-4">
-                            <span class="font-weight-bold c-gold">Details</span>
-                            <div class="">{{task.description}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="ml-3">
-                <app-google-map [latitude]="location.latitude" [longitude]="location.longitude" [mapTypeId]="location.mapType"></app-google-map>
-            </div>
-            <div class="ml-3">
-                <div>
-                    <fa-icon [icon]="faInfoCircle"></fa-icon>
-                    <span class="font-weight-bold c-gold">Messages</span>
-                    <p class="">Please don't share personal info – insurance won't apply to tasks not done through dgiini!</p>
-                </div>
-                <div *ngIf="currentUser">
-                    <app-message-sender (messageSent)="handleMessageSent($event)" [currentUser]="currentUser" [messageToReply]="messageToReply" [from]="currentUser._id" [to]="task.client.id" [task]="task._id"></app-message-sender>
-                </div>
-                <div>
-                    <app-message-list [messages]="messages" (messageToReply)="handleMessagedToReply($event)"></app-message-list>
-                </div>
-            </div>
-        </div>
-    </mat-card-content>
-</mat-card> -->

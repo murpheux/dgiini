@@ -3,5 +3,8 @@
 export interface IResponse {
     code: number;
     description: string;
-    payload: any;
+    payload: {
+        count: number;
+        data: any;
+    };
 }

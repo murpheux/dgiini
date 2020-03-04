@@ -7,19 +7,19 @@
         </div>
     </div>
 
-    <div class="container tasks">
+    <div *ngIf="taskList" class="container tasks">
         <div class="row">
             <div class="col-md-12">
                 <div class="task-box">
                     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="all-tasks-tab" data-toggle="tab" href="#all-tasks" role="tab" aria-controls="home" aria-selected="true">
-                  All Tasks <span class="badge badge-secondary">7</span>
+                  All Tasks <span class="badge badge-secondary">{{ taskList.length }}</span>
                 </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="posted-tasks-tab" data-toggle="tab" href="#posted-tasks" role="tab" aria-controls="profile" aria-selected="false">
-                  Posted Tasks <span class="badge badge-secondary">3</span>
+                  Posted Tasks <span class="badge badge-secondary">{{ taskList.length }}</span>
                 </a>
                         </li>
                         <li class="nav-item">
@@ -29,7 +29,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="assigned-tasks-tab" data-toggle="tab" href="#assigned-tasks" role="tab" aria-controls="contact" aria-selected="false">
-                  Assigned <span class="badge badge-secondary">2</span>
+                  Assigned <span class="badge badge-secondary">{{assignedTaskList.length}}</span>
                 </a>
                         </li>
                         <li class="nav-item">
@@ -39,12 +39,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="completed-tasks-tab" data-toggle="tab" href="#completed-tasks" role="tab" aria-controls="contact" aria-selected="false">
-                  Completed <span class="badge badge-secondary">6</span>
+                  Completed <span class="badge badge-secondary">{{completedTaskList.length}}</span>
                 </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="cancelled-tasks-tab" data-toggle="tab" href="#cancelled-tasks" role="tab" aria-controls="cancelled-tasks" aria-selected="false">
-                  Cancelled <span class="badge badge-secondary">0</span>
+                  Cancelled <span class="badge badge-secondary">{{cancelledTaskList.length}}</span>
                 </a>
                         </li>
                     </ul>
@@ -62,61 +62,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    <tr *ngIf="taskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
                                     </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Moving</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-primary">Assigned</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Furniture Assembly</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Lawn Moving</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-info">Drafted</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Child Care</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-danger">Cancelled</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Gardening</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Handy Man</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    <tr *ngFor="let task of taskList">
+                                        <td>{{task.title}}</td>
+                                        <td>{{task.description}}</td>
+                                        <td><span class=" badge badge-web">{{task.category}}</span></td>
+                                        <td>{{task.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{task.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -133,26 +88,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Moving</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Furniture Assembly</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-warning">Pending</span></td>
+                                    <tr *ngIf="taskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr> 
+                                    <tr *ngFor="let task of taskList">
+                                        <td>{{task.title}}</td>
+                                        <td><span class=" badge badge-web">{{task.category}}</span></td>
+                                        <td>{{task.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{task.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -188,21 +132,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-primary">Assigned</span></td>
+                                    <tr *ngIf="assignedTaskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
                                     </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Moving</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-primary">Assigned</span></td>
+                                    <tr *ngFor="let assignedTask of assignedTaskList">
+                                        <td>{{assignedTask.title}}</td>
+                                        <td>{{assignedTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{assignedTask.category}}</span></td>
+                                        <td>{{assignedTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{assignedTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-primary">{{assignedTask.title}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -242,55 +181,18 @@
                                         <th><i class="fas fa-dollar-sign"></i> Total</th>
                                         <th>Status</th>
                                     </tr>
-                                </thead>
+i                                </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    <tr *ngIf="completedTaskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
                                     </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Client Name</td>
-                                        <td>Task Description</td>
-                                        <td><span class=" badge badge-web">Cleaning</span></td>
-                                        <td>16, Jan 2020</td>
-                                        <td>100$</td>
-                                        <td><span class=" badge badge-success">Completed</span></td>
+                                    <tr *ngFor="let compTask of completedTaskList">
+                                        <td>{{compTask.title}}</td>
+                                        <td>{{compTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{compTask.category}}</span></td>
+                                        <td>{{compTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{compTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{taskService.getStatusColor(compTask.status)}}">{{compTask.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -307,8 +209,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr *ngIf="cancelledTaskList.length <= 0">
                                         <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                    <tr *ngFor="let canTask of cancelledTaskList">
+                                        <td>{{canTask.title}}</td>
+                                        <td>{{canTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{canTask.category}}</span></td>
+                                        <td>{{canTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{canTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{taskService.getStatusColor(canTask.status)}}">{{canTask.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>

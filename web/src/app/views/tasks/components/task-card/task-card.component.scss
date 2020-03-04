@@ -185,7 +185,12 @@
 
 /* For Active Task */
 
-.browse-tasks .task-box .task-list .task.active {
+.browse-tasks .task-box .task-list div.active {
+    background-color: var(--border-color);
+    border-radius: 5px 5px;
+}
+
+.active {
     background-color: var(--border-color);
     border-radius: 5px 5px;
 }

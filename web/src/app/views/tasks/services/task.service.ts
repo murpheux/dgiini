@@ -125,4 +125,25 @@ export class TaskService {
         //     });
         // });
     }
+
+    getStatusColor(status: string) {
+        let stats = 'danger';
+
+        switch (status) {
+            case 'completed':
+                stats = 'success';
+                break;
+
+            case 'open':
+                stats = 'warning';
+                break;
+
+            default:
+                stats = 'danger';
+                break;
+        }
+
+        return stats;
+    }
+
 }

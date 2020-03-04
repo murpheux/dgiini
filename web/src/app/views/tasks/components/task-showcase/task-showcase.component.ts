@@ -31,7 +31,7 @@ export class TaskShowcaseComponent implements OnInit {
 
     getTasks() {
         this.taskService.getTasks().subscribe((response: IResponse) => {
-            this.model = response.payload;
+            this.model = response.payload.data;
             this.taskService.enrichTasks(this.model);
         });
     }
@@ -40,7 +40,7 @@ export class TaskShowcaseComponent implements OnInit {
 
         return new Promise<ITask[]>((resolve, reject) => {
             this.taskService.getTasksByCategories([category]).subscribe((response: IResponse) => {
-                    const model: ITask[] = response.payload;
+                    const model: ITask[] = response.payload.data;
                     this.taskService.enrichTasks(model);
 
                     resolve(model);

@@ -32,15 +32,15 @@ export class AuthService {
         concatMap((client: Auth0Client) => from(client.handleRedirectCallback()))
     );
 
-    private userProfileSubject$ = new BehaviorSubject<any>(null);
-    private userTokenSubject$ = new BehaviorSubject<any>(null);
-    private userClaimsSubject$ = new BehaviorSubject<any>(null);
+    private userProfileSubject$ = new BehaviorSubject<any>(undefined);
+    private userTokenSubject$ = new BehaviorSubject<any>(undefined);
+    private userClaimsSubject$ = new BehaviorSubject<any>(undefined);
 
     userProfile$ = this.userProfileSubject$.asObservable();
     userToken$ = this.userTokenSubject$.asObservable();
     userClaims$ = this.userClaimsSubject$.asObservable();
 
-    loggedIn: boolean = null;
+    loggedIn: boolean = true;
 
     constructor(private router: Router) { }
 

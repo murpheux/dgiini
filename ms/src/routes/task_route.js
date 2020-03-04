@@ -44,11 +44,8 @@ router.get('/tasks', asyncHandler(async(req, res, next) => {
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)
     const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
-    const tasks = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
-
-    // winston.error(err)
-    // res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, err.message, err))
+    const [count, data] = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
 }))
 
 router.get('/tasks/city/:city', asyncHandler(async(req, res, next) => {
@@ -61,8 +58,8 @@ router.get('/tasks/city/:city', asyncHandler(async(req, res, next) => {
     const db = await mgaccess.get_connection(common.database_uri, database_name, options)
     const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
-    const tasks = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+    const [count, data] = await invoke_getlist()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
 }))
 
 // user task
@@ -80,8 +77,8 @@ router.get('/tasks/user/:id', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, TASK_COLL, paging)
 
-        const tasks = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -98,7 +95,7 @@ router.get('/tasks/:id', asyncHandler(async(req, res, next) => {
         const invoke_getone = async() => await mgaccess.getonetask(db, TASK_COLL, { _id: id })
 
         const tasks = await invoke_getone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
     }
 }))
 
@@ -107,7 +104,7 @@ router.get('/tasks/stats/full', asyncHandler(async(req, res, next) => {
     const invoke_getstats = async() => await mgaccess.getTaskStatistics(db, TASK_COLL, undefined)
 
     const tasks = await invoke_getstats()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks[0]))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
 }))
 
 
@@ -219,7 +216,7 @@ router.get('/tasks/search/:searchstr', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.searchTask(db, TASK_COLL, paging)
 
     const tasks = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
 }))
 
 
@@ -239,8 +236,8 @@ router.get('/tasks/:id/search/:searchstr', asyncHandler(async(req, res, next) =>
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
-        const tasks = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, data))
     }
 }))
 
@@ -264,8 +261,8 @@ router.get('/tasks/category/:category', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, TASK_COLL, paging)
 
-        const tasks = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -287,10 +284,10 @@ router.get('/tasks/city/:city/category/:category', asyncHandler(async(req, res, 
         res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
     } else {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
-        const invoke_getlist = async() => await mgaccess.getlist(db, TASK_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
-        const tasks = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
     }
 }))
 
@@ -298,7 +295,7 @@ const categories = ['Cleaning', 'Gardening', 'Handy Man', 'Furniture Assembly', 
 
 // categories
 router.get('/categories', (req, res) => {
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', categories))
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, categories))
 })
 
 const validateBid = (bid) => {

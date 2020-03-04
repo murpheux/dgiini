@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
@@ -18,6 +18,13 @@ import { Guid } from 'guid-typescript';
     styleUrls: ['./task-create.component.scss']
 })
 export class TaskCreateComponent implements OnInit, AfterViewInit {
+
+    public currentTabOpen = 1;
+    @ViewChild('postTaskBackBtn', { static: false }) postTaskBackBtn: ElementRef;
+    @ViewChild('postTaskNextBtn', { static: false }) postTaskNextBtn: ElementRef;
+    @ViewChild('postTaskPostBtn', { static: false }) postTaskPostBtn: ElementRef;
+    @ViewChild('postTaskProgressBar', { static: false }) postTaskProgressBar: ElementRef;
+    @ViewChild('postTaskProgressText', { static: false }) postTaskProgressText: ElementRef;
 
     taskFormGroup: FormGroup;
 
@@ -49,7 +56,6 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initializeContent();
-        this.buildForms();
     }
 
     ngAfterViewInit() {
@@ -74,7 +80,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.currentCountry = this.countries[0];
 
         this.taskService.getTaskCategories().subscribe(response => {
-            this.categoryList = response.payload;
+            this.categoryList = response.payload.data;
         });
 
         if (this.authService.loggedIn) {
@@ -94,39 +100,6 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         }
 
         return value;
-    }
-
-    buildForms() {
-
-        this.taskFormGroup = this.formBuilder.group({
-            'task1FormGroup': this.formBuilder.group({
-                'title': this.formBuilder.control(null,
-                    [Validators.required, Validators.minLength(10), Validators.maxLength(50)]),
-                'description': this.formBuilder.control(null,
-                    [Validators.required, Validators.minLength(25), Validators.maxLength(1000)]),
-                'category': this.formBuilder.control(this.selectedCategory, [Validators.required])
-            }),
-
-            'task2FormGroup': this.formBuilder.group({
-                'street': this.formBuilder.control(null, [Validators.required]),
-                'city': this.formBuilder.control(this.currentCity, [Validators.required]),
-                'state': this.formBuilder.control(this.currentState, [Validators.required]),
-                'zipcode': this.formBuilder.control(null,
-                    [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
-                'country': this.formBuilder.control(this.currentCountry, [Validators.required])
-            }),
-
-            'task3FormGroup': this.formBuilder.group({
-                'taskdate': this.formBuilder.control(null, [Validators.required]),
-                'tasktime': this.formBuilder.control('8:00 AM', [Validators.required])
-            }),
-
-            'task4FormGroup': this.formBuilder.group({
-                'rateunit': this.formBuilder.control(null, [Validators.required]),
-                'rate': this.formBuilder.control(null, [Validators.required]),
-                'esthrs': this.formBuilder.control(null, [Validators.required])
-            })
-        });
     }
 
     handleSave(formValues: any): void {
@@ -184,6 +157,89 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
     onCountryChanged() { }
 
-    onStateChanged() { }
+    onStateChanged() {  }
 
+    nextTab() {
+        if (this.currentTabOpen > 5) { return false; }
+
+        // Close Old Tab
+        const oldTab = document.getElementById('post-task-step-' + this.currentTabOpen);
+        oldTab.classList.remove('active');
+        oldTab.classList.add('fade');
+        // Increment To Next Tab
+        this.currentTabOpen++;
+        // Open Next Tab
+        const newTab = document.getElementById('post-task-step-' + this.currentTabOpen);
+        newTab.classList.add('active');
+        newTab.classList.remove('fade');
+
+        if (this.currentTabOpen === 2) {
+            this.postTaskProgressBar.nativeElement.style.width = '33%'
+            this.postTaskProgressText.nativeElement.innerHTML = '33%';
+            this.postTaskBackBtn.nativeElement.classList.remove('d-none');
+        }
+
+        if (this.currentTabOpen === 3) {
+            this.postTaskProgressBar.nativeElement.style.width = '50%'
+            this.postTaskProgressText.nativeElement.innerHTML = '50%';
+        }
+
+        if (this.currentTabOpen === 4) {
+            this.postTaskProgressBar.nativeElement.style.width = '66%'
+            this.postTaskProgressText.nativeElement.innerHTML = '66%';
+        }
+
+        if (this.currentTabOpen === 5) {
+            this.postTaskProgressBar.nativeElement.style.width = '83%'
+            this.postTaskProgressText.nativeElement.innerHTML = '83%';
+        }
+
+        if (this.currentTabOpen === 6) {
+            this.postTaskProgressBar.nativeElement.style.width = '100%'
+            this.postTaskProgressText.nativeElement.innerHTML = '100%';
+            this.postTaskNextBtn.nativeElement.classList.add('d-none');
+            this.postTaskPostBtn.nativeElement.classList.remove('d-none');
+        }
+    }
+
+    previousTab() {
+        // Close Old Tab
+        const oldTab = document.getElementById('post-task-step-' + this.currentTabOpen);
+        oldTab.classList.remove('active');
+        oldTab.classList.add('fade');
+        // Increment To Next Tab
+        this.currentTabOpen--;
+        // Open Next Tab
+        const newTab = document.getElementById('post-task-step-' + this.currentTabOpen);
+        newTab.classList.add('active');
+        newTab.classList.remove('fade');
+
+        if (this.currentTabOpen === 1) {
+            this.postTaskProgressBar.nativeElement.style.width = '16%'
+            this.postTaskProgressText.nativeElement.innerHTML = '16%';
+            this.postTaskBackBtn.nativeElement.classList.add('d-none');
+        }
+
+        if (this.currentTabOpen === 2) {
+            this.postTaskProgressBar.nativeElement.style.width = '33%'
+            this.postTaskProgressText.nativeElement.innerHTML = '33%';
+        }
+
+        if (this.currentTabOpen === 3) {
+            this.postTaskProgressBar.nativeElement.style.width = '50%'
+            this.postTaskProgressText.nativeElement.innerHTML = '50%';
+        }
+
+        if (this.currentTabOpen === 4) {
+            this.postTaskProgressBar.nativeElement.style.width = '66%'
+            this.postTaskProgressText.nativeElement.innerHTML = '66%';
+        }
+
+        if (this.currentTabOpen === 5) {
+            this.postTaskProgressBar.nativeElement.style.width = '83%'
+            this.postTaskProgressText.nativeElement.innerHTML = '83%';
+            this.postTaskNextBtn.nativeElement.classList.remove('d-none');
+            this.postTaskPostBtn.nativeElement.classList.add('d-none');
+        }
+    }
 }

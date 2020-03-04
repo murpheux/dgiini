@@ -25,13 +25,13 @@ export class TaskStatsComponent implements OnInit {
 
     getTaskStatistics() {
         this.taskService.getTaskStatistics().subscribe(result => {
-            this.taskStats = result.payload;
+            this.taskStats = result.payload.data;
         });
     }
 
     getUserStatstics() {
         this.userService.getUserStatstics().subscribe(result => {
-            this.userStats = result.payload;
+            this.userStats = result.payload.data;
         });
     }
 }

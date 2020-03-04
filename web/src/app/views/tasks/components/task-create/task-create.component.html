@@ -1,182 +1,189 @@
-<div>
-    <h3>//// New Task</h3>
-</div>
-<div class="container">
-    <app-loader *ngIf="!taskFormGroup"></app-loader>
-    <mat-card class="mcard">
-        <form #taskForm="ngForm" [formGroup]="taskFormGroup" autocomplete="off" (ngSubmit)="handleSave(taskForm.value)">
-            <mat-horizontal-stepper linear #stepper class="innerStepper">
-                <mat-step formGroupName="task1FormGroup" [stepControl]="taskFormGroup.get('task1FormGroup')">
-                    <ng-template matStepLabel>What do you need done?</ng-template>
-                    <div class="d-flex flex-row">
-                        <div class="flex-fill">
-                            <div>
-                                <mat-form-field class="full-width" floatLabel="always">
-                                    <mat-label>What do you need done?</mat-label>
-                                    <input matInput placeholder="enter title" formControlName="title">
-                                </mat-form-field>
+<div class="modal fade" id="postTaskModal">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <h4 class="modal-title text-web font-weight-bold mb-2">
+                    <i class="fas fa-pen"></i> Post Task <span #postTaskProgressText class="float-right task-percentage">16%</span>
+                </h4>
+                <div class="progress" style="height:7px">
+                    <div #postTaskProgressBar class="progress-bar bg-web" style="width:20%;height:7px"></div>
+                </div>
+
+                <div class="post-task-form pt-3">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane container p-0 active" id="post-task-step-1">
+                            <div class="form-group mb-2">
+                                <label for="task-title">What do you need done?</label>
+                                <input type="text" class="form-control" id="task-title" placeholder="Task Title">
                             </div>
-                            <div>
-                                <mat-form-field class="full-width" floatLabel="always">
-                                    <mat-label>What are the details</mat-label>
-                                    <textarea matInput placeholder="enter details" formControlName="description" matAutosizeMinRows=3 matAutosizeMaxRows=5></textarea>
-                                </mat-form-field>
+                            <div class="form-group mb-2">
+                                <label for="task-details">What are the details?</label>
+                                <textarea class="form-control" rows="5" id="task-details" placeholder="Task Details"></textarea>
                             </div>
-                            <div>
-                                <mat-form-field class="full-width" floatLabel="always">
-                                    <mat-label>Select Task Category</mat-label>
-                                    <mat-select formControlName="category">
-                                        <mat-option *ngFor="let category of categoryList" [value]="category">{{category}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
+                            <div class="form-group">
+                                <label for="task-category">Select Category</label>
+                                <select class="form-control" id="task-category">
+                    <option value="0" disabled>-- Select Category --</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Gardening">Gardening</option>
+                    <option value="Handy Man">Handy Man</option>
+                    <option value="Furniture Assembly">Furniture Assembly</option>
+                    <option value="Snow Plowing">Snow Plowing</option>
+                    <option value="Child Care">Child Care</option>
+                    <option value="Moving">Moving</option>
+                  </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="mat-control d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
-                    </div>
-                </mat-step>
-                <mat-step formGroupName="task2FormGroup" [stepControl]="taskFormGroup.get('task2FormGroup')">
-                    <ng-template matStepLabel>What Location?</ng-template>
-                    <div class="d-flex flex-row">
-                        <div class="flex-fill">
-                            <div>
-                                <mat-label>Location</mat-label>
-                                <p class="small font-italic">Note: Address will not be shared with prospect until bid has been accepted!</p>
-                                <div>
-                                    <mat-form-field class="full-width" floatLabel="always">
-                                        <mat-label>Street</mat-label>
-                                        <input matInput placeholder="enter street" formControlName="street" />
-                                    </mat-form-field>
+                        <div class="tab-pane container p-0 fade" id="post-task-step-2">
+                            <p class="font-weight-bold">Attachments (Optional)</p>
+                            <div class="mb-2">
+                                <label for="">Uploaded Images</label>
+                                <div class="clearfix"></div>
+                                <div class="img d-inline">
+                                    <i class="fas fa-times"></i>
+                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
+                                </div>
+                                <div class="img d-inline">
+                                    <i class="fas fa-times"></i>
+                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
+                                </div>
+                                <div class="img d-inline">
+                                    <i class="fas fa-times"></i>
+                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
+                                </div>
+                                <div class="img d-inline">
+                                    <i class="fas fa-times"></i>
+                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col-lg-6">
-                                    <mat-form-field>
-                                        <mat-select formControlName="city">
-                                            <mat-option *ngFor="let city of cities" [value]="city">{{city}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-lg-6">
-                                    <mat-form-field>
-                                        <mat-select formControlName="state">
-                                            <mat-option *ngFor="let state of states" [value]="state">{{state}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
+                            <div class="form-group mb-2 files">
+                                <label for="task-drag-image">Upload Image</label>
+                                <input type="file" accept="image/*" class="form-control" id="task-drag-image">
+                            </div>
+                        </div>
+                        <div class="tab-pane container p-0 fade" id="post-task-step-3">
+                            <div class="border p-2 pt-1 pb-1 rounded-lg mb-2">
+                                <p class="m-0 text-web font-weight-bold"><i class="fas fa-info-circle"></i> Note</p>
+                                <p class="m-0 text-muted">Address will be kept confidential until task is assigned to tasker</p>
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <label for="task-street">Street</label>
+                                <input type="text" class="form-control" id="task-street" placeholder="Street">
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-4">
-                                    <mat-form-field class="full-width" floatLabel="always">
-                                        <mat-label>Postal Code</mat-label>
-                                        <input matInput placeholder="enter postal code" formControlName="zipcode" />
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-lg-8">
-                                    <mat-form-field>
-                                        <mat-select formControlName="country">
-                                            <mat-option *ngFor="let country of countries" [value]="country">{{country}}</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="mat-control d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
-                    </div>
-                </mat-step>
-                <mat-step formGroupName="task3FormGroup" [stepControl]="taskFormGroup.get('task3FormGroup')">
-                    <ng-template matStepLabel>When do you need it done?</ng-template>
-                    <div class="form-row">
-                        <div class="col-lg-6">
-                            <mat-form-field class="full-width" floatLabel="always">
-                                <mat-label>When do you need it done?</mat-label>
-                                <input matInput [matDatepicker]="dp" placeholder="" formControlName="taskdate">
-                                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                                <mat-datepicker #dp></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                        <div class="matrcol-lg-6">
-                            <div class="ngx-timepicker-field-example">
-                                <ngx-timepicker-field [controlOnly]="true" formControlName="tasktime"></ngx-timepicker-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mat-control d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
-                    </div>
-                </mat-step>
-                <mat-step formGroupName="task4FormGroup" [stepControl]="taskFormGroup.get('task4FormGroup')">
-                    <ng-template matStepLabel>Where do you need it done?</ng-template>
-                    <div class="d-flex flex-row">
-                        <div class="flex-fill">
-                            <div>
-                                <mat-label>Where do you need it done?</mat-label>
-                                <div>
-                                    <mat-radio-group aria-label="Select an option" formControlName="rateunit">
-                                        <mat-radio-button *ngFor="let key of rateunits_keys" [value]="rateunits[key] | lowercase">{{ rateunits[key] }}</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                            <div>
-                                <mat-form-field class="full-width" floatLabel="always">
-                                    <mat-label>Amount</mat-label>
-                                    <div class="input-group mb-2">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">$</span>
-                                        </div>
-                                        <input matInput type="number" class="form-control" aria-label="Amount (to the nearest dollar)" formControlName="rate" appDigitOnly>
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">.00</span>
-                                        </div>
+                                <div class="col">
+                                    <div class="form-group mb-2">
+                                        <label for="task-city">City</label>
+                                        <input type="text" class="form-control" id="task-city" placeholder="City">
                                     </div>
-                                </mat-form-field>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group mb-2">
+                                        <label for="task-state">State</label>
+                                        <input type="text" class="form-control" id="task-state" placeholder="State">
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <div class="input-group mb-2">
-                                    <span class="font-weight-bold">How long will the task take:</span>
-                                    <mat-slider class="flex-fill" thumbLabel [displayWith]="formatLabel" formControlName="esthrs" tickInterval="5" min="1" max="50"></mat-slider> {{ taskFormGroup.get('task4FormGroup').get('esthrs').value }} hrs
+
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="form-group mb-2">
+                                        <label for="task-zip">Zip Code</label>
+                                        <input type="text" class="form-control" id="task-zip" placeholder="Zip Code">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group mb-2">
+                                        <label for="task-country">Country</label>
+                                        <input type="text" class="form-control" id="task-country" placeholder="Country">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane container p-0 fade" id="post-task-step-4">
+                            <p class="font-weight-bold">When you want it done?</p>
+                            <div class="form-group mb-2">
+                                <label for="task-date">Expected Task Completion Date</label>
+                                <input type="date" class="form-control" id="task-date" placeholder="Enter Here">
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="task-time">Expected Task Completion Time</label>
+                                <input type="time" class="form-control" id="task-time" placeholder="Enter Here">
+                            </div>
+                        </div>
+                        <div class="tab-pane container p-0 fade" id="post-task-step-5">
+                            <p class="font-weight-bold">How do you need it?</p>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optradio" checked> Total
+                  </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optradio"> Hourly
+                  </label>
+                            </div>
+                            <div class="form-group mb-2 mt-2">
+                                <label for="task-amount">Amount</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign text-web"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Amount" id="task-amount">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="task-hours">How long it will take?</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-clock text-web"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" placeholder="Hours" id="task-hours">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">hours</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mat-control d-flex justify-content-end">
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperPrevious>Back</button>
-                        <button type="button" class="btn btn-danger b-center" mat-button matStepperNext>Next</button>
-                    </div>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>Confirm</ng-template>
-                    Confirm entry ...
-                    <div>
-                        <div>
-                            <h4>Following details submitted, please confirm and hit post</h4>
-                            <br/>Title: {{taskFormGroup.get('task1FormGroup').get('title').value}}
-                            <br/>Description : {{taskFormGroup.get('task1FormGroup').get('description').value}}
-                            <br/>Category : {{taskFormGroup.get('task1FormGroup').get('category').value}}
-                            <br/>Address :{{taskFormGroup.get('task2FormGroup').get('street').value}} {{taskFormGroup.get('task2FormGroup').get('city').value}}, {{taskFormGroup.get('task2FormGroup').get('country').value}} {{taskFormGroup.get('task2FormGroup').get('zipcode').value}}
-                            <br/>Scheduled Date :{{taskFormGroup.get('task3FormGroup').get('taskdate').value | date}}, {{taskFormGroup.get('task3FormGroup').get('tasktime').value}}
-                            <br/>Rate :{{taskFormGroup.get('task4FormGroup').get('rate').value}}
-                            <br/>Rate Unit :{{taskFormGroup.get('task4FormGroup').get('rateunit').value}}
-                            <br/>Est. Hrs. :{{taskFormGroup.get('task4FormGroup').get('esthrs').value}}
-                            <br/>
+                        <div class="tab-pane container p-0 fade" id="post-task-step-6">
+                            <p class="font-weight-bold">Confirm Details</p>
+                            <p class="m-0 font-weight-bold">Task Title</p>
+                            <p>Task Name</p>
+                            <p class="m-0 font-weight-bold">Task Description</p>
+                            <p>Task Description</p>
+                            <p class="m-0 font-weight-bold">Address</p>
+                            <p>Street, City, State, Zip Code, Country</p>
+                            <p class="m-0 font-weight-bold">Expected Completion</p>
+                            <p>Date & Time</p>
+                            <p class="m-0 font-weight-bold">Rate</p>
+                            <p>Hourly, 100.00 $, 7-hours</p>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                    </div>
-                    <div class="mat-control d-flex justify-content-end">
-                        <button mat-button type="button" class="btn btn-danger b-center" matStepperPrevious>Back</button>
-                        <button mat-button type="button" class="btn btn-danger b-center" (click)="stepper.reset()">Reset</button>
-                        <button mat-button class="btn btn-primary b-center" type="submit">Post</button>
-                    </div>
-                </mat-step>
-            </mat-horizontal-stepper>
-        </form>
-    </mat-card>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button #postTaskBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="PreviousTab()"><i
+              class="fas fa-arrow-left"></i> Back</button>
+                <button #postTaskNextBtn type="button" class="btn btn-web next-btn" (click)="NextTab()">Continue <i
+              class="fas fa-arrow-right"></i></button>
+                <button #postTaskPostBtn type="button" class="btn btn-web next-btn post-task-btn d-none"><i
+              class="fas fa-pen"></i> Post Task</button>
+            </div>
+
+        </div>
+    </div>
 
 </div>

@@ -36,7 +36,7 @@ router.get('/messages/:id', asyncHandler(async(req, res, next) => {
         const invoke_getone = async() => await mgaccess.getone(db, MESSAGE_COLL, { _id: id })
 
         const message = await invoke_getone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, message))
     }
 }))
 
@@ -53,8 +53,8 @@ router.get('/messages/to/:sender', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-        const messages = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -73,8 +73,8 @@ router.get('/messages/from/:sender', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-        const messages = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -96,8 +96,8 @@ router.get('/messages/task/:taskid/:userid', asyncHandler(async(req, res, next) 
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-        const messages = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
+        const [count, data] = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -116,8 +116,9 @@ router.get('/messages/task/:id', asyncHandler(async(req, res, next) => {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
-        const messages = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', messages))
+        const [count, data] = await invoke_getlist()
+        console.log(JSON.stringify(count))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
 
@@ -141,7 +142,7 @@ router.post('/messages/task/:id', asyncHandler(async(req, res, next) => {
         const invoke_getlist = async() => await mgaccess.create(db, MESSAGE_COLL, message)
 
         const result = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.ops[0]))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result.ops[0]))
     }
 }))
 
@@ -158,7 +159,7 @@ router.post('/sendmessage', asyncHandler(async(req, res, next) => {
         const invoke_updateone = async() => await mgaccess.create(db, MESSAGE_COLL, message)
 
         const message = await invoke_updateone()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', message))
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, message))
     }
 }))
 

@@ -66,21 +66,39 @@ module.exports = {
         }
 
         if (paging.lastid) {
-            return new Promise((resolve, reject) => {
-                db.collection(collection).find({ '_id': { '$gt': ObjectId(paging.lastid) } })
+            const count = new Promise((resolve, reject) => {
+                const count = db.collection(collection).find({ '_id': { '$gt': ObjectId(paging.lastid) } })
+                    .count()
+
+                resolve(count)
+            })
+
+            const data = new Promise((resolve, reject) => {
+                const data = db.collection(collection).find({ '_id': { '$gt': ObjectId(paging.lastid) } })
                     .limit(paging.page_limit)
-                    .toArray((err, data) => {
-                        err ? reject(err) : resolve(data)
-                    })
+                    .toArray()
+
+                resolve(data)
             })
+
+            return Promise.all([count, data])
         } else {
-            return new Promise((resolve, reject) => {
-                db.collection(collection).find(paging.filter).sort(paging.sort_keys)
-                    .skip(paging.page_limit * (paging.page - 1)).limit(paging.page_limit)
-                    .toArray((err, data) => {
-                        err ? reject(err) : resolve(data)
-                    })
+            const count = new Promise((resolve, reject) => {
+                const count = db.collection(collection).find(paging.filter)
+                    .count()
+
+                resolve(count)
             })
+
+            const data = new Promise((resolve, reject) => {
+                const data = db.collection(collection).find(paging.filter).sort(paging.sort_keys)
+                    .skip(paging.page_limit * (paging.page - 1)).limit(paging.page_limit)
+                    .toArray()
+
+                resolve(data)
+            })
+
+            return Promise.all([count, data])
         }
     },
 
@@ -290,32 +308,25 @@ module.exports = {
     getUserStatistics: (db, collection, filter) => {
 
         return new Promise((resolve, _) => {
-            const doc = db.collection(collection).aggregate([{
-                    $facet: {
-                        'client': [
-                            { $match: {} },
-                            { $count: 'client' },
-                        ],
-                        'vendor': [
-                            { $match: { roles: { $eq: 'vendor' } } },
-                            { $count: 'vendor' }
-                        ]
+            const doc = db.collection(collection)
+                .aggregate([{
+                        $facet: {
+                            'client': [{ $match: {} }, { $count: 'client' }, ],
+                            'vendor': [{ $match: { roles: { $eq: 'vendor' } } }, { $count: 'vendor' }]
+                        }
+                    },
+                    {
+                        $project: {
+                            'client': { $arrayElemAt: ['$client.client', 0] },
+                            'vendor': { $arrayElemAt: ['$vendor.vendor', 0] }
+                        }
                     }
-                },
-                {
-                    $project: {
-                        'client': { $arrayElemAt: ['$client.client', 0] },
-                        'vendor': { $arrayElemAt: ['$vendor.vendor', 0] }
-                    }
-                }
-            ]).toArray()
+                ]).toArray()
 
             resolve(doc)
         })
 
     },
-
-
 
     searchTask: (db, collection, paging) => {
 
@@ -333,8 +344,18 @@ module.exports = {
         paging = process_paging(paging)
 
         if (paging.lastid) {
-            return new Promise((resolve, reject) => {
-                const doc = db.collection(collection)
+            const count = new Promise((resolve, reject) => {
+                const count = db.collection(collection)
+                    .aggregate([{ $match: { '_id': { '$gt': ObjectId(paging.lastid) } } },
+                        { $count: 'count' }
+                    ]).limit(paging.page_limit)
+                    .toArray()
+
+                resolve(count)
+            })
+
+            const data = new Promise((resolve, reject) => {
+                const data = db.collection(collection)
                     .aggregate([{ $match: { '_id': { '$gt': ObjectId(paging.lastid) } } },
                         { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
                         {
@@ -356,11 +377,23 @@ module.exports = {
                     ]).limit(paging.page_limit)
                     .toArray()
 
-                resolve(doc)
+                resolve(data)
             })
+
+            return Promise.all([count, data])
         } else {
-            return new Promise((resolve, reject) => {
-                const doc = db.collection(collection)
+            const count = new Promise((resolve, reject) => {
+
+                const count = db.collection(collection)
+                    .aggregate([{ $match: paging.filter },
+                        { $count: 'count' }
+                    ]).toArray()
+
+                resolve(count)
+            })
+
+            const data = new Promise((resolve, reject) => {
+                const data = db.collection(collection)
                     .aggregate([{ $match: paging.filter },
                         { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
                         {
@@ -384,8 +417,10 @@ module.exports = {
                         { $sort: { '_id': 1 } }
                     ]).toArray()
 
-                resolve(doc)
+                resolve(data)
             })
+
+            return Promise.all([count, data])
         }
 
     }

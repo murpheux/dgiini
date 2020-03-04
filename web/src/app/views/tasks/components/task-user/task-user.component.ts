@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LocationService } from 'src/app/views/user/services/location.service';
 import { ITask } from '../../models/ITask';
-import { IUser } from 'src/app/views/user/models/user';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
+import { IUser } from 'src/app/views/user/models/user';
 
 @Component({
     selector: 'app-task-user',
@@ -15,9 +14,12 @@ import { Constants } from 'src/app/shared/models/constants';
     styleUrls: ['./task-user.component.scss']
 })
 export class TaskUserComponent implements OnInit {
-    public model: ITask[];
+    public taskList: ITask[];
+    public completedTaskList: ITask[];
+    public cancelledTaskList: ITask[];
+    public assignedTaskList: ITask[];
     public currentTask: ITask;
-    public currentUser: any;
+    public currentUser: IUser;
     public searchString: string;
 
     constructor(
@@ -35,26 +37,30 @@ export class TaskUserComponent implements OnInit {
         }
     }
 
-    getUserTasks(user: any) {
+    getUserTasks(user: IUser) {
         this.taskService.getUserTasks(user._id).subscribe(success => {
-            this.model = success.payload;
+            this.taskList = success.payload.data;
 
-            if (this.model !== undefined && this.model.length !== 0) {
-                this.currentTask = this.model[0];
+            if (this.taskList !== undefined && this.taskList.length !== 0) {
+                this.currentTask = this.taskList[0];
                 this.currentTask.selected = true;
             }
 
-            this.taskService.enrichTasks(this.model);
+            this.taskService.enrichTasks(this.taskList);
+
+            this.completedTaskList = this.taskList.filter(task => task.status === 'completed');
+            this.cancelledTaskList = this.taskList.filter(task => task.status === 'cancelled');
+            this.assignedTaskList = this.taskList.filter(task => task.status === 'assigned');
         });
     }
 
     searchUserTask(searchstr: string) {
         this.taskService.searchUserTask(searchstr, this.currentUser._id).subscribe(success => {
-            this.model = success.payload;
+            this.taskList = success.payload.data;
 
-            if (this.model !== undefined && this.model.length !== 0) {
-                this.taskService.enrichTasks(this.model);
-                this.currentTask = this.model[0];
+            if (this.taskList !== undefined && this.taskList.length !== 0) {
+                this.taskService.enrichTasks(this.taskList);
+                this.currentTask = this.taskList[0];
                 this.currentTask.selected = true;
             }
         });

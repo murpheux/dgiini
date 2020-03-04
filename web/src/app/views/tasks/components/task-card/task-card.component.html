@@ -1,51 +1,18 @@
-<div class="task" #task>
-    {{ task.title }}
+<div *ngIf="task" (click)="ontaskcardclick()" class="task {{task.selected ? 'active': ''}}">
     <p class="font-weight-bold m-0">
-        Task Title
-        <span style="font-size: 16px;" class="float-right">CA$ 200</span>
+        {{task.title}}
+        <span style="font-size: 16px;" class="float-right">{{task.rate.amount | currency : 'CAD'}}</span>
     </p>
     <p class="text-muted text-truncate m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        {{task.description}}
     </p>
     <p class="m-0">
-        <i class="fas fa-map-marker-alt"></i> Location
-        <span class="float-right"><i class="fas fa-calendar"></i> Jan 17, 2020</span>
+        <i class="fas fa-map-marker-alt"></i> {{task.location.city}}
+        <span class="float-right"><i class="fas fa-calendar"></i> {{task.scheduled_date | date}}</span>
     </p>
     <p class="m-0">
-        <span class="badge badge-outline-success">Open</span>
-        <span class="text-muted">12 Offers</span>
-        <span class="badge badge-secondary float-right">Cleaning</span>
+        <span class="badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span>
+        <span class="text-muted">{{task.bidcount}} Offers</span>
+        <span class="badge badge-secondary float-right">{{task.category}}</span>
     </p>
 </div>
-
-
-
-
-
-
-
-<!-- <mat-card (click)="ontaskcardclick()" [ngClass]="task.selected ? 'task-active' : ''" class="task-card mb-3">
-    <mat-card-content>
-        <div>
-            <h3 class="sb-title open font-weight-bold">{{task.title | titlecase | slice:0:25}}</h3>
-        </div>
-        <div class="descr">{{task.description}}</div>
-        <div *ngIf="task.lastbid" class="ramount-init font-weight-bold text-danger">{{task.rate.amount | currency:'CAD':'symbol':'1.0-0'}}</div>
-        <div class="ramount font-weight-bold">{{currentPrice | currency:'CAD':'symbol':'1.0-0'}}</div>
-        <div class="task-header-image float-right">
-            <img *ngIf="task.client.photo" mat-card-avatar [src]="task.client.photo" />
-        </div>
-        <div class="taskinfo">
-            <div>
-                <fa-icon [icon]="faMapMarkerAlt"></fa-icon> {{task.location.city}}, {{task.location.zipcode}}</div>
-            <div>
-                <fa-icon [icon]="faCalendar"></fa-icon> {{task.scheduled_date | date }}</div>
-        </div>
-        <div class="badge badge-light cat-ind">
-            <button type="button" class="btn btn-success">
-                {{task.category}}
-            </button>
-        </div>
-        <div class="footer font-weight-bold small text-success">{{task.status | uppercase}} : 12 offers</div>
-    </mat-card-content>
-</mat-card> -->

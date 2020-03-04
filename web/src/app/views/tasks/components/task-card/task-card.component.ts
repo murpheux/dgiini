@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import { ITask } from '../../models/ITask';
 import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-card',
@@ -15,7 +16,9 @@ export class TaskCardComponent implements OnInit {
     faCalendar = faCalendar;
     faMapMarkerAlt = faMapMarkerAlt;
 
-    constructor() { }
+    constructor(
+        private taskService: TaskService
+    ) { }
 
     ngOnInit() {
         if (this.task.lastbid) {

@@ -18,6 +18,7 @@ export interface ITask {
     selected?: boolean;
     status?: string;
     lastbid?: ITaskBid;
+    bidcount?: number;
 }
 
 export class ClientSlim {
