@@ -4,7 +4,7 @@ import chaiHttp from 'chai-http'
 import sinon from 'sinon'
 //import api from '../src/routes/task_route.js'
 //import HttpStatus from 'http-status-codes'
-import TaskRoute from '../src/TaskRoute'
+//import TaskRoute from '../src/routes/TaskRoute'
 
 // Configure chai
 chai.use(chaiHttp)
@@ -14,23 +14,23 @@ const assert = chai.assert
 const expect = chai.expect
 const should = chai.should()
 
-describe('ATask', () => {
-    describe('GET /tasks', () => {
-        // Test to get all students record
-        it('should do something', (done) => {
-            const mg = sinon.fake.returns(42)
-            const m = new TaskRoute(mg)
+// describe('ATask', () => {
+//     describe('GET /tasks', () => {
+//         // Test to get all students record
+//         it('should do something', (done) => {
+//             const mg = sinon.fake.returns(42)
+//             const m = new TaskRoute(mg)
 
-            const resp = m.doSomething()
+//             const resp = m.doSomething()
 
-            assert(mg.called)
-            expect(resp).to.equal(42)
-            should.equal(resp, 42)
+//             assert(mg.called)
+//             expect(resp).to.equal(42)
+//             should.equal(resp, 42)
 
-            done()
-        })
-    })
-})
+//             done()
+//         })
+//     })
+// })
 
 describe('TIDO', () => {
     describe('Some Stub', () => {

@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
 
     passwordValidator(form: FormGroup) {
         const condition = form.get('password').value !== form.get('confirmpassword').value;
-        return condition ? { passwordsDoNotMatch: true } : null;
+        return condition ? { passwordsDoNotMatch: true } : undefined;
     }
 
     save() {

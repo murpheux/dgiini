@@ -123,6 +123,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     }
 
     private checkIfIntersecting (entry: IntersectionObserverEntry) {
+        // tslint:disable-next-line: no-any
         return (<any>entry).isIntersecting && entry.target === this._element.nativeElement;
     }
 
@@ -214,6 +215,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         this.searchTask(searchString);
     }
 
+    // tslint:disable-next-line: no-any
     handleScroll(event: any) {
     }
 }

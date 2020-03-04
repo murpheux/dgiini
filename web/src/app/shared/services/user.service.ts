@@ -12,6 +12,6 @@ export class UserService {
   }
 
   isLogged() {
-    return localStorage.getItem(TOKEN) != null;
+    return localStorage.getItem(TOKEN) !== undefined;
   }
 }

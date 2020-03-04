@@ -38,25 +38,25 @@ pipeline {
                 '''
             }
         }
-        // stage('Code analyse') {
-        //     steps {
-        //         sh '''
-        //             cd ${WORKSPACE}/ms
-        //             npm run lint
+        stage('Code analyse') {
+            steps {
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run lint
 
-        //             cd ${WORKSPACE}/web
-        //             npm run lint
-        //         '''
-        //     }
-        // }
-        // stage('Unit test') {
-        //     steps {
-        //         sh '''
-        //             cd ${WORKSPACE}/ms
-        //             npm run test
-        //         '''
-        //     }
-        // }
+                    cd ${WORKSPACE}/web
+                    npm run lint
+                '''
+            }
+        }
+        stage('Unit test') {
+            steps {
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run test
+                '''
+            }
+        }
         stage('Create version file') {
             steps {
                 writeFile file: 'build_version', text: '{"version": "${BUILD_NUMBER}"}'

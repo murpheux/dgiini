@@ -48,6 +48,7 @@ export class MessageSenderComponent implements OnInit {
 
     ngOnInit() { }
 
+    // tslint:disable-next-line: no-any
     handleSubmit(formValues: any) {
 
         // update model

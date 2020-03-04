@@ -14,6 +14,7 @@ import { Guid } from 'guid-typescript';
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 
+    // tslint:disable-next-line: no-any
     subscription: any;
     model: ITask;
     readonly = false;

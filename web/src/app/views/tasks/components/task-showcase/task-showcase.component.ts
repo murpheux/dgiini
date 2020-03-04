@@ -48,6 +48,7 @@ export class TaskShowcaseComponent implements OnInit {
         });
     }
 
+    // tslint:disable-next-line: no-any
     onGroupClick(selectedTab: any) {
         const category = this.showcaseTabArray[+selectedTab.index];
 

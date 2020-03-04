@@ -25,13 +25,13 @@ export class TableState {
         this.loading = true;
     }
 
-    attachResponse(response: any): void {
-        this.page = response.currentPage;
-        this.data = response.payload.result;
-        this.count = response.totalItems;
-        this.limit = response.limit;
-        this.loading = false;
-    }
+    // attachResponse(response: any): void {
+    //     this.page = response.currentPage;
+    //     this.data = response.payload.result;
+    //     this.count = response.totalItems;
+    //     this.limit = response.limit;
+    //     this.loading = false;
+    // }
 
     setOrdering(columnName: string): void {
         if (this.orderBy === columnName) {

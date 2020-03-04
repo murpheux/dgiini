@@ -9,6 +9,7 @@ import { VERSION } from 'src/environments/version';
 })
 export class FooterTemplateComponent implements OnInit {
 
+    // tslint:disable-next-line: no-any
     version: any;
 
     constructor() { }

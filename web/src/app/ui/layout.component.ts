@@ -19,7 +19,7 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     }
 
     ngAfterViewChecked() {
-        if (true) { //(this.authService.loggedIn) {
+        if (true) { // (this.authService.loggedIn) {
 
             if (!localStorage.getItem(Constants.AUTH_LOGGEDIN_USER)) {
                 this.authService.userToken$.subscribe(token => {
@@ -32,7 +32,7 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
                 });
 
                 this.authService.userProfile$.subscribe(profile => {
-                    profile = {email: 'dapo.onawole@gmail.com'}
+                    profile = {email: 'dapo.onawole@gmail.com'};
                     localStorage.setItem(Constants.AUTH_USER_PROFILE, JSON.stringify(profile));
 
                     // get user info from db

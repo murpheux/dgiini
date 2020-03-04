@@ -13,6 +13,7 @@ export class ServerErrorInterceptor implements HttpInterceptor {
  constructor(private notifier: NotificationService) {
 
  }
+  // tslint:disable-next-line: no-any
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     return next.handle(request).pipe(

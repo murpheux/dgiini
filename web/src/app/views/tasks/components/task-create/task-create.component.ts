@@ -33,14 +33,17 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     states: string[];
     categoryList: string[];
     options: string[];
+    // tslint:disable-next-line: no-any
     options_keys: any;
 
     rateunits: string[];
+    // tslint:disable-next-line: no-any
     rateunits_keys: any;
 
     currentCity: string;
     currentState: string;
     currentCountry: string;
+    // tslint:disable-next-line: no-any
     currentUser: any;
     selectedCategory: string;
 
@@ -63,10 +66,14 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     }
 
     initializeContent() {
+        // tslint:disable-next-line: no-any
         this.options = Object.keys(TaskType).filter(k => typeof TaskType[k as any] === 'number');
+        // tslint:disable-next-line: no-any
         this.options_keys = this.options.map(k => TaskType[k as any]);
 
+        // tslint:disable-next-line: no-any
         this.rateunits = Object.keys(RateUnit).filter(k => typeof RateUnit[k as any] === 'number');
+        // tslint:disable-next-line: no-any
         this.rateunits_keys = this.rateunits.map(k => RateUnit[k as any]);
 
         // set default values
@@ -102,6 +109,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         return value;
     }
 
+    // tslint:disable-next-line: no-any
     handleSave(formValues: any): void {
 
         const currentDate = new Date();
@@ -174,28 +182,28 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         newTab.classList.remove('fade');
 
         if (this.currentTabOpen === 2) {
-            this.postTaskProgressBar.nativeElement.style.width = '33%'
+            this.postTaskProgressBar.nativeElement.style.width = '33%';
             this.postTaskProgressText.nativeElement.innerHTML = '33%';
             this.postTaskBackBtn.nativeElement.classList.remove('d-none');
         }
 
         if (this.currentTabOpen === 3) {
-            this.postTaskProgressBar.nativeElement.style.width = '50%'
+            this.postTaskProgressBar.nativeElement.style.width = '50%';
             this.postTaskProgressText.nativeElement.innerHTML = '50%';
         }
 
         if (this.currentTabOpen === 4) {
-            this.postTaskProgressBar.nativeElement.style.width = '66%'
+            this.postTaskProgressBar.nativeElement.style.width = '66%';
             this.postTaskProgressText.nativeElement.innerHTML = '66%';
         }
 
         if (this.currentTabOpen === 5) {
-            this.postTaskProgressBar.nativeElement.style.width = '83%'
+            this.postTaskProgressBar.nativeElement.style.width = '83%';
             this.postTaskProgressText.nativeElement.innerHTML = '83%';
         }
 
         if (this.currentTabOpen === 6) {
-            this.postTaskProgressBar.nativeElement.style.width = '100%'
+            this.postTaskProgressBar.nativeElement.style.width = '100%';
             this.postTaskProgressText.nativeElement.innerHTML = '100%';
             this.postTaskNextBtn.nativeElement.classList.add('d-none');
             this.postTaskPostBtn.nativeElement.classList.remove('d-none');
@@ -215,28 +223,28 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         newTab.classList.remove('fade');
 
         if (this.currentTabOpen === 1) {
-            this.postTaskProgressBar.nativeElement.style.width = '16%'
+            this.postTaskProgressBar.nativeElement.style.width = '16%';
             this.postTaskProgressText.nativeElement.innerHTML = '16%';
             this.postTaskBackBtn.nativeElement.classList.add('d-none');
         }
 
         if (this.currentTabOpen === 2) {
-            this.postTaskProgressBar.nativeElement.style.width = '33%'
+            this.postTaskProgressBar.nativeElement.style.width = '33%';
             this.postTaskProgressText.nativeElement.innerHTML = '33%';
         }
 
         if (this.currentTabOpen === 3) {
-            this.postTaskProgressBar.nativeElement.style.width = '50%'
+            this.postTaskProgressBar.nativeElement.style.width = '50%';
             this.postTaskProgressText.nativeElement.innerHTML = '50%';
         }
 
         if (this.currentTabOpen === 4) {
-            this.postTaskProgressBar.nativeElement.style.width = '66%'
+            this.postTaskProgressBar.nativeElement.style.width = '66%';
             this.postTaskProgressText.nativeElement.innerHTML = '66%';
         }
 
         if (this.currentTabOpen === 5) {
-            this.postTaskProgressBar.nativeElement.style.width = '83%'
+            this.postTaskProgressBar.nativeElement.style.width = '83%';
             this.postTaskProgressText.nativeElement.innerHTML = '83%';
             this.postTaskNextBtn.nativeElement.classList.remove('d-none');
             this.postTaskPostBtn.nativeElement.classList.add('d-none');

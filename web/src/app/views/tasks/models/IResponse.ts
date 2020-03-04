@@ -5,6 +5,7 @@ export interface IResponse {
     description: string;
     payload: {
         count: number;
+        // tslint:disable-next-line: no-any
         data: any;
     };
 }

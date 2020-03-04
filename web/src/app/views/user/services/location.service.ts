@@ -12,6 +12,7 @@ export class LocationService {
 
     constructor(private http: HttpClient) { }
 
+    // tslint:disable-next-line: no-any
     getMyIPAddress(): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
         const url = `${environment.services.ipify}`;

@@ -32,20 +32,25 @@ export class AuthService {
         concatMap((client: Auth0Client) => from(client.handleRedirectCallback()))
     );
 
+    // tslint:disable-next-line: no-any
     private userProfileSubject$ = new BehaviorSubject<any>(undefined);
+    // tslint:disable-next-line: no-any
     private userTokenSubject$ = new BehaviorSubject<any>(undefined);
+    // tslint:disable-next-line: no-any
     private userClaimsSubject$ = new BehaviorSubject<any>(undefined);
 
     userProfile$ = this.userProfileSubject$.asObservable();
     userToken$ = this.userTokenSubject$.asObservable();
     userClaims$ = this.userClaimsSubject$.asObservable();
 
-    loggedIn: boolean = true;
+    // loggedIn: boolean = true;
+    loggedIn = true;
 
     constructor(private router: Router) { }
 
     // When calling, options can be passed if desired
     // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser
+    // tslint:disable-next-line: no-any
     getUser$(options?): Observable<any> {
         return this.auth0Client$.pipe(
             concatMap((client: Auth0Client) => from(client.getUser(options))),
@@ -53,6 +58,7 @@ export class AuthService {
         );
     }
 
+    // tslint:disable-next-line: no-any
     getClaims$(options?): Observable<any> {
         return this.auth0Client$.pipe(
             concatMap((client: Auth0Client) => from(client.getIdTokenClaims(options))),
@@ -60,6 +66,7 @@ export class AuthService {
         );
     }
 
+    // tslint:disable-next-line: no-any
     getToken$(options?): Observable<any> {
         return this.auth0Client$.pipe(
             concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
@@ -78,6 +85,7 @@ export class AuthService {
             })
         );
 
+        // tslint:disable-next-line: no-any
         const checkAuthSub = checkAuth$.subscribe((response: { [key: string]: any } | boolean) => {
             this.loggedIn = !!response;
             checkAuthSub.unsubscribe();

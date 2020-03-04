@@ -17,7 +17,8 @@ import { UserstatsComponent } from './components/userstats/userstats.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
-  declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent, UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
+  declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent,
+    UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
   imports: [
     CommonModule,
     SharedModule,

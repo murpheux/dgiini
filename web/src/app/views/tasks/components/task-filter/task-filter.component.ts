@@ -103,6 +103,7 @@ export class TaskFilterComponent implements OnInit {
         return value;
     }
 
+    // tslint:disable-next-line: no-any
     onCategoriesChanged(event: any) {
         if (event.target) {
             this.selectedCategory = this.selectedCategory ? this.selectedCategory : [];
@@ -126,6 +127,7 @@ export class TaskFilterComponent implements OnInit {
         this.searchClicked.emit(this.searchString);
     }
 
+    // tslint:disable-next-line: no-any
     onValueChange(event: any) {
         this.distanceToHome = event.target.value;
     }

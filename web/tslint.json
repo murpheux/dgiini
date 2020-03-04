@@ -3,6 +3,7 @@
         "codelyzer"
     ],
     "rules": {
+        "no-any": false,
         "arrow-return-shorthand": true,
         "callable-types": true,
         "class-name": true,
