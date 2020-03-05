@@ -14,7 +14,7 @@ const file = resolve(__dirname, 'src', 'version.js')
 writeFileSync(file,
     `// IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!
 /* tslint:disable */
-export const VERSION = ${JSON.stringify(gitInfo, null, 4)}
+export const VERSION = ${JSON.stringify(gitInfo, null, 4).replace(/"/g, '\'')}
 /* tslint:enable */
 `, { encoding: 'utf-8' })
 
