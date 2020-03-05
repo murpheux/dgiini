@@ -59,8 +59,7 @@ services:
             - APP_NAME=auth_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=*
-            - CITY_SERVICE=https://tools.keycdn.com/geo.json
+            - COR_CLIENT_URL=http://sdpro.dynu.com:7000
         ports:
             - "8008:80"
         volumes:
@@ -88,8 +87,7 @@ services:
             - APP_NAME=task_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=*
-            - CITY_SERVICE=https://tools.keycdn.com/geo.json
+            - COR_CLIENT_URL=http://sdpro.dynu.com:7000
         ports:
             - "8000:80"
         volumes:
@@ -117,8 +115,7 @@ services:
             - APP_NAME=msg_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=*
-            - CITY_SERVICE=https://tools.keycdn.com/geo.json
+            - COR_CLIENT_URL=http://sdpro.dynu.com:7000
         ports:
             - "8004:80"
         volumes:

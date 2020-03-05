@@ -14,7 +14,8 @@ import winston from './shared/winston'
 import common from './shared/common'
 
 import * as gen from './version'
-const msg_router = require('./routes/msg_route')
+import msg_router from './routes/msg_route'
+import { set_whitelist } from './shared/lib'
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
@@ -43,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan(log_format, { stream: winston.stream }))
 
-var whitelist = [CLIENT_URL, 'http://localhost:9002', undefined]
+var whitelist = set_whitelist(CLIENT_URL)
 var corsOptions = {
     origin: (origin, callback) => {
         if (whitelist.indexOf(origin) !== -1) { callback(null, true) } else { callback(new Error('Not allowed by CORS')) }

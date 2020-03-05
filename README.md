@@ -69,6 +69,30 @@ $ yarn dev src/auth_api &
 $ yarn dev src/notify_api &
 ```
 
+### > api gateway
+
+```bash
+$ yarn start
+
+or
+
+$ nodemon start --watch config/gateway.config.yml
+```
+
+## CI/CD Build
+
+```bash
+$ curl http://gru:8088/git/notifyCommit?url=ssh://jenkins@scarlet/projects.git/projects/dgiini
+
+or
+
+ssh -l murpheux -p 53801 gru build dgiini -p deploy=false -p branch=dev
+
+or
+
+$ .build/jenkins/build.sh
+```
+
 ## Database
 
 Recommended database of choice is mongodb or any other related document database provided by the adopted cloud provider.

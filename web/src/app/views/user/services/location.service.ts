@@ -15,7 +15,6 @@ export class LocationService {
     // tslint:disable-next-line: no-any
     getMyIPAddress(): Observable<any> {
         const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
-        const url = `${environment.services.ipify}`;
         return this.http.get('/api', {responseType: 'text', headers});
     }
 
