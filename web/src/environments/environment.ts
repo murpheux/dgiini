@@ -6,11 +6,6 @@ export const environment = {
         api: 'https://localhost:7000/api',
     },
 
-    // 3rd party services
-    services: {
-        ipify: 'http://api.ipify.org',
-    },
-
     // AUTH0
     auth0: {
         domain: 'murpheux.auth0.com',
