@@ -1,34 +1,26 @@
 https:
   port: 7000
-  # hostname: 10.10.2.7
   tls:
     "default":
         key: cert/dgiini.key.pem
         cert: cert/dgiini.cert.pem
 admin:
   port: 9876
-  # host: 10.10.2.7
 apiEndpoints:
   taskApiDefault:
-    # host: 10.10.2.7
     paths: '/api/task/v1/'
     methods: GET
   taskApi:
-    # host: 10.10.2.7
     paths: '/api/task/v1/*'
   authApiDefault:
-    # host: 10.10.2.7
     paths: '/api/auth/v1/'
     methods: GET
   authApi:
-    # host: 10.10.2.7
     paths: '/api/auth/v1/*'
   msgApiDefault:
-    # host: 10.10.2.7
     paths: '/api/msg/v1/'
     methods: GET
   msgApi:
-    # host: 10.10.2.7
     paths: '/api/msg/v1/*'
 
 serviceEndpoints:
@@ -38,6 +30,8 @@ serviceEndpoints:
     url: 'http://localhost:8008'
   msgService:
     url: 'http://localhost:8004'
+  notifyService:
+    url: 'http://localhost:8002'
 
 policies:
   - basic-auth
@@ -68,9 +62,10 @@ pipelines:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
-            # prependPath: true
-            # ignorePath: false
-            # stripPath: true
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
   taskPipeline:
     apiEndpoints:
       - taskApi
@@ -89,9 +84,10 @@ pipelines:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
-            # prependPath: true
-            # ignorePath: false
-            # stripPath: true
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
   authDefaultPipeline:
     apiEndpoints:
       - authApiDefault
@@ -105,6 +101,10 @@ pipelines:
         - action:
             serviceEndpoint: authService
             changeOrigin: true
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
   authPipeline:
     apiEndpoints:
       - authApi
@@ -112,6 +112,10 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: authService
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
   msgDefaultPipeline:
     apiEndpoints:
       - msgApiDefault
@@ -125,6 +129,10 @@ pipelines:
         - action:
             serviceEndpoint: msgService
             changeOrigin: true
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
   msgPipeline:
     apiEndpoints:
       - msgApi
@@ -132,3 +140,7 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: msgService
+      - cors:
+        - action:
+          origin: http://sdpro.dynu.com:9000
+          credentials: true
