@@ -87,6 +87,14 @@ use <database name>
 db.dropDatabase()
 ```
 
+### Dump Database
+
+```mongo
+mongodump --host gru -d dg_taskdb -o task$(date +%s)
+mongodump --host gru -d dg_authdb -o auth$(date +%s)
+mongodump --host gru -d dg_messagedb -o msg$(date +%s)
+```
+
 ### Load database dump
 
 1. Download and unzip archived dump file.
@@ -94,7 +102,9 @@ db.dropDatabase()
 
 ```bash
 #!/bin/bash
-mongorestore -d epic epic/
+mongorestore --host gru -d dg_taskdb task0730474/
+mongorestore --host gru -d dg_authdb auth0730475/
+mongorestore --host gru -d dg_messagedb msg0730476/
 ```
 
 ### Data Generation

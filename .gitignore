@@ -10,6 +10,8 @@
 **/gw/.cache
 /tmp
 /out-tsc
+**/data
+**/nweb
 
 # dependencies
 **/node_modules

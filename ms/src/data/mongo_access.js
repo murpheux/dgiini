@@ -348,7 +348,7 @@ module.exports = {
                 const count = db.collection(collection)
                     .aggregate([{ $match: { '_id': { '$gt': ObjectId(paging.lastid) } } },
                         { $count: 'count' }
-                    ]).limit(paging.page_limit)
+                    ])
                     .toArray()
 
                 resolve(count)

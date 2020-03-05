@@ -45,7 +45,8 @@ router.get('/tasks', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
     const [count, data] = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
+    const cnt = count.length > 0 ? count[0].count : 0
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
 }))
 
 router.get('/tasks/city/:city', asyncHandler(async(req, res, next) => {
@@ -59,7 +60,8 @@ router.get('/tasks/city/:city', asyncHandler(async(req, res, next) => {
     const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
     const [count, data] = await invoke_getlist()
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
+    const cnt = count.length > 0 ? count[0].count : 0
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
 }))
 
 // user task
@@ -287,7 +289,8 @@ router.get('/tasks/city/:city/category/:category', asyncHandler(async(req, res, 
         const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)
 
         const [count, data] = await invoke_getlist()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count[0].count, data))
+        const cnt = count.length > 0 ? count[0].count : 0
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
     }
 }))
 

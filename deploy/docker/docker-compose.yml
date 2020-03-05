@@ -133,6 +133,8 @@ services:
 
     db:
         image: mongo:4.1.13-bionic
+        ports:
+            - "27017:27017"
         container_name: dgmongo
         networks:
             - dgnet
