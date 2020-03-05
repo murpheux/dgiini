@@ -1,5 +1,5 @@
 https:
-  port: 443
+  port: 7000
   tls:
     "default":
         key: cert/dgiini.key.pem
@@ -22,33 +22,37 @@ apiEndpoints:
     methods: GET
   msgApi:
     paths: '/api/msg/v1/*'
+
 serviceEndpoints:
   taskService:
-    url: 'http://task_api'
+    url: 'http://localhost:8000'
   authService:
-    url: 'http://auth_api'
+    url: 'http://localhost:8008'
   msgService:
-    url: 'http://msg_api'
+    url: 'http://localhost:8004'
+  notifyService:
+    url: 'http://localhost:8002'
+
 policies:
-  - basic-auth
   - cors
-  - expression
-  - key-auth
-  - jwt
-  - log
-  - oauth2
   - proxy
-  - rate-limit
+
 pipelines:
   taskDefaultPipeline:
     apiEndpoints:
       - taskApiDefault
     policies:
-      - rate-limit:
-        - action:
-            max: 10
-            windowsMs: 120000
-            rateLimitBy: '${req.hostname}'
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -57,17 +61,17 @@ pipelines:
     apiEndpoints:
       - taskApi
     policies:
-      # - log:
-      #   - action:
-      #       message: ${req.ip} - ${req.method} ${req.originalUrl}
-      # - jwt:
-      #   - action:
-      #       secretOrPublicKeyFile: './cert/gen.cert.pem'
-      - cors:
-        - action:
-              origin: '*'
-              methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-              allowedHeaders: ['Content-Type', 'Authorization']
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -76,24 +80,37 @@ pipelines:
     apiEndpoints:
       - authApiDefault
     policies:
-      - rate-limit:
-        - action:
-            max: 10
-            windowsMs: 120000
-            rateLimitBy: '${req.hostname}'
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: authService
             changeOrigin: true
+      
   authPipeline:
     apiEndpoints:
       - authApi
     policies:
-      - cors:
-        - action:
-              origin: '*'
-              methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-              allowedHeaders: ['Content-Type', 'Authorization']
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: authService
@@ -101,11 +118,17 @@ pipelines:
     apiEndpoints:
       - msgApiDefault
     policies:
-      - rate-limit:
-        - action:
-            max: 10
-            windowsMs: 120000
-            rateLimitBy: '${req.hostname}'
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: msgService
@@ -114,11 +137,17 @@ pipelines:
     apiEndpoints:
       - msgApi
     policies:
-      - cors:
-        - action:
-            origin: '*'
-            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
-            allowedHeaders: ['Content-Type', 'Authorization']
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://sdpro.dynu.com:9000', 'http://sclet:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
       - proxy:
         - action:
             serviceEndpoint: msgService
