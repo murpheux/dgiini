@@ -29,7 +29,9 @@ const CLIENT_URL = process.env.COR_CLIENT_URL || 'http://localhost:9000'
 const app = express()
 app.use(compression()) // use compression
 
-if (process.env.NODE_ENV === 'development') {
+if ((process.env.NODE_ENV === 'development') &&
+    (fs.existsSync('swagger.yaml')))
+{
     const file = fs.readFileSync('swagger.yaml', 'utf8')
     const swagger_config = yaml.parse(file)
 
