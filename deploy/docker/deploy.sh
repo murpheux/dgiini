@@ -39,14 +39,14 @@ unzip msnotify.zip -d msnotify && rm msnotify.zip
 unzip msbill.zip -d msbill && rm msbill.zip
 unzip web.zip -d web && rm web.zip
 
-mkdir -p deploy/app
-mv apigw deploy/app
-mv msauth deploy/app
-mv mstask deploy/app
-mv msmsg deploy/app
-mv msnotify deploy/app
-mv msbill deploy/app
-mv web deploy/app
+mkdir -p deploy/docker/app
+mv apigw deploy/docker/app
+mv msauth deploy/docker/app
+mv mstask deploy/docker/app
+mv msmsg deploy/docker/app
+mv msnotify deploy/docker/app
+mv msbill deploy/docker/app
+mv web deploy/docker/app
 
 cd ../../
 
