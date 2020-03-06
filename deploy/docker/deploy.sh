@@ -20,7 +20,7 @@ if [ -d "$CURR_DIR" ]; then
     docker-compose -H sclet:2375 -f $CURR_DIR/archive/deploy/docker/docker-compose.yml down
 
     echo 'remove current deployment files'
-    sudo rm -rf $CURR_DIR
+    rm -rf $CURR_DIR
 fi
 
 curl --user murpheux:$JK_TOKEN -O http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
@@ -36,13 +36,22 @@ unzip mstask.zip -d mstask && rm mstask.zip
 unzip msauth.zip -d msauth && rm msauth.zip
 unzip msmsg.zip -d msmsg && rm msmsg.zip
 unzip msnotify.zip -d msnotify && rm msnotify.zip
-unzip msbill.zip -d msnbill && rm msbill.zip
+unzip msbill.zip -d msbill && rm msbill.zip
 unzip web.zip -d web && rm web.zip
+
+mkdir -p deploy/app
+mv apigw deploy/app
+mv msauth deploy/app
+mv mstask deploy/app
+mv msmsg deploy/app
+mv msnotify deploy/app
+mv msbill deploy/app
+mv web deploy/app
 
 cd ../../
 
 #sudo chown -R murpheux:murpheux $NEW_DIR
-sudo chmod -R 755 $NEW_DIR
+chmod -R 755 $NEW_DIR
 
 echo 'start new run'
 docker-compose -H sclet:2375 -f $NEW_DIR/archive/deploy/docker/docker-compose.yml up -d

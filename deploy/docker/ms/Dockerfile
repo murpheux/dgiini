@@ -4,7 +4,7 @@ ARG $APPFILE
 
 WORKDIR /usr/src/app
 
-COPY ../../$APPNAME/ /usr/src/app
+COPY app/$APPNAME/ /usr/src/app
 
 RUN npm install --only=production
 
