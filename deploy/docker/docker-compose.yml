@@ -2,7 +2,9 @@ version: '3.7'
 services:
 
     web:
-        image: nginx:1.17.9
+        build:
+          context: ./web/
+          dockerfile: Dockerfile
         depends_on:
             - apigw
         environment:
@@ -10,16 +12,14 @@ services:
             - NGINX_PORT=80
         ports:
             - "9000:80"
-        volumes:
-            - ../../web:/usr/share/nginx/html
-            - ../nginx/dgiini.template:/etc/nginx/conf.d/dgiini.template
         container_name: web
-        #command: /bin/bash -c "envsubst < /etc/nginx/conf.d/dgiini.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
         networks:
             - dgnet
 
     apigw:
-        image: node:13.10.1-stretch
+        build:
+          context: ./gw/
+          dockerfile: Dockerfile
         depends_on:
             - auth_api
             - task_api
@@ -36,18 +36,17 @@ services:
             - APP_BUILD=0.0.1.00237
         ports:
             - "7000:443"
-        volumes:
-            - ../../apigw:/usr/src/app
         container_name: apigw
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && npm run start"
         networks:
             - dgnet
 
     auth_api:
-        image: node:13.10.1-stretch
+        build:
+          context: ./ms/
+          dockerfile: Dockerfile
+          args:
+            APPNAME: msauth
+            APPFILE: auth_api
         depends_on:
             - db
         environment:
@@ -62,18 +61,17 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
             - COR_CLIENT_URL=https://sdpro.dynu.com:7000
-        volumes:
-            - ../../msauth:/usr/src/app
         container_name: auth_api
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && node auth_api"
         networks:
             - dgnet
 
     task_api:
-        image: node:12.6.0-stretch
+        build:
+          context: ./ms/
+          dockerfile: Dockerfile
+          args:
+            APPNAME: mstask
+            APPFILE: task_api
         depends_on:
             - db
         environment:
@@ -88,18 +86,17 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
             - COR_CLIENT_URL=https://sdpro.dynu.com:9000
-        volumes:
-            - ../../mstask:/usr/src/app
         container_name: task_api
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && node task_api"
         networks:
             - dgnet
 
     msg_api:
-        image: node:13.10.1-stretch
+        build:
+          context: ./ms/
+          dockerfile: Dockerfile
+          args:
+            APPNAME: msmsg
+            APPFILE: msg_api
         depends_on:
             - db
         environment:
@@ -114,18 +111,17 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
             - COR_CLIENT_URL=https://sdpro.dynu.com:9000
-        volumes:
-            - ../../msmsg:/usr/src/app
         container_name: msg_api
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && node msg_api"
         networks:
             - dgnet
 
     notify_api:
-        image: node:13.10.1-stretch
+        build:
+          context: ./ms/
+          dockerfile: Dockerfile
+          args:
+            APPNAME: msnotify
+            APPFILE: notify_api
         depends_on:
             - db
         environment:
@@ -142,18 +138,17 @@ services:
             - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
             - SENDGRID_API_KEY=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
             - COR_CLIENT_URL=https://sdpro.dynu.com:9000
-        volumes:
-            - ../../msnotify:/usr/src/app
         container_name: notify_api
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && node notify_api"
         networks:
             - dgnet
 
     bill_api:
-        image: node:13.10.1-stretch
+        build:
+          context: ./ms/
+          dockerfile: Dockerfile
+          args:
+            APPNAME: msbill
+            APPFILE: bill_api
         depends_on:
             - db
         environment:
@@ -168,19 +163,15 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
             - COR_CLIENT_URL=https://sdpro.dynu.com:9000
-        volumes:
-            - ../../msbill:/usr/src/app
         container_name: bill_api
-        command: >
-            bash -c "cd /usr/src/app
-            && npm install --only=production
-            && node bill_api"
         networks:
             - dgnet
 
     db:
         image: mongo:4.2.3-bionic
         container_name: dgmongo
+        volumes:
+          - /home/murpheux/data:/data/db
         networks:
             - dgnet
 
