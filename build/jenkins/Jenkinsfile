@@ -8,12 +8,10 @@ pipeline {
         IMAGE_VERSION="v_${BUILD_NUMBER}"
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
-        //ARTIFACT_URL = 'http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_${BUILD_NUMBER}.zip'
     }
-    // parameters {
-    //     booleanParam(name: 'deploy', defaultValue: false, description: 'Deploy if true')
-    //     string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
-    // }
+    parameters {
+        string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
+    }
     tools {
         nodejs "node"
         git "Default"
@@ -24,29 +22,47 @@ pipeline {
                 deleteDir() /* clean up our workspace */
 
                 // Git repository
-                git branch: "develop", url: "${GIT_URL}"
+                git branch: "${branch}", url: "${GIT_URL}"
             }
         }
         stage('install dependencies') {
-            steps {
-                sh '''
-                    cd ${WORKSPACE}/ms
-                    npm install
-
-                    cd ${WORKSPACE}/web
-                    npm install
-                '''
+            parallel {
+                stage('install web dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm install
+                        '''
+                    }
+                }
+                stage('install ms dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm install
+                        '''
+                    }
+                }
             }
         }
         stage('Code analyse') {
-            steps {
-                sh '''
-                    cd ${WORKSPACE}/ms
-                    npm run lint
-
-                    cd ${WORKSPACE}/web
-                    npm run lint
-                '''
+            parallel {
+                stage('web lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm run lint
+                        '''
+                    }
+                }
+                stage('ms lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm run lint
+                        '''
+                    }
+                }
             }
         }
         stage('Unit test') {
@@ -115,6 +131,26 @@ pipeline {
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
                     }
                 }
+                stage('Build notify_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msnotify npm run build src/notify_api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msnotify/'
+                    }
+                }
+                stage('Build bill_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msbill npm run build src/bill_api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'
+                    }
+                }
             }
         }
         stage('Zip/Artifacts') {
@@ -136,6 +172,12 @@ pipeline {
 
                 zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
                 archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
+
+                zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
+                archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
+
+                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
+                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
             }
         }
         stage('clean') {
@@ -143,20 +185,6 @@ pipeline {
                 deleteDir() /* clean up our workspace */
             }
         }
-        // stage('Deploy') {
-        //     when { deploy true }
-        //     steps {
-        //         // deploy with ansible
-        //         ansiblePlaybook colorized: true, 
-        //             credentialsId: 'jenkins',
-        //             limit: "scarlet",
-        //             installation: 'ansible',
-        //             inventory: 'inventory.ini', 
-        //             playbook: 'playbook.yml', 
-        //             sudo: true,
-        //             sudoUser: 'jenkins'
-        //     }
-        // }
     }
     post {
         success {

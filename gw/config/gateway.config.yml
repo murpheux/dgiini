@@ -22,16 +22,28 @@ apiEndpoints:
     methods: GET
   msgApi:
     paths: '/api/msg/v1/*'
+  notifyApiDefault:
+    paths: '/api/notify/v1/'
+    methods: GET
+  notifyApi:
+    paths: '/api/notify/v1/*'
+  billApiDefault:
+    paths: '/api/bill/v1/'
+    methods: GET
+  billApi:
+    paths: '/api/bill/v1/*'
 
 serviceEndpoints:
-  taskService:
-    url: 'http://localhost:8000'
   authService:
-    url: 'http://localhost:8008'
+    url: 'http://localhost:8000'
+  taskService:
+    url: 'http://localhost:8002'
   msgService:
     url: 'http://localhost:8004'
   notifyService:
-    url: 'http://localhost:8002'
+    url: 'http://localhost:8006'
+  billService:
+    url: 'http://localhost:8008'
 
 policies:
   #- basic-auth
@@ -92,6 +104,7 @@ pipelines:
         - action:
             serviceEndpoint: taskService
             changeOrigin: true
+  
   authDefaultPipeline:
     apiEndpoints:
       - authApiDefault
@@ -115,8 +128,7 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: authService
-            changeOrigin: true
-      
+            changeOrigin: true  
   authPipeline:
     apiEndpoints:
       - authApi
@@ -135,6 +147,7 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: authService
+  
   msgDefaultPipeline:
     apiEndpoints:
       - msgApiDefault
@@ -177,3 +190,79 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: msgService
+
+  notifyDefaultPipeline:
+    apiEndpoints:
+      - notifyApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://localhost:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
+      - proxy:
+        - action:
+            serviceEndpoint: notifyService
+            changeOrigin: true
+  notifyPipeline:
+    apiEndpoints:
+      - notifyApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://localhost:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
+      - proxy:
+        - action:
+            serviceEndpoint: notifyService
+
+  billDefaultPipeline:
+    apiEndpoints:
+      - billApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://localhost:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
+      - proxy:
+        - action:
+            serviceEndpoint: billService
+            changeOrigin: true
+  billPipeline:
+    apiEndpoints:
+      - billApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: ['http://localhost:9000']
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
+      - proxy:
+        - action:
+            serviceEndpoint: billService

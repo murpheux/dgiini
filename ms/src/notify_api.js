@@ -7,30 +7,44 @@ import compression from 'compression'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
-import uuid from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 import HttpStatus from 'http-status-codes'
+import fs from 'fs'
+import yaml from 'yaml'
+import swaggerui from 'swagger-ui-express'
 
-import winston from './winston'
+import winston from './shared/winston'
 import common from './shared/common'
 
-const ntf_router = require('./routes/notify_route')
+import * as gen from './version'
+import nf_router from './routes/notify_route'
+import { set_whitelist } from './shared/lib'
 
 // eslint-disable-next-line no-unused-vars
 const log_level = process.env.LOG_LEVEL || 'debug'
 const log_format = process.env.LOG_FORMAT || 'combined'
 const port = process.env.PORT || process.env.NTF_API_PORT
 
-const CLIENT_URL = 'http://localhost:9000'
+const CLIENT_URL = process.env.COR_CLIENT_URL || 'http://localhost:9000'
 
 const app = express()
 app.use(compression()) // use compression
+
+if ((process.env.NODE_ENV === 'development') &&
+    (fs.existsSync('swagger.yaml')))
+{
+    const file = fs.readFileSync('swagger.yaml', 'utf8')
+    const swagger_config = yaml.parse(file)
+
+    app.use('/api/docs/v1', swaggerui.serve, swaggerui.setup(swagger_config))
+}
 
 // check configuration
 if (config.error) { throw config.error }
 
 // id for log
 const requestId = (req, res, next) => {
-    req.id = uuid()
+    req.id = uuidv4()
     next()
 }
 
@@ -41,17 +55,28 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(morgan(log_format, { stream: winston.stream }))
-app.use(cors({ origin: CLIENT_URL }))
+
+var whitelist = set_whitelist(CLIENT_URL)
+var corsOptions = {
+    origin: (origin, callback) => {
+        if (whitelist.indexOf(origin) !== -1) { callback(null, true) } else { callback(new Error('Request blocked by CORS')) }
+    }
+}
+app.use(cors(corsOptions))
+
+if (process.env.NODE_ENV === 'production') {
+    //running in production
+}
 
 // ping
-app.get('/api/', (req, res) => {
+app.get('/api/notify/v1/', (req, res) => {
     let payload = {
-        'Service': `${common.app_name} ${common.version} ${common.build}`
+        'Service': `notify ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
 })
 
-app.use('/api/', ntf_router)
+app.use('/api/notify/v1/', nf_router)
 
 // 404
 app.use((req, res) => {
@@ -68,4 +93,4 @@ app.use((req, res) => {
 })
 
 //start the app server
-app.listen(port, () => console.log(`task api listening on port ${port}!`))
+app.listen(port, () => console.log(`notify api listening on port ${port}!`))

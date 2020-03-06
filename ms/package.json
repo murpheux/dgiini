@@ -19,6 +19,7 @@
         "postinstall": "node semver.js"
     },
     "dependencies": {
+        "@sendgrid/mail": "^6.5.4",
         "app-root-path": "^3.0.0",
         "body-parser": "^1.19.0",
         "compression": "^1.7.4",

@@ -283,7 +283,7 @@ router.get('/tasks/city/:city/category/:category', asyncHandler(async(req, res, 
     paging.filter = { 'location.city': city, category: { $in: categories } }
 
     if (validation.hasErrors()) {
-        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, 0, validation.getErrors()))
     } else {
         const db = await mgaccess.get_connection(common.database_uri, database_name, options)
         const invoke_getlist = async() => await mgaccess.getlisttask(db, TASK_COLL, paging)

@@ -7,7 +7,7 @@ import compression from 'compression'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
-import uuid from 'uuid/v4'
+import { v4 as uuidv4 } from 'uuid'
 import HttpStatus from 'http-status-codes'
 import fs from 'fs'
 import yaml from 'yaml'
@@ -44,7 +44,7 @@ if (config.error) { throw config.error }
 
 // id for log
 const requestId = (req, res, next) => {
-    req.id = uuid()
+    req.id = uuidv4()
     next()
 }
 

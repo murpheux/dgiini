@@ -1,43 +1,36 @@
+/* eslint-disable no-unused-vars */
 'use strict'
 
 import express from 'express'
-import mongodb from 'mongodb'
+
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
+import titleCase from 'title-case'
+import mongodb from 'mongodb'
+import asyncHandler from 'express-async-handler'
+import nodemailer from 'nodemailer'
+import sendgridmail from '@sendgrid/mail'
 
 import common from '../shared/common'
-import build_response from '../shared/lib'
-import winston from '../winston'
+import VALIDATION_MSG from '../shared/error_messages'
+import { build_response, options, build_paging, enrich_paging } from '../shared/lib'
+import winston from '../shared/winston'
 
+const mgaccess = require('../data/mongo_access')
 const router = express.Router()
-const mongoClient = mongodb.MongoClient
+const database_name = process.env.BILL_DATABASE || 'dg_billdb'
+const ObjectId = mongodb.ObjectId
+const BILL_COLL = 'bill'
 
-const database = process.env.TASK_DATABASE || 'dg_taskdb'
-const TASK_COLL = 'tasks'
-const VALIDATION_MSG = 'validation errors encountered'
 
-const options = {
-    poolSize: 20,
-    socketTimeoutMS: 480000,
-    keepAlive: 300000,
-    sslValidate: false,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-    useNewUrlParser: true
-}
+const collections = [BILL_COLL]
+mgaccess.setup_database(common.database_uri, database_name, options, collections).then(
+    _ => {
+        winston.info(`Collection ${collections} created!`)
+    },
+    err => { winston.error('Error! ', err) }
+)
 
-const setup_database = () => {
-    mongoClient.connect(common.database_uri, options, (err, client) => {
-        client.db(database).createCollection(TASK_COLL, (err) => {
-            if (err) { winston.error(err) }
-
-            winston.info(`Collection ${TASK_COLL} created!`)
-            client.close()
-        })
-    })
-}
-
-setup_database()
 
 router.post('/cards', (req, res) => {
     const card = req.body

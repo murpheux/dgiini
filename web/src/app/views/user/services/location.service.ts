@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IResponse } from '../../tasks/models/IResponse';
 import { Observable, Subject } from 'rxjs';
-import { Guid } from 'guid-typescript';
 import { Constants } from 'src/app/shared/models/constants';
 @Injectable()
 export class LocationService {
@@ -24,7 +22,6 @@ export class LocationService {
     }
 
     getCurrentCity(): Promise<string> {
-
         return new Promise<string>((resolve, reject) => {
             let currentCity = 'Unknown';
             new Observable(observer => { observer.next(localStorage.getItem(Constants.LOC_CURRENT_CITY)); }).subscribe(data => {
@@ -32,6 +29,7 @@ export class LocationService {
                     currentCity = data.toString();
                 } else {
                     this.getMyIPAddress().subscribe(resp => {
+                        console.log(JSON.stringify(resp));
                         const publicIPAddress = resp;
 
                         if (publicIPAddress) {
