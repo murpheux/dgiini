@@ -1,5 +1,6 @@
 {
     "name": "dgiini",
+    "description": "",
     "version": "1.0.0",
     "main": "index.js",
     "author": "Clement Onawole <dapo.onawole@gmail.com>",
@@ -7,6 +8,10 @@
         "Dupe Orefuja <dorefuja@gmail.com>"
     ],
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "murpheux@scarlet:/projects.git/projects/dgiini"
+    },
     "scripts": {
         "build": "parcel build --no-source-maps --out-dir $OUT_DIR --target node --no-cache",
         "watch": "parcel watch --no-source-maps --target node --no-cache",
@@ -48,7 +53,6 @@
         "@babel/preset-env": "^7.8.6",
         "@babel/register": "^7.8.6",
         "@types/chai": "^4.2.10",
-        "@types/dotenv": "^8.2.0",
         "@types/mocha": "^7.0.2",
         "@types/sinon": "^7.5.2",
         "babel-eslint": "^10.1.0",

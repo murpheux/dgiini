@@ -1,6 +1,15 @@
 {
     "name": "dgiini",
     "version": "0.0.1-dev.0",
+    "author": "Clement Onawole <dapo.onawole@gmail.com>",
+    "contributors": [
+        "Dupe Orefuja <dorefuja@gmail.com>"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "murpheux@scarlet:/projects.git/projects/dgiini"
+    },
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
