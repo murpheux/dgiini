@@ -65,7 +65,7 @@ services:
     task_api:
         build:
           context: .
-          dockerfile: Dockerfile_ms
+          dockerfile: task_dockerfile
         depends_on:
             - db
         environment:

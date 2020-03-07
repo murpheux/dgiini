@@ -19,6 +19,10 @@ if [ -d "$CURR_DIR" ]; then
     echo 'releasing current run'
     docker-compose -H sclet:2375 -f $CURR_DIR/archive/deploy/docker/docker-compose.yml down
 
+    echo 'remove previous build images'
+    docker rmi docker_web docker_apigw docker_auth_api docker_task_api \
+        docker_msg_api docker_notify_api docker_bill_api
+
     echo 'remove current deployment files'
     rm -rf $CURR_DIR
 fi
