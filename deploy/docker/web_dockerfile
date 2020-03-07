@@ -1,7 +1,6 @@
 FROM nginx:1.17.9
-ARG $RELFOLDER
 
-WORKDIR /usr/src/app
+WORKDIR /usr/share/nginx/html
 
-COPY app/web/ /usr/src/app
+COPY app/web/ /usr/share/nginx/html
 COPY app/dgiini.template /etc/nginx/conf.d/dgiini.template

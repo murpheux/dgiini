@@ -4,7 +4,7 @@ services:
     web:
         build:
           context: .
-          dockerfile: Dockerfile_web
+          dockerfile: web_dockerfile
         depends_on:
             - apigw
         environment:
@@ -19,7 +19,7 @@ services:
     apigw:
         build:
           context: .
-          dockerfile: Dockerfile_gw
+          dockerfile: gw_dockerfile
         depends_on:
             - auth_api
             - task_api
@@ -43,10 +43,7 @@ services:
     auth_api:
         build:
           context: .
-          dockerfile: Dockerfile_ms
-          args:
-            APPNAME: msauth
-            APPFILE: auth_api
+          dockerfile: auth_dockerfile
         depends_on:
             - db
         environment:
@@ -69,9 +66,6 @@ services:
         build:
           context: .
           dockerfile: Dockerfile_ms
-          args:
-            APPNAME: mstask
-            APPFILE: task_api
         depends_on:
             - db
         environment:
@@ -93,10 +87,7 @@ services:
     msg_api:
         build:
           context: .
-          dockerfile: Dockerfile_ms
-          args:
-            APPNAME: msmsg
-            APPFILE: msg_api
+          dockerfile: msg_dockerfile
         depends_on:
             - db
         environment:
@@ -118,10 +109,7 @@ services:
     notify_api:
         build:
           context: .
-          dockerfile: Dockerfile_ms
-          args:
-            APPNAME: msnotify
-            APPFILE: notify_api
+          dockerfile: notify_dockerfile
         depends_on:
             - db
         environment:
@@ -145,10 +133,7 @@ services:
     bill_api:
         build:
           context: .
-          dockerfile: Dockerfile_ms
-          args:
-            APPNAME: msbill
-            APPFILE: bill_api
+          dockerfile: bill_dockerfile
         depends_on:
             - db
         environment:
