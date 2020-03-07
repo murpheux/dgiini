@@ -59,12 +59,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -78,12 +78,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: taskService
@@ -98,12 +98,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: authService
@@ -117,12 +117,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: authService
@@ -136,12 +136,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: msgService
@@ -155,12 +155,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: msgService
@@ -174,12 +174,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: notifyService
@@ -193,12 +193,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: notifyService
@@ -212,12 +212,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: billService
@@ -231,12 +231,12 @@ pipelines:
         - 
           action:
             origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 200
+            optionsSuccessStatus: 204
             credentials: true
-            maxAge: 600
+            maxAge: 21600
       - proxy:
         - action:
             serviceEndpoint: billService
