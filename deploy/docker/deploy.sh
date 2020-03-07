@@ -40,6 +40,7 @@ unzip msbill.zip -d msbill && rm msbill.zip
 unzip web.zip -d web && rm web.zip
 
 mkdir -p deploy/docker/app
+cp deploy/nginx/dgiini.template deploy/docker/app
 mv apigw deploy/docker/app
 mv msauth deploy/docker/app
 mv mstask deploy/docker/app

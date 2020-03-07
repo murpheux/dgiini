@@ -6,4 +6,4 @@ COPY app/apigw/ /usr/src/app
 
 RUN npm install --only=production
 
-CMD [ "node", "start" ]
+CMD [ "npm", "run", "start" ]
