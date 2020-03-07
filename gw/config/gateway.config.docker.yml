@@ -58,11 +58,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -77,11 +77,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -97,11 +97,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -116,11 +116,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -135,11 +135,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -154,11 +154,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -173,11 +173,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -192,11 +192,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -211,11 +211,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
@@ -230,11 +230,11 @@ pipelines:
         cors:
         - 
           action:
-            origin: 'http://sdpro.dynu.com:9000'
+            origin: '*'
             methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
             allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
             preflightContinue: true
-            optionsSuccessStatus: 204
+            optionsSuccessStatus: 200
             credentials: true
             maxAge: 600
       - proxy:
