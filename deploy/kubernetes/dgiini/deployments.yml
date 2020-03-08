@@ -1,0 +1,168 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-web
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-web
+    spec:
+      containers:
+      - name: web
+        image: murpheux/dgiini_web:246
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-apigw
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-apigw
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-apigw
+    spec:
+      containers:
+      - name: apigw
+        image: murpheux/dgiini_apigw:246
+        ports:
+        - containerPort: 443
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: auth-api
+# spec:
+#   selector:
+#     matchLabels:
+#       app: auth-api-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: auth-api
+#     spec:
+#       containers:
+#       - name: auth-api
+#         image: murpheux/dgiini_auth:246
+#         ports:
+#         - containerPort: 80
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: task-api
+# spec:
+#   selector:
+#     matchLabels:
+#       app: task-api-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: task-api
+#     spec:
+#       containers:
+#       - name: task-api
+#         image: murpheux/dgiini_task:246
+#         ports:
+#         - containerPort: 80
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: msg-api
+# spec:
+#   selector:
+#     matchLabels:
+#       app: msg-api-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: msg-api
+#     spec:
+#       containers:
+#       - name: msg-api
+#         image: murpheux/dgiini_msg:246
+#         ports:
+#         - containerPort: 80
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: notify-api
+# spec:
+#   selector:
+#     matchLabels:
+#       app: notify-api-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: notify-api
+#     spec:
+#       containers:
+#       - name: notify-api
+#         image: murpheux/dgiini_notify:246
+#         ports:
+#         - containerPort: 80
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: bill-api
+# spec:
+#   selector:
+#     matchLabels:
+#       app: bill-api-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: bill-api
+#     spec:
+#       containers:
+#       - name: bill-api
+#         image: murpheux/dgiini_bill:246
+#         ports:
+#         - containerPort: 80
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: mongodb
+# spec:
+#   selector:
+#     matchLabels:
+#       app: db-service
+#   replicas: 1
+#   template:
+#     metadata:
+#       labels:
+#         app: mongodb
+#     spec:
+#       containers:
+#       - name: mongodb
+#         image: mongo:4.2.3-bionic
+#         ports:
+#         - containerPort: 27017

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # get current build number
 currentBuildNumber=$(ls -d release_* | sed -e 's/[^0-9]//g')
 

@@ -1,129 +1,150 @@
-version: "3.4"
+version: "3.7"
 services:
 
     web:
-        image: php:7.0-apache
-        environment:
-            - DGIINI_ENV=development
-            - DGIINI_GW=https://apigw/api
-        ports:
-            - "9000:80"
-        volumes:
-            - ../../webui:/var/www/html
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+      image: gru:5000/dgiini/web:246
+      restart: always
+      environment:
+        - NGINX_HOST=sdpro.dynu.com
+        - NGINX_PORT=80
+      ports:
+        - "9000:80"
+      networks:
+        - dgiininet
+      deploy:
+          replicas: 1
 
     apigw:
-        image: node:9.11.2-jessie
-        environment:
-            - DGIINI_ENV=development
-            - DGIINI_GW_HOST=0.0.0.0
-            - DGIINI_GW_PORT=443
-            - DGIINI_AUTH=https://auth_service/api
-            - DGIINI_TASK=https://task_service/api
-            - DGIINI_BILL=https://bill_service/api
-            - DGIINI_NOTIFY=https://notify_service/api
-        ports:
-            - "8000:443"
-        volumes:
-            - ../../api_gateway:/usr/src/app
-            - ../../certs:/usr/src/app/certs
-        command: >
-            bash -c "cd /usr/src/app
-            && yarn install
-            && yarn start"
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+      image: gru:5000/dgiini/apigw:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - APP_NAME=apigw/apigw
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+      ports:
+          - "7000:443"
+      networks:
+          - dgiininet
+      deploy:
+          replicas: 1
 
-    auth_service:
-        image: python:3.7.0-stretch
-        environment:
-            - DGIINI_ENV=development
-            - DGIINI_AUTH=https://auth_service/api
-            - DGIINI_TASK=https://task_service/api
-            - DGIINI_BILL=https://bill_service/api
-            - DGIINI_NOTIFY=https://notify_service/api
-            - DGIINI_AUTH_DB=db_auth:27017
-            - DGIINI_TASK_DB=db_task:27017
-            - DGIINI_BILL_DB=db_bill:27017
-            - DGIINI_NOTIFY_DB=db_notify:27017
-        ports:
-            - "7000:443"
-        volumes:
-            - ../../service:/usr/src/app
-        command: >
-            bash -c "cd /usr/src/app
-            && pip install --upgrade pip
-            && pip install -r requirements.txt
-            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 auth_v1:api"
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+    auth_api:
+      image: gru:5000/dgiini/auth:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - AUTH_DATABASE=dg_authdb
+        - APP_NAME=auth_api/microservices
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
-    task_service:
-        image: python:3.7.0-stretch
-        environment:
-            - DGIINI_ENV=development
-            - DGIINI_AUTH=https://auth_service/api
-            - DGIINI_TASK=https://task_service/api
-            - DGIINI_BILL=https://bill_service/api
-            - DGIINI_NOTIFY=https://notify_service/api
-            - DGIINI_AUTH_DB=db_auth:27017
-            - DGIINI_TASK_DB=db_task:27017
-            - DGIINI_BILL_DB=db_bill:27017
-            - DGIINI_NOTIFY_DB=db_notify:27017
-        ports:
-            - "7001:443"
-        volumes:
-            - ../../service:/usr/src/app
-        command: >
-            bash -c "cd /usr/src/app
-            && pip install --upgrade pip
-            && pip install -r requirements.txt
-            && gunicorn --certfile=certs/dgiini.crt --keyfile=certs/private.key --workers=2 --bind 0.0.0.0:443 task_v1:api"
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+    task_api:
+      image: gru:5000/dgiini/task:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - TASK_DATABASE=dg_taskdb
+        - APP_NAME=task_api/microservices
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
-    db_auth:
-        image: mongo:4.1.13-bionic
-        ports:
-            - "27017:27017"
-        environment:
-            - NODE_ENV=development
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+    msg_api:
+      image: gru:5000/dgiini/msg:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - TASK_DATABASE=dg_msgdb
+        - APP_NAME=msg_api/microservices
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
+    notify_api:
+      image: gru:5000/dgiini/notify:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - TASK_DATABASE=dg_notifydb
+        - APP_NAME=notify_api/microservices
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+        - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
+        - SENDGRID_API_KEY=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
+        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
-    db_task:
-        image: mongo:4.1.13-bionic
-        ports:
-            - "27018:27017"
-        environment:
-            - NODE_ENV=development
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+    bill_api:
+      image: gru:5000/dgiini/bill:246
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - TASK_DATABASE=dg_msbill
+        - APP_NAME=bill_api/microservices
+        - APP_VERSION=v0.1
+        - APP_BUILD=0.0.1.00237
+        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
-    db_notify:
-        image: mongo:4.1.13-bionic
-        ports:
-            - "27019:27017"
-        environment:
-            - NODE_ENV=development
-        networks:
-            - dgiininet
-        deploy:
-            replicas: 1
+    db:
+      image: mongo:4.2.3-bionic
+      restart: always
+      volumes:
+        - /home/murpheux/data:/data/db
+      ports:
+        - "27017:27017"
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
 
 networks:
-    dgiininet:
+  dgiininet:

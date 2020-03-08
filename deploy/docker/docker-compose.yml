@@ -14,7 +14,7 @@ services:
             - "9000:80"
         container_name: web
         networks:
-            - dgnet
+            - dgiininet
 
     apigw:
         build:
@@ -38,7 +38,7 @@ services:
             - "7000:443"
         container_name: apigw
         networks:
-            - dgnet
+            - dgiininet
 
     auth_api:
         build:
@@ -57,10 +57,10 @@ services:
             - APP_NAME=auth_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:7000
+            - COR_CLIENT_URL=http://sdpro.dynu.com:9000
         container_name: auth_api
         networks:
-            - dgnet
+            - dgiininet
 
     task_api:
         build:
@@ -79,10 +79,10 @@ services:
             - APP_NAME=task_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=http://sdpro.dynu.com:9000
         container_name: task_api
         networks:
-            - dgnet
+            - dgiininet
 
     msg_api:
         build:
@@ -101,10 +101,10 @@ services:
             - APP_NAME=msg_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=http://sdpro.dynu.com:9000
         container_name: msg_api
         networks:
-            - dgnet
+            - dgiininet
 
     notify_api:
         build:
@@ -125,10 +125,10 @@ services:
             - APP_BUILD=0.0.1.00237
             - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
             - SENDGRID_API_KEY=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
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=http://sdpro.dynu.com:9000
         container_name: notify_api
         networks:
-            - dgnet
+            - dgiininet
 
     bill_api:
         build:
@@ -147,10 +147,10 @@ services:
             - APP_NAME=bill_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=http://sdpro.dynu.com:9000
         container_name: bill_api
         networks:
-            - dgnet
+            - dgiininet
 
     db:
         image: mongo:4.2.3-bionic
@@ -158,7 +158,7 @@ services:
         volumes:
           - /home/murpheux/data:/data/db
         networks:
-            - dgnet
+            - dgiininet
 
 networks:
-    dgnet:
+    dgiininet:

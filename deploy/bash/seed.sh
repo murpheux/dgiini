@@ -1,1 +1,0 @@
-mongoimport --host db --db db_authdb --collection users --type json --file /seed.json --jsonArray
