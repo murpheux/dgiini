@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-
+  
     web:
       image: gru:5000/dgiini/web:246
       restart: always
@@ -22,9 +22,11 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
         - APP_NAME=apigw/apigw
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
       ports:
           - "7000:443"
       networks:
@@ -40,12 +42,14 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - AUTH_DATABASE=dg_authdb
         - APP_NAME=auth_api/microservices
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -65,7 +69,7 @@ services:
         - TASK_DATABASE=dg_taskdb
         - APP_NAME=task_api/microservices
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -80,12 +84,14 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - TASK_DATABASE=dg_msgdb
         - APP_NAME=msg_api/microservices
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -100,12 +106,14 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - TASK_DATABASE=dg_notifydb
         - APP_NAME=notify_api/microservices
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
         - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
         - SENDGRID_API_KEY=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
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
@@ -122,12 +130,14 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - TASK_DATABASE=dg_msbill
         - APP_NAME=bill_api/microservices
         - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1.00237
+        - APP_BUILD=0.0.1-00237
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet

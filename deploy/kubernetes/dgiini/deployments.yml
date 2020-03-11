@@ -19,6 +19,11 @@ spec:
     spec:
       containers:
       - name: web
+        env:
+          - name: NGINX_HOST
+            value: dgiini.com
+          - name: NGINX_PORT
+            value: '80'
         image: murpheux/dgiini_web:246
         ports:
         - containerPort: 80
@@ -43,126 +48,321 @@ spec:
     spec:
       containers:
       - name: apigw
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: APP_NAME
+            value: apigw/apigw
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
         image: murpheux/dgiini_apigw:246
         ports:
         - containerPort: 443
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: auth-api
-# spec:
-#   selector:
-#     matchLabels:
-#       app: auth-api-service
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: auth-api
-#     spec:
-#       containers:
-#       - name: auth-api
-#         image: murpheux/dgiini_auth:246
-#         ports:
-#         - containerPort: 80
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: task-api
-# spec:
-#   selector:
-#     matchLabels:
-#       app: task-api-service
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: task-api
-#     spec:
-#       containers:
-#       - name: task-api
-#         image: murpheux/dgiini_task:246
-#         ports:
-#         - containerPort: 80
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: msg-api
-# spec:
-#   selector:
-#     matchLabels:
-#       app: msg-api-service
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: msg-api
-#     spec:
-#       containers:
-#       - name: msg-api
-#         image: murpheux/dgiini_msg:246
-#         ports:
-#         - containerPort: 80
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: notify-api
-# spec:
-#   selector:
-#     matchLabels:
-#       app: notify-api-service
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: notify-api
-#     spec:
-#       containers:
-#       - name: notify-api
-#         image: murpheux/dgiini_notify:246
-#         ports:
-#         - containerPort: 80
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: bill-api
-# spec:
-#   selector:
-#     matchLabels:
-#       app: bill-api-service
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: bill-api
-#     spec:
-#       containers:
-#       - name: bill-api
-#         image: murpheux/dgiini_bill:246
-#         ports:
-#         - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-auth-api
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-auth
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-auth
+    spec:
+      containers:
+      - name: auth-api
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: DB_HOST
+            value: dgiini_db
+          - name: DB_PORT
+            value: '27017'
+          # - name: DB_USER
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: mongo-credential
+          #       key: username
+          # - name: DB_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: mongo-credential
+          #       key: password
+          - name: AUTH_DATABASE
+            value: dg_authdb
+          - name: APP_NAME
+            value: auth_api/microservices
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
+          - name: COR_CLIENT_URL
+            value: http://138.197.236.87
+        image: murpheux/dgiini_auth:246
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-task-api
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-task
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-task
+    spec:
+      containers:
+      - name: task-api
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: DB_HOST
+            value: dgiini_db
+          - name: DB_PORT
+            value: '27017'
+          - name: TASK_DATABASE
+            value: dg_taskdb
+          - name: APP_NAME
+            value: task_api/microservices
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
+          - name: COR_CLIENT_URL
+            value: http://138.197.236.87
+        image: murpheux/dgiini_task:246
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-msg-api
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-msg
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-msg
+    spec:
+      containers:
+      - name: msg-api
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: DB_HOST
+            value: dgiini_db
+          - name: DB_PORT
+            value: '27017'
+          - name: AUTH_DATABASE
+            value: dg_msgdb
+          - name: APP_NAME
+            value: msg_api/microservices
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
+          - name: COR_CLIENT_URL
+            value: http://138.197.236.87
+        image: murpheux/dgiini_msg:246
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-notify-api
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-notify
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-notify
+    spec:
+      containers:
+      - name: notify-api
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: DB_HOST
+            value: dgiini_db
+          - name: DB_PORT
+            value: '27017'
+          - name: NOTIFY_DATABASE
+            value: dg_notifydb
+          - name: APP_NAME
+            value: notify_api/microservices
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
+          - name: COR_CLIENT_URL
+            value: http://138.197.236.87
+        image: murpheux/dgiini_notify:246
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dgiini-bill-api
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    matchLabels:
+      app: dgiini-bill
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dgiini-bill
+    spec:
+      containers:
+      - name: bill-api
+        env:
+          - name: NODE_ENV
+            value: development
+          - name: TASK_API_PORT
+            value: '80'
+          - name: MSG_API_PORT
+            value: '80'
+          - name: AUTH_API_PORT
+            value: '80'
+          - name: NOTIFY_API_PORT
+            value: '80'
+          - name: BILL_API_PORT
+            value: '80'
+          - name: DB_HOST
+            value: dgiini_db
+          - name: DB_PORT
+            value: '27017'
+          - name: AUTH_DATABASE
+            value: dg_billdb
+          - name: APP_NAME
+            value: bill_api/microservices
+          - name: APP_VERSION
+            value: '0.1'
+          - name: APP_BUILD
+            value: '0.0.1-00237'
+          - name: COR_CLIENT_URL
+            value: http://138.197.236.87
+        image: murpheux/dgiini_bill:246
+        ports:
+        - containerPort: 80
 # ---
 # apiVersion: apps/v1
 # kind: Deployment
 # metadata:
 #   name: mongodb
+#   namespace: dgiini
+#   labels:
+#     app: dgiini
+#     environment: development
 # spec:
 #   selector:
 #     matchLabels:
-#       app: db-service
+#       app: dgiini-db
 #   replicas: 1
 #   template:
 #     metadata:
 #       labels:
-#         app: mongodb
+#         app: dgiini-db
 #     spec:
+#       volumes:
+#       - name: dgiini-volume
+#         persistentVolumeClaim:
+#           claimName: dgiini-volume-claim
 #       containers:
 #       - name: mongodb
 #         image: mongo:4.2.3-bionic
 #         ports:
 #         - containerPort: 27017
+#         volumeMounts:
+#         - mountPath: "/data/db"
+#           name: dgiini-volume
