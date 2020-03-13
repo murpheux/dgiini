@@ -195,11 +195,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f web_dockerfile -t dgiini/web:${BUILD_NUMBER} .
-
-                            docker tag dgiini/web:${BUILD_NUMBER} gru:5000/dgiini/web:${BUILD_NUMBER}
                             docker tag dgiini/web:${BUILD_NUMBER} murpheux/dgiini_web:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/web:${BUILD_NUMBER}
                             docker push murpheux/dgiini_web:${BUILD_NUMBER}
                         '''
                     }
@@ -213,11 +209,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f gw_dockerfile -t dgiini/apigw:${BUILD_NUMBER} .
-
-                            docker tag dgiini/apigw:${BUILD_NUMBER} gru:5000/dgiini/apigw:${BUILD_NUMBER}
                             docker tag dgiini/apigw:${BUILD_NUMBER} murpheux/apigw:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/apigw:${BUILD_NUMBER}
                             docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
                         '''
                     }
@@ -231,11 +223,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f auth_dockerfile -t dgiini/auth:${BUILD_NUMBER} .
-
-                            docker tag dgiini/auth:${BUILD_NUMBER} gru:5000/dgiini/auth:${BUILD_NUMBER}
                             docker tag dgiini/auth:${BUILD_NUMBER} murpheux/auth:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/auth:${BUILD_NUMBER}
                             docker push murpheux/dgiini_auth:${BUILD_NUMBER}
                         '''
                     }
@@ -249,11 +237,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f task_dockerfile -t dgiini/task:${BUILD_NUMBER} .
-
-                            docker tag dgiini/task:${BUILD_NUMBER} gru:5000/dgiini/task:${BUILD_NUMBER}
                             docker tag dgiini/task:${BUILD_NUMBER} murpheux/task:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/task:${BUILD_NUMBER}
                             docker push murpheux/dgiini_task:${BUILD_NUMBER}
                         '''
                     }
@@ -267,11 +251,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f msg_dockerfile -t dgiini/msg:${BUILD_NUMBER} .
-
-                            docker tag dgiini/msg:${BUILD_NUMBER} gru:5000/dgiini/msg:${BUILD_NUMBER}
                             docker tag dgiini/msg:${BUILD_NUMBER} murpheux/msg:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/msg:${BUILD_NUMBER}
                             docker push murpheux/dgiini_msg:${BUILD_NUMBER}
                         '''
                     }
@@ -285,11 +265,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f notify_dockerfile -t dgiini/notify:${BUILD_NUMBER} .
-
-                            docker tag dgiini/notify:${BUILD_NUMBER} gru:5000/dgiini/notify:${BUILD_NUMBER}
                             docker tag dgiini/notify:${BUILD_NUMBER} murpheux/notify:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/notify:${BUILD_NUMBER}
                             docker push murpheux/dgiini_notify:${BUILD_NUMBER}
                         '''
                     }
@@ -303,11 +279,7 @@ pipeline {
                             cd ${WORKSPACE}/app
 
                             docker build --no-cache -f bill_dockerfile -t dgiini/bill:${BUILD_NUMBER} .
-
-                            docker tag dgiini/bill:${BUILD_NUMBER} gru:5000/dgiini/bill:${BUILD_NUMBER}
                             docker tag dgiini/bill:${BUILD_NUMBER} murpheux/bill:${BUILD_NUMBER}
-
-                            docker push gru:5000/dgiini/bill:${BUILD_NUMBER}
                             docker push murpheux/dgiini_bill:${BUILD_NUMBER}
                         '''
                     }
