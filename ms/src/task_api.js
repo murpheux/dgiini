@@ -12,6 +12,7 @@ import HttpStatus from 'http-status-codes'
 import fs from 'fs'
 import yaml from 'yaml'
 import swaggerui from 'swagger-ui-express'
+import asyncHandler from 'express-async-handler'
 
 import winston from './shared/winston'
 import common from './shared/common'
@@ -65,16 +66,24 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 if (process.env.NODE_ENV === 'production') {
-    //running in production
+    // running in production
 }
 
+app.get('/api/hc', asyncHandler(async(req, res) => {
+    const payload = {
+        'service': true,
+        'database': true
+    }
+    res.status(HttpStatus.OK).json(payload)
+}))
+
 // ping
-app.get('/api/task/v1/', (req, res) => {
-    let payload = {
+app.get('/api/task/v1/', asyncHandler(async(req, res) => {
+    const payload = {
         'Service': `task ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
-})
+}))
 
 app.use('/api/task/v1/', task_router)
 

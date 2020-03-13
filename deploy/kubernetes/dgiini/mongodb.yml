@@ -7,6 +7,8 @@
 # openssl rand -base64 741 > mongodb-keyfile
 ## Create k8s secrets
 # kubectl create secret generic mongo-key --from-file=mongodb-keyfile
+#
+# mongo --username admin --password password --authenticationDatabase admin
 ---
 apiVersion: v1
 kind: Service
@@ -42,34 +44,20 @@ spec:
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        # - name: dgiini-db
-        #   image: mongo:3.4
-        #   command:
-        #     - mongod
-        #     - "--replSet"
-        #     - rs0
-        #     - "--bind_ip"
-        #     - 0.0.0.0
-        #     - "--smallfiles"
-        #     - "--noprealloc"
-        #   ports:
-        #     - containerPort: 27017
-        #   volumeMounts:
-        #     - name: dgiini-volume
-        #       mountPath: /data/db
-        # - name: mongo-sidecar
-        #   image: cvallance/mongo-k8s-sidecar
-        #   env:
-        #     - name: MONGO_SIDECAR_POD_LABELS
-        #       value: "role=dgiini-db,environment=development"
         - name: mongodb
           image: mongo:3.4
+          env:
+            - name: REPLICA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: mongo-replica-config
+                  value: replica.json
           command:
           - /bin/sh
           - -c
           - >
             if [ -f /data/db/admin-user.lock ]; then
-              mongod --replSet rs0 --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
+              mongod --replSet dgiiniRepl --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
             else
               mongod --auth;
             fi;
@@ -96,6 +84,9 @@ spec:
               readOnly: true
             - name: dgiini-volume
               mountPath: /data/db
+            - name: config
+              mountPath: /etc/mongod.conf
+              subPath: mongod.conf
         - name: mongo-sidecar
           image: cvallance/mongo-k8s-sidecar
           env:
@@ -112,6 +103,9 @@ spec:
         secret:
           defaultMode: 0400
           secretName: mongo-key
+      - name: config
+        configMap:
+          name: mongo-config
   volumeClaimTemplates:
   - metadata:
       name: dgiini-volume

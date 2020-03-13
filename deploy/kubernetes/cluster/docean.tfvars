@@ -1,0 +1,1 @@
+do_cluster_name = "k8s-cluster-for-apps7"

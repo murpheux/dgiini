@@ -1,3 +1,4 @@
+#set DGIINI_VERSION before running 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,7 +25,7 @@ spec:
             value: dgiini.com
           - name: NGINX_PORT
             value: '80'
-        image: murpheux/dgiini_web:246
+        image: murpheux/dgiini_web:${DGIINI_VERSION}
         ports:
         - containerPort: 80
 ---
@@ -67,7 +68,7 @@ spec:
             value: '0.1'
           - name: APP_BUILD
             value: '0.0.1-00237'
-        image: murpheux/dgiini_apigw:246
+        image: murpheux/dgiini_apigw:${DGIINI_VERSION}
         ports:
         - containerPort: 443
 ---
@@ -108,16 +109,16 @@ spec:
             value: dgiini_db
           - name: DB_PORT
             value: '27017'
-          # - name: DB_USER
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mongo-credential
-          #       key: username
-          # - name: DB_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: mongo-credential
-          #       key: password
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongo-credential
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-credential
+                key: password
           - name: AUTH_DATABASE
             value: dg_authdb
           - name: APP_NAME
@@ -128,7 +129,7 @@ spec:
             value: '0.0.1-00237'
           - name: COR_CLIENT_URL
             value: http://138.197.236.87
-        image: murpheux/dgiini_auth:246
+        image: murpheux/dgiini_auth:${DGIINI_VERSION}
         ports:
         - containerPort: 80
 ---
@@ -179,7 +180,7 @@ spec:
             value: '0.0.1-00237'
           - name: COR_CLIENT_URL
             value: http://138.197.236.87
-        image: murpheux/dgiini_task:246
+        image: murpheux/dgiini_task:${DGIINI_VERSION}
         ports:
         - containerPort: 80
 ---
@@ -230,7 +231,7 @@ spec:
             value: '0.0.1-00237'
           - name: COR_CLIENT_URL
             value: http://138.197.236.87
-        image: murpheux/dgiini_msg:246
+        image: murpheux/dgiini_msg:${DGIINI_VERSION}
         ports:
         - containerPort: 80
 ---
@@ -281,7 +282,7 @@ spec:
             value: '0.0.1-00237'
           - name: COR_CLIENT_URL
             value: http://138.197.236.87
-        image: murpheux/dgiini_notify:246
+        image: murpheux/dgiini_notify:${DGIINI_VERSION}
         ports:
         - containerPort: 80
 ---
@@ -332,37 +333,6 @@ spec:
             value: '0.0.1-00237'
           - name: COR_CLIENT_URL
             value: http://138.197.236.87
-        image: murpheux/dgiini_bill:246
+        image: murpheux/dgiini_bill:${DGIINI_VERSION}
         ports:
         - containerPort: 80
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mongodb
-#   namespace: dgiini
-#   labels:
-#     app: dgiini
-#     environment: development
-# spec:
-#   selector:
-#     matchLabels:
-#       app: dgiini-db
-#   replicas: 1
-#   template:
-#     metadata:
-#       labels:
-#         app: dgiini-db
-#     spec:
-#       volumes:
-#       - name: dgiini-volume
-#         persistentVolumeClaim:
-#           claimName: dgiini-volume-claim
-#       containers:
-#       - name: mongodb
-#         image: mongo:4.2.3-bionic
-#         ports:
-#         - containerPort: 27017
-#         volumeMounts:
-#         - mountPath: "/data/db"
-#           name: dgiini-volume

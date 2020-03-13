@@ -17,6 +17,7 @@
         "build-dev": "ng build --base-href",
         "build-prod": "ng build --prod --base-href",
         "build-docker": "ng build --base-href --configuration=docker",
+        "build-k8s": "ng build --base-href --configuration=k8s",
         "test": "ng test",
         "lint": "ng lint",
         "tslint": "npx tslint --project tsconfig.json --fix",
