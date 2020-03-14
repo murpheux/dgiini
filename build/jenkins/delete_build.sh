@@ -1,1 +1,1 @@
-ssh -l murpheux -p 53801 gru delete-builds dgiini $1
+ssh -l murpheux -p 53801 gru delete-builds $1 $2

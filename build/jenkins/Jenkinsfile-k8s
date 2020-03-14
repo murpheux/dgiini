@@ -189,7 +189,7 @@ pipeline {
                 stage('build and publish web') {
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/web/dist/dgiini ${WORKSPACE}/app
+                            cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
                             cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}
@@ -209,7 +209,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f gw_dockerfile -t dgiini/apigw:${BUILD_NUMBER} .
-                            docker tag dgiini/apigw:${BUILD_NUMBER} murpheux/apigw:${BUILD_NUMBER}
+                            docker tag dgiini/apigw:${BUILD_NUMBER} murpheux/dgiini_apigw:${BUILD_NUMBER}
                             docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
                         '''
                     }
@@ -223,7 +223,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f auth_dockerfile -t dgiini/auth:${BUILD_NUMBER} .
-                            docker tag dgiini/auth:${BUILD_NUMBER} murpheux/auth:${BUILD_NUMBER}
+                            docker tag dgiini/auth:${BUILD_NUMBER} murpheux/dgiini_auth:${BUILD_NUMBER}
                             docker push murpheux/dgiini_auth:${BUILD_NUMBER}
                         '''
                     }
@@ -237,7 +237,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f task_dockerfile -t dgiini/task:${BUILD_NUMBER} .
-                            docker tag dgiini/task:${BUILD_NUMBER} murpheux/task:${BUILD_NUMBER}
+                            docker tag dgiini/task:${BUILD_NUMBER} murpheux/dgiini_task:${BUILD_NUMBER}
                             docker push murpheux/dgiini_task:${BUILD_NUMBER}
                         '''
                     }
@@ -251,7 +251,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f msg_dockerfile -t dgiini/msg:${BUILD_NUMBER} .
-                            docker tag dgiini/msg:${BUILD_NUMBER} murpheux/msg:${BUILD_NUMBER}
+                            docker tag dgiini/msg:${BUILD_NUMBER} murpheux/dgiini_msg:${BUILD_NUMBER}
                             docker push murpheux/dgiini_msg:${BUILD_NUMBER}
                         '''
                     }
@@ -265,7 +265,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f notify_dockerfile -t dgiini/notify:${BUILD_NUMBER} .
-                            docker tag dgiini/notify:${BUILD_NUMBER} murpheux/notify:${BUILD_NUMBER}
+                            docker tag dgiini/notify:${BUILD_NUMBER} murpheux/dgiini_notify:${BUILD_NUMBER}
                             docker push murpheux/dgiini_notify:${BUILD_NUMBER}
                         '''
                     }
@@ -279,7 +279,7 @@ pipeline {
                             cd ${WORKSPACE}
 
                             docker build --no-cache -f bill_dockerfile -t dgiini/bill:${BUILD_NUMBER} .
-                            docker tag dgiini/bill:${BUILD_NUMBER} murpheux/bill:${BUILD_NUMBER}
+                            docker tag dgiini/bill:${BUILD_NUMBER} murpheux/dgiini_bill:${BUILD_NUMBER}
                             docker push murpheux/dgiini_bill:${BUILD_NUMBER}
                         '''
                     }

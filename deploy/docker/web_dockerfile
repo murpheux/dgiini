@@ -3,4 +3,3 @@ FROM nginx:1.17.9
 WORKDIR /usr/share/nginx/html
 
 COPY app/web/ /usr/share/nginx/html
-COPY app/dgiini.template /etc/nginx/conf.d/dgiini.template
