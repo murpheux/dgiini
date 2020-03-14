@@ -65,10 +65,6 @@ var corsOptions = {
 }
 app.use(cors(corsOptions))
 
-if (process.env.NODE_ENV === 'production') {
-    //running in production
-}
-
 // healthcheck
 app.get('/api/hc', asyncHandler(async(req, res) => {
     const payload = {

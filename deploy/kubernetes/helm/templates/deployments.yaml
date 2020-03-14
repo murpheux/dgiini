@@ -83,25 +83,28 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    volumes:
-      - name: dhparam
-        secret:
-          defaultMode: 0400
-          secretName: dhparam
-      - name: nginx-cert
-        secret:
-          defaultMode: 0400
-          secretName: nginx-cert
-      - name: nginx-key
-        secret:
-          defaultMode: 0400
-          secretName: nginx-key
-      - name: nginx-self-signed
-        configMap:
-          name: nginx-self-signed
-      - name: nginx-ssl-params
-        configMap:
-          name: nginx-ssl-params
+      volumes:
+        - name: dhparam
+          secret:
+            defaultMode: 0400
+            secretName: dhparam
+        - name: nginx-cert
+          secret:
+            defaultMode: 0400
+            secretName: nginx-cert
+        - name: nginx-key
+          secret:
+            defaultMode: 0400
+            secretName: nginx-key
+        - name: nginx-self-signed
+          configMap:
+            name: nginx-self-signed
+        - name: nginx-ssl-params
+          configMap:
+            name: nginx-ssl-params
+        - name: dgiini-com
+          configMap:
+            name: dgiini-com
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -246,14 +249,14 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.authApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -328,14 +331,14 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.taskApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -420,14 +423,14 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.msgApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -512,14 +515,14 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.notifyApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -604,14 +607,14 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.billApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /api/hc
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /api/hc
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

@@ -188,97 +188,86 @@ pipeline {
             parallel {
                 stage('build and publish web') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
-                                    cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
+                                cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
 
-                                    cd ${WORKSPACE}
+                                cd ${WORKSPACE}
 
-                                    docker build --no-cache -f web_dockerfile -t dgiini/web:${BUILD_NUMBER} .
-                                    docker tag dgiini/web:${BUILD_NUMBER} murpheux/dgiini_web:${BUILD_NUMBER}
+                                docker build --no-cache -f web_dockerfile -t dgiini/web:${BUILD_NUMBER} .
+                                docker tag dgiini/web:${BUILD_NUMBER} murpheux/dgiini_web:${BUILD_NUMBER}
 
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_web:${BUILD_NUMBER}
-                                '''
-                            }
+                                docker login -u=${username} -p=${password}
+                                docker push murpheux/dgiini_web:${BUILD_NUMBER}
+                            '''
                         }
                     }
                 }
                 stage('build and publish apigw') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
 
-                                    cd ${WORKSPACE}
+                                cd ${WORKSPACE}
 
-                                    docker build --no-cache -f gw_dockerfile -t dgiini/apigw:${BUILD_NUMBER} .
-                                    docker tag dgiini/apigw:${BUILD_NUMBER} murpheux/dgiini_apigw:${BUILD_NUMBER}
+                                docker build --no-cache -f gw_dockerfile -t dgiini/apigw:${BUILD_NUMBER} .
+                                docker tag dgiini/apigw:${BUILD_NUMBER} murpheux/dgiini_apigw:${BUILD_NUMBER}
 
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
-                                '''
-                            }
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
+                            '''
                         }
                     }
                 }
                 stage('build and publish auth') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
 
-                                    cd ${WORKSPACE}
+                                cd ${WORKSPACE}
 
-                                    docker build --no-cache -f auth_dockerfile -t dgiini/auth:${BUILD_NUMBER} .
-                                    docker tag dgiini/auth:${BUILD_NUMBER} murpheux/dgiini_auth:${BUILD_NUMBER}
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_auth:${BUILD_NUMBER}
-                                '''
-                            }
+                                docker build --no-cache -f auth_dockerfile -t dgiini/auth:${BUILD_NUMBER} .
+                                docker tag dgiini/auth:${BUILD_NUMBER} murpheux/dgiini_auth:${BUILD_NUMBER}
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_auth:${BUILD_NUMBER}
+                            '''
                         }
                     }
                 }
                 stage('build and publish task') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username',
+                            passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
 
-                                    cd ${WORKSPACE}
+                                cd ${WORKSPACE}
 
-                                    docker build --no-cache -f task_dockerfile -t dgiini/task:${BUILD_NUMBER} .
-                                    docker tag dgiini/task:${BUILD_NUMBER} murpheux/dgiini_task:${BUILD_NUMBER}
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_task:${BUILD_NUMBER}
-                                '''
-                            }
+                                docker build --no-cache -f task_dockerfile -t dgiini/task:${BUILD_NUMBER} .
+                                docker tag dgiini/task:${BUILD_NUMBER} murpheux/dgiini_task:${BUILD_NUMBER}
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_task:${BUILD_NUMBER}
+                            '''
                         }
                     }
                 }
