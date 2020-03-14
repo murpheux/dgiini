@@ -12,6 +12,7 @@ import HttpStatus from 'http-status-codes'
 import fs from 'fs'
 import yaml from 'yaml'
 import swaggerui from 'swagger-ui-express'
+import asyncHandler from 'express-async-handler'
 
 import winston from './shared/winston'
 import common from './shared/common'
@@ -68,13 +69,22 @@ if (process.env.NODE_ENV === 'production') {
     //running in production
 }
 
+// healthcheck
+app.get('/api/hc', asyncHandler(async(req, res) => {
+    const payload = {
+        'service': true,
+        'database': true
+    }
+    res.status(HttpStatus.OK).json(payload)
+}))
+
 // ping
-app.get('/api/notify/v1/', (req, res) => {
+app.get('/api/notify/v1/', asyncHandler(async(req, res) => {
     let payload = {
         'Service': `notify ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
-})
+}))
 
 app.use('/api/notify/v1/', nf_router)
 

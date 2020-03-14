@@ -9,6 +9,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import { v4 as uuidv4 } from 'uuid'
 import HttpStatus from 'http-status-codes'
+import asyncHandler from 'express-async-handler'
 
 import winston from './shared/winston'
 import common from './shared/common'
@@ -52,13 +53,22 @@ var corsOptions = {
 }
 app.use(cors(corsOptions))
 
+// healthcheck
+app.get('/api/hc', asyncHandler(async(req, res) => {
+    const payload = {
+        'service': true,
+        'database': true
+    }
+    res.status(HttpStatus.OK).json(payload)
+}))
+
 // ping
-app.get('/api/msg/v1/', (req, res) => {
+app.get('/api/msg/v1/', asyncHandler(async(req, res) => {
     let payload = {
         'Service': `msg ${common.app_name} v${gen.VERSION.semverString || common.version}`
     }
     res.status(HttpStatus.OK).json(payload)
-})
+}))
 
 app.use('/api/msg/v1/', msg_router)
 
