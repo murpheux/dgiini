@@ -190,7 +190,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/web/dist/dgiini ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -204,7 +204,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -218,7 +218,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -232,7 +232,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -246,7 +246,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -260,7 +260,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
@@ -274,7 +274,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/app
-                            cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}/app
+                            cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}
 
                             cd ${WORKSPACE}/app
 
