@@ -10,6 +10,7 @@ import cors from 'cors'
 import { v4 as uuidv4 } from 'uuid'
 import HttpStatus from 'http-status-codes'
 import asyncHandler from 'express-async-handler'
+import { createLightship } from 'lightship'
 
 import winston from './shared/winston'
 import common from './shared/common'
@@ -25,6 +26,7 @@ const port = process.env.PORT || process.env.MSG_API_PORT
 
 const CLIENT_URL = process.env.COR_CLIENT_URL || 'http://localhost:9000'
 
+const lightship = createLightship()
 const app = express()
 app.use(compression()) // use compression
 
@@ -87,4 +89,10 @@ app.use((req, res) => {
 })
 
 //start the app server
-app.listen(port, () => console.log(`message api listening on port ${port}!`))
+const server = app.listen(port, () => {
+    lightship.signalReady()
+    console.log(`message api listening on port ${port}!`)
+})
+
+lightship.registerShutdownHandler(() => { server.close() })
+lightship.signalReady()

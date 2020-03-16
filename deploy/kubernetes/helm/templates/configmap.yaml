@@ -128,6 +128,7 @@ data:
 
         ssl_certificate /etc/ssl/certs/dgiini.com.crt;
         ssl_certificate_key /etc/ssl/private/dgiini.com.key;
+        ssl_dhparam /etc/ssl/dh/dhparam.pem;
 
         server_name dgiini.com www.dgiini.com;
         root /usr/share/nginx/html;

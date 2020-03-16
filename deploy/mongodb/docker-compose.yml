@@ -4,7 +4,7 @@ services:
   dgiinidb0:
     hostname: dgiinidb0
     container_name: dgiinidb0
-    image: mongo:4.2.0-bionic
+    image: mongo:4.2.3-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb0:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
@@ -19,7 +19,7 @@ services:
   dgiinidb1:
     hostname: dgiinidb1
     container_name: dgiinidb1
-    image: mongo:4.2.0-bionic
+    image: mongo:4.2.3-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb1:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
@@ -32,7 +32,7 @@ services:
   dgiinidb2:
     hostname: dgiinidb2
     container_name: dgiinidb2
-    image: mongo:4.2.0-bionic
+    image: mongo:4.2.3-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb2:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
