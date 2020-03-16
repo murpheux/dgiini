@@ -12,8 +12,8 @@ spec:
     app: {{ .Values.appName }}-{{ .Values.web.appName }}
   ports:
     - protocol: TCP
-      port: {{ .Values.webApiPort }}
-      targetPort: {{ .Values.webApiPort }}
+      port: {{ .Values.webPort }}
+      targetPort: {{ .Values.webPort }}
   type: LoadBalancer
 ---
 apiVersion: v1

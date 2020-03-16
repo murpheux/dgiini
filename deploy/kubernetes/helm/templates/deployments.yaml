@@ -37,30 +37,27 @@ spec:
             - name: NGINX_HOST
               value: {{ .Values.web.domain }}
             - name: NGINX_PORT
-              value: {{ .Values.webApiPort | squote }}
-          command:
-            - /bin/sh
-            - -c
-            - >
-              ln -s /etc/nginx/sites-available/dgiini.com /etc/nginx/sites-enabled/
+              value: {{ .Values.webPort | squote }}
           image: "{{ .Values.image.repository }}/{{ .Values.web.image }}:{{ .Values.version }}"
           ports:
             - name: http
-              containerPort: {{ .Values.webApiPort }}
+              containerPort: {{ .Values.webPort }}
               protocol: TCP
           volumeMounts:
             - name: dhparam
-              mountPath: "/etc/nginx/dhparam.pem"
+              mountPath: "/etc/nginx/dh"
             - name: nginx-cert
-              mountPath: "/etc/ssl/certs/dgiini.com.crt"
+              mountPath: "/etc/ssl/certs"
+              readOnly: true
             - name: nginx-key
-              mountPath: "/etc/ssl/private/dgiini.com.key"
-            - name: nginx-self-signed
-              mountPath: "/etc/nginx/snippets/self-signed.conf"
-            - name: nginx-ssl-params
-              mountPath: "/etc/nginx/snippets/ssl-params.conf"
+              mountPath: "/etc/ssl/private"
+              readOnly: true
+            # - name: nginx-self-signed
+            #   mountPath: "/etc/nginx/snippets"
             - name: dgiini-com
-              mountPath: "/etc/nginx/conf.d/default.conf"
+              mountPath: "/etc/nginx/conf.d"
+            - name: https-redirect
+              mountPath: "/etc/nginx/default.d"
           # livenessProbe:
           #   httpGet:
           #     path: /
@@ -88,6 +85,9 @@ spec:
           secret:
             defaultMode: 0400
             secretName: dhparam
+            items:
+            - key: dhparam.pem
+              path: dhparam.pem
         - name: nginx-cert
           secret:
             defaultMode: 0400
@@ -105,6 +105,9 @@ spec:
         - name: dgiini-com
           configMap:
             name: dgiini-com
+        - name: https-redirect
+          configMap:
+            name: https-redirect
 ---
 apiVersion: apps/v1
 kind: Deployment

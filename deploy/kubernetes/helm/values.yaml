@@ -77,7 +77,7 @@ appName: dgiini
 version: 246
 environment: development
 
-webApiPort: 443
+webPort: 443
 apigwPort: 443
 
 msPorts:  
@@ -113,7 +113,7 @@ auth:
   appServiceName: auth-api/microservices
   appVersion: 0.0.1
   appBuild: 246
-  corClientURL: http://dgiini-web-service
+  corClientURL: https://dgiini-web-service
   image: dgiini_auth
   db:
     host: dgiini-db
@@ -127,7 +127,7 @@ task:
   appServiceName: task-api/microservices
   appVersion: 0.0.1
   appBuild: 246
-  corClientURL: http://dgiini-web-service
+  corClientURL: https://dgiini-web-service
   image: dgiini_task
   db:
     host: dgiini-db
@@ -141,7 +141,7 @@ msg:
   appServiceName: msg-api/microservices
   appVersion: 0.0.1
   appBuild: 246
-  corClientURL: http://dgiini-web-service
+  corClientURL: https://dgiini-web-service
   image: dgiini_msg
   db:
     host: dgiini-db
@@ -155,7 +155,7 @@ notify:
   appServiceName: notify-api/microservices
   appVersion: 0.0.1
   appBuild: 246
-  corClientURL: http://dgiini-web-service
+  corClientURL: https://dgiini-web-service
   image: dgiini_notify
   db:
     host: dgiini-db
@@ -169,7 +169,7 @@ bill:
   appServiceName: bill-api/microservices
   appVersion: 0.0.1
   appBuild: 246
-  corClientURL: http://dgiini-web-service
+  corClientURL: https://dgiini-web-service
   image: dgiini_bill
   db:
     host: dgiini-db
