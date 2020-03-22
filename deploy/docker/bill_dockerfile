@@ -6,4 +6,4 @@ COPY app/msbill/ /usr/src/app
 
 RUN npm install --only=production
 
-CMD [ "node", "bill_api" ]
+CMD [ "node", "bill.api" ]

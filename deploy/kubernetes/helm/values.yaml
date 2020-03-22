@@ -50,9 +50,11 @@ ingress:
   #      - chart-example.local
 
 resources: {}
-  # limits: {}
+  # limits:
+  #   memory: 3Gi
+  #   cpu: 500m
   # requests:
-  #   memory: 1.5Gi
+  #   memory: 2Gi
   #   cpu: 300m
 
   # We usually recommend not to specify default resources and to leave this as a conscious

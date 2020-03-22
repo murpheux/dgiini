@@ -12,11 +12,12 @@ import nodemailer from 'nodemailer'
 import sendgridmail from '@sendgrid/mail'
 
 import common from '../shared/common'
+import { validateCard } from '../shared/validator'
 import VALIDATION_MSG from '../shared/error_messages'
-import { build_response, options, build_paging, enrich_paging } from '../shared/lib'
+import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
 import winston from '../shared/winston'
 
-const mgaccess = require('../data/mongo_access')
+const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.BILL_DATABASE || 'dg_billdb'
 const ObjectId = mongodb.ObjectId
@@ -94,12 +95,5 @@ router.put('/prepreceipt', (req, res) => {
 
     res.status(HttpStatus.OK).json({})
 })
-
-const validateCard = (card) => {
-    const validation = validator()
-        .validate(card.cardno).isNotEmpty()
-
-    return validation
-}
 
 module.exports = router

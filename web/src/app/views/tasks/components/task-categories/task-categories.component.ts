@@ -27,6 +27,13 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     currentCity: string;
     currentUser: IUser;
 
+    @ViewChild('inputTag', { static: true}) set inputTag(input: ElementRef|null) {
+        if (!input) { return; }
+
+        // do something
+        // doSomething(input);
+    }
+
     // @ViewChildren('task') tasks: QueryList<any>;
     @ViewChild('scrollAreaGrp', { static: true}) scrollDiv: ElementRef;
 

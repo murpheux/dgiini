@@ -6,27 +6,32 @@ https:
         cert: cert/dgiini.cert.pem
 admin:
   port: 9876
+
 apiEndpoints:
-  taskApiDefault:
-    paths: '/api/task/v1/'
-    methods: GET
-  taskApi:
-    paths: '/api/task/v1/*'
   authApiDefault:
     paths: '/api/auth/v1/'
     methods: GET
   authApi:
     paths: '/api/auth/v1/*'
+
+  taskApiDefault:
+    paths: '/api/task/v1/'
+    methods: GET
+  taskApi:
+    paths: '/api/task/v1/*'
+
   msgApiDefault:
     paths: '/api/msg/v1/'
     methods: GET
   msgApi:
     paths: '/api/msg/v1/*'
+
   notifyApiDefault:
     paths: '/api/notify/v1/'
     methods: GET
   notifyApi:
     paths: '/api/notify/v1/*'
+    
   billApiDefault:
     paths: '/api/bill/v1/'
     methods: GET
@@ -46,71 +51,22 @@ serviceEndpoints:
     url: 'http://localhost:8008'
 
 policies:
-  #- basic-auth
+  - basic-auth
   - cors
-  # - expression
-  # - key-auth
-  # - jwt
-  # - log
-  # - oauth2
+  - jwt
+  - log
   - proxy
-  # - rate-limit
 
 pipelines:
-  taskDefaultPipeline:
-    apiEndpoints:
-      - taskApiDefault
-    policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      # - rate-limit:
-      #   - action:
-      #       max: 10
-      #       windowsMs: 120000
-      #       rateLimitBy: '${req.hostname}'
-      # - key-auth:
-      #     - action:
-      #         apiKeyHeader: Authorization
-      #         disableHeadersScheme: false
-      - proxy:
-        - action:
-            serviceEndpoint: taskService
-            changeOrigin: true
-  taskPipeline:
-    apiEndpoints:
-      - taskApi
-    policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
-        - action:
-            serviceEndpoint: taskService
-            changeOrigin: true
-  
   authDefaultPipeline:
     apiEndpoints:
       - authApiDefault
     policies:
+      - log: &log
+        - action:    # array of condition/actions objects
+            message: ${req.ip} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
       - 
-        cors:
+        cors: &cors
         - 
           action:
             origin: '*'
@@ -120,12 +76,7 @@ pipelines:
             optionsSuccessStatus: 204
             credentials: true
             maxAge: 600
-      # - rate-limit:
-      #   - action:
-      #       max: 10
-      #       windowsMs: 120000
-      #       rateLimitBy: '${req.hostname}'
-      - proxy:
+      - proxy: &as
         - action:
             serviceEndpoint: authService
             changeOrigin: true  
@@ -133,42 +84,40 @@ pipelines:
     apiEndpoints:
       - authApi
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
+      - log: *log
+      - cors: *cors
+      - jwt: &jwt
         - action:
-            serviceEndpoint: authService
+            secretOrPublicKeyFile: ./cert/murpheux.pem
+            checkCredentialExistence: false
+      - proxy: *as
+
+  taskDefaultPipeline:
+    apiEndpoints:
+      - taskApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &ts
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  taskPipeline:
+    apiEndpoints:
+      - taskApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ts
   
   msgDefaultPipeline:
     apiEndpoints:
       - msgApiDefault
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      # - rate-limit:
-      #   - action:
-      #       max: 10
-      #       windowsMs: 120000
-      #       rateLimitBy: '${req.hostname}'
-      - proxy:
+      - log: *log
+      - cors: *cors
+      - proxy: &ms
         - action:
             serviceEndpoint: msgService
             changeOrigin: true
@@ -176,37 +125,18 @@ pipelines:
     apiEndpoints:
       - msgApi
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
-        - action:
-            serviceEndpoint: msgService
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ms
 
   notifyDefaultPipeline:
     apiEndpoints:
       - notifyApiDefault
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
+      - log: *log
+      - cors: *cors
+      - proxy: &ns
         - action:
             serviceEndpoint: notifyService
             changeOrigin: true
@@ -214,37 +144,18 @@ pipelines:
     apiEndpoints:
       - notifyApi
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
-        - action:
-            serviceEndpoint: notifyService
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ns
 
   billDefaultPipeline:
     apiEndpoints:
       - billApiDefault
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
+      - log: *log
+      - cors: *cors
+      - proxy: &bs
         - action:
             serviceEndpoint: billService
             changeOrigin: true
@@ -252,17 +163,7 @@ pipelines:
     apiEndpoints:
       - billApi
     policies:
-      - 
-        cors:
-        - 
-          action:
-            origin: '*'
-            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
-            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
-            preflightContinue: true
-            optionsSuccessStatus: 204
-            credentials: true
-            maxAge: 600
-      - proxy:
-        - action:
-            serviceEndpoint: billService
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *bs

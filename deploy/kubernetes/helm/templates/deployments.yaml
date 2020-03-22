@@ -288,33 +288,33 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.authApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          startupProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -389,33 +389,33 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.taskApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          startupProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -500,33 +500,33 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.msgApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          startupProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -611,33 +611,33 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.notifyApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          startupProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -722,33 +722,33 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.billApiPort }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: http
-            failureThreshold: 1
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          startupProbe:
-            httpGet:
-              path: /live
-              port: http
-            failureThreshold: 3
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

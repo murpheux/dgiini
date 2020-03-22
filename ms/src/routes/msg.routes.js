@@ -7,10 +7,11 @@ import HttpStatus from 'http-status-codes'
 import asyncHandler from 'express-async-handler'
 
 import common from '../shared/common'
-import { build_response, options, build_paging } from '../shared/lib'
+import { validateMessage } from '../shared/validator'
+import { build_response, options, build_paging } from '../shared/service.library'
 import winston from '../shared/winston'
 
-const mgaccess = require('../data/mongo_access')
+const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.MESSAGE_DATABASE || 'dg_messagedb'
 const MESSAGE_COLL = 'messages'
@@ -117,7 +118,6 @@ router.get('/messages/task/:id', asyncHandler(async(req, res, next) => {
         const invoke_getlist = async() => await mgaccess.getlist(db, MESSAGE_COLL, paging)
 
         const [count, data] = await invoke_getlist()
-        console.log(JSON.stringify(count))
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
     }
 }))
@@ -162,15 +162,5 @@ router.post('/sendmessage', asyncHandler(async(req, res, next) => {
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, message))
     }
 }))
-
-const validateMessage = (message) => {
-    const validation = validator()
-        .validate(message.from).isNotNull().and.isNotEmpty().and.isMongoObjectId()
-        .validate(message.to).isNotNull().and.isNotEmpty().and.isMongoObjectId()
-        .validate(message.message).isNotNull().and.isNotEmpty()
-        .validate(message.replyto).isNull().or.isMongoObjectId()
-
-    return validation
-}
 
 module.exports = router

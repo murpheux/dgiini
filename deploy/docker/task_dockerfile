@@ -6,4 +6,4 @@ COPY app/mstask/ /usr/src/app
 
 RUN npm install --only=production
 
-CMD [ "node", "task_api" ]
+CMD [ "node", "task.api" ]

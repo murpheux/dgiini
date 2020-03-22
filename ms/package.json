@@ -17,7 +17,7 @@
         "watch": "parcel watch --no-source-maps --target node --no-cache",
         "cp": "xargs -n 1 cp -v .env<<<\"dist/mstask/ dist/msauth/ dist/msmsg/\"",
         "lint": "eslint src",
-        "test": "mocha --require @babel/register",
+        "test": "mocha --require @babel/register --require @babel/polyfill",
         "dev": "nodemon --exec babel-node --",
         "serve": "NODE_ENV=production nodemon --exec babel-node --",
         "clean": "rimraf dist",
@@ -51,6 +51,7 @@
         "@babel/cli": "^7.8.4",
         "@babel/core": "^7.8.6",
         "@babel/node": "^7.8.4",
+        "@babel/polyfill": "^7.8.7",
         "@babel/preset-env": "^7.8.6",
         "@babel/register": "^7.8.6",
         "@types/chai": "^4.2.10",
@@ -65,9 +66,11 @@
         "fs-extra": "^8.1.0",
         "git-describe": "^4.0.4",
         "mocha": "^7.1.0",
+        "nock": "^12.0.3",
         "nodemon": "^2.0.2",
         "parcel-bundler": "^1.12.3",
         "pm2": "^4.2.3",
-        "sinon": "^9.0.0"
+        "sinon": "^9.0.0",
+        "sinon-chai": "^3.5.0"
     }
 }

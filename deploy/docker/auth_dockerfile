@@ -6,4 +6,4 @@ COPY app/msauth/ /usr/src/app
 
 RUN npm install --only=production
 
-CMD [ "node", "auth_api" ]
+CMD [ "node", "auth.api" ]

@@ -6,4 +6,4 @@ COPY app/msnotify/ /usr/src/app
 
 RUN npm install --only=production
 
-CMD [ "node", "notify_api" ]
+CMD [ "node", "notify.api" ]

@@ -2,26 +2,30 @@
 'use strict'
 
 import express from 'express'
-
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
 import asyncHandler from 'express-async-handler'
 import fetch from 'node-fetch'
 
 import common from '../shared/common'
+import { validateClient, validateCredential, validateVendor } from '../shared/validator'
 import { VALIDATION_MSG, NOTFOUND_MSG, PROVIDER_MSG } from '../shared/error_messages'
-import { build_response, options, build_paging } from '../shared/lib'
+import { build_response, options, build_paging } from '../shared/service.library'
 import winston from '../shared/winston'
 
-const mgaccess = require('../data/mongo_access')
+const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.AUTH_DATABASE || 'dg_authdb'
 const find_city_service = process.env.CITY_SERVICE || 'https://tools.keycdn.com/geo.json'
 const USER_COLL = 'users'
 
 const collections = [USER_COLL]
-mgaccess.setup_database(common.database_uri, database_name, options, collections)
-winston.info(`Collection ${collections} created!`)
+mgaccess.setup_database(common.database_uri, database_name, options, collections).then(
+    _ => {
+        winston.info(`Collection ${collections} created!`)
+    },
+    err => { winston.error('Error! ', err) }
+)
 
 // custom validators
 validator.add('isCountry', 'Value is not a country', (country) => {
@@ -231,7 +235,6 @@ router.get('/usersx/:username', asyncHandler(async(req, res, next) => {
     }
 }))
 
-
 // update
 router.put('/users', asyncHandler(async(req, res, next) => {
     const user = req.body
@@ -299,7 +302,7 @@ router.post('/users/vendor', asyncHandler(async(req, res, next) => {
     }
 }))
 
-// task/category
+// fincity
 router.get('/findcity/:ip', asyncHandler(async(req, res, next) => {
     const ip = req.params.ip
     const validation = validator().validate(ip).isNotEmpty().isIP()
@@ -320,48 +323,5 @@ router.get('/findcity/:ip', asyncHandler(async(req, res, next) => {
 
     }
 }))
-
-const validateUser = (user) => {
-    const validation = validator()
-        .validate(user.username).isNotEmpty().and.isEmail()
-        .validate(user.name).isNotNull()
-        .validate(user.address.street).isNotNull()
-        .validate(user.address.city).isNotNull().and.isCity()
-        .validate(user.address.state).isNotNull().and.isProvince()
-        .validate(user.address.zipcode).isNotNull().and.matches('^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]')
-        .validate(user.address.country).isNotNull().and.isCountry()
-
-    return validation
-}
-
-const validateClient = (user) => {
-    const validation = validateUser(user)
-    validation
-        .validate(user.username).isNotEmpty().and.isEmail()
-
-    return validation
-}
-
-const validateVendor = (user) => {
-    const validation = validateUser(user)
-    validation
-        .validate(user.roles).isNotNull().and.passes(value => Array.isArray(value) && value.length >= 1, 'roles not array!')
-        .validate(user.skill_summary).isNotNull()
-        .validate(user.work_cities).passes(value => Array.isArray(value), 'cities not array!')
-        .validate(user.email).isNotNull().and.isEmail()
-        .validate(user.social).isNull().or.passes(value => Array.isArray(value), 'social not array!')
-        .validate(user.vehicles).isNull().or.passes(value => Array.isArray(value), 'vehicles not array!')
-        .validate(user.jobdone_photos).isNull().or.passes(value => Array.isArray(value), 'jobphotos not array!')
-
-    return validation
-}
-
-const validateCredential = (user) => {
-    const validation = validator()
-        .validate(user.username).isNotEmpty().and.isEmail()
-        .validate(user.password).isNotEmpty()
-
-    return validation
-}
 
 module.exports = router

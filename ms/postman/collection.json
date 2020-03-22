@@ -1,0 +1,2727 @@
+{
+	"info": {
+		"_postman_id": "01b09517-981d-4847-b63a-a4a134c6947a",
+		"name": "dgiini",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "apigw",
+			"item": [
+				{
+					"name": "cors",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "GET",
+								"type": "text"
+							},
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "origin, x-requested-with",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "http://localhost:9000",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/categories",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cors2",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "GET",
+								"type": "text"
+							},
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "origin, x-requested-with",
+								"type": "text"
+							},
+							{
+								"key": "Origin",
+								"value": "https://sdpro.dynu.com:9000",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/login",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettoken",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/gettoken",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"gettoken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newuser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\" : \"dapo.onawole@gmail.com\",\n\t\"password\" : \"P@ssWord12\",\n\t\"name\" : \"Dapo Onawole\",\n\t\"taskee\" : \"bfdac70666134f0fba465802658e9080\",\n\t\"tasker\" : null,\n\t\"role\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/newuser",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"newuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getuser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"segun.arinze@gmail.ca\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/getuser",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"getuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeuser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": \"bdc7cdf1cace4e3da03b2abc6427cb54\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/removeuser",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"removeuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "whcity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ip\": \"70.77.10.241\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/whcity",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"whcity"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newclient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"dele.alade@gmail.com\",\n\t\"password\": \"P@ssWord12\",\n  \"firstname\": \"Segun\",\n  \"initial\": \"\",\n  \"lastname\": \"Arinze\",\n  \"email\": \"segun.arinze@gmail.com\",\n  \"phone_number\": \"+15872259345\",\n  \"address\": {\n    \"street\": \"23 Chaparral Valley Common SE\",\n    \"city\": \"Calgary\",\n\t\t\"state\": \"AB\",\n    \"zipcode\": \"T2X 0T4\",\n\t\t\"country\": \"Canada\"\n  },\n  \"dob\": \"28/12/75\",\n  \"how_heard\": \"Facebook\",\n  \"photo\": {\n      \"photo\": \"xyxjhfjf\",\n\t\t\t\"filename\": \"afile.png\",\n\t\t\t\"filetype\": \"image/png\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/newclient",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"newclient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newvendor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"ben.taiwo@gmail.dnn\",\n\t\"password\": \"P@ssWord12\",\n\t\"firstname\": \"Taye\",\n\t\"initial\": \"\",\n\t\"lastname\": \"Taiwo\",\n\t\"email\": \"taye.taiwo@gmail.com\",\n\t\"phone_number\": \"+15872259345\",\n\t\"skill_summary\": \"some mothers do have them\",\n\t\"address\": {\n\t\t\"street\": \"23 Chaparral Valley Common SE\",\n\t\t\"city\": \"Calgary\",\n\t\t\"state\": \"AB\",\n    \"zipcode\": \"T2X 0T4\",\n\t\t\"country\": \"Canada\"\n\t},\n\t\"dob\": \"28/12/75\",\n\t\"city_work\": \"Calgary\",\n\t\"how_heard\": \"Facebook\",\n\t\"vehicle_type\": [\n\t\t{\n\t\t\t\"brand\": \"honda\",\n\t\t\t\"model\": \"accord\",\n\t\t\t\"year\": \"2014\"\n\t\t},\n\t\t{\n\t\t\t\"brand\": \"toyota\",\n\t\t\t\"model\": \"venza\",\n\t\t\t\"year\": \"2012\"\n\t\t}\n\t],\n\t\"photo\": {\n      \"photo\": \"xyxjhfjf\",\n\t\t\t\"filename\": \"afile.png\",\n\t\t\t\"filetype\": \"image/png\"\n  },\n\t\"jobdone_photo\": [\n\t\t\t{\n\t\t\t\t\"photo\": \"xyxjhfjf\",\n\t\t\t\t\"filename\": \"afile.png\",\n\t\t\t\t\"filetype\": \"image/png\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"photo\": \"xyxjhfjf\",\n\t\t\t\t\"filename\": \"afile.png\",\n\t\t\t\t\"filetype\": \"image/png\"\n\t}],\n\t\"sin\": \"4847494748\",\n\t\"qualifications\": [\n\t\t\"B.Sc\", \"HND\", \"MSC\"\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/newtasker",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"newtasker"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newtask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"a task\",\n    \"summary\": \"some kolo\",\n    \"description\": \"some task to make you kolo\",\n    \"category\": \"garden\",\n    \"taskee\": {\n        \"id\": \"bfdac70666134f0fba465802658e9080\",\n        \"name\": \"Segun Sobam\"\n    },\n    \"rate\": {\n        \"amount\": 30,\n        \"currency\": \"CAD\",\n        \"unit\": \"perhr\"\n    },\n    \"location\": {\n        \"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Calgary\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2X 0T4\",\n        \"country\": \"Canada\"\n    },\n    \"estimated_hours\": 15,\n    \"photo\": [\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"afile.png\",\n            \"filetype\": \"image/png\"\n        },\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"bfile.png\",\n            \"filetype\": \"image/png\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/newtask",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"newtask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newmessage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"from\": \"5dbf4f54aee2b3a3b5bea707\",\n    \"to\": \"5dbf4f54aee2b3a3b5bea707\",\n    \"message\": \"Some mothers do have them ...\",\n    \"task\": \"5dbefb98745afd64828fa91e\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/messages/task/5d1cf62a8cda953115f07a30",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"messages",
+								"task",
+								"5d1cf62a8cda953115f07a30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newfeedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Clement Onawole\",\n\t\"email\": \"dapo.onawole@gmail.com\",\n\t\"comments\": \"lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clitakasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/newfeedback",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"newfeedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addcard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"owner\": \"bfdac70666134f0fba465802658e9080\",\n\t\"cardnum\": \"23463536383637363736373\",\n\t\"name\": \"Clement Onawole\",\n\t\"cv2\": 222,\n\t\"expiry\": \"06/20\"\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/addcard",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"addcard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getmessage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"6431670f403246f498348292e1cf0886\",\n\t\"replyto\": \"6431670f403246f498348292e1cf0886\",\n\t\"paging\" : {\n\t\t\"pagenumber\" : 0,\n\t\t\"nperpage\" : 10\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/getmessage",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"getmessage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gettask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"client.id\": \"6babc858c57043b58fc7d0974214bc53\",\n\t\"paging\" : {\n\t\t\"pagenumber\" : 1,\n\t\t\"nperpage\" : 10\n\t},\n\t\"include\" : [ \"rate\" ]\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/gettask",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"gettask"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getclient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"_id\": \"6babc858c57043b58fc7d0974214bc53\",\n\t\"paging\": {\n\t\t\"pagenumber\": 1, \"nperpage\": 1\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/getclient",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"getclient"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getvendor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstname\": \"Clement\",\n\t\"paging\" : {\n\t\t\"pagenumber\" : 1,\n\t\t\"nperpage\" : 2\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{apigwurl}}/api/task/v1/getvendor",
+							"host": [
+								"{{apigwurl}}"
+							],
+							"path": [
+								"api",
+								"task",
+								"v1",
+								"getvendor"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "microservice",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "ping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "healthcheck",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authurl}}/healthcheck",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\": \"dapo.onawole@gmail.com\",\n\t\"password\": \"pass\"\n}"
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/login",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\" : \"dapo.onawole@gmail.com\",\n\t\"name\" : \"Dapo Onawole\",\n\t\"address\": {\n\t\t\"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Edmonton\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2X 0T4\",\n        \"country\": \"Canada\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/register",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register/client",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\" : \"dele.ayuba@gmail.com\",\n\t\"email\" : \"delet.ayuba@gmail.com\",\n\t\"name\" : \"Dapo Onawole\",\n\t\"phone\": \"+1587 225 9345\",\n\t\"address\": {\n\t\t\"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Edmonton\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2X 0T4\",\n        \"country\": \"Canada\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/register/client",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"register",
+										"client"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register/vendor",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"dele.ayuba@gmail.com\",\n    \"name\": \"Dele Ayuba\",\n    \"email\": \"dele.ayuba@gmail.com\",\n    \"phone\": \"+1587 225 9345\",\n    \"address\": {\n        \"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Edmonton\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2X 0T4\",\n        \"country\": \"Canada\"\n    },\n    \"dob\": \"28/12/1975\",\n    \"skill_summary\": \"lorem ipsum dolor sit amet consetetur sadipscing\",\n    \"work_cities\": [\n        \"Calgary\",\n        \"Edmonton\"\n    ],\n    \"roles\": [\"client\", \"vendor\"],\n    \"how_heard\": [ \"Facebook\", \"Friends\", \"Website\" ],\n    \"sin\": \"4847494748\",\n    \"qualifications\": [\n        \"B.Sc\",\n        \"MSC\"\n    ],\n    \"vehicles\": [\n        {\n            \"brand\": \"honda\",\n            \"model\": \"accord\",\n            \"year\": \"2014\"\n        },\n        {\n            \"brand\": \"toyota\",\n            \"model\": \"venza\",\n            \"year\": \"2012\"\n        }\n    ],\n    \"photo\": {\n        \"photo\": \"xyxjhfjf\",\n        \"filename\": \"afile.png\",\n        \"filetype\": \"image/png\"\n    },\n    \"jobdone_photos\": [\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"afile.png\",\n            \"filetype\": \"image/png\"\n        },\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"afile.png\",\n            \"filetype\": \"image/png\"\n        }\n    ],\n    \"social\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/register/vendor",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"register",
+										"vendor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register2",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"username\" : \"dorefuja@gmail.com\",\n\t\"name\" : \"Dupe Orefuja\",\n\t\"address\": {\n\t\t\"street\": \"Legacy Village Avenue\",\n        \"city\": \"Calgary\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2A 1L4\",\n        \"country\": \"Canada\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/register",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users/dapo.onawole@gmail.com",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users",
+										"dapo.onawole@gmail.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user2",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/usersx/dapo.onawole@gmail.com",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"usersx",
+										"dapo.onawole@gmail.com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "stats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users/stats/full",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users",
+										"stats",
+										"full"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "vendors",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users/role/vendor",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users",
+										"role",
+										"vendor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "vendors/skill",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/vendors/driver",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"vendors",
+										"driver"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "clients",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users/role/client",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users",
+										"role",
+										"client"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users2",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users?dir=asc&sort=[]&filter={\"_id\" : [\"5dbf4f54aee2b3a3b5bea707\", \"5d38fb09526858d94aae5381\"]}&page=1&pageLimit=10",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[]"
+										},
+										{
+											"key": "filter",
+											"value": "{\"_id\" : [\"5dbf4f54aee2b3a3b5bea707\", \"5d38fb09526858d94aae5381\"]}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageLimit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "users3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "P@ssWord12",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "dapo.onawole@gmail.com",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/users?dir=asc&sort=[]&filter={\"_id\" : [\"5d1d0dac1b0adc3a53434f00\", \"5d22ac9d06e69c99cff5d1d0\"]}&page=1&pageLimit=10",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"users"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[]"
+										},
+										{
+											"key": "filter",
+											"value": "{\"_id\" : [\"5d1d0dac1b0adc3a53434f00\", \"5d22ac9d06e69c99cff5d1d0\"]}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pageLimit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findcity",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{authurl}}/api/auth/v1/findcity/70.77.10.241",
+									"host": [
+										"{{authurl}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"v1",
+										"findcity",
+										"70.77.10.241"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Bill",
+					"item": [
+						{
+							"name": "ping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{billurl}}/api/bill/v1",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"api",
+										"bill",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "healthcheck",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{billurl}}/healthcheck",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addcard",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"owner\": \"bfdac70666134f0fba465802658e9080\",\n\t\"cardnum\": \"23463536383637363736373\",\n\t\"name\": \"Clement Onawole\",\n\t\"cv2\": 222,\n\t\"expiry\": \"06/20\"\n}"
+								},
+								"url": {
+									"raw": "{{billurl}}/api/bill/v1/addcard",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"api",
+										"bill",
+										"v1",
+										"addcard"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "removecard",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": \"253b3a5a37464c0d8993fd5a462ec914\"\n}"
+								},
+								"url": {
+									"raw": "{{billurl}}/api/bill/v1/removecard",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"api",
+										"bill",
+										"v1",
+										"removecard"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "billcard",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"taskee\": \"bfdac70666134f0fba465802658e9080\",\n\t\"card_num\": \"23463536383637363736373\",\n\t\"name_on_card\": \"Clement Onawole\",\n\t\"cv2\": 222,\n\t\"expiry\": \"06/20\"\n}"
+								},
+								"url": {
+									"raw": "{{billurl}}/api/bill/v1/addcard",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"api",
+										"bill",
+										"v1",
+										"addcard"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "prepinvoice",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"task\": \"d3731e54dcaf4ef2b1878ce0dc035813\",\n\t\"client\": \"d3731e54dcaf4ef2b1878ce0dc035813\",\n\t\"rate\": 22,\n\t\"hours\": 9\n}"
+								},
+								"url": {
+									"raw": "{{billurl}}/api/bill/v1/prepinvoice",
+									"host": [
+										"{{billurl}}"
+									],
+									"path": [
+										"api",
+										"bill",
+										"v1",
+										"prepinvoice"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Task",
+					"item": [
+						{
+							"name": "ping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "healthcheck",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/healthcheck",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasksbycity",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/city/Calgary",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"city",
+										"Calgary"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks?dir=asc&sort=[title, location.city]&filter={}&page=1&pagelimit=10",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[title, location.city]"
+										},
+										{
+											"key": "filter",
+											"value": "{}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagelimit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks3",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks?dir=asc&sort=[title, location.city]&filter={}&page=1&pagelimit=10&lastid=5d39d64027e5fe02f75db3a8",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[title, location.city]"
+										},
+										{
+											"key": "filter",
+											"value": "{}"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagelimit",
+											"value": "10"
+										},
+										{
+											"key": "lastid",
+											"value": "5d39d64027e5fe02f75db3a8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/5dbefb98745afd64828fa91e",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"5dbefb98745afd64828fa91e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"some home thing to do\",\n    \"description\": \"some task to make you kolo\",\n    \"client\": {\n        \"id\": \"5d1d0dac1b0adc3a53434f00\",\n        \"name\": \"Segun Sobam\"\n    },\n    \"rate\": {\n        \"amount\": 18,\n        \"currency\": \"CAD\",\n        \"date\": \"2018-02-03T14:08:47.8137754+00:00\"\n    },\n    \"location\": {\n        \"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Calgary\",\n        \"state\": \"AB\",\n        \"zipcode\": \"T2X 0T4\",\n        \"country\": \"Canada\"\n    },\n    \"estimated_hours\": 5,\n    \"category\": \"Cleaning\",\n    \"scheduled_date\": \"2018-02-03T14:08:47.8137754+00:00\"\n}"
+								},
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks2",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Some mother do have them\",\n    \"description\": \"Some people will have to find out some of my stuff\",\n    \"location\": {\n        \"street\": \"23 Chaparral Valley Common SE\",\n        \"city\": \"Calgary\",\n        \"state\": \"AB\",\n        \"country\": \"Canada\",\n        \"zipcode\": \"T2X 0T4\"\n    },\n    \"rate\": {\n        \"unit\": \"hourly\",\n        \"amount\": 34,\n        \"currency\": \"CAD\",\n        \"date\": \"2019-07-21T03:37:02.894Z\"\n    },\n    \"client\": {\n        \"id\": \"5d1d0dac1b0adc3a53434f00\",\n        \"name\": \"Dapo Onawole\"\n    },\n    \"scheduled_date\": \"2019-07-20T06:00:00.000Z\",\n    \"created\": \"2019-07-21T03:37:02.894Z\",\n    \"category\": \"Driver\",\n    \"estimated_hours\": 35,\n    \"photo\": [\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"afile.png\",\n            \"filetype\": \"image/png\"\n        },\n        {\n            \"photo\": \"xyxjhfjf\",\n            \"filename\": \"bfile.png\",\n            \"filetype\": \"image/png\"\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": \"5d12bbc98c5599fb507b48cb\",\n    \"title\": \"garden task\",\n    \"description\": \"lorem ipsum lundo\"\n}"
+								},
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImRhcG8ub25hd29sZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjdlNWYxMzQ0MDZiYzlmMDIyMWU3YjdhOGZhNDJmMTEzMDUwMjVmYWZmMDAyNTI0YWFiMzY5ZWZkZWFiNGUyNjYiLCJyb2xlIjoidXNlciIsInRpbWUiOjE1MzEwNzE3MjYuNTUwNTQzfQ.talvkYFl1bY_ga05nJZvuOjzhIJQhmTT4qtFmzuZHJo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{taskurl}}/api/tasks/5d12f0bd70abe0873a8d2881",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										"5d12f0bd70abe0873a8d2881"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/categories",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "stats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/stats/full",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"stats",
+										"full"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/category/%5B%22Garden%22%2C%22Cleaning%22%5D?dir=asc&sort=[title, location.city]&page=1&pagelimit=10",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"category",
+										"%5B%22Garden%22%2C%22Cleaning%22%5D"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[title, location.city]"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagelimit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/categorycity",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/city/Calgary/category/%5B%22Garden%22%2C%22Cleaning%22%5D?dir=asc&sort=[title, location.city]&page=1&pagelimit=10",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"city",
+										"Calgary",
+										"category",
+										"%5B%22Garden%22%2C%22Cleaning%22%5D"
+									],
+									"query": [
+										{
+											"key": "dir",
+											"value": "asc"
+										},
+										{
+											"key": "sort",
+											"value": "[title, location.city]"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagelimit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/search/Need Cleaning",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"search",
+										"Need Cleaning"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/user/search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/5d388355b473eb7d09a0540b/search/first",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"5d388355b473eb7d09a0540b",
+										"search",
+										"first"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tasks/user",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{taskurl}}/api/task/v1/tasks/user/5d1d0dac1b0adc3a53434f00",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"api",
+										"task",
+										"v1",
+										"tasks",
+										"user",
+										"5d1d0dac1b0adc3a53434f00"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "bids",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user\": \"5d38f281526858d94aae5380\",\n\t\"task\": \"5d38d5abb1f1dc7d07f97897\",\n\t\"amount\": 57.32\n}"
+								},
+								"url": {
+									"raw": "{{taskurl}}/task/v1/bids",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"task",
+										"v1",
+										"bids"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "bids",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"id\": \"5d3bccf0fac84d94d9022b3e\",\n\t\"accepted\": true\n}"
+								},
+								"url": {
+									"raw": "{{taskurl}}/task/v1/bids",
+									"host": [
+										"{{taskurl}}"
+									],
+									"path": [
+										"task",
+										"v1",
+										"bids"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Notify",
+					"item": [
+						{
+							"name": "ping",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{notifyurl}}/api/notify/v1",
+									"host": [
+										"{{notifyurl}}"
+									],
+									"path": [
+										"api",
+										"notify",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "healthcheck",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{notifyurl}}/healthcheck",
+									"host": [
+										"{{notifyurl}}"
+									],
+									"path": [
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sendmail",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"from\": \"dapo.onawole@gmail.com\",\n\t\"to\": \"dapo.onawole@gmail.com\",\n\t\"cc\": null,\n\t\"bcc\": null,\n\t\"subject\": \"what da\",\n\t\"body\": \"lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod\"\n}"
+								},
+								"url": {
+									"raw": "{{notifyurl}}/api/notify/v1/sendmail",
+									"host": [
+										"{{notifyurl}}"
+									],
+									"path": [
+										"api",
+										"notify",
+										"v1",
+										"sendmail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sendgrid",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "32bc8442-b71d-4a8c-9d8e-8a9407ce4b1e",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"to\": \"dapo.onawole@gmail.com\",\n\t\"cc\": null,\n\t\"bcc\": null,\n\t\"subject\": \"what da\",\n\t\"message\": \"lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod\"\n}"
+								},
+								"url": {
+									"raw": "{{notifyurl}}/api/notify/v1/sendgrid",
+									"host": [
+										"{{notifyurl}}"
+									],
+									"path": [
+										"api",
+										"notify",
+										"v1",
+										"sendgrid"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Message",
+					"item": [
+						{
+							"name": "ping",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "healthcheck",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{notifyurl}}/healthcheck",
+									"host": [
+										"{{notifyurl}}"
+									],
+									"path": [
+										"healthcheck"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/task/5d1cf62a8cda953115f07a30",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"task",
+										"5d1cf62a8cda953115f07a30"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "userMessages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/task/5d1cf62a8cda953115f07a30/5d1d0dac1b0adc3a53434f00",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"task",
+										"5d1cf62a8cda953115f07a30",
+										"5d1d0dac1b0adc3a53434f00"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mymessages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/from/5d1d0dac1b0adc3a53434f00",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"from",
+										"5d1d0dac1b0adc3a53434f00"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "mymessages2",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/to/5d1d0dac1b0adc3a53434f00",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"to",
+										"5d1d0dac1b0adc3a53434f00"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "newfeedback",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"Clement Onawole\",\n\t\"email\": \"dapo.onawole@gmail.com\",\n\t\"comments\": \"lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clitakasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero\"\n}"
+								},
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/newfeedback",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"newfeedback"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getmessage",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"from.id\": \"ed3b266ffc604b9fac7ae7e90a09fd5f\",\n\t\"paging\" : {\n\t\t\"pagenumber\" : 0,\n\t\t\"nperpage\" : 2\n\t}\n\n}"
+								},
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/getmessage",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"getmessage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "newmessage",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{jwt_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"from\": \n\t\t{\n\t\t\t\"id\" :\"bfdac70666134f0fba465802658e9080\",\n\t\t\t\"name\": \"Dare Oyenuga\"\n\t\t},\n\t\"to\": \"bfdac70666134f0fba465802658e9080\",\n\t\"message\": \"lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clitakasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero eos et accusam et justo duo dolores et ea rebum stet clita kasd gubergren no sea takimata sanctus est lorem ipsum dolor sit amet lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat sed diam voluptua at vero\",\n\t\"time\" : \"2018-02-03T14:08:47.8137754+00:00\",\n\t\"read\" : false\n}"
+								},
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/newmessage",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"newmessage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "messages",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"from\": \"5d1d0dac1b0adc3a53434f00\",\n\t\"to\": \"5d1d0dac1b0adc3a53434f00\",\n\t\"message\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut placerat euismod risus ac venenatis. Sed ullamcorper mauris urna, ut pharetra dolor ullamcorper eu. Proin sollicitudin metus nec malesuada vulputate. Fusce interdum magna arcu, rutrum consequat velit mollis in. Nam efficitur diam id augue venenatis, eget maximus eros tempus. Cras convallis non nisl et dignissim. Morbi massa diam, efficitur ut dui commodo, feugiat semper elit. Donec in feugiat magna. Nam cursus leo quis gravida consequat. Pellentesque a maximus risus, eu vulputate quam. Pellentesque et eros id mauris porttitor mattis non eget ante. Suspendisse fermentum dignissim libero vel pellentesque. Quisque id libero sed elit porttitor feugiat a vitae nisl. Sed sit amet maximus augue. Aenean finibus quam massa, quis tempus turpis interdum at.\",\n\t\"replyto\": null,\n\t\"attachments\" : []\n}"
+								},
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/task/5d1cf62a8cda953115f07a30",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"task",
+										"5d1cf62a8cda953115f07a30"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "messages2",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"from\": \"5d1d0dac1b0adc3a53434f00\",\n    \"to\": \"5d1d0dac1b0adc3a53434f00\",\n    \"message\": \"dkjbhhbldbvoivhbd\",\n    \"task\": \"5d1cf62a8cda953115f07a30\"\n}"
+								},
+								"url": {
+									"raw": "{{messageurl}}/api/msg/v1/messages/task/5d1cf62a8cda953115f07a30",
+									"host": [
+										"{{messageurl}}"
+									],
+									"path": [
+										"api",
+										"msg",
+										"v1",
+										"messages",
+										"task",
+										"5d1cf62a8cda953115f07a30"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "webui",
+			"item": [
+				{
+					"name": "ipapi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ip-api.com/json?70.77.10.245",
+							"protocol": "http",
+							"host": [
+								"ip-api",
+								"com"
+							],
+							"path": [
+								"json"
+							],
+							"query": [
+								{
+									"key": "70.77.10.245",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ajax",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"functionname\": \"changestate\",\n  \"arguments\": true\n}"
+						},
+						"url": {
+							"raw": "http://localhost:9000/ajax_json.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9000",
+							"path": [
+								"ajax_json.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

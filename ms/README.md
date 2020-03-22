@@ -1,10 +1,9 @@
-# dgiini / task_api
+# dgiini / task.api
 
 API for acting as a central authenticated data service for all EPIC front-ends
 
 ## Related projects
 
-Eagle is a revision name of the EAO EPIC application suite.
 
 These projects comprise EAO EPIC:
 
@@ -221,26 +220,30 @@ yarn lint --fix
 
 ```bash
 #!/bin/bash
-OUT_DIR=dist/mstask yarn build src/task_api.js
+OUT_DIR=dist/mstask yarn build src/task.api
 
-OUT_DIR=dist/msauth yarn build src/auth_api.js
+OUT_DIR=dist/msauth yarn build src/auth.api
 
-OUT_DIR=dist/msmsg yarn build src/msg_api.js
+OUT_DIR=dist/msmsg yarn build src/msg.api
 
-OUT_DIR=dist/msbill yarn build src/bill_api.js
+OUT_DIR=dist/msbill yarn build src/bill.api
 
-OUT_DIR=dist/notify yarn build src/notify_api.js
+OUT_DIR=dist/notify yarn build src/notify.api
 ```
 
 ## Run and Execute (.env)
 
 ```bash
 #!/bin/bash
-yarn serve src/task_api.js
+yarn serve src/task.api
 
-yarn serve src/auth_api.js
+yarn serve src/auth.api
 
-yarn serve src/msg_api.js
+yarn serve src/msg.api
+
+yarn serve src/notify.api
+
+yarn serve src/bill.api
 ```
 
 ## Run and Execute (production)
@@ -259,10 +262,10 @@ DB_PORT=27017
 
 ```bash
 #!/bin/bash
-node task_api
+node task.api
 
 or
 
-nodemon task_api
+nodemon task.api
 
 ```

@@ -2,19 +2,17 @@
 'use strict'
 
 import express from 'express'
-
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
-import titleCase from 'title-case'
 import mongodb from 'mongodb'
 import asyncHandler from 'express-async-handler'
-
 import common from '../shared/common'
 import VALIDATION_MSG from '../shared/error_messages'
-import { build_response, options, build_paging, enrich_paging } from '../shared/lib'
+import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
 import winston from '../shared/winston'
+import { validateBid, validateTask } from '../shared/validator'
 
-const mgaccess = require('../data/mongo_access')
+const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
 const ObjectId = mongodb.ObjectId
@@ -300,30 +298,5 @@ const categories = ['Cleaning', 'Gardening', 'Handy Man', 'Furniture Assembly', 
 router.get('/categories', (req, res) => {
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, categories))
 })
-
-const validateBid = (bid) => {
-    const validation = validator()
-        .validate(bid.user).isNotEmpty().and.isMongoObjectId()
-        .validate(bid.task).isNotEmpty().and.isMongoObjectId()
-        .validate(bid.amount).isNumber().isPositive()
-
-    return validation
-}
-
-const validateTask = (task) => {
-    const validation = validator()
-        .validate(task.title).isNotEmpty()
-        .validate(task.description).isNotEmpty()
-        .validate(task.rate).isNotNull()
-        .validate(task.rate.amount).isNumber().and.isPositive()
-        .validate(task.location).isNotNull()
-        .validate(task.location.street).isNotEmpty()
-        .validate(task.location.city).isNotEmpty()
-        .validate(task.location.state).isNotEmpty()
-        .validate(task.location.zipcode).isNotEmpty()
-        .validate(task.location.country).isNotEmpty()
-
-    return validation
-}
 
 module.exports = router

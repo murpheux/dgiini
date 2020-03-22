@@ -60,13 +60,13 @@ $ ng serve
 ```bash
 #!/bin/bash
 $ cd ms
-$ yarn dev src/task_api &
+$ yarn dev src/task.api &
 
-$ yarn dev src/msg_api &
+$ yarn dev src/msg.api &
 
-$ yarn dev src/auth_api &
+$ yarn dev src/auth.api &
 
-$ yarn dev src/notify_api &
+$ yarn dev src/notify.api &
 ```
 
 ### > api gateway
@@ -77,6 +77,22 @@ $ yarn start
 or
 
 $ nodemon start --watch config/gateway.config.yml
+```
+
+## Unit Test
+
+### microservices
+
+```bash
+yarn test
+
+```
+
+## Postman
+
+```bash
+newman run postman/collection.json -e postman/environment.json -k
+
 ```
 
 ## CI/CD Build

@@ -6,7 +6,8 @@
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
-        "build": "parcel build server.js --out-dir dist/apigw --target node"
+        "build": "parcel build server.js --out-dir dist/apigw --target node",
+        "serve": "nodemon start --watch config/gateway.config.yml"
     },
     "staticFiles": {
         "staticPath": [{

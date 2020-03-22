@@ -1,15 +1,21 @@
+/* eslint-disable no-unused-vars */
+'use strict'
+
 // Import the dependencies for testing
 import chai from 'chai'
 import chaiHttp from 'chai-http'
 import sinon from 'sinon'
-//import api from '../src/routes/task_route.js'
-//import HttpStatus from 'http-status-codes'
-//import TaskRoute from '../src/routes/TaskRoute'
+import  nock from 'nock'
+import sinonChai from 'sinon-chai'
+import HttpStatus from 'http-status-codes'
+
+// import api from '../src/routes/task.routes'
 
 // Configure chai
 chai.use(chaiHttp)
-chai.should()
+chai.use(sinonChai)
 
+// prep actions
 const assert = chai.assert
 const expect = chai.expect
 const should = chai.should()
@@ -32,19 +38,25 @@ const should = chai.should()
 //     })
 // })
 
-describe('TIDO', () => {
-    describe('Some Stub', () => {
-        // Test to get all students record
-        it('do some other', (done) => {
-            var callback = sinon.stub()
-            callback.withArgs(42).returns(1)
-            callback.withArgs(1).throws('name')
+describe('testing the task API', () => {
+    let server, taskStub
 
-            callback()
-            callback(42)
-            done()
-        })
+    it('test ping', async (done) => {
+        const callback = sinon.stub()//(server, 'isAuthenticated')
+        // .callsFake((req, res, next) => { return next() })
+
+        callback.withArgs(42).returns(1)
+        callback.withArgs(1).throws('name')
+
+        callback()
+        callback(42)
+        done()
     })
+
+    afterEach(() => {
+        nock.cleanAll()
+    })
+    
 })
 
 

@@ -101,11 +101,11 @@ pipeline {
                         sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
                     }
                 }
-                stage('Build task_api') {
+                stage('Build task.api') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/mstask npm run build src/task_api.js
+                            OUT_DIR=dist/mstask npm run build src/task.api
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/mstask/'
@@ -115,7 +115,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msauth npm run build src/auth_api.js
+                            OUT_DIR=dist/msauth npm run build src/auth.api
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
@@ -125,7 +125,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msmsg npm run build src/msg_api.js
+                            OUT_DIR=dist/msmsg npm run build src/msg.api
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
@@ -135,7 +135,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msnotify npm run build src/notify_api.js
+                            OUT_DIR=dist/msnotify npm run build src/notify.api
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msnotify/'
@@ -145,7 +145,7 @@ pipeline {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msbill npm run build src/bill_api.js
+                            OUT_DIR=dist/msbill npm run build src/bill.api
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'

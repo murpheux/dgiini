@@ -10,13 +10,14 @@ import mongodb from 'mongodb'
 import asyncHandler from 'express-async-handler'
 import nodemailer from 'nodemailer'
 import sendgridmail from '@sendgrid/mail'
+import { validateMail } from '../shared/validator'
 
 import common from '../shared/common'
 import VALIDATION_MSG from '../shared/error_messages'
-import { build_response, options, build_paging, enrich_paging } from '../shared/lib'
+import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
 import winston from '../shared/winston'
 
-const mgaccess = require('../data/mongo_access')
+const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.NOTIFY_DATABASE || 'dg_notifydb'
 const ObjectId = mongodb.ObjectId
@@ -64,21 +65,10 @@ router.post('/sendgrid', (req, res) => {
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, {}))
 })
 
-const validateMail = (mail) => {
-    const validation = validator()
-        .validate(mail.subject).isNotNull().and.isNotEmpty()
-        .validate(mail.body).isNotNull().and.isNotEmpty()
-        .validate(mail.from).isNotNull().and.isNotEmpty().and.isEmail()
-        .validate(mail.to).isNotEmpty().and.isNotEmpty()
-
-    return validation
-}
-
 const send_mail = async(mail) => {
     // const testAccount = await nodemailer.createTestAccount()
     const buffer = Buffer.from(common.smtp_password, 'base64')
     const smtp_password = buffer.toString('ascii')
-    console.log(smtp_password)
 
     const transporter = nodemailer.createTransport({
         service: common.smtp_service,
