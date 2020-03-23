@@ -107,6 +107,14 @@ router.get('/tasks/stats/full', asyncHandler(async(req, res, next) => {
     res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
 }))
 
+router.get('/tasks/category/stats', asyncHandler(async(req, res, next) => {
+    const db = await mgaccess.get_connection(common.database_uri, database_name, options)
+    const invoke_getstats = async() => await mgaccess.getCategoryStatistics(db, TASK_COLL, undefined)
+
+    const tasks = await invoke_getstats()
+    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
+}))
+
 
 // update
 router.put('/tasks', asyncHandler(async(req, res, next) => {

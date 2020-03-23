@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class TaskCategoryNodeComponent implements OnInit {
     categories: string[] = [];
+    categoryStats: {[key: string]: number};
     fa_imageMap = { 'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
         'Childcare': 'baby-carriage', 'Moving': 'truck' };
@@ -20,6 +21,7 @@ export class TaskCategoryNodeComponent implements OnInit {
 
     ngOnInit() {
         this.getTaskCategories();
+        this.getCategoryStat();
     }
 
     getTaskCategories() {
@@ -30,6 +32,22 @@ export class TaskCategoryNodeComponent implements OnInit {
 
     handleCategory(category) {
         this.router.navigate(['/tasks/category/' + category]);
+    }
+
+    getCategoryStat() {
+        this.taskService.getCategoryStats().subscribe(response => {
+            this.categoryStats = this.convertArrayToObject(response.payload.data, '_id');
+        });
+    }
+
+    convertArrayToObject = (array, key) => {
+        const initialValue = {};
+        return array.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item,
+          };
+        }, initialValue);
     }
 
 }

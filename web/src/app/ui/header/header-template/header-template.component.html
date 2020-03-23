@@ -23,7 +23,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="/mytask"><i class="fas fa-list"></i> My Tasks</a>
+                <a *ngIf="authService.loggedIn" class="nav-link" routerLink="/mytask"><i class="fas fa-list"></i> My Tasks</a>
             </li>
         </ul>
         <span class="navbar-text ">
@@ -35,32 +35,31 @@
           <li class="nav-item dropdown profile-icon profile-dropdown ml-3">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              <img src="assets/images/user.jpg" class="profile-img border rounded-circle" alt="">
-              <span class="username">Guest</span>
+              <img [src]="authServiceloggedIn ? authService.userClaims$.picture : 'assets/images/user.jpg'" class="profile-img border rounded-circle" alt="">
+              <span class="username">{{ authServiceloggedIn ? authService.userClaims$.name : "Guest" }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6">
-                        <h5 class="dropdown-header px-0"><i class="fas fa-balance-scale-left"></i> Financial</h5>
-                        <div class="border mb-2"></div>
-                        <a routerLink="/user/finance">Financial Dashboard</a>
-                        <a routerLink="/user/transactions">Transaction History</a>
-                        <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-chart-bar"></i> User Insight</h5>
-                        <div class="border mb-2"></div>
-                        <a routerLink="/user/statistics">User Statistics</a>
+                        <h5 *ngIf="authService.loggedIn" class="dropdown-header px-0"><i class="fas fa-balance-scale-left"></i> Financial</h5>
+                        <div *ngIf="authService.loggedIn" class="border mb-2"></div>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/finance">Financial Dashboard</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/transactions">Transaction History</a>
+                        <h5 *ngIf="authService.loggedIn" class="dropdown-header mt-2 px-0"><i class="fas fa-chart-bar"></i> User Insight</h5>
+                        <div *ngIf="authService.loggedIn" class="border mb-2"></div>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/statistics">User Statistics</a>
                     </div>
                     <div class="col-md-6">
-                        <h4 class="dropdown-header px-0"><i class="far fa-user"></i> Account</h4>
+                        <h4 *ngIf="authService.loggedIn" class="dropdown-header px-0"><i class="far fa-user"></i> Account</h4>
                         <div class="border mb-2"></div>
-                        <a routerLink="/user/profile">My Profile</a>
-                        <a routerLink="/user/settings">User Setting</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/profile">My Profile</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/settings">User Setting</a>
                         <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-question-circle"></i> Help</h5>
                         <div class="border mb-2"></div>
-                        <a routerLink="/user/support">Get Support</a>
-                        <a routerLink="/">Invite Friend</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/support">Get Support</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/">Invite Friend</a>
                         <a *ngIf="authService.loggedIn" (click)="logout()">Logout</a>
-                        <a (click)="logout()">Logout</a>
                         <a *ngIf="!authService.loggedIn" (click)="authService.login()">Login</a>
                     </div>
                 </div>

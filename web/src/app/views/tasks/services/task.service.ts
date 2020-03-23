@@ -61,6 +61,11 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
+    getCategoryStats(): Observable<IResponse> {
+        const url = `${this.serviceUrl}/category/stats`;
+        return this.http.get<IResponse>(url);
+    }
+
     getTasksByCategoriesAndCity(category: string[], city: string): Observable<IResponse> {
         const url = `${this.serviceUrl}/city/${city}/category/${encodeURIComponent(JSON.stringify(category))}`;
         return this.http.get<IResponse>(url);

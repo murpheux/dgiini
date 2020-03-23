@@ -23,31 +23,31 @@ import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent, GoogleMapComponent],
-  exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-    OverlayLoaderComponent, ContentLoaderComponent, BandComponent, GoogleMapComponent],
-  providers: [
-    UtilService,
-    LoadingService,
-    AuthGuard,
-    //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
-     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
-     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-     { provide: HTTP_INTERCEPTORS, useClass: NoHttpCacheInterceptor, multi: true },
-     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
-  ],
-  imports: [
-    CommonModule,
-    MaterialDesignModule,
-    FontAwesomeModule,
-    AgmCoreModule.forRoot({
-        apiKey: environment.keys.gmap,
-        libraries: ['places', 'geometry']
-    })
-  ],
-  entryComponents: [
-    ConfirmDialogComponent,
-  ],
+    declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
+        OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent, GoogleMapComponent],
+    exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
+        OverlayLoaderComponent, ContentLoaderComponent, BandComponent, GoogleMapComponent],
+    providers: [
+        UtilService,
+        LoadingService,
+        AuthGuard,
+        //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
+        { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: NoHttpCacheInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    ],
+    imports: [
+        CommonModule,
+        MaterialDesignModule,
+        FontAwesomeModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.keys.gmap,
+            libraries: ['places', 'geometry']
+        })
+    ],
+    entryComponents: [
+        ConfirmDialogComponent,
+    ],
 })
 export class SharedModule { }

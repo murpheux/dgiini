@@ -9,32 +9,36 @@ admin:
 
 apiEndpoints:
   authApiDefault:
-    paths: '/api/auth/v1/'
-    methods: GET
+    paths: ['/api/auth/v1/', '/api/auth/v1/users/stats/full',
+        '/api/auth/v1/findcity/:ip', '/api/auth/v1/vendors/:category',
+        '/api/auth/v1/users?*']
+    methods: [GET, OPTIONS]
   authApi:
     paths: '/api/auth/v1/*'
 
   taskApiDefault:
-    paths: '/api/task/v1/'
-    methods: GET
+    paths: ['/api/task/v1/', '/api/task/v1/categories', 
+        '/api/task/v1/tasks', '/api/task/v1/tasks/stats/full',
+        '/api/task/v1/tasks/city/:city/category/*', '/api/task/v1/tasks/category/stats']
+    methods: [GET, OPTIONS]
   taskApi:
     paths: '/api/task/v1/*'
 
   msgApiDefault:
-    paths: '/api/msg/v1/'
-    methods: GET
+    paths: ['/api/msg/v1/', '/api/msg/v1/messages/task/:id']
+    methods: [GET, OPTIONS]
   msgApi:
     paths: '/api/msg/v1/*'
 
   notifyApiDefault:
     paths: '/api/notify/v1/'
-    methods: GET
+    methods: [GET, OPTIONS]
   notifyApi:
     paths: '/api/notify/v1/*'
     
   billApiDefault:
     paths: '/api/bill/v1/'
-    methods: GET
+    methods: [GET, OPTIONS]
   billApi:
     paths: '/api/bill/v1/*'
 
@@ -64,7 +68,7 @@ pipelines:
     policies:
       - log: &log
         - action:    # array of condition/actions objects
-            message: ${req.ip} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
+            message: ${req.ip} - ${req.user} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
       - 
         cors: &cors
         - 

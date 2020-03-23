@@ -43,10 +43,12 @@ export class AuthService {
     userToken$ = this.userTokenSubject$.asObservable();
     userClaims$ = this.userClaimsSubject$.asObservable();
 
-    // loggedIn: boolean = true;
-    loggedIn = true;
+    loggedIn: boolean = undefined;
 
-    constructor(private router: Router) { }
+    constructor(private router: Router) {
+        this.localAuthSetup();
+        this.handleAuthCallback();
+    }
 
     // When calling, options can be passed if desired
     // https://auth0.github.io/auth0-spa-js/classes/auth0client.html#getuser

@@ -143,6 +143,7 @@ export const not_found = async (req, res) => {
 }
 
 export const authorize = (req, res, next) => {
+    // Do nothing. Defer to GW
     if (req.user !== '') {
         next()
     } else {
