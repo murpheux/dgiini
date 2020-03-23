@@ -103,7 +103,7 @@ export class TaskViewComponent implements OnInit {
     getTaskMessages() {
         this.messageService.getTaskMessages(this.task._id).subscribe(success => {
             this.messages = success.payload.data;
-            this.messageService.enrichMessages(this.messages);
+            // this.messageService.enrichMessages(this.messages);
         });
     }
 

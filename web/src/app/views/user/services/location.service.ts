@@ -29,7 +29,6 @@ export class LocationService {
                     currentCity = data.toString();
                 } else {
                     this.getMyIPAddress().subscribe(resp => {
-                        console.log(JSON.stringify(resp));
                         const publicIPAddress = resp;
 
                         if (publicIPAddress) {

@@ -35,8 +35,8 @@
           <li class="nav-item dropdown profile-icon profile-dropdown ml-3">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">
-              <img [src]="authServiceloggedIn ? authService.userClaims$.picture : 'assets/images/user.jpg'" class="profile-img border rounded-circle" alt="">
-              <span class="username">{{ authServiceloggedIn ? authService.userClaims$.name : "Guest" }}</span>
+              <img [src]="authService.loggedIn ? claim?.picture : 'assets/images/user.jpg'" class="profile-img border rounded-circle" alt="">
+              <span class="username">{{ authService.loggedIn ? claim?.name : "Guest" }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <div class="container-fluid">

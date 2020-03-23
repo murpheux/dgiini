@@ -31,7 +31,7 @@ export class TaskUserComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        if (this.authService.loggedIn) {
+        if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
             this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
             this.getUserTasks(this.currentUser);
         }

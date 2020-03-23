@@ -8,37 +8,51 @@ admin:
   port: 9876
 
 apiEndpoints:
+  authApiPreflight:
+    paths: '/api/auth/v1/*'
+    methods: OPTIONS
   authApiDefault:
     paths: ['/api/auth/v1/', '/api/auth/v1/users/stats/full',
-        '/api/auth/v1/findcity/:ip', '/api/auth/v1/vendors/:category',
-        '/api/auth/v1/users?*']
-    methods: [GET, OPTIONS]
+        '/api/auth/v1/findcity/:ip', '/api/auth/v1/vendors/:category']
+    methods: GET
   authApi:
     paths: '/api/auth/v1/*'
 
+  taskApiPreflight:
+    paths: '/api/task/v1/*'
+    methods: OPTIONS
   taskApiDefault:
     paths: ['/api/task/v1/', '/api/task/v1/categories', 
         '/api/task/v1/tasks', '/api/task/v1/tasks/stats/full',
         '/api/task/v1/tasks/city/:city/category/*', '/api/task/v1/tasks/category/stats']
-    methods: [GET, OPTIONS]
+    methods: GET
   taskApi:
     paths: '/api/task/v1/*'
 
+  msgApiPreflight:
+    paths: '/api/msg/v1/*'
+    methods: OPTIONS
   msgApiDefault:
     paths: ['/api/msg/v1/', '/api/msg/v1/messages/task/:id']
-    methods: [GET, OPTIONS]
+    methods: GET
   msgApi:
     paths: '/api/msg/v1/*'
 
+  notifyApiPreflight:
+    paths: '/api/notify/v1/*'
+    methods: OPTIONS
   notifyApiDefault:
     paths: '/api/notify/v1/'
-    methods: [GET, OPTIONS]
+    methods: GET
   notifyApi:
     paths: '/api/notify/v1/*'
-    
+  
+  billApiPreflight:
+    paths: '/api/bill/v1/*'
+    methods: OPTIONS
   billApiDefault:
     paths: '/api/bill/v1/'
-    methods: [GET, OPTIONS]
+    methods: GET
   billApi:
     paths: '/api/bill/v1/*'
 
@@ -62,6 +76,14 @@ policies:
   - proxy
 
 pipelines:
+  authApiPreflightPipeline:
+    apiEndpoints:
+      - authApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: authService
+              changeOrigin: true 
   authDefaultPipeline:
     apiEndpoints:
       - authApiDefault
@@ -96,6 +118,14 @@ pipelines:
             checkCredentialExistence: false
       - proxy: *as
 
+  taskApiPreflightPipeline:
+    apiEndpoints:
+      - taskApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: taskService
+              changeOrigin: true
   taskDefaultPipeline:
     apiEndpoints:
       - taskApiDefault
@@ -115,6 +145,14 @@ pipelines:
       - jwt: *jwt
       - proxy: *ts
   
+  msgApiPreflightPipeline:
+    apiEndpoints:
+      - msgApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: msgService
+              changeOrigin: true
   msgDefaultPipeline:
     apiEndpoints:
       - msgApiDefault
@@ -134,6 +172,14 @@ pipelines:
       - jwt: *jwt
       - proxy: *ms
 
+  notifyApiPreflightPipeline:
+    apiEndpoints:
+      - notifyApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: notifyService
+              changeOrigin: true
   notifyDefaultPipeline:
     apiEndpoints:
       - notifyApiDefault
@@ -153,6 +199,14 @@ pipelines:
       - jwt: *jwt
       - proxy: *ns
 
+  billApiPreflightPipeline:
+    apiEndpoints:
+      - billApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: billService
+              changeOrigin: true
   billDefaultPipeline:
     apiEndpoints:
       - billApiDefault

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,6 +19,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     isCollapsed = true;
     categories: string[] = [];
+    claim: any;
     fa_imageMap = {
         'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
@@ -29,11 +30,22 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
         private notifyHeaderService: NotifyHeaderService,
         public authService: AuthService,
         public taskService: TaskService,
-        private dialog: MatDialog
-    ) { }
+        private dialog: MatDialog,
+        private ref: ChangeDetectorRef
+    ) {
+        setInterval(() => { this.ref.detectChanges(); }, 5000);
+    }
 
     ngOnInit() {
         this.getTaskCategories();
+
+        if (this.authService.loggedIn) {
+            this.authService.userClaims$.subscribe(claim => {
+
+                console.log(JSON.stringify(claim));
+                this.claim = claim;
+            });
+        }
     }
 
     getTaskCategories() {
