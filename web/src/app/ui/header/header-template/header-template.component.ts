@@ -19,7 +19,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     isCollapsed = true;
     categories: string[] = [];
-    claim: any;
+    claim: {};
     fa_imageMap = {
         'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
