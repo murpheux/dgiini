@@ -65,14 +65,6 @@ pipeline {
                 }
             }
         }
-        // stage('Unit test') {
-        //     steps {
-        //         sh '''
-        //             cd ${WORKSPACE}/ms
-        //             npm run test
-        //         '''
-        //     }
-        // }
         stage('Create version file') {
             steps {
                 writeFile file: 'build_version', text: '{"version": "${BUILD_NUMBER}"}'
