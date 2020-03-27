@@ -14,6 +14,15 @@ export interface IUser {
     lastLogin: Date;
     rating: number;
     photo: [];
+
+    aboutMember: string;
+    joined: Date;
+}
+
+export interface IMemberReview {
+    client: IUser;
+    comment: string;
+    created: Date;
 }
 
 export interface IClient extends IUser {

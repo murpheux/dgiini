@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 
 @Component({
-  selector: 'app-vendorclient',
-  templateUrl: './vendorclient.component.html',
-  styleUrls: ['./vendorclient.component.scss']
+    selector: 'app-vendorclient',
+    templateUrl: './vendorclient.component.html',
+    styleUrls: ['./vendorclient.component.scss']
 })
 export class VendorclientComponent implements OnInit, AfterViewInit {
 
@@ -14,28 +14,28 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
     @ViewChild('taskerSteps', { static: true }) taskerSteps: ElementRef;
     @ViewChild('howItWorks', { static: true }) howItWorks: ElementRef;
 
-  constructor(
-    private dialog: MatDialog
-  ) { }
+    constructor(
+        private dialog: MatDialog
+    ) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  ngAfterViewInit() {
-    this.tasker.nativeElement.addEventListener('mouseover', function () {
-        const box = document.getElementById('clientTaskerBox');
-        box.classList.add('tasker-active');
-        box.classList.add('client-fade');
-    });
+    ngAfterViewInit() {
+        this.tasker.nativeElement.addEventListener('mouseover', () => {
+            const box = document.getElementById('clientTaskerBox');
+            box.classList.add('tasker-active');
+            box.classList.add('client-fade');
+        });
 
-    this.tasker.nativeElement.addEventListener('mouseleave', function () {
-        const box = document.getElementById('clientTaskerBox');
-        box.classList.remove('tasker-active');
-        box.classList.remove('client-fade');
-    });
-}
+        this.tasker.nativeElement.addEventListener('mouseleave', () => {
+            const box = document.getElementById('clientTaskerBox');
+            box.classList.remove('tasker-active');
+            box.classList.remove('client-fade');
+        });
+    }
 
-  openDialog() {
+    openDialog() {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',

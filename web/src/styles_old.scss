@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+$fa-font-path: '../node_modules/font-awesome/fonts';
+@import '~ngx-toastr/toastr.css';
+$table-accent-bg: rgba(#eee, .0) !default;
+@font-face {
+    font-family: 'Open Sans';
+    src: url('./assets/fonts/DIN_Regular.ttf') format('truetype');
+}
+
+@import "~font-awesome/scss/font-awesome.scss";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Mine defined! */
+
+$brandred: #d80303;
+$brandgold: #cba135;
+$fades: 10 20 30 40 50 60 70 80 90 100; //
+.c-red {
+    color: $brandred;
+}
+
+.c-gold {
+    color: $brandgold;
+}
+
+@each $fadr in $fades {
+    .c-gold-#{$fadr} {
+        color: lighten($brandgold, $fadr);
+    }
+}
+
+@each $fadr in $fades {
+    .c-red-#{$fadr} {
+        color: lighten($brandred, $fadr);
+    }
+}

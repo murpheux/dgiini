@@ -35,7 +35,6 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
 
                     // get user info from db
                     this.userService.getUserByEmail(profile.email).subscribe(response => {
-                        console.log(JSON.stringify(response));
                         localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data));
                     });
                 });
