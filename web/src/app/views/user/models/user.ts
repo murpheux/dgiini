@@ -19,6 +19,11 @@ export interface IUser {
     joined: Date;
 }
 
+export interface IUserClaim {
+    name: string;
+    picture: string;
+}
+
 export interface IMemberReview {
     client: IUser;
     comment: string;

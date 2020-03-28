@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { IUserClaim } from 'src/app/views/user/models/user';
 
 @Component({
     selector: 'app-header-template',
@@ -20,7 +21,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     subscription: Subscription;
     isCollapsed = true;
     categories: string[] = [];
-    claim: {};
+    claim: IUserClaim;
     fa_imageMap = {
         'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
