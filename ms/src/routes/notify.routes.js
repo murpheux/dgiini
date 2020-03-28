@@ -16,8 +16,8 @@ import common from '../shared/common'
 import VALIDATION_MSG from '../shared/error_messages'
 import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
 import winston from '../shared/winston'
+import mgaccess from '../data/mongo.access'
 
-const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.NOTIFY_DATABASE || 'dg_notifydb'
 const ObjectId = mongodb.ObjectId

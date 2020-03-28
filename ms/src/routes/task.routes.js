@@ -11,8 +11,8 @@ import VALIDATION_MSG from '../shared/error_messages'
 import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
 import winston from '../shared/winston'
 import { validateBid, validateTask } from '../shared/validator'
+import mgaccess from '../data/mongo.access'
 
-const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.TASK_DATABASE || 'dg_taskdb'
 const ObjectId = mongodb.ObjectId

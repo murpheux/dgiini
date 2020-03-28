@@ -12,8 +12,8 @@ import { validateClient, validateCredential, validateVendor } from '../shared/va
 import { VALIDATION_MSG, NOTFOUND_MSG, PROVIDER_MSG } from '../shared/error_messages'
 import { build_response, options, build_paging } from '../shared/service.library'
 import winston from '../shared/winston'
+import mgaccess from '../data/mongo.access'
 
-const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.AUTH_DATABASE || 'dg_authdb'
 const find_city_service = process.env.CITY_SERVICE || 'https://tools.keycdn.com/geo.json'

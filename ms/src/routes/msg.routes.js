@@ -10,8 +10,8 @@ import common from '../shared/common'
 import { validateMessage } from '../shared/validator'
 import { build_response, options, build_paging } from '../shared/service.library'
 import winston from '../shared/winston'
+import mgaccess from '../data/mongo.access'
 
-const mgaccess = require('../data/mongo.access')
 const router = express.Router()
 const database_name = process.env.MESSAGE_DATABASE || 'dg_messagedb'
 const MESSAGE_COLL = 'messages'
