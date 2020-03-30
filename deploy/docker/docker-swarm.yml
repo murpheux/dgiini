@@ -2,7 +2,7 @@ version: "3.7"
 services:
   
     web:
-      image: gru:5000/dgiini/web:246
+      image: gru:5000/dgiini/web:${DGIINI_VERSION}
       restart: always
       environment:
         - NGINX_HOST=sdpro.dynu.com
@@ -15,7 +15,7 @@ services:
           replicas: 1
 
     apigw:
-      image: gru:5000/dgiini/apigw:246
+      image: gru:5000/dgiini/apigw:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -25,8 +25,7 @@ services:
         - NOTIFY_API_PORT=80
         - BILL_API_PORT=80
         - APP_NAME=apigw/apigw
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
       ports:
           - "7000:443"
       networks:
@@ -35,7 +34,7 @@ services:
           replicas: 1
 
     auth_api:
-      image: gru:5000/dgiini/auth:246
+      image: gru:5000/dgiini/auth:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -48,8 +47,7 @@ services:
         - DB_PORT=27017
         - AUTH_DATABASE=dg_authdb
         - APP_NAME=auth_api/microservices
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -57,7 +55,7 @@ services:
         replicas: 1
 
     task_api:
-      image: gru:5000/dgiini/task:246
+      image: gru:5000/dgiini/task:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -68,8 +66,7 @@ services:
         - DB_PORT=27017
         - TASK_DATABASE=dg_taskdb
         - APP_NAME=task_api/microservices
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -77,7 +74,7 @@ services:
         replicas: 1
 
     msg_api:
-      image: gru:5000/dgiini/msg:246
+      image: gru:5000/dgiini/msg:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -90,8 +87,7 @@ services:
         - DB_PORT=27017
         - TASK_DATABASE=dg_msgdb
         - APP_NAME=msg_api/microservices
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet
@@ -99,7 +95,7 @@ services:
         replicas: 1
 
     notify_api:
-      image: gru:5000/dgiini/notify:246
+      image: gru:5000/dgiini/notify:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -112,8 +108,7 @@ services:
         - DB_PORT=27017
         - TASK_DATABASE=dg_notifydb
         - APP_NAME=notify_api/microservices
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
         - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
         - SENDGRID_API_KEY=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
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
@@ -123,7 +118,7 @@ services:
         replicas: 1
 
     bill_api:
-      image: gru:5000/dgiini/bill:246
+      image: gru:5000/dgiini/bill:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -136,8 +131,7 @@ services:
         - DB_PORT=27017
         - TASK_DATABASE=dg_msbill
         - APP_NAME=bill_api/microservices
-        - APP_VERSION=v0.1
-        - APP_BUILD=0.0.1-00237
+        - APP_VERSION=0.1
         - COR_CLIENT_URL=http://sdpro.dynu.com:9000
       networks:
         - dgiininet

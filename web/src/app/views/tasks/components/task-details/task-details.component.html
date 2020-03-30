@@ -6,132 +6,122 @@
 
             </div>
             <div class="p-2">
-                <button [hidden]="readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="setEditMode()">Edit</button>
-                <button [hidden]="!readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="handleUpdateTask()">Save</button>
-                <button [hidden]="!readonly" color="warn" id="btnEditTask" mat-stroked-button (click)="handleCancel()">Cancel</button>
-                <button color="warn" id="btnDeleteTask" mat-stroked-button (click)="openConfirmationDialog(model._id)">Delete</button>
+                <button [hidden]="readonly" color="warn" id="btnEditTask" (click)="setEditMode()">Edit</button>
+                <button [hidden]="!readonly" color="warn" id="btnEditTask" (click)="handleUpdateTask()">Save</button>
+                <button [hidden]="!readonly" color="warn" id="btnEditTask" (click)="handleCancel()">Cancel</button>
+                <button color="warn" id="btnDeleteTask" (click)="openConfirmationDialog(model._id)">Delete</button>
             </div>
         </div>
 
 
     </div>
-    <mat-card *ngIf="model">
+    <div *ngIf="model">
         <form *ngIf="taskFormGroup" [formGroup]="taskFormGroup" (ngSubmit)="handleUpdateTask()">
             <ng-template matStepLabel>Task Details</ng-template>
             <div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Id</mat-label>
+                        <div class="full-width">
+                            <label>Id</label>
                             <input readonly matInput placeholder="Placeholder" formControlName="id">
-                            <mat-icon matSuffix>settings</mat-icon>
-                        </mat-form-field>
+                            <span>settings</span>
+                        </div>
                     </div>
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Title</mat-label>
+                        <div class="full-width">
+                            <label>Title</label>
                             <input [readonly]="!readonly" matInput placeholder="Title" formControlName="title">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['title'].invalid">
+                            <div *ngIf="taskFormGroup.controls['title'].invalid">
                                 <span *ngIf="taskFormGroup.controls['title'].errors.required">Title is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Description</mat-label>
+                        <div class="full-width">
+                            <label>Description</label>
                             <input [readonly]="!readonly" matInput placeholder="Placeholder" formControlName="description">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['description'].invalid">
+                            <div *ngIf="taskFormGroup.controls['description'].invalid">
                                 <span *ngIf="taskFormGroup.controls['description'].errors.required">Description is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Category</mat-label>
+                        <div class="full-width">
+                            <label>Category</label>
                             <input [readonly]="!readonly" matInput placeholder="Category" formControlName="category">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['category'].invalid">
+                            <div *ngIf="taskFormGroup.controls['category'].invalid">
                                 <span *ngIf="taskFormGroup.controls['category'].errors.required">Category is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Street</mat-label>
+                        <div class="full-width">
+                            <label>Street</label>
                             <input [readonly]="!readonly" matInput placeholder="Placeholder" formControlName="street">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['street'].invalid">
+                            <div *ngIf="taskFormGroup.controls['street'].invalid">
                                 <span *ngIf="taskFormGroup.controls['street'].errors.required">Street is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>City</mat-label>
+                        <div class="full-width">
+                            <label>City</label>
                             <input [readonly]="!readonly" matInput placeholder="city" formControlName="city">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['city'].invalid">
+                            <div *ngIf="taskFormGroup.controls['city'].invalid">
                                 <span *ngIf="taskFormGroup.controls['city'].errors.required">City is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>State</mat-label>
+                        <div class="full-width">
+                            <label>State</label>
                             <input [readonly]="!readonly" matInput placeholder="state" formControlName="state">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['state'].invalid">
+                            <div *ngIf="taskFormGroup.controls['state'].invalid">
                                 <span *ngIf="taskFormGroup.controls['state'].errors.required">State is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Zip Code</mat-label>
+                        <div class="full-width">
+                            <label>Zip Code</label>
                             <input [readonly]="!readonly" matInput placeholder="zipcode" formControlName="zipcode">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['zipcode'].invalid">
+                            <div *ngIf="taskFormGroup.controls['zipcode'].invalid">
                                 <span *ngIf="taskFormGroup.controls['zipcode'].errors.required">Zip Code is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Country</mat-label>
+                        <div class="full-width">
+                            <label>Country</label>
                             <input [readonly]="!readonly" matInput placeholder="country" formControlName="country">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['country'].invalid">
+                            <div *ngIf="taskFormGroup.controls['country'].invalid">
                                 <span *ngIf="taskFormGroup.controls['country'].errors.required">Country is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                     <div class="flex-fill p-1">
-                        <mat-form-field class="full-width">
-                            <mat-label>Estimated Hours</mat-label>
+                        <div class="full-width">
+                            <label>Estimated Hours</label>
                             <input [readonly]="!readonly" matInput placeholder="zipcode" formControlName="estimated_hours">
-                            <mat-icon matSuffix></mat-icon>
-                            <mat-error *ngIf="taskFormGroup.controls['estimated_hours'].invalid">
+                            <div *ngIf="taskFormGroup.controls['estimated_hours'].invalid">
                                 <span *ngIf="taskFormGroup.controls['estimated_hours'].errors.required">Est. Hours is required</span>
-                            </mat-error>
-                        </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="d-flex flex-row">
-                    <div class="m-2"><button mat-stroked-button id="btnBack" (click)='handleBack()'>Back</button></div>
-                    <!-- <div class="m-2"><button type="submit" color="primary" id="btnSaveProject" mat-stroked-button>Save</button></div> -->
+                    <div class="m-2"><button id="btnBack" (click)='handleBack()'>Back</button></div>
                 </div>
             </div>
         </form>
-    </mat-card>
+    </div>
 </div>

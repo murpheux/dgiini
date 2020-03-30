@@ -4,8 +4,8 @@ import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.component';
 import { Guid } from 'guid-typescript';
+import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.component';
 
 @Component({
     selector: 'app-task-details',

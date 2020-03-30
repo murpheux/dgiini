@@ -14,12 +14,10 @@ import { TaskFilterComponent } from './components/task-filter/task-filter.compon
 import { TaskDeleteDialogComponent } from './components/task-details/delete-dialog/task-delete-dialog.component';
 import { TaskCardComponent } from './components/task-card/task-card.component';
 import { TaskCategoryNodeComponent } from './components/task-category-node/task-category-node.component';
-import { TaskShowcaseComponent } from './components/task-showcase/task-showcase.component';
 import { TaskViewComponent } from './components/task-view/task-view.component';
 import { faStar, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { TaskUserComponent } from './components/task-user/task-user.component';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { TaskCardLinkComponent } from './components/task-card-link/task-card-link.component';
 import { MessageModule } from '../message/message.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { TaskOfferComponent } from './components/task-offer/task-offer.component';
@@ -33,9 +31,8 @@ import { VendorModule } from '../vendor/vendor.module';
     declarations: [TaskDetailsComponent,
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
-        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskViewComponent,
-        TaskUserComponent, TaskCardLinkComponent,
-        TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
+        TaskCategoryNodeComponent, TaskViewComponent,
+        TaskUserComponent, TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -53,7 +50,7 @@ import { VendorModule } from '../vendor/vendor.module';
       ],
     exports: [TaskCategoriesComponent, TaskStatsComponent,
         TaskCreateComponent, TaskCardComponent, FeaturedTaskComponent,
-        TaskCategoryNodeComponent, TaskShowcaseComponent, TaskSearchComponent],
+        TaskCategoryNodeComponent, TaskSearchComponent],
     providers: [TaskService]
 })
 export class TasksModule {

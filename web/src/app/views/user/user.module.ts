@@ -5,7 +5,6 @@ import { UserRoutingModule } from './user-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LocationService } from './services/location.service';
-import { RegisterComponent } from './components/register/register.component';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { BecomevendorComponent } from './components/becomevendor/becomevendor.component';
 import { UserService } from './services/user.service';
@@ -17,7 +16,7 @@ import { UserstatsComponent } from './components/userstats/userstats.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
-  declarations: [ RegisterComponent, UserprofileComponent, BecomevendorComponent,
+  declarations: [UserprofileComponent, BecomevendorComponent,
     UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
   imports: [
     CommonModule,
@@ -27,6 +26,6 @@ import { TransactionsComponent } from './components/transactions/transactions.co
     MaterialDesignModule
   ],
   providers: [LocationService, UserService, AuthService ],
-  exports: [ RegisterComponent, UserprofileComponent ]
+  exports: [ UserprofileComponent ]
 })
 export class UserModule { }

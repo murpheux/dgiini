@@ -17,16 +17,15 @@ import { AuthGuard } from './guards/auth-guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BandComponent } from './components/band/band.component';
 import { GoogleMapComponent } from './components/google-map/google-map.component';
-import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
     declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-        OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, BandComponent, GoogleMapComponent],
+        OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, GoogleMapComponent],
     exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-        OverlayLoaderComponent, ContentLoaderComponent, BandComponent, GoogleMapComponent],
+        OverlayLoaderComponent, ContentLoaderComponent, GoogleMapComponent],
     providers: [
         UtilService,
         LoadingService,
@@ -41,10 +40,7 @@ import { environment } from 'src/environments/environment';
         CommonModule,
         MaterialDesignModule,
         FontAwesomeModule,
-        AgmCoreModule.forRoot({
-            apiKey: environment.keys.gmap,
-            libraries: ['places', 'geometry']
-        })
+        GoogleMapsModule,
     ],
     entryComponents: [
         ConfirmDialogComponent,

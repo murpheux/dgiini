@@ -12,6 +12,7 @@
 /out-tsc
 /data
 **/nweb
+**/yweb
 deploy/**/release_*
 
 # dependencies
