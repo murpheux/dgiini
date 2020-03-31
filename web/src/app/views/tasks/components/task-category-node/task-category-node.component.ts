@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 export class TaskCategoryNodeComponent implements OnInit {
     categories: string[] = [];
     categoryStats: {[key: string]: number};
-    fa_imageMap = { 'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
+    faImageMap = { Cleaning: 'sun', Gardening: 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        'Childcare': 'baby-carriage', 'Moving': 'truck' };
+        Childcare: 'baby-carriage', Moving: 'truck' };
 
     constructor(
         private taskService: TaskService,

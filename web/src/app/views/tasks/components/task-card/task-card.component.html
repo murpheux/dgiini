@@ -11,7 +11,7 @@
         <span class="float-right"><i class="fas fa-calendar"></i> {{task.scheduled_date | date}}</span>
     </p>
     <p class="m-0">
-        <span class="badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span>
+        <span class="badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span>
         <span class="text-muted">{{task.bidcount}} Offers</span>
         <span class="badge badge-secondary float-right">{{task.category}}</span>
     </p>

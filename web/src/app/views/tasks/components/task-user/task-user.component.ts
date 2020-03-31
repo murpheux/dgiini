@@ -87,4 +87,6 @@ export class TaskUserComponent implements OnInit {
     handleSearchClicked(searchString: string) {
         this.searchUserTask(searchString);
     }
+
+    getStatusColor = (status) => this.taskService.getStatusColor(status);
 }

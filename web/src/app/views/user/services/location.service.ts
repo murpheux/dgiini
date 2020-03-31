@@ -4,11 +4,18 @@ import { environment } from 'src/environments/environment';
 import { IResponse } from '../../tasks/models/IResponse';
 import { Observable, Subject } from 'rxjs';
 import { Constants } from 'src/app/shared/models/constants';
+import { EnvService } from 'src/app/shared/services/env.service';
+
 @Injectable()
 export class LocationService {
-    private serviceUrl = `${environment.gateway.api}/auth/v1`;
+    private serviceUrl = undefined;
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private env: EnvService,
+        private http: HttpClient
+    ) {
+        this.serviceUrl = `${env.apiUrl}/auth/v1`;
+    }
 
     // tslint:disable-next-line: no-any
     getMyIPAddress(): Observable<any> {

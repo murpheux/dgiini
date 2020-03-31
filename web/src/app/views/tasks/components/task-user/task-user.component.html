@@ -71,7 +71,7 @@
                                         <td><span class=" badge badge-web">{{task.category}}</span></td>
                                         <td>{{task.scheduled_date | date:'medium'}}</td>
                                         <td>C${{task.rate.amount}}</td>
-                                        <td><span class=" badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span></td>
+                                        <td><span class=" badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -96,7 +96,7 @@
                                         <td><span class=" badge badge-web">{{task.category}}</span></td>
                                         <td>{{task.scheduled_date | date:'medium'}}</td>
                                         <td>C${{task.rate.amount}}</td>
-                                        <td><span class=" badge badge-{{taskService.getStatusColor(task.status)}}">{{task.status}}</span></td>
+                                        <td><span class=" badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -192,7 +192,7 @@ i                                </thead>
                                         <td><span class=" badge badge-web">{{compTask.category}}</span></td>
                                         <td>{{compTask.scheduled_date | date:'medium'}}</td>
                                         <td>C${{compTask.rate.amount}}</td>
-                                        <td><span class=" badge badge-{{taskService.getStatusColor(compTask.status)}}">{{compTask.status}}</span></td>
+                                        <td><span class=" badge badge-{{getStatusColor(compTask.status)}}">{{compTask.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -218,7 +218,7 @@ i                                </thead>
                                         <td><span class=" badge badge-web">{{canTask.category}}</span></td>
                                         <td>{{canTask.scheduled_date | date:'medium'}}</td>
                                         <td>C${{canTask.rate.amount}}</td>
-                                        <td><span class=" badge badge-{{taskService.getStatusColor(canTask.status)}}">{{canTask.status}}</span></td>
+                                        <td><span class=" badge badge-{{getStatusColor(canTask.status)}}">{{canTask.status}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>

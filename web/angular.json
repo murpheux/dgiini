@@ -27,7 +27,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/web.config"
+              "src/web.config",
+              "src/env.js"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -73,6 +74,10 @@
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.docker.ts"
+              },
+              {
+                "replace": "src/env.js",
+                "with": "src/env.docker.js"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -94,6 +99,10 @@
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.k8s.ts"
+              },
+              {
+                "replace": "src/env.js",
+                "with": "src/env.k8s.js"
               }],
               "optimization": true,
               "outputHashing": "all",

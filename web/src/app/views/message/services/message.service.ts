@@ -6,17 +6,21 @@ import { IMessage } from '../models/message';
 import { Guid } from 'guid-typescript';
 import { environment } from '../../../../environments/environment';
 import { UserService } from '../../user/services/user.service';
+import { EnvService } from 'src/app/shared/services/env.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MessageService {
-    private serviceUrl = `${environment.gateway.api}/msg/v1/messages`;
+    private serviceUrl = undefined;
 
     constructor(
+        private env: EnvService,
         private http: HttpClient,
         private userService: UserService
-        ) { }
+        ) {
+            this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
+        }
 
     sendMessage(message: IMessage): Observable<IResponse> {
         const url = `${this.serviceUrl}`;

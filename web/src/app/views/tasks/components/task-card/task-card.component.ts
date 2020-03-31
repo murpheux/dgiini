@@ -32,4 +32,6 @@ export class TaskCardComponent implements OnInit {
         this.taskSelected.emit(this.task);
     }
 
+    getStatusColor = (status) => this.taskService.getStatusColor(status);
+
 }

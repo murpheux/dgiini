@@ -23,10 +23,6 @@
       "dom"
     ]
   },
-  "runtimeArgs": [
-    "-r",
-    "ts-node/register"
-  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

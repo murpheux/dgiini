@@ -19,6 +19,7 @@ export const environment = {
   superDoubleSecret: "${process.env.SUPER_SECRET_CRED2}"
 };
 `;
+
 writeFile(targetPath, envConfigFile, (err) => {
     if (err) {
         console.log(err);

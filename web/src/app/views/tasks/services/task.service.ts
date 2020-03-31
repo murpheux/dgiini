@@ -8,21 +8,26 @@ import { IResponse } from '../models/IResponse';
 import { Guid } from 'guid-typescript';
 import { LocationService } from '../../user/services/location.service';
 import { ITaskBid } from '../models/ITaskBid';
+import { EnvService } from 'src/app/shared/services/env.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-    private serviceUrl = `${environment.gateway.api}/task/v1/tasks`;
-    private bidServiceUrl = `${environment.gateway.api}/task/v1/bids`;
+    private serviceUrl = undefined;
+    private bidServiceUrl = undefined;
 
     constructor(
+        private env: EnvService,
         private http: HttpClient,
         private locationService: LocationService
-    ) { }
+    ) {
+        this.serviceUrl = `${env.apiUrl}/task/v1/tasks`;
+        this.bidServiceUrl = `${env.apiUrl}/task/v1/bids`;
+    }
 
     getTaskCategories(): Observable<IResponse> {
-        const url = `${environment.gateway.api}/task/v1/categories`;
+        const url = `${this.env.apiUrl}/task/v1/categories`;
         return this.http.get<IResponse>(url);
     }
 

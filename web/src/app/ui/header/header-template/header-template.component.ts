@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { NotifyHeaderService } from 'src/app/services/notify-header.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { faUser, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
-import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
@@ -22,14 +20,13 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     isCollapsed = true;
     categories: string[] = [];
     claim: IUserClaim;
-    fa_imageMap = {
-        'Cleaning': 'sun', 'Gardening': 'tree', 'Handy Man': 'wrench',
+    faImageMap = {
+        Cleaning: 'sun', Gardening: 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        'Childcare': 'baby-carriage', 'Moving': 'truck'
+        Childcare: 'baby-carriage', Moving: 'truck'
     };
 
     constructor(
-        private notifyHeaderService: NotifyHeaderService,
         public authService: AuthService,
         public taskService: TaskService,
         private dialog: MatDialog,
@@ -91,11 +88,11 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     }
 
     openRegisterDialog() {
-        const registerRef = this.dialog.open(RegisterComponent, {
-            height: '600px',
-            width: '800px',
-        });
-        registerRef.afterClosed().subscribe(result => { });
+        // const registerRef = this.dialog.open(RegisterComponent, {
+        //     height: '600px',
+        //     width: '800px',
+        // });
+        // registerRef.afterClosed().subscribe(result => { });
     }
 
     changeLang(lang: string) {

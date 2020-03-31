@@ -1,10 +1,6 @@
 export const environment = {
     production: false,
 
-    gateway: {
-        api: 'https://dgiini-apigw-service/api',
-    },
-
     // AUTH0
     auth0: {
         domain: 'murpheux.auth0.com',
@@ -13,8 +9,4 @@ export const environment = {
     },
 
     version: '0.0.1',
-
-    keys: {
-        gmap: ''
-    }
 };

@@ -225,4 +225,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     // tslint:disable-next-line: no-any
     handleScroll(event: any) {
     }
+
+    handleOverflow(event: any) {
+    }
 }

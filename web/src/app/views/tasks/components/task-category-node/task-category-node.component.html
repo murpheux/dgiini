@@ -7,10 +7,10 @@
                 <div class="category-box text-center mt-3">
                     <a routerLink="/browse/{{ category }}">
                         <i class="fas fa-sun box-background"></i>
-                        <i class="fas fa-{{ fa_imageMap[category] }}"></i>
+                        <i class="fas fa-{{ faImageMap[category] }}"></i>
                         <div class="border category-border mx-auto mt-2 mb-2"></div>
                         <p class="m-0 title">{{ category }}</p>
-                        <p *ngIf="categoryStats" class="m-0 jobs-open">{{categoryStats[category]?.count}} Tasks Open</p>
+                        <p *ngIf="categoryStats" class="m-0 jobs-open">{{ categoryStats.count }} Tasks Open</p>
                     </a>
                 </div>
             </div>

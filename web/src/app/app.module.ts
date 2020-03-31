@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ToastrModule } from 'ngx-toastr';
+import { UiModule } from './ui';
+import { EnvServiceProvider } from './shared/services/env.service.provider';
 
 @NgModule({
   declarations: [
@@ -15,9 +18,11 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    UiModule,
+    ToastrModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [ EnvServiceProvider ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

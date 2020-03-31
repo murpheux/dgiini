@@ -10,20 +10,20 @@ import {MapInfoWindow, MapMarker} from '@angular/google-maps';
 export class GoogleMapComponent implements OnInit {
     @ViewChild(MapInfoWindow, {static: false}) infoWindow: MapInfoWindow;
 
-    center = {lat: 24, lng: 12};
+    @Input() latitude: number;
+    @Input() longitude: number;
+    @Input() mapTypeId: string;
+
+    center = {lat: 51.049999, lng: -114.066666}; // calgary
     markerOptions = {draggable: false};
     markerPositions: google.maps.LatLngLiteral[] = [];
     zoom = 4;
     display?: google.maps.LatLngLiteral;
 
-    @Input() latitude: number;
-    @Input() longitude: number;
-    @Input() mapTypeId: string;
-
     constructor() { }
 
     ngOnInit() {
-        console.log(process.env.GOOGLE_API_KEY);
+        this.center = {lat: this.latitude, lng: this.longitude};
     }
 
     addMarker(event: google.maps.MouseEvent) {
