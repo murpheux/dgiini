@@ -68,7 +68,10 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     }
 
     openDialog() {
-        const dialogRef = this.dialog.open(TaskCreateComponent, {});
+        const dialogRef = this.dialog.open(TaskCreateComponent, {
+            height: '570px',
+            width: '800px',
+        });
         dialogRef.afterClosed().subscribe(result => { });
     }
 

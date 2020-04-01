@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 import { ITask, TaskType, RateUnit, Currency } from '../../models/ITask';
@@ -26,26 +26,28 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     @ViewChild('postTaskProgressBar', { static: false }) postTaskProgressBar: ElementRef;
     @ViewChild('postTaskProgressText', { static: false }) postTaskProgressText: ElementRef;
 
-    taskFormGroup: FormGroup;
+    taskForm: Array<FormGroup>;
 
+    task: ITask;
     countries: string[];
     cities: string[];
     states: string[];
     categoryList: string[];
     options: string[];
-    // tslint:disable-next-line: no-any
-    options_keys: any;
-
-    rateunits: string[];
-    // tslint:disable-next-line: no-any
-    rateunits_keys: any;
-
     currentCity: string;
     currentState: string;
     currentCountry: string;
+    rateunits: string[];
+    selectedCategory: string;
+    mouseoverSave = false;
+    activeStepIndex: number;
+
+    // tslint:disable-next-line: no-any
+    optionsKeys: any;
+    // tslint:disable-next-line: no-any
+    rateunitsKeys: any;
     // tslint:disable-next-line: no-any
     currentUser: any;
-    selectedCategory: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -59,6 +61,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.initializeContent();
+        this.buildForm();
     }
 
     ngAfterViewInit() {
@@ -69,12 +72,12 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line: no-any
         this.options = Object.keys(TaskType).filter(k => typeof TaskType[k as any] === 'number');
         // tslint:disable-next-line: no-any
-        this.options_keys = this.options.map(k => TaskType[k as any]);
+        this.optionsKeys = this.options.map(k => TaskType[k as any]);
 
         // tslint:disable-next-line: no-any
         this.rateunits = Object.keys(RateUnit).filter(k => typeof RateUnit[k as any] === 'number');
         // tslint:disable-next-line: no-any
-        this.rateunits_keys = this.rateunits.map(k => RateUnit[k as any]);
+        this.rateunitsKeys = this.rateunits.map(k => RateUnit[k as any]);
 
         // set default values
         this.cities = ['Calgary', 'Edmonton', 'Red Deer', 'Montreal', 'Toronto', 'Vancouver'];
@@ -95,6 +98,32 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 this.currentUser = profile;
             });
         }
+    }
+
+    buildForm() {
+        this.activeStepIndex = 0;
+
+        this.taskForm = [
+            new FormGroup({
+                title: this.formBuilder.control('', [Validators.required]),
+                description: this.formBuilder.control('', [Validators.required]),
+                category: this.formBuilder.control('', [Validators.required]),
+            }),
+            new FormGroup({
+                photo: this.formBuilder.control('', []),
+            }),
+            new FormGroup({
+                street: this.formBuilder.control('', [Validators.required]),
+                city: this.formBuilder.control(this.currentCity, [Validators.required]),
+                state: this.formBuilder.control(this.currentState, [Validators.required]),
+                country: this.formBuilder.control('Canada', [Validators.required]),
+                zipcode: this.formBuilder.control('', [Validators.required]),
+            })
+        ];
+    }
+
+    get form(){
+        return this.taskForm[0].controls;
     }
 
     formatLabel(value: number | null) {
@@ -152,7 +181,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
         if (result.isValid) {
             this.taskService.saveTask(task).subscribe(success => {
-                this.notificationService.showSuccess('Task saved!');
+                this.notificationService.showSuccess('Task saved successfully!');
                 this.dialogRef.close();
             });
         } else {
@@ -161,7 +190,9 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         }
     }
 
-    cancel() { }
+    cancel() {
+        this.dialogRef.close();
+    }
 
     onCountryChanged() { }
 
@@ -250,4 +281,5 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             this.postTaskPostBtn.nativeElement.classList.add('d-none');
         }
     }
+
 }

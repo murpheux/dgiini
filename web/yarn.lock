@@ -2694,6 +2694,24 @@ cosmiconfig@^5.0.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+countries-list@^2.3.2:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/countries-list/-/countries-list-2.5.4.tgz#c1a0ab8f63c0972b266254d63e595ea86a6cfe1e"
+  integrity sha512-6+AIKth3MCOEWTLOVTgR7zTe6oH3JlL0MworsJwIyG0jQi+cKeChOEPvcKszNtGAuCp7p+OrqdxPWxjhu8LqoA==
+
+country-state-city@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/country-state-city/-/country-state-city-0.0.5.tgz#2ad37501bfcf7444270eef0cdecca0046705fad2"
+  integrity sha1-KtN1Ab/PdEQnDu8M3sygBGcF+tI=
+
+countrycitystatejson@^0.2.16:
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/countrycitystatejson/-/countrycitystatejson-0.2.16.tgz#b9c607132b46a0d0241ab1419f27306883ba18eb"
+  integrity sha512-NUNMrAZMYagtfJSsvN61O/ir7JMSIL7IewcOf2SleL+uyVuWQoebEmVere+xMQiNqx8tokXrGGFqWyRIMTHL4A==
+  dependencies:
+    countries-list "^2.3.2"
+    country-state-city "0.0.5"
+
 create-ecdh@^4.0.0:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.3.tgz#c9111b6f33045c4697f144787f9254cdc77c45ff"

@@ -1,189 +1,180 @@
-<div class="modal fade" id="postTaskModal">
-    <div class="modal-dialog modal-md modal-dialog-centered">
-        <div class="modal-content">
+<div class="" id="postTaskModal">
 
-            <!-- Modal body -->
-            <div class="modal-body">
-                <h4 class="modal-title text-web font-weight-bold mb-2">
-                    <i class="fas fa-pen"></i> Post Task <span #postTaskProgressText class="float-right task-percentage">16%</span>
-                </h4>
-                <div class="progress" style="height:7px">
-                    <div #postTaskProgressBar class="progress-bar bg-web" style="width:20%;height:7px"></div>
-                </div>
-
-                <div class="post-task-form pt-3">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane container p-0 active" id="post-task-step-1">
-                            <div class="form-group mb-2">
-                                <label for="task-title">What do you need done?</label>
-                                <input type="text" class="form-control" id="task-title" placeholder="Task Title">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="task-details">What are the details?</label>
-                                <textarea class="form-control" rows="5" id="task-details" placeholder="Task Details"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="task-category">Select Category</label>
-                                <select class="form-control" id="task-category">
-                    <option value="0" disabled>-- Select Category --</option>
-                    <option value="Cleaning">Cleaning</option>
-                    <option value="Gardening">Gardening</option>
-                    <option value="Handy Man">Handy Man</option>
-                    <option value="Furniture Assembly">Furniture Assembly</option>
-                    <option value="Snow Plowing">Snow Plowing</option>
-                    <option value="Child Care">Child Care</option>
-                    <option value="Moving">Moving</option>
-                  </select>
-                            </div>
-                        </div>
-                        <div class="tab-pane container p-0 fade" id="post-task-step-2">
-                            <p class="font-weight-bold">Attachments (Optional)</p>
-                            <div class="mb-2">
-                                <label for="">Uploaded Images</label>
-                                <div class="clearfix"></div>
-                                <div class="img d-inline">
-                                    <i class="fas fa-times"></i>
-                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
-                                </div>
-                                <div class="img d-inline">
-                                    <i class="fas fa-times"></i>
-                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
-                                </div>
-                                <div class="img d-inline">
-                                    <i class="fas fa-times"></i>
-                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
-                                </div>
-                                <div class="img d-inline">
-                                    <i class="fas fa-times"></i>
-                                    <img src="assets/images/preview.png" class="border" alt="Task Img">
-                                </div>
-                            </div>
-                            <div class="form-group mb-2 files">
-                                <label for="task-drag-image">Upload Image</label>
-                                <input type="file" accept="image/*" class="form-control" id="task-drag-image">
-                            </div>
-                        </div>
-                        <div class="tab-pane container p-0 fade" id="post-task-step-3">
-                            <div class="border p-2 pt-1 pb-1 rounded-lg mb-2">
-                                <p class="m-0 text-web font-weight-bold"><i class="fas fa-info-circle"></i> Note</p>
-                                <p class="m-0 text-muted">Address will be kept confidential until task is assigned to tasker</p>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="task-street">Street</label>
-                                <input type="text" class="form-control" id="task-street" placeholder="Street">
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group mb-2">
-                                        <label for="task-city">City</label>
-                                        <input type="text" class="form-control" id="task-city" placeholder="City">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2">
-                                        <label for="task-state">State</label>
-                                        <input type="text" class="form-control" id="task-state" placeholder="State">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="col">
-                                    <div class="form-group mb-2">
-                                        <label for="task-zip">Zip Code</label>
-                                        <input type="text" class="form-control" id="task-zip" placeholder="Zip Code">
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="form-group mb-2">
-                                        <label for="task-country">Country</label>
-                                        <input type="text" class="form-control" id="task-country" placeholder="Country">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="tab-pane container p-0 fade" id="post-task-step-4">
-                            <p class="font-weight-bold">When you want it done?</p>
-                            <div class="form-group mb-2">
-                                <label for="task-date">Expected Task Completion Date</label>
-                                <input type="date" class="form-control" id="task-date" placeholder="Enter Here">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="task-time">Expected Task Completion Time</label>
-                                <input type="time" class="form-control" id="task-time" placeholder="Enter Here">
-                            </div>
-                        </div>
-                        <div class="tab-pane container p-0 fade" id="post-task-step-5">
-                            <p class="font-weight-bold">How do you need it?</p>
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optradio" checked> Total
-                  </label>
-                            </div>
-                            <div class="form-check-inline">
-                                <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optradio"> Hourly
-                  </label>
-                            </div>
-                            <div class="form-group mb-2 mt-2">
-                                <label for="task-amount">Amount</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-dollar-sign text-web"></i></span>
-                                    </div>
-                                    <input type="number" class="form-control" placeholder="Amount" id="task-amount">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">.00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-2">
-                                <label for="task-hours">How long it will take?</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-clock text-web"></i></span>
-                                    </div>
-                                    <input type="number" class="form-control" placeholder="Hours" id="task-hours">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">hours</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane container p-0 fade" id="post-task-step-6">
-                            <p class="font-weight-bold">Confirm Details</p>
-                            <p class="m-0 font-weight-bold">Task Title</p>
-                            <p>Task Name</p>
-                            <p class="m-0 font-weight-bold">Task Description</p>
-                            <p>Task Description</p>
-                            <p class="m-0 font-weight-bold">Address</p>
-                            <p>Street, City, State, Zip Code, Country</p>
-                            <p class="m-0 font-weight-bold">Expected Completion</p>
-                            <p>Date & Time</p>
-                            <p class="m-0 font-weight-bold">Rate</p>
-                            <p>Hourly, 100.00 $, 7-hours</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button #postTaskBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()"><i
-              class="fas fa-arrow-left"></i> Back</button>
-                <button #postTaskNextBtn type="button" class="btn btn-web next-btn" (click)="nextTab()">Continue <i
-              class="fas fa-arrow-right"></i></button>
-                <button #postTaskPostBtn type="button" class="btn btn-web next-btn post-task-btn d-none"><i
-              class="fas fa-pen"></i> Post Task</button>
-            </div>
-
-        </div>
+  <!-- Modal body -->
+  <div class="modal-body">
+    <h4 class="modal-title text-web font-weight-bold mb-2">
+      <i class="fas fa-pen"></i> Post Task <span #postTaskProgressText class="float-right task-percentage">16%</span>
+    </h4>
+    <div class="progress" style="height:7px">
+      <div #postTaskProgressBar class="progress-bar bg-web" style="width:20%;height:7px"></div>
     </div>
+
+    <div class="post-task-form pt-3">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <form [formGroup]="taskForm[0]" autocomplete="off">
+          <div class="tab-pane container p-0 active" id="post-task-step-1">
+            <div class="form-group mb-2">
+              <label for="title">What do you need done?</label>
+              <em *ngIf="taskForm[0].controls.title?.invalid && (taskForm[0].controls.title?.touched || mouseoverSave)">Required</em>
+              <input type="text" class="form-control" formControlName="title" id="title" name="title" placeholder="Task Title" required>
+            </div>
+            <div class="form-group mb-2">
+              <label for="description">What are the details?</label>
+              <em *ngIf="taskForm[0].controls.description?.invalid && (taskForm[0].controls.description?.touched || mouseoverSave)">Required</em>
+              <textarea class="form-control" rows="5" formControlName="description" id="description" id="description" placeholder="Task Details" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="category">Select Category</label>
+              <select class="form-control" id="category" name="category" formControlName="category">
+                <option value="0">-- Select Category --</option>
+                <option value="Cleaning">Cleaning</option>
+                <option value="Gardening">Gardening</option>
+                <option value="Handy Man">Handy Man</option>
+                <option value="Furniture Assembly">Furniture Assembly</option>
+                <option value="Snow Plowing">Snow Plowing</option>
+                <option value="Child Care">Child Care</option>
+                <option value="Moving">Moving</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="taskForm[1]" autocomplete="off">
+          <div class="tab-pane container p-0 fade" id="post-task-step-2">
+            <p class="font-weight-bold">Attachments (Optional)</p>
+            <div class="mb-2">
+              <label for="">Uploaded Images</label>
+              <div class="clearfix"></div>
+              <div class="img d-inline">
+                <i class="fas fa-times"></i>
+                <img src="assets/images/preview.png" class="border" alt="Task Img">
+              </div>
+              <div class="img d-inline">
+                <i class="fas fa-times"></i>
+                <img src="assets/images/preview.png" class="border" alt="Task Img">
+              </div>
+            </div>
+            <div class="form-group mb-2 files">
+              <label for="task-drag-image">Upload Image</label>
+              <input type="file" accept="image/*" class="form-control" id="task-drag-image">
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="taskForm[2]" autocomplete="off">
+          <div class="tab-pane container p-0 fade" id="post-task-step-3">
+            <div class="border p-2 pt-1 pb-1 rounded-lg mb-2">
+              <p class="m-0 text-web font-weight-bold"><i class="fas fa-info-circle"></i> Note</p>
+              <p class="m-0 text-muted">Address will be kept confidential until task is assigned to tasker</p>
+            </div>
+
+            <div class="form-group mb-2">
+              <label for="street">Street</label>
+              <input type="text" class="form-control" id="street" name="street" formControlName="street" placeholder="Street">
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group mb-2">
+                  <label for="city">City</label>
+                  <input type="text" class="form-control" id="city" name="city" formControlName="city" placeholder="City">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group mb-2">
+                  <label for="state">State</label>
+                  <input type="text" class="form-control" id="state" name="state" formControlName="state" placeholder="State">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group mb-2">
+                  <label for="zipcode">Zip Code</label>
+                  <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode" placeholder="Zip Code">
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-group mb-2">
+                  <label for="country">Country</label>
+                  <input type="text" class="form-control" id="country" name="country" formControlName="country" placeholder="Country">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+        <div class="tab-pane container p-0 fade" id="post-task-step-4">
+          <p class="font-weight-bold">When you want it done?</p>
+          <div class="form-group mb-2">
+            <label for="task-date">Expected Task Completion Date</label>
+            <input type="date" class="form-control" id="task-date" placeholder="Enter Here">
+          </div>
+          <div class="form-group mb-2">
+            <label for="task-time">Expected Task Completion Time</label>
+            <input type="time" class="form-control" id="task-time" placeholder="Enter Here">
+          </div>
+        </div>
+        <div class="tab-pane container p-0 fade" id="post-task-step-5">
+          <p class="font-weight-bold">How do you need it?</p>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio" checked> Total
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio"> Hourly
+            </label>
+          </div>
+          <div class="form-group mb-2 mt-2">
+            <label for="task-amount">Amount</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-dollar-sign text-web"></i></span>
+              </div>
+              <input type="number" class="form-control" placeholder="Amount" id="task-amount">
+              <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-2">
+            <label for="task-hours">How long it will take?</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-clock text-web"></i></span>
+              </div>
+              <input type="number" class="form-control" placeholder="Hours" id="task-hours">
+              <div class="input-group-append">
+                <span class="input-group-text">hours</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane container p-0 fade" id="post-task-step-6">
+          <p class="font-weight-bold">Confirm Details</p>
+          <p class="m-0 font-weight-bold">Task Title</p>
+          <p>Task Name</p>
+          <p class="m-0 font-weight-bold">Task Description</p>
+          <p>Task Description</p>
+          <p class="m-0 font-weight-bold">Address</p>
+          <p>Street, City, State, Zip Code, Country</p>
+          <p class="m-0 font-weight-bold">Expected Completion</p>
+          <p>Date & Time</p>
+          <p class="m-0 font-weight-bold">Rate</p>
+          <p>Hourly, 100.00 $, 7-hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Close</button>
+    <button #postTaskBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()"><i class="fas fa-arrow-left"></i> Back</button>
+    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskNextBtn [disabled]="taskForm[0].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Continuex <i class="fas fa-arrow-right"></i></button>
+    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskPostBtn [disabled]="taskForm[0].invalid" type="submit" class="btn btn-web next-btn post-task-btn d-none"><i class="fas fa-pen"></i> Post Task</button>
+  </div>
 
 </div>

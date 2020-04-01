@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class TaskCategoryNodeComponent implements OnInit {
     categories: string[] = [];
-    categoryStats: {[key: string]: number};
+    categoryStats: any;
     faImageMap = { Cleaning: 'sun', Gardening: 'tree', 'Handy Man': 'wrench',
         'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
         Childcare: 'baby-carriage', Moving: 'truck' };
@@ -49,5 +49,7 @@ export class TaskCategoryNodeComponent implements OnInit {
           };
         }, initialValue);
     }
+
+    getstat = (category) => this.categoryStats[category]?.count;
 
 }

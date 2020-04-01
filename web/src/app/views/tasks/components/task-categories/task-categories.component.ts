@@ -123,15 +123,15 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
             if (this.checkIfIntersecting(entry)) {
                 console.log('event triggered!');
 
-                this._intersectionObserver.unobserve(<Element>(this._element.nativeElement));
+                this._intersectionObserver.unobserve((this._element.nativeElement) as Element);
                 this._intersectionObserver.disconnect();
             }
         });
     }
 
-    private checkIfIntersecting (entry: IntersectionObserverEntry) {
+    private checkIfIntersecting(entry: IntersectionObserverEntry) {
         // tslint:disable-next-line: no-any
-        return (<any>entry).isIntersecting && entry.target === this._element.nativeElement;
+        return (entry as any).isIntersecting && entry.target === this._element.nativeElement;
     }
 
     searchTask(searchstr: string) {

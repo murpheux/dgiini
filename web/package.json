@@ -49,6 +49,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "bootstrap": "^4.4.1",
+    "countrycitystatejson": "^0.2.16",
     "fluent-ts-validator": "^3.0.2",
     "guid-typescript": "^1.0.9",
     "jquery": "^3.4.1",
