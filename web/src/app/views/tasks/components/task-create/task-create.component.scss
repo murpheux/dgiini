@@ -73,6 +73,7 @@ footer {
 .post-task-form .img {
   position: relative;
 }
+
 .post-task-form .img .fa-times {
   position: absolute;
   right: 5px;
@@ -86,6 +87,7 @@ footer {
   border-radius: 999px;
   cursor: pointer;
 }
+
 .post-task-form .img img {
   width: 50px;
   height: 50px;
@@ -104,6 +106,7 @@ footer {
   margin: 0;
   width: 100% !important;
 }
+
 .files input:focus {
   outline: 2px dashed var(--theme-color);
   outline-offset: -10px;
@@ -112,9 +115,11 @@ footer {
   transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
   border: 1px solid var(--theme-color);
 }
+
 .files {
   position: relative;
 }
+
 .files:after {
   pointer-events: none;
   position: absolute;
@@ -130,6 +135,7 @@ footer {
   background-size: 100%;
   background-repeat: no-repeat;
 }
+
 .files:before {
   position: absolute;
   bottom: 10px;

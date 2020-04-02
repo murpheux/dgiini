@@ -10,4 +10,9 @@ export const environment = {
     },
 
     version: '0.0.1',
+
+    countries: [
+        { name: 'Canada', code: 'ca' },
+        { name: 'United States', code: 'us' },
+    ]
 };

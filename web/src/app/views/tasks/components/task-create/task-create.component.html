@@ -17,30 +17,24 @@
             <div class="form-group mb-2">
               <label for="title">What do you need done?</label>
               <em *ngIf="taskForm[0].controls.title?.invalid && (taskForm[0].controls.title?.touched || mouseoverSave)">Required</em>
-              <input type="text" class="form-control" formControlName="title" id="title" name="title" placeholder="Task Title" required>
+              <input type="text" class="form-control" formControlName="title" id="title" name="title" placeholder="Task Title">
             </div>
             <div class="form-group mb-2">
               <label for="description">What are the details?</label>
               <em *ngIf="taskForm[0].controls.description?.invalid && (taskForm[0].controls.description?.touched || mouseoverSave)">Required</em>
-              <textarea class="form-control" rows="5" formControlName="description" id="description" id="description" placeholder="Task Details" required></textarea>
+              <textarea class="form-control" rows="5" formControlName="description" id="description" id="description" placeholder="Task Details"></textarea>
             </div>
             <div class="form-group">
               <label for="category">Select Category</label>
               <select class="form-control" id="category" name="category" formControlName="category">
-                <option value="0">-- Select Category --</option>
-                <option value="Cleaning">Cleaning</option>
-                <option value="Gardening">Gardening</option>
-                <option value="Handy Man">Handy Man</option>
-                <option value="Furniture Assembly">Furniture Assembly</option>
-                <option value="Snow Plowing">Snow Plowing</option>
-                <option value="Child Care">Child Care</option>
-                <option value="Moving">Moving</option>
+                <option value="">-- Select Category --</option>
+                <option *ngFor="let category of categoryList" value="{{ category }}">{{ category }}</option>
               </select>
             </div>
           </div>
         </form>
         <form [formGroup]="taskForm[1]" autocomplete="off">
-          <div class="tab-pane container p-0 fade" id="post-task-step-2">
+          <div class="tab-pane container p-0 fade d-none" id="post-task-step-2">
             <p class="font-weight-bold">Attachments (Optional)</p>
             <div class="mb-2">
               <label for="">Uploaded Images</label>
@@ -61,7 +55,7 @@
           </div>
         </form>
         <form [formGroup]="taskForm[2]" autocomplete="off">
-          <div class="tab-pane container p-0 fade" id="post-task-step-3">
+          <div class="tab-pane container p-0 fade d-none" id="post-task-step-3">
             <div class="border p-2 pt-1 pb-1 rounded-lg mb-2">
               <p class="m-0 text-web font-weight-bold"><i class="fas fa-info-circle"></i> Note</p>
               <p class="m-0 text-muted">Address will be kept confidential until task is assigned to tasker</p>
@@ -69,6 +63,7 @@
 
             <div class="form-group mb-2">
               <label for="street">Street</label>
+              <em *ngIf="taskForm[2].controls.street?.invalid && (taskForm[2].controls.street?.touched || mouseoverSave)">Required</em>
               <input type="text" class="form-control" id="street" name="street" formControlName="street" placeholder="Street">
             </div>
 
@@ -76,13 +71,13 @@
               <div class="col">
                 <div class="form-group mb-2">
                   <label for="city">City</label>
-                  <input type="text" class="form-control" id="city" name="city" formControlName="city" placeholder="City">
+                  <input type="text" [readonly]="true" class="form-control" id="city" name="city" formControlName="city" placeholder="City">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group mb-2">
                   <label for="state">State</label>
-                  <input type="text" class="form-control" id="state" name="state" formControlName="state" placeholder="State">
+                  <input type="text" [readonly]="true" class="form-control" id="state" name="state" formControlName="state" placeholder="State">
                 </div>
               </div>
             </div>
@@ -91,20 +86,21 @@
               <div class="col">
                 <div class="form-group mb-2">
                   <label for="zipcode">Zip Code</label>
+                  <em *ngIf="taskForm[2].controls.zipcode?.invalid && (taskForm[2].controls.zipcode?.touched || mouseoverSave)">Required</em>
                   <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode" placeholder="Zip Code">
                 </div>
               </div>
               <div class="col">
                 <div class="form-group mb-2">
                   <label for="country">Country</label>
-                  <input type="text" class="form-control" id="country" name="country" formControlName="country" placeholder="Country">
+                  <input type="text" [readonly]="true" class="form-control" id="country" name="country" formControlName="country" placeholder="Country">
                 </div>
               </div>
             </div>
 
           </div>
         </form>
-        <div class="tab-pane container p-0 fade" id="post-task-step-4">
+        <div class="tab-pane container p-0 fade d-none" id="post-task-step-4">
           <p class="font-weight-bold">When you want it done?</p>
           <div class="form-group mb-2">
             <label for="task-date">Expected Task Completion Date</label>
@@ -115,7 +111,7 @@
             <input type="time" class="form-control" id="task-time" placeholder="Enter Here">
           </div>
         </div>
-        <div class="tab-pane container p-0 fade" id="post-task-step-5">
+        <div class="tab-pane container p-0 fade d-none" id="post-task-step-5">
           <p class="font-weight-bold">How do you need it?</p>
           <div class="form-check-inline">
             <label class="form-check-label">
@@ -152,7 +148,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-pane container p-0 fade" id="post-task-step-6">
+        <div class="tab-pane container p-0 fade d-none" id="post-task-step-6">
           <p class="font-weight-bold">Confirm Details</p>
           <p class="m-0 font-weight-bold">Task Title</p>
           <p>Task Name</p>
@@ -173,8 +169,8 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Close</button>
     <button #postTaskBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()"><i class="fas fa-arrow-left"></i> Back</button>
-    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskNextBtn [disabled]="taskForm[0].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Continuex <i class="fas fa-arrow-right"></i></button>
-    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskPostBtn [disabled]="taskForm[0].invalid" type="submit" class="btn btn-web next-btn post-task-btn d-none"><i class="fas fa-pen"></i> Post Task</button>
+    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskNextBtn [disabled]="taskForm[currentTabOpen - 1].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Continuex <i class="fas fa-arrow-right"></i></button>
+    <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskPostBtn [disabled]="taskForm[currentTabOpen - 1].invalid" type="submit" class="btn btn-web next-btn post-task-btn d-none"><i class="fas fa-pen"></i> Post Task</button>
   </div>
 
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../user/services/location.service';
+import { ICityLocation } from '../user/models/city';
 
 @Component({
     selector: 'app-home',
@@ -7,7 +8,7 @@ import { LocationService } from '../user/services/location.service';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    currentCity: string;
+    currentCity: ICityLocation;
 
     constructor(
         private locationService: LocationService,

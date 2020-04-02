@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/views/user/services/auth.service';
 import { VendorService } from 'src/app/views/vendor/services/vendor.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
+import { ICityLocation } from 'src/app/views/user/models/city';
 
 @Component({
     selector: 'app-task-categories',
@@ -24,7 +25,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     selectedCategory: string[];
     searchString: string;
     defaultDistanceToHome = 55;
-    currentCity: string;
+    currentCity: ICityLocation;
     currentUser: IUser;
 
     @ViewChild('inputTag', { static: true}) set inputTag(input: ElementRef|null) {
@@ -58,14 +59,14 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
                     const category = params['category'];
 
                     this.selectedCategory = [category];
-                    this.getTasksByCategory(category, this.currentCity);
+                    this.getTasksByCategory(category, this.currentCity.city);
                 } else if (params['searchstr']) {
                     this.searchString = params['searchstr'];
                     this.searchTask(this.searchString);
                 } else {
                     this.taskService.getTaskCategories().subscribe(response => {
                         this.selectedCategory = response.payload.data; // select all categories
-                        this.getTasksByCategories(this.selectedCategory, this.currentCity);
+                        this.getTasksByCategories(this.selectedCategory, this.currentCity.city);
                     });
                 }
             });
@@ -147,7 +148,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
                 }
             });
         } else {
-            this.getTasksByCategories(this.selectedCategory, this.currentCity);
+            this.getTasksByCategories(this.selectedCategory, this.currentCity.city);
         }
     }
 
@@ -198,7 +199,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     }
 
     handleCityChanged(city: string) {
-        this.currentCity = city;
+        this.currentCity.city = city;
         this.locationService.setCurrentCity(city);
 
         this.getTasksByCategories(this.selectedCategory, city);
@@ -209,9 +210,9 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
 
     handleCategoryChanged(categories: string[]) {
         if (categories.length === 0) {
-            this.getTasksByCategories([], this.currentCity);
+            this.getTasksByCategories([], this.currentCity.city);
         } else {
-            this.getTasksByCategories(categories, this.currentCity);
+            this.getTasksByCategories(categories, this.currentCity.city);
         }
     }
 

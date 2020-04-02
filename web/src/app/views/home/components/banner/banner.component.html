@@ -11,12 +11,12 @@
                     <input type="text" class="form-control" placeholder="Search Keywords">
                 </div>
             </div>
-            <div class="ml-2 mr-2">
+            <div *ngIf="currentCity" class="ml-2 mr-2">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-map-marker-alt input-icon"></i></span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Location" [value]="currentCity">
+                    <input type="text" class="form-control" placeholder="Location" [value]="currentCity.city">
                 </div>
             </div>
             <div>

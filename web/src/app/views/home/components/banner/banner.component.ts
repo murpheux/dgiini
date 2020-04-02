@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from 'src/app/views/user/services/location.service';
+import { ICityLocation } from 'src/app/views/user/models/city';
 
 @Component({
     selector: 'app-banner',
@@ -7,7 +8,7 @@ import { LocationService } from 'src/app/views/user/services/location.service';
     styleUrls: ['./banner.component.scss']
 })
 export class BannerComponent implements OnInit {
-    currentCity: string;
+    currentCity: ICityLocation;
 
     constructor(
         private locationService: LocationService

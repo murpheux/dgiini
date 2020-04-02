@@ -3,6 +3,7 @@ import { LocationService } from 'src/app/views/user/services/location.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { Router } from '@angular/router';
+import { ICityLocation } from 'src/app/views/user/models/city';
 
 @Component({
     selector: 'app-carousel',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class CarouselComponent implements OnInit {
 
     searchFormGroup: FormGroup;
-    currentCity: string;
+    currentCity: ICityLocation;
 
     constructor(
         private locationService: LocationService,
@@ -27,7 +28,7 @@ export class CarouselComponent implements OnInit {
         });
 
         this.searchFormGroup = this.formBuilder.group({
-            'search': this.formBuilder.control('', [Validators.required])
+            search: this.formBuilder.control('', [Validators.required])
         });
     }
 

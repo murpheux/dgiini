@@ -4,6 +4,7 @@ import { TaskService } from '../../services/task.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, startWith } from 'rxjs/operators';
+import { ICityLocation } from 'src/app/views/user/models/city';
 
 @Component({
     selector: 'app-task-filter',

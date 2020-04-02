@@ -5,6 +5,7 @@ import { IResponse } from '../../tasks/models/IResponse';
 import { Observable, Subject } from 'rxjs';
 import { Constants } from 'src/app/shared/models/constants';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { ICityLocation } from '../models/city';
 
 @Injectable()
 export class LocationService {
@@ -28,20 +29,27 @@ export class LocationService {
         return this.http.get<IResponse>(url);
     }
 
-    getCurrentCity(): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            let currentCity = 'Unknown';
+    getCurrentCity(): Promise<ICityLocation> {
+        return new Promise<ICityLocation>((resolve, reject) => {
+            let currentCity: ICityLocation;
             new Observable(observer => { observer.next(localStorage.getItem(Constants.LOC_CURRENT_CITY)); }).subscribe(data => {
                 if (data) {
-                    currentCity = data.toString();
+                    currentCity = JSON.parse(data.toString());
                 } else {
                     this.getMyIPAddress().subscribe(resp => {
                         const publicIPAddress = resp;
 
                         if (publicIPAddress) {
                             this.getCityByIPAddress(publicIPAddress).subscribe(inres => {
-                                currentCity = inres.payload.data.data.geo.city;
-                                localStorage.setItem(Constants.LOC_CURRENT_CITY, currentCity);
+                                currentCity = {
+                                    city: inres.payload.data.data.geo.city,
+                                    state: inres.payload.data.data.geo.region_name,
+                                    stateCode: inres.payload.data.data.geo.region_code,
+                                    country: inres.payload.data.data.geo.country_name,
+                                    countryCode: inres.payload.data.data.geo.country_code,
+                                };
+
+                                localStorage.setItem(Constants.LOC_CURRENT_CITY, JSON.stringify(currentCity));
                             });
                         }
                     });
