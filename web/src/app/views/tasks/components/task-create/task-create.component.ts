@@ -13,6 +13,7 @@ import { Guid } from 'guid-typescript';
 import * as $ from 'jquery';
 import { environment } from 'src/environments/environment';
 import { ICityLocation } from 'src/app/views/user/models/city';
+import { IPhoto, ImageFilType } from '../../models/IPhoto';
 
 @Component({
     selector: 'app-task-create',
@@ -43,8 +44,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     rateunits: string[];
     selectedCategory: string;
     activeStepIndex: number;
-    uploadedImages: File[] = [];
-    photos: string[] = [];
+    photos: IPhoto[] = [];
 
     mouseoverSave = false;
     percentage = [0, 16, 33, 50, 66, 83, 100];
@@ -103,36 +103,13 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     buildForm() {
         this.activeStepIndex = 0;
 
-        // this.taskForm = [
-        //     new FormGroup({
-        //         title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
-        //         description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25) ]),
-        //         category: this.formBuilder.control('', [ Validators.required ]),
-        //     }),
-        //     new FormGroup({ }), // dummy
-        //     new FormGroup({
-        //         street: this.formBuilder.control('', [ Validators.required ]),
-        //         city: this.formBuilder.control('Calgary', [ Validators.required ]),
-        //         state: this.formBuilder.control('AB', [ Validators.required ]),
-        //         country: this.formBuilder.control('Canada', [ Validators.required ]),
-        //         zipcode: this.formBuilder.control('', [ Validators.required ]),
-        //     }),
-        //     new FormGroup({
-        //         date: this.formBuilder.control('', [ Validators.required ]),
-        //         time: this.formBuilder.control('', [ Validators.required ]),
-        //     }),
-        //     new FormGroup({
-        //         amount: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
-        //         unit: this.formBuilder.control('', [ Validators.required ]),
-        //         duration: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
-        //     }),
-        // ];
-
         this.taskForm = this.formBuilder.group({
             subTaskForms: this.formBuilder.array([
                 this.formBuilder.group({
-                    title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
-                    description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25) ]),
+                    title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10),
+                            Validators.maxLength(50) ]),
+                    description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25),
+                            Validators.maxLength(1000) ]),
                     category: this.formBuilder.control('', [ Validators.required ]),
                 }),
                 this.formBuilder.group({ }), // dummy
@@ -178,36 +155,35 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         const currentDate = new Date();
 
         const task: ITask = {
-            title: formValues.task1FormGroup.title,
-            description: formValues.task1FormGroup.description,
-            category: formValues.task1FormGroup.category,
+            title: formValues.subTaskForms[0].title,
+            description: formValues.subTaskForms[0].description,
+            category: formValues.subTaskForms[0].category,
 
             location: {
-                street: formValues.task2FormGroup.street,
-                city: formValues.task2FormGroup.city,
-                state: formValues.task2FormGroup.state,
-                country: formValues.task2FormGroup.country,
-                zipcode: formValues.task2FormGroup.zipcode
+                street: formValues.subTaskForms[2].street,
+                city: formValues.subTaskForms[2].city,
+                state: formValues.subTaskForms[2].state,
+                country: formValues.subTaskForms[2].country,
+                zipcode: formValues.subTaskForms[2].zipcode
             },
 
             rate: {
-                unit: formValues.task4FormGroup.rateunit,
-                amount: formValues.task4FormGroup.rate,
+                unit: formValues.subTaskForms[4].unit,
+                amount: formValues.subTaskForms[4].amount,
                 currency: Currency.CAD,
                 date: currentDate
             },
 
             client: {
-                // TODO: remove next line
-                id: Guid.create(),
-                name: 'Clement Onawole'
-                // id: this.currentUser._id,
-                // name: this.currentUser.name
+                id: this.currentUser._id,
+                name: this.currentUser.name
             },
 
-            scheduled_date: new Date(`${formValues.task3FormGroup.taskdate} ${formValues.task3FormGroup.tasktime}`),
+            scheduled_date: new Date(`${formValues.subTaskForms[3].date} ${formValues.subTaskForms[3].time}`),
             created: currentDate,
-            estimated_hours: formValues.task4FormGroup.esthrs,
+            estimated_hours: formValues.subTaskForms[4].esthrs,
+
+            photo: this.photos,
         };
 
         const validator = new TaskValidator();
@@ -227,10 +203,6 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     cancel() {
         this.dialogRef.close();
     }
-
-    onCountryChanged() { }
-
-    onStateChanged() {  }
 
     nextTab() {
         if (this.currentTabOpen > 5) { return false; }
@@ -331,15 +303,17 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     }
 
     removeUpload(index: number) {
-        this.uploadedImages.splice(index, 1);
         this.photos.splice(index, 1);
     }
 
     handleFileInput(files: FileList) {
         Array.from(files).forEach(async file => {
-            this.uploadedImages.push(file);
             const base64 = await this.imageFileToBase64(file);
-            this.photos.push(base64.toString());
+            this.photos.push({
+                filename: file.name,
+                photo: base64.toString(),
+                filetype: ImageFilType['image/png']
+            });
         });
     }
 

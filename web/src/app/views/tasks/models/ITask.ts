@@ -1,6 +1,8 @@
-import { IAddress } from './IAddress';
 import { Guid } from 'guid-typescript';
+
+import { IAddress } from './IAddress';
 import { ITaskBid } from './ITaskBid';
+import { IPhoto } from './IPhoto';
 
 export enum TaskType { InPerson, Online }
 
@@ -19,7 +21,9 @@ export interface ITask {
     status?: string;
     lastbid?: ITaskBid;
     bidcount?: number;
+    photo?: IPhoto[];
 }
+
 
 export class ClientSlim {
     id: Guid;

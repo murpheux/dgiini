@@ -31,7 +31,7 @@ export class TaskCategoryNodeComponent implements OnInit {
     }
 
     handleCategory(category) {
-        this.router.navigate(['/tasks/category/' + category]);
+        this.router.navigate([`/tasks/category/${category}`]);
     }
 
     getCategoryStat() {

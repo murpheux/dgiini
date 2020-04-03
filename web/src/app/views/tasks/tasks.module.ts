@@ -20,8 +20,6 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { MessageModule } from '../message/message.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { TaskOfferComponent } from './components/task-offer/task-offer.component';
-import { TaskSearchComponent } from './components/task-search/task-search.component';
 import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
 import { TaskStatsComponent } from './components/task-stats/task-stats.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -32,7 +30,7 @@ import { VendorModule } from '../vendor/vendor.module';
         TaskCreateComponent, TaskCategoriesComponent,
         TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
         TaskCategoryNodeComponent, TaskViewComponent,
-        TaskUserComponent, TaskOfferComponent, TaskSearchComponent, FeaturedTaskComponent, TaskStatsComponent],
+        TaskUserComponent, FeaturedTaskComponent, TaskStatsComponent],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -46,11 +44,11 @@ import { VendorModule } from '../vendor/vendor.module';
         NgxMaterialTimepickerModule
     ],
     entryComponents: [
-        TaskDeleteDialogComponent, TaskOfferComponent
+        TaskDeleteDialogComponent,
       ],
     exports: [TaskCategoriesComponent, TaskStatsComponent,
         TaskCreateComponent, TaskCardComponent, FeaturedTaskComponent,
-        TaskCategoryNodeComponent, TaskSearchComponent],
+        TaskCategoryNodeComponent],
     providers: [TaskService]
 })
 export class TasksModule {

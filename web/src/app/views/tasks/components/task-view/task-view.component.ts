@@ -4,7 +4,6 @@ import { MessageService } from '../../../message/services/message.service';
 import { IMessage } from '../../../message/models/message';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskOfferComponent } from '../task-offer/task-offer.component';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TaskService } from '../../services/task.service';
 import { IUser } from 'src/app/views/user/models/user';
@@ -116,17 +115,6 @@ export class TaskViewComponent implements OnInit {
 
     handleMessagedToReply(message: IMessage) {
         this.messageToReply = message;
-    }
-
-    handleMakeOffer() {
-        const registerRef = this.dialog.open(TaskOfferComponent, {
-            height: '400px',
-            width: '400px',
-            data: { user: this.currentUser, task: this.task }
-        });
-        registerRef.afterClosed().subscribe(result => {
-            this.currentPrice = this.task.lastbid.amount;
-        });
     }
 
     handleAcceptOffer() {

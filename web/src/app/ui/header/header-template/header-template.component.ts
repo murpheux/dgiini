@@ -8,6 +8,7 @@ import { Constants } from 'src/app/shared/models/constants';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { IUserClaim } from 'src/app/views/user/models/user';
+import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
 
 @Component({
     selector: 'app-header-template',
@@ -68,10 +69,21 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     }
 
     openDialog() {
-        const dialogRef = this.dialog.open(TaskCreateComponent, {
-            height: '570px',
-            width: '800px',
-        });
+        let dialogRef;
+
+        if (this.authService.loggedIn) {
+            dialogRef = this.dialog.open(TaskCreateComponent, {
+                height: '570px',
+                width: '800px',
+            });
+        }
+        else  {
+            dialogRef = this.dialog.open(NologinComponent, {
+                height: '570px',
+                width: '350px',
+            });
+        }
+
         dialogRef.afterClosed().subscribe(result => { });
     }
 

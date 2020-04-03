@@ -19,6 +19,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { YouSkilledComponent } from './components/you-skilled/you-skilled.component';
 import { UserModule } from '../user/user.module';
 import { BannerComponent } from './components/banner/banner.component';
+import { NologinComponent } from './components/nologin/nologin.component';
 
 export function hljsLanguages() {
     return [{ name: 'json', func: json }];
@@ -37,6 +38,7 @@ export function hljsLanguages() {
     FaqComponent,
     YouSkilledComponent,
     BannerComponent,
+    NologinComponent,
   ],
   imports: [
     CommonModule,
