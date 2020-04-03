@@ -28,7 +28,8 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     @ViewChild('postTaskProgressBar', { static: false }) postTaskProgressBar: ElementRef;
     @ViewChild('postTaskProgressText', { static: false }) postTaskProgressText: ElementRef;
 
-    taskForm: Array<FormGroup>;
+    // taskForm: Array<FormGroup>;
+    taskForm: FormGroup;
 
     task: ITask;
     countries: string[];
@@ -42,6 +43,8 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     rateunits: string[];
     selectedCategory: string;
     activeStepIndex: number;
+    uploadedImages: File[] = [];
+    photos: string[] = [];
 
     mouseoverSave = false;
     percentage = [0, 16, 33, 50, 66, 83, 100];
@@ -73,7 +76,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.cd.detectChanges();
     }
 
-    initializeContent() {
+    async initializeContent() {
         // tslint:disable-next-line: no-any
         this.options = Object.keys(TaskType).filter(k => typeof TaskType[k as any] === 'number');
         // tslint:disable-next-line: no-any
@@ -84,16 +87,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         // tslint:disable-next-line: no-any
         this.rateunitsKeys = this.rateunits.map(k => RateUnit[k as any]);
 
-        // set default values
-        this.locationService.getCurrentCity().then(data => {
-            this.currentCity = data;
-        });
-
-        this.states = ['AB', 'ON', 'SK', 'MN', 'QC', 'BC'];
-        this.currentState = this.states[0];
-
-        this.countries = environment.countries.map(c => c.name);
-        this.currentCountry = this.countries[0];
+        this.currentCity = await this.locationService.getCurrentCity();
 
         this.taskService.getTaskCategories().subscribe(response => {
             this.categoryList = response.payload.data;
@@ -109,28 +103,61 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     buildForm() {
         this.activeStepIndex = 0;
 
-        this.taskForm = [
-            new FormGroup({
-                title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
-                description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25) ]),
-                category: this.formBuilder.control('', [ Validators.required ]),
-            }),
-            new FormGroup({
-                photo: this.formBuilder.control('', []),
-            }),
-            new FormGroup({
-                street: this.formBuilder.control('', [ Validators.required ]),
-                city: this.formBuilder.control(this.currentCity, [ Validators.required ]),
-                state: this.formBuilder.control(this.currentState, [ Validators.required ]),
-                country: this.formBuilder.control('Canada', [ Validators.required ]),
-                zipcode: this.formBuilder.control('', [ Validators.required,
-                        Validators.pattern('^(\d{5}(-\d{4})?|[A-Z]\d[A-Z] *\d[A-Z]\d)$') ]),
-            })
-        ];
+        // this.taskForm = [
+        //     new FormGroup({
+        //         title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
+        //         description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25) ]),
+        //         category: this.formBuilder.control('', [ Validators.required ]),
+        //     }),
+        //     new FormGroup({ }), // dummy
+        //     new FormGroup({
+        //         street: this.formBuilder.control('', [ Validators.required ]),
+        //         city: this.formBuilder.control('Calgary', [ Validators.required ]),
+        //         state: this.formBuilder.control('AB', [ Validators.required ]),
+        //         country: this.formBuilder.control('Canada', [ Validators.required ]),
+        //         zipcode: this.formBuilder.control('', [ Validators.required ]),
+        //     }),
+        //     new FormGroup({
+        //         date: this.formBuilder.control('', [ Validators.required ]),
+        //         time: this.formBuilder.control('', [ Validators.required ]),
+        //     }),
+        //     new FormGroup({
+        //         amount: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
+        //         unit: this.formBuilder.control('', [ Validators.required ]),
+        //         duration: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
+        //     }),
+        // ];
+
+        this.taskForm = this.formBuilder.group({
+            subTaskForms: this.formBuilder.array([
+                this.formBuilder.group({
+                    title: this.formBuilder.control('', [ Validators.required, Validators.minLength(10) ]),
+                    description: this.formBuilder.control('', [ Validators.required, Validators.minLength(25) ]),
+                    category: this.formBuilder.control('', [ Validators.required ]),
+                }),
+                this.formBuilder.group({ }), // dummy
+                this.formBuilder.group({
+                    street: this.formBuilder.control('', [ Validators.required ]),
+                    city: this.formBuilder.control('Calgary', [ Validators.required ]),
+                    state: this.formBuilder.control('AB', [ Validators.required ]),
+                    country: this.formBuilder.control('Canada', [ Validators.required ]),
+                    zipcode: this.formBuilder.control('', [ Validators.required ]),
+                }),
+                this.formBuilder.group({
+                    date: this.formBuilder.control('', [ Validators.required ]),
+                    time: this.formBuilder.control('', [ Validators.required ]),
+                }),
+                this.formBuilder.group({
+                    amount: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
+                    unit: this.formBuilder.control('', [ Validators.required ]),
+                    duration: this.formBuilder.control('', [ Validators.required, Validators.min(1) ]),
+                }),
+            ])
+        });
     }
 
-    get form(){
-        return this.taskForm[0].controls;
+    get forms(): Array<FormGroup> {
+        return (this.taskForm.get('subTaskForms') as FormArray).controls as Array<FormGroup>;
     }
 
     formatLabel(value: number | null) {
@@ -227,8 +254,6 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
         const progressBar = this.postTaskProgressBar.nativeElement;
 
-        console.log(this.currentTabOpen);
-
         switch (this.currentTabOpen) {
             case 1:
                 break;
@@ -304,5 +329,25 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         }
 
     }
+
+    removeUpload(index: number) {
+        this.uploadedImages.splice(index, 1);
+        this.photos.splice(index, 1);
+    }
+
+    handleFileInput(files: FileList) {
+        Array.from(files).forEach(async file => {
+            this.uploadedImages.push(file);
+            const base64 = await this.imageFileToBase64(file);
+            this.photos.push(base64.toString());
+        });
+    }
+
+    imageFileToBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    })
 
 }

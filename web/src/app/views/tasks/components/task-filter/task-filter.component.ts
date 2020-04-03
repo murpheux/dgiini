@@ -22,7 +22,7 @@ export class TaskFilterComponent implements OnInit {
     filteredOptions: Observable<string[]>;
     formCtrlSub: Subscription;
 
-    @Input() currentCity: string;
+    @Input() currentCity: ICityLocation;
     @Input() selectedCategory: string[];
     @Input() distanceToHome: number;
     @Input() searchString: string;
@@ -79,7 +79,7 @@ export class TaskFilterComponent implements OnInit {
     }
 
     onCityChanged(city: string) {
-        this.currentCity = city;
+        this.currentCity.city = city;
         this.cityChanged.emit(city);
     }
 
