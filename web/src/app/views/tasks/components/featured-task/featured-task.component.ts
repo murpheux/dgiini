@@ -23,14 +23,14 @@ export class FeaturedTaskComponent implements OnInit {
     getFeaturedTasks() {
         this.taskService.getFeaturedTasks().subscribe(response => {
             const tasks = response.payload.data;
-            this.featuredTasks = tasks.slice(0, 5);
+            this.featuredTasks = tasks.slice(0, 7);
         });
     }
 
     getRecentTasks() {
         this.taskService.getRecentTasks().subscribe(response => {
             const tasks = response.payload.data;
-            this.recentTasks = tasks.slice(0, 2);
+            this.recentTasks = tasks.slice(0, 3);
         });
     }
 

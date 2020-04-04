@@ -4,7 +4,6 @@ export class IPhoto {
     filetype: ImageFilType;
 }
 
-
 export enum ImageFilType {
     'image/png',
     'image/jpeg',

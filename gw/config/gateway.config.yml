@@ -22,8 +22,8 @@ apiEndpoints:
     paths: '/api/task/v1/*'
     methods: OPTIONS
   taskApiDefault:
-    paths: ['/api/task/v1/', '/api/task/v1/categories', 
-        '/api/task/v1/tasks', '/api/task/v1/tasks/stats/full',
+    paths: ['/api/task/v1/', '/api/task/v1/categories', '/api/task/v1/tasks/search/:search',
+        '/api/task/v1/tasks', '/api/task/v1/tasks/:id', '/api/task/v1/tasks/stats/full',
         '/api/task/v1/tasks/city/:city/category/*', '/api/task/v1/tasks/category/stats']
     methods: GET
   taskApi:

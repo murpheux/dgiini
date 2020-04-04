@@ -2,15 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ITask } from '../../models/ITask';
 import { MessageService } from '../../../message/services/message.service';
 import { IMessage } from '../../../message/models/message';
-import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TaskService } from '../../services/task.service';
 import { IUser } from 'src/app/views/user/models/user';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { faDollarSign, faCheck, faTimes, faFileAlt, faUserCircle, faMapMarkedAlt, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from 'src/app/views/user/services/auth.service';
 import { ILocation } from 'src/app/shared/models/ILocation';
 

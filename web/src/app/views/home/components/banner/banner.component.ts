@@ -22,7 +22,7 @@ export class BannerComponent implements OnInit {
     }
 
     handleSearch() {
-        this.router.navigate([`/tasks/search/${this.searchString}?city=${this.currentCity.city}`]);
+        this.router.navigate([`/search/${this.searchString}`]);
     }
 
 }

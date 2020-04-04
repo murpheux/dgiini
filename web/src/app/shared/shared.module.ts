@@ -21,6 +21,9 @@ import { GoogleMapComponent } from './components/google-map/google-map.component
 import { environment } from 'src/environments/environment';
 import { GoogleMapsModule } from '@angular/google-maps';
 
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
+
 @NgModule({
     declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
         OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, GoogleMapComponent],
@@ -41,6 +44,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
         MaterialDesignModule,
         FontAwesomeModule,
         GoogleMapsModule,
+        GalleryModule,
+        LightboxModule,
     ],
     entryComponents: [
         ConfirmDialogComponent,

@@ -1,5 +1,4 @@
 
-
 export interface ICityLocation {
     city: string;
     state: string;

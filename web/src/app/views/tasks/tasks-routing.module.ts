@@ -11,6 +11,7 @@ const routes: Routes = [
     { path: 'mytask', component: TaskUserComponent, canActivate: [AuthGuard] },
     { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'browse/:category', component: TaskCategoriesComponent, canActivate: [] },
+    { path: 'task/:taskid', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'search/:searchstr', component: TaskCategoriesComponent, canActivate: [] }
 ];
 

@@ -9,6 +9,7 @@ import { VendorService } from 'src/app/views/vendor/services/vendor.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
+import { Guid } from 'guid-typescript';
 
 @Component({
     selector: 'app-task-categories',
@@ -63,6 +64,8 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
                 } else if (params['searchstr']) {
                     this.searchString = params['searchstr'];
                     this.searchTask(this.searchString);
+                } else if (params['taskid']) {
+                    this.getTask(params['taskid']);
                 } else {
                     this.taskService.getTaskCategories().subscribe(response => {
                         this.selectedCategory = response.payload.data; // select all categories
@@ -133,6 +136,19 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     private checkIfIntersecting(entry: IntersectionObserverEntry) {
         // tslint:disable-next-line: no-any
         return (entry as any).isIntersecting && entry.target === this._element.nativeElement;
+    }
+
+    getTask(taskid: Guid) {
+        if (taskid) {
+            this.taskService.getTask(taskid).subscribe(success => {
+                this.currentTask = success.payload.data;
+
+                if (this.currentTask) {
+                    this.taskService.enrichTasks([this.currentTask]);
+                    this.currentTask.selected = true;
+                }
+            });
+        }
     }
 
     searchTask(searchstr: string) {

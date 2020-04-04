@@ -62,18 +62,18 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     buildForms() {
         this.taskFormGroup = this.formBuilder.group({
-            'id': this.formBuilder.control(this.model._id, [ Validators.required ]),
-            'title': this.formBuilder.control(this.model.title, [ Validators.required ]),
-            'description': this.formBuilder.control(this.model.description, [ Validators.required ]),
-            'category': this.formBuilder.control(this.model.category, [Validators.required]),
-            'clientid': this.formBuilder.control(this.model.client.id, [Validators.required]),
-            'clientname': this.formBuilder.control(this.model.client.name, [Validators.required]),
-            'street': this.formBuilder.control(this.model.location.street, [Validators.required]),
-            'city': this.formBuilder.control(this.model.location.city, [Validators.required]),
-            'state': this.formBuilder.control(this.model.location.state, [Validators.required]),
-            'zipcode': this.formBuilder.control(this.model.location.zipcode, [Validators.required]),
-            'country': this.formBuilder.control(this.model.location.country, [Validators.required]),
-            'estimated_hours': this.formBuilder.control(this.model.estimated_hours, [Validators.required]),
+            id: this.formBuilder.control(this.model._id, [ Validators.required ]),
+            title: this.formBuilder.control(this.model.title, [ Validators.required ]),
+            description: this.formBuilder.control(this.model.description, [ Validators.required ]),
+            category: this.formBuilder.control(this.model.category, [Validators.required]),
+            clientid: this.formBuilder.control(this.model.client.id, [Validators.required]),
+            clientname: this.formBuilder.control(this.model.client.name, [Validators.required]),
+            street: this.formBuilder.control(this.model.location.street, [Validators.required]),
+            city: this.formBuilder.control(this.model.location.city, [Validators.required]),
+            state: this.formBuilder.control(this.model.location.state, [Validators.required]),
+            zipcode: this.formBuilder.control(this.model.location.zipcode, [Validators.required]),
+            country: this.formBuilder.control(this.model.location.country, [Validators.required]),
+            estimated_hours: this.formBuilder.control(this.model.estimated_hours, [Validators.required]),
         });
     }
 

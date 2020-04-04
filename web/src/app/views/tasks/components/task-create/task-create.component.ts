@@ -4,14 +4,11 @@ import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 import { ITask, TaskType, RateUnit, Currency } from '../../models/ITask';
 import { TaskValidator } from '../../models/Validators/TaskValidator';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/views/user/services/auth.service';
-import { Guid } from 'guid-typescript';
 import * as $ from 'jquery';
-import { environment } from 'src/environments/environment';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { IPhoto, ImageFilType } from '../../models/IPhoto';
 
@@ -323,5 +320,38 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         reader.onload = () => resolve(reader.result);
         reader.onerror = error => reject(error);
     })
+
+    thumbnailify = (base64Image, targetSize, callback) => {
+        const img = new Image();
+
+        img.onload = () => {
+            const width = img.width;
+            const height = img.height;
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = canvas.height = targetSize;
+
+            ctx.drawImage(img,
+                width > height ? (width - height) / 2 : 0,
+                height > width ? (height - width) / 2 : 0,
+                width > height ? height : width,
+                width > height ? height : width,
+                0, 0,
+                targetSize, targetSize
+            );
+
+            callback(canvas.toDataURL());
+        };
+
+        img.src = base64Image;
+    }
+
+    //   const sourceImage = document.getElementById("source-image");
+    //   const thumbnail = document.getElementById("thumbnail");
+
+    //   thumbnailify(sourceImage.src, 100, (base64Thumbnail) => {
+    //       thumbnail.src = base64Thumbnail;
+    //   });
 
 }

@@ -35,6 +35,7 @@ export class MessageSenderComponent implements OnInit {
         this.messageInReply = message;
     }
 
+    // tslint:disable-next-line: adjacent-overload-signatures
     get task(): Guid {
         return this._task;
     }
