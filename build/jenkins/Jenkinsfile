@@ -27,7 +27,9 @@ pipeline {
         }
         stage('replace env files'){
             steps {
-                dir "${WORKSPACE}/web/src"
+                sh '''
+                    cd ${WORKSPACE}/web/src
+                '''
                 writeFile file: 'env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://sdpro.dynu.com:7000/api",_.__env.enableDebug=!0}(this);'
             }
         }
