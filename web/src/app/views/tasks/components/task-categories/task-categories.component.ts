@@ -125,7 +125,6 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
         entries.forEach((entry: IntersectionObserverEntry) => {
             if (this.checkIfIntersecting(entry)) {
-                console.log('event triggered!');
 
                 this._intersectionObserver.unobserve((this._element.nativeElement) as Element);
                 this._intersectionObserver.disconnect();

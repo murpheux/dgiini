@@ -12,9 +12,9 @@ re='^[0-9]+$'
 if [[ $currentBuildNumber =~ $re ]] ; then
 
     # check if image already exist
-    imagesFound=$(docker images | grep ${currentBuildNumber} | awk '{print $3}' | wc -l)
+    imagesFound=$(docker images --filter=reference='gru:5000/dgiini/*:*${currentBuildNumber}' | awk '{print $3}' | wc -l)
 
-    if [[ imagesFound > 0 ]] ; then
+    if [[ imagesFound < 2 ]] ; then
         echo -e "=> ${YELLOW}Previous build image exist. Remove it if you need a rebuild.${NOCOLOR}"
         exit 1
     fi

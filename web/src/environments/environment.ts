@@ -8,7 +8,10 @@ export const environment = {
         callbackURL: 'https://localhost:9000'
     },
 
-    version: '0.0.1',
+    provider:  {
+        ip: 'http://api.ipify.org/?format=json',
+        proxy: 'https://cors-anywhere.herokuapp.com'
+    },
 
     countries: [
         { name: 'Canada', code: 'ca' },

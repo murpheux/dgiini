@@ -10,6 +10,7 @@ import { ICityLocation } from '../models/city';
 @Injectable()
 export class LocationService {
     private serviceUrl = undefined;
+    private provider = environment.provider;
 
     constructor(
         private env: EnvService,
@@ -19,9 +20,9 @@ export class LocationService {
     }
 
     // tslint:disable-next-line: no-any
-    getMyIPAddress(): Observable<any> {
-        const headers = new HttpHeaders({ 'Content-Type': 'text/plain'});
-        return this.http.get('/api', {responseType: 'text', headers});
+    getMyIPAddress() {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'X-Requested-With' : 'XMLHttpRequest'});
+        return this.http.get(`${this.provider.proxy}/${this.provider.ip}`, {responseType: 'text', headers});
     }
 
     getCityByIPAddress(ip: string): Observable<IResponse> {
@@ -37,10 +38,10 @@ export class LocationService {
                     currentCity = JSON.parse(data.toString());
                 } else {
                     this.getMyIPAddress().subscribe(resp => {
-                        const publicIPAddress = resp;
+                        const ipAddress = JSON.parse(resp);
 
-                        if (publicIPAddress) {
-                            this.getCityByIPAddress(publicIPAddress).subscribe(inres => {
+                        if (ipAddress.ip) {
+                            this.getCityByIPAddress(ipAddress.ip).subscribe(inres => {
                                 currentCity = {
                                     city: inres.payload.data.data.geo.city,
                                     state: inres.payload.data.data.geo.region_name,

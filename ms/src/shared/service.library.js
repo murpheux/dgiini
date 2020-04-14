@@ -71,7 +71,7 @@ export const enrich_paging = (paging) => {
 }
 
 export const set_whitelist = (client_url) => {
-    var whitelist = [client_url]
+    var whitelist = [client_url, 'https://localhost:8443']
 
     if (process.env.NODE_ENV === 'development') {
         whitelist.push(undefined) // for postman

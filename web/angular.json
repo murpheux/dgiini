@@ -74,10 +74,6 @@
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.docker.ts"
-              },
-              {
-                "replace": "src/env.js",
-                "with": "src/env.docker.js"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -99,10 +95,6 @@
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.k8s.ts"
-              },
-              {
-                "replace": "src/env.js",
-                "with": "src/env.k8s.js"
               }],
               "optimization": true,
               "outputHashing": "all",
@@ -126,7 +118,6 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "dgiini:build",
-            "proxyConfig": "proxy.conf.json",
             "port": 9000
           },
           "configurations": {
