@@ -75,7 +75,7 @@ pipeline {
         }
         stage('Create version file') {
             steps {
-                writeFile file: 'build_version.json', text: '{"version": ${BUILD_NUMBER}}'
+                writeFile file: 'build_version.json', text: "{\"version\": \"${BUILD_NUMBER}\"}"
             }
         }
         stage('build app') {
