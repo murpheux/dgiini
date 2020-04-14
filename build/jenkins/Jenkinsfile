@@ -96,7 +96,7 @@ pipeline {
                             npm run build
                         '''
                         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/'
                         sh 'cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml'
                         sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
                     }
@@ -108,7 +108,7 @@ pipeline {
                             OUT_DIR=dist/mstask npm run build src/task.api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/mstask/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/mstask/'
                     }
                 }
                 stage('Build auth_api') {
@@ -118,7 +118,7 @@ pipeline {
                             OUT_DIR=dist/msauth npm run build src/auth.api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msauth/'
                     }
                 }
                 stage('Build msg_api') {
@@ -128,7 +128,7 @@ pipeline {
                             OUT_DIR=dist/msmsg npm run build src/msg.api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/'
                     }
                 }
                 stage('Build notify_api') {
@@ -138,7 +138,7 @@ pipeline {
                             OUT_DIR=dist/msnotify npm run build src/notify.api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msnotify/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msnotify/'
                     }
                 }
                 stage('Build bill_api') {
@@ -148,7 +148,7 @@ pipeline {
                             OUT_DIR=dist/msbill npm run build src/bill.api.js
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/'
                     }
                 }
             }
