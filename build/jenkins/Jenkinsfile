@@ -27,10 +27,10 @@ pipeline {
         }
         stage('replace env files'){
             steps {
-                sh '''
-                    cd ${WORKSPACE}/web/src
-                '''
                 writeFile file: 'env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://sdpro.dynu.com:7000/api",_.__env.enableDebug=!0}(this);'
+                sh '''
+                    mv env.js ${WORKSPACE}/web/src
+                '''
             }
         }
         stage('install dependencies') {
@@ -75,7 +75,7 @@ pipeline {
         }
         stage('Create version file') {
             steps {
-                writeFile file: 'build_version', text: '{"version": "${BUILD_NUMBER}"}'
+                writeFile file: 'build_version.json', text: '{"version": ${BUILD_NUMBER}}'
             }
         }
         stage('build app') {
