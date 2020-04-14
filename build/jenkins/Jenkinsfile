@@ -25,9 +25,14 @@ pipeline {
                 git branch: "${branch}", url: "${GIT_URL}"
             }
         }
+        stage('replace env files'){
+            steps {
+                writeFile file: '${WORKSPACE}/web/src/env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://sdpro.dynu.com:7000/api",_.__env.enableDebug=!0}(this);'
+            }
+        }
         stage('install dependencies') {
             parallel {
-                stage('install web dependency') {
+                stage('install ms dependency') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
@@ -35,9 +40,8 @@ pipeline {
                         '''
                     }
                 }
-                stage('install ms dependency') {
+                stage('install web dependency') {
                     steps {
-                        writeFile file: '${WORKSPACE}/web/src/env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://sdpro.dynu.com:7000/api",_.__env.enableDebug=!0}(this);'
                         sh '''
                             cd ${WORKSPACE}/web
                             npm install
