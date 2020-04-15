@@ -76,7 +76,9 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         });
 
         if (this.authService.loggedIn) {
-            this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+            if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
+                this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+            }
         }
 
         this.distanceToHome = this.defaultDistanceToHome;

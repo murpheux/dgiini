@@ -17,7 +17,9 @@ export class UserprofileComponent implements OnInit, AfterViewChecked {
     ) { }
 
     ngOnInit() {
-        this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+        if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
+            this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+        }
     }
 
     ngAfterViewChecked() {

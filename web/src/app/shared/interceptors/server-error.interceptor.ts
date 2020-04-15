@@ -6,6 +6,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { NotificationService } from '../services/notification.service';
+import { Constants } from '../models/constants';
 
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
@@ -20,8 +21,9 @@ export class ServerErrorInterceptor implements HttpInterceptor {
             retry(1),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401) {
-                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    if (currentUser) {
+                    const authUserProfile = localStorage.getItem(Constants.AUTH_USER_PROFILE);
+                    if (authUserProfile) {
+                        const currentUser = JSON.parse(authUserProfile);
                         request = request.clone({
                             setHeaders: {
                                 Authorization: `Bearer ${currentUser.accessToken}`

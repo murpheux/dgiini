@@ -8,9 +8,10 @@ export class JwtInterceptor implements HttpInterceptor {
     // tslint:disable-next-line: no-any
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
-        const currentToken = JSON.parse(localStorage.getItem(Constants.AUTH_USER_CLAIM));
+        const authUserClaim = localStorage.getItem(Constants.AUTH_USER_CLAIM);
 
-        if (currentToken) {
+        if (authUserClaim) {
+            const currentToken = JSON.parse(authUserClaim);
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${currentToken.__raw}`

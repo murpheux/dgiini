@@ -56,8 +56,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     ngAfterViewChecked() {
         if (this.authService.loggedIn) {
             if (localStorage.getItem(Constants.AUTH_USER_CLAIM)) {
-                const claim = JSON.parse(localStorage.getItem(Constants.AUTH_USER_CLAIM));
-                this.claim = claim;
+                this.claim = JSON.parse(localStorage.getItem(Constants.AUTH_USER_CLAIM));
             }
         }
     }
