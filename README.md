@@ -84,7 +84,14 @@ $ nodemon start --watch config/gateway.config.yml
 ### microservices
 
 ```bash
-yarn test
+yarn test test/unit
+
+```
+
+## Integration Test
+
+```bash
+yarn test test/int
 
 ```
 

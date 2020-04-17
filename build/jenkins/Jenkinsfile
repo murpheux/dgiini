@@ -78,6 +78,14 @@ pipeline {
                 writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
             }
         }
+        stage('run unit test') {
+            steps {
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run test test/unit
+                '''
+            }
+        }
         stage('build app') {
             parallel {
                 stage('Build web') {
@@ -188,10 +196,10 @@ pipeline {
     }
     post {
         success {
-            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: 'Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: "Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!", tokenCredentialId: 'build-admin'
         }
         failure {
-            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: 'Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: "Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!", tokenCredentialId: 'build-admin'
         }
     }
 }
