@@ -55,16 +55,16 @@ module.exports = {
             .validate(user.username).isNotEmpty().and.isEmail()
             .validate(user.name).isNotNull()
             .validate(user.address.street).isNotNull()
-            .validate(user.address.city).isNotNull().and.isCity()
-            .validate(user.address.state).isNotNull().and.isProvince()
+            .validate(user.address.city).isNotNull()//.and.isCity()
+            .validate(user.address.state).isNotNull()//.and.isProvince()
             .validate(user.address.zipcode).isNotNull().and.matches('^[A-Za-z][0-9][A-Za-z][ -]?[0-9][A-Za-z][0-9]')
-            .validate(user.address.country).isNotNull().and.isCountry()
+            .validate(user.address.country).isNotNull()//.and.isCountry()
     
         return validation
     },
     
     validateClient: (user) => {
-        const validation = this.validateUser(user)
+        const validation = module.exports.validateUser(user)
         validation
             .validate(user.username).isNotEmpty().and.isEmail()
     
@@ -72,7 +72,7 @@ module.exports = {
     },
     
     validateVendor: (user) => {
-        const validation = this.validateUser(user)
+        let validation = this.validateUser(user)
         validation
             .validate(user.roles).isNotNull().and.passes(value => Array.isArray(value) && value.length >= 1, 'roles not array!')
             .validate(user.skill_summary).isNotNull()
@@ -98,6 +98,23 @@ module.exports = {
             .validate(card.cardno).isNotEmpty()
     
         return validation
+    },
+
+    extend: (validator) => {
+        // custom validators
+        validator.add('isCountry', 'Value is not a country', (country) => {
+            return ['Canada', 'United States'].includes(country)
+        })
+
+        validator.add('isCity', 'Value is not a country', (city) => {
+            return ['Calgary', 'Edmonton', 'Montreal', 'Winnipeg', 'Toronto', 'Regina', 'Sasktoon'].includes(city)
+        })
+
+        validator.add('isProvince', 'Value is not a country', (province) => {
+            return ['AB', 'ON', 'QC', 'BC'].includes(province)
+        })
+
+        return validator
     }
 
 }

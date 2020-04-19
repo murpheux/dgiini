@@ -3,18 +3,12 @@
 
 import express from 'express'
 
-import validator from 'fluent-validator'
-import HttpStatus from 'http-status-codes'
-import titleCase from 'title-case'
 import mongodb from 'mongodb'
 import asyncHandler from 'express-async-handler'
-import nodemailer from 'nodemailer'
-import sendgridmail from '@sendgrid/mail'
-import { validateMail } from '../shared/validator'
+import { NotifyController } from '../controllers/notify'
 
 import common from '../shared/common'
-import VALIDATION_MSG from '../shared/error_messages'
-import { build_response, options, build_paging, enrich_paging } from '../shared/service.library'
+import { options } from '../shared/service.library'
 import winston from '../shared/winston'
 import mgaccess from '../data/mongo.access'
 
@@ -32,73 +26,12 @@ mgaccess.setup_database(common.database_uri, database_name, options, collections
     err => { winston.error('Error! ', err) }
 )
 
-// send mail
-router.post('/sendmail', (req, res) => {
-    const mail = req.body
-    const validation = validateMail(mail)
+mgaccess.get_connection(common.database_uri, database_name, options).then(connection => {
+    const db = connection
+    const api = new NotifyController(db)
 
-    if (validation.hasErrors()) {
-        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, 0, validation.getErrors()))
-    } else {
-        send_mail(mail)
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, {}))
-    }
+    router.post('/sendmail', asyncHandler(api.send_mail))
+    router.post('/sendgrid', asyncHandler(api.send_grid))
 })
-
-// sendgrid
-router.post('/sendgrid', (req, res) => {
-    const mail = req.body
-    const validation = validateMail(mail)
-
-    // using Twilio SendGrid's v3 Node.js Library
-    // https://github.com/sendgrid/sendgrid-nodejs
-    sendgridmail.setApiKey(process.env.SENDGRID_API_KEY)
-    const msg = {
-        to: mail.to,
-        from: mail.from,
-        subject: mail.subject,
-        text: mail.body,
-        //html: mail.body,
-    }
-
-    sendgridmail.send(msg)
-    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, {}))
-})
-
-const send_mail = async(mail) => {
-    // const testAccount = await nodemailer.createTestAccount()
-    const buffer = Buffer.from(common.smtp_password, 'base64')
-    const smtp_password = buffer.toString('ascii')
-
-    const transporter = nodemailer.createTransport({
-        service: common.smtp_service,
-        host: common.smtp_host,
-        port: common.smtp_port,
-        secure: common.smtp_ssl,
-        auth: {
-            user: common.smtp_user,
-            pass: smtp_password
-        }
-    })
-
-    const options = {
-        from: mail.from,
-        to: mail.to,
-        subject: mail.subject,
-        text: mail.body,
-        html: mail.html
-    }
-
-    const response = await transporter.sendMail(options, (error, info) => {
-        if (error) {
-            winston.error(error)
-        } else {
-            winston.info('Email sent: ' + info.response)
-        }
-    })
-
-    // winston.info('Message sent: %s', response.messageId)
-    // winston.info('Preview URL: %s', nodemailer.getTestMessageUrl(response))
-}
 
 module.exports = router

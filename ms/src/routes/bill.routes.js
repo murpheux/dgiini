@@ -10,6 +10,7 @@ import mongodb from 'mongodb'
 import asyncHandler from 'express-async-handler'
 import nodemailer from 'nodemailer'
 import sendgridmail from '@sendgrid/mail'
+import { MessageController } from '../controllers/msg'
 
 import common from '../shared/common'
 import { validateCard } from '../shared/validator'
@@ -32,68 +33,13 @@ mgaccess.setup_database(common.database_uri, database_name, options, collections
     err => { winston.error('Error! ', err) }
 )
 
+mgaccess.get_connection(common.database_uri, database_name, options).then(connection => {
+    const db = connection
+    const api = new MessageController(db)
 
-router.post('/cards', (req, res) => {
-    const card = req.body
-    const validation = validateCard(card)
-
-    if (validation.hasErrors()) {
-
-        res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
-    } else {
-
-        res.status(HttpStatus.OK).json({})
-    }
-})
-
-router.post('/card/:cardno', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.post('/billcard', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.get('/getcard', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.get('/addacct', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.get('/removeacct', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.put('/billacct', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.put('/getacct', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.get('/updaterate', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.put('/prepinvoice', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
-})
-
-router.put('/prepreceipt', (req, res) => {
-
-    res.status(HttpStatus.OK).json({})
+    router.post('/cards', asyncHandler(api.add_card))
+    router.get('/card/:cardno', asyncHandler(api.get_card))
+    router.post('/billcard', asyncHandler(api.bill_card))
 })
 
 module.exports = router

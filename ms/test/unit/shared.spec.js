@@ -18,5 +18,9 @@ export const mockRequest = (authHeader, sessionData, accepts, user) => ({
     },
     session: { data: sessionData },
     accepts: sinon.stub().returns(accepts),
-    user: user
+    query: sinon.stub().returns({dir: {}, sort_keys: []}),
+    params: { id: null, city: null },
+    user: user,
+    body: {},
+    cardno: ''
 })

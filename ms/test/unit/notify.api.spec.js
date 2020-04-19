@@ -5,12 +5,13 @@
 import chai from 'chai'
 import chaiHttp from 'chai-http'
 import sinon from 'sinon'
+import faker from 'faker'
 import sinonChai from 'sinon-chai'
 import mongodb from 'mongodb'
 import mongounit from 'mongo-unit'
 import HttpStatus from 'http-status-codes'
 import { mockRequest, mockResponse } from './shared.spec'
-import { TaskController } from '../../src/controllers/task'
+import { NotifyController } from '../../src/controllers/notify'
 
 const _ = undefined
 
@@ -23,39 +24,39 @@ const expect = chai.expect
 chai.should()
 
 const mongoclient = mongodb.MongoClient
-const DB_NAME = 'tasks'
+const DB_NAME = 'notify'
 
-describe('task api controller', () => {
+describe('notify api controller', () => {
     const req = mockRequest(_, _, true, _)
     const res = mockResponse()
 
-    before(() => mongounit.start({ dbName: DB_NAME, port: 27018 }))
+    before(() => mongounit.start({ dbName: DB_NAME, port: 27022 }))
 
-    it('test get tasks', async () => {
+    it('test send mail', async () => {
         const client = await mongoclient.connect(mongounit.getUrl(), {
             useUnifiedTopology: true
         })
 
         const db = client.db(DB_NAME)
-        const api = new TaskController(db)
+        const api = new NotifyController(db)
 
-        await api.get_tasks(req, res)
+        req.body = { subject: faker.lorem.word(), body: faker.lorem.sentence(), from: faker.internet.email(), to: faker.internet.email() }
+        await api.send_mail(req, res)
 
         expect(res.status).to.have.been.calledWith(HttpStatus.OK)
         await client.close()
     })
 
-    it('test get tasks by city', async () => {
+    it('test send grid', async () => {
         const client = await mongoclient.connect(mongounit.getUrl(), {
             useUnifiedTopology: true,
         })
 
         const db = client.db(DB_NAME)
-        const api = new TaskController(db)
+        const api = new NotifyController(db)
 
-        // set params
-        req.params.city = 'Calgary'
-        await api.get_tasks_by_city(req, res)
+        req.body = { subject: faker.lorem.word(), body: faker.lorem.sentence(), from: faker.internet.email(), to: faker.internet.email() }
+        await api.send_grid(req, res)
 
         expect(res.status).to.have.been.calledWith(HttpStatus.OK)
         await client.close()
