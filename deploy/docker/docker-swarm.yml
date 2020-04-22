@@ -8,7 +8,7 @@ services:
         - NGINX_HOST=sdpro.dynu.com
         - NGINX_PORT=80
       ports:
-        - "9000:80"
+        - "9000:443"
       networks:
         - dgiininet
       deploy:
@@ -48,7 +48,7 @@ services:
         - AUTH_DATABASE=dg_authdb
         - APP_NAME=auth_api/microservices
         - APP_VERSION=0.1
-        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+        - COR_CLIENT_URL=https://sdpro.dynu.com:9000
       networks:
         - dgiininet
       deploy:
@@ -67,7 +67,7 @@ services:
         - TASK_DATABASE=dg_taskdb
         - APP_NAME=task_api/microservices
         - APP_VERSION=0.1
-        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+        - COR_CLIENT_URL=https://sdpro.dynu.com:9000
       networks:
         - dgiininet
       deploy:
@@ -88,7 +88,7 @@ services:
         - TASK_DATABASE=dg_msgdb
         - APP_NAME=msg_api/microservices
         - APP_VERSION=0.1
-        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+        - COR_CLIENT_URL=https://sdpro.dynu.com:9000
       networks:
         - dgiininet
       deploy:
@@ -111,7 +111,7 @@ services:
         - APP_VERSION=0.1
         - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
         - SENDGRID_API_KEY=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
-        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+        - COR_CLIENT_URL=https://sdpro.dynu.com:9000
       networks:
         - dgiininet
       deploy:
@@ -132,7 +132,7 @@ services:
         - TASK_DATABASE=dg_msbill
         - APP_NAME=bill_api/microservices
         - APP_VERSION=0.1
-        - COR_CLIENT_URL=http://sdpro.dynu.com:9000
+        - COR_CLIENT_URL=https://sdpro.dynu.com:9000
       networks:
         - dgiininet
       deploy:

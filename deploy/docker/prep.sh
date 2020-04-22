@@ -70,6 +70,7 @@ mv msmsg deploy/docker/app
 mv msnotify deploy/docker/app
 mv msbill deploy/docker/app
 mv web deploy/docker/app
+mv deploy/nginx deploy/docker/app
 
 cd ../../
 
