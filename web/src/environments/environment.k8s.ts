@@ -13,6 +13,8 @@ export const environment = {
         proxy: 'https://cors-anywhere.herokuapp.com'
     },
 
+    auth_ttl: 3600000, // 1hr
+
     countries: [
         { name: 'Canada', code: 'ca' },
         { name: 'United States', code: 'us' },

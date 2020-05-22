@@ -14,6 +14,7 @@ export const environment = {
     },
 
     version: '0.0.1',
+    auth_ttl: 3600000, // 1hr
 
     keys: {
         gmap: ''
