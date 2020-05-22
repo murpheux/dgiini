@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventE
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { AuthService } from 'src/app/views/user/services/auth.service';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-vendorclient',
@@ -17,10 +18,7 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
 
     @Output() stateChanged = new EventEmitter<string>();
 
-    private CLIENT_STATE = 'client';
-    private TASKER_STATE = 'tasker';
-
-    private currentState = this.CLIENT_STATE; // default
+    private currentState = Constants.USER_ROLE_CLIENT; // default
 
     constructor(
         private dialog: MatDialog,
@@ -55,16 +53,16 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
 
 
     showTaskerSteps() {
-        if (this.currentState !== this.TASKER_STATE) {
-            this.currentState = this.TASKER_STATE;
+        if (this.currentState !== Constants.USER_ROLE_TASKER) {
+            this.currentState = Constants.USER_ROLE_TASKER;
 
             this.stateChanged.emit(this.currentState);
         }
     }
 
     showClientSteps() {
-        if (this.currentState !== this.CLIENT_STATE) {
-            this.currentState = this.CLIENT_STATE;
+        if (this.currentState !== Constants.USER_ROLE_CLIENT) {
+            this.currentState = Constants.USER_ROLE_CLIENT;
 
             this.stateChanged.emit(this.currentState);
         }

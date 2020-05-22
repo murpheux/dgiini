@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocationService } from '../user/services/location.service';
 import { ICityLocation } from '../user/models/city';
+import { Constants } from 'src/app/shared/models/constants';
 
 @Component({
     selector: 'app-home',
@@ -9,7 +10,7 @@ import { ICityLocation } from '../user/models/city';
 })
 export class HomeComponent implements OnInit {
     currentCity: ICityLocation;
-    vendorClientState = 'client'; // default client state
+    vendorClientState = Constants.USER_ROLE_CLIENT; // default client state
 
     constructor(
         private locationService: LocationService,
