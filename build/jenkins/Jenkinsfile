@@ -7,7 +7,7 @@ pipeline {
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
         IMAGE_VERSION="v_${BUILD_NUMBER}"
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
-        GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+        GIT_URL = 'git@github.com:murpheux/dgiini.git'
     }
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
