@@ -1,0 +1,66 @@
+/***********************************************************************
+*****************************  Featured-Tasks  *************************
+************************************************************************/
+
+.featured-tasks {
+    background-color: #F7F7F7;
+    padding: 50px 0px;
+}
+
+.featured-tasks .feature-box {
+    margin-top: 20px;
+    padding: 5px 0px;
+    border: 1px solid var(--golden-color);
+    border-radius: 10px;
+    background-color: white;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+}
+
+.featured-tasks .feature-box::-webkit-scrollbar {
+    display: none;
+}
+
+.featured-tasks .feature-box img {
+    width: 75px !important;
+    height: 75px;
+}
+
+.featured-tasks .recent-box {
+    margin-top: 20px;
+    padding: 5px 0px;
+    border: 1px solid var(--golden-color);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.featured-tasks .recent-box img {
+    height: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+    .featured-tasks .feature-box {
+        margin-bottom: 20px;
+    }
+    .featured-tasks .feature-box {
+        border-radius: 5px;
+    }
+    .featured-tasks .feature-box .col-img {
+        width: 30% !important;
+    }
+    .featured-tasks .feature-box .col-md-6 {
+        width: 70% !important;
+    }
+    .featured-tasks .feature-box .col-md-3 {
+        width: 70% !important;
+    }
+    .featured-tasks .feature-box .col-btn {
+        width: 30% !important;
+    }
+    .featured-tasks .feature-box .col-btn .btn {
+        float: right;
+    }
+    .featured-tasks .feature-box .col-md-3 .float-right {
+        float: left !important;
+    }
+}

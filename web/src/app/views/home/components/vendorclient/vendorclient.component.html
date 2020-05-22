@@ -1,0 +1,31 @@
+<section class="tasker-client" id="clientTaskerBox">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 tasker" (mouseover)="showTaskerSteps()" #tasker>
+                <div class="float-left">
+                    <h1><i class="fas fa-user-cog"></i> I'M A TASKER</h1>
+                    <p class="text-justify">
+                        dgiini is a marketplace for skilled professionals to offer their services to prospective clients who desire to get tasks performed from small scale household chores like cleaning to more skilled ones like landscaping or moving. As a tasker, you start by telling us which categories of task you are skilled in, accompanied with necessary certifications. You’ll also be required to go through a security check. Once these steps are completed, you are ready to take on your first task.
+                    </p>
+                    <p>
+                        Upon full registration, you can log into the platform and bid for tasks that fit your skillsets and you’re your bid is selected, you coordinate the task execution with the client. Once the task  completed, the client approves the task and payment is made into your bank account.
+                    </p>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-outline-web" (click)="authService.login()">Get Started</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 client" (mouseover)="showClientSteps()" #client>
+                <div class="float-right">
+                    <h1 class="float-right"><i class="fas fa-user"></i> I'M A CLIENT</h1>
+                    <p class="text-justify float-right">
+                        Upon registration, you start by telling us details of your task (including location, brief description and budget). Your task could range from simple household chores like vacuum cleaning to more technical ones like landscaping, moving, etc). Post the task, and select the best tasker from the many bids received. Coordinate with tasker and once task is completed, you approve the completion and payment is released to the tasker. You can then leave a review/ rating for the tasker letting them know the quality of their job.
+                    </p>
+                    <div class="clearfix"></div>
+                    <button class="btn btn-outline-default float-right border" (click)="authService.login()">Get
+                        Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

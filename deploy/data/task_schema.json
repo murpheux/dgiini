@@ -1,0 +1,33 @@
+{
+    "title": "{{chance.sentence({ words: 5 })}}",
+    "description": "{{chance.paragraph({ sentences: 1 })}}",
+    "location": {
+        "street": "{{chance.address()}}",
+        "city": "{{util.sample(['Calgary', 'Edmonton', 'Red-Deer'])}}",
+        "state": "AB",
+        "country": "Canada",
+        "zipcode": "{{chance.postal()}}"
+    },
+    "category": "{{util.sample(['Cleaning', 'Gardening', 'Handy-Man', 'Furniture-Assembly', 'Lawn-Mowing', 'Snow-Plowing', 'Childcare', 'Moving'])}}",
+    "roles": ["client", "vendor"],
+    "estimated_hours": "{{chance.integer({ min: 8, max: 40 })}}",
+    "rate": {
+        "unit": "{{util.sample(['hourly', 'total'])}}",
+        "amount": "{{chance.floating({ min: 30, max: 400, fixed: 2 })}}",
+        "currency": "CAD",
+        "date": "{{Date(chance.date())}}"
+    },
+    "client": {
+        "id": "{{ObjectID()}}",
+        "name": "{{chance.name()}}"
+    },
+    "status": "{{util.sample(['open', 'completed'])}}",
+    "posted_date": "{{Date(chance.date())}}",
+    "created": "{{Date(chance.date())}}",
+    "scheduled_date": "{{Date(chance.date())}}",
+    "format": "image/png;base64",
+    "photos": [
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAAAAAA6fptVAAAACklEQVQYV2P4DwABAQEAWk1v8QAAAABJRU5ErkJggg=="
+    ]
+}

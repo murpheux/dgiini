@@ -1,62 +1,11 @@
-<div class="container-fluid landin-page">
-  <div class="f-flex flex-row flex-wrap">
-      <div class="d-flex flex-row justify-content-start">
-          <div>
-              <nav class="navbar top-sub-nav navbar-expand-lg navbar-light">
-                  <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-center">
-                      <li class="nav-item p-3">
-                          <a class="nav-link active" href="/">File<span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item p-3">
-                          <a class="nav-link " href="#">Edit<span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-itemp-3 p-3">
-                          <a class="nav-link" href="#">Options</a>
-                      </li>
-                      <li class="nav-item p-3">
-                          <a class="nav-link" href="#">Tools</a>
-                      </li>
-                      <li class="nav-item p-3">
-                          <a class="nav-link" href="#">Windows</a>
-                      </li>
-                      <li class="nav-item p-3">
-                          <a class="nav-link" href="#">Help</a>
-                      </li>
-                  </ul>
-              </nav>
-          </div>
-      </div>
-      <div class="d-flex flex-row justify-content-start">
-          <ul class="nav nav-pills project-nav-tabs">
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Layer #1</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Layer #2</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Layer #3</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link active" href="#">Layer #4</a>
-              </li>
-          </ul>
-      </div>
-      <div class="mt-5 cards-group">
-          <div class="row mb-2">
-              <app-report class="col-md-6"></app-report>
-              <app-project class="col-md-6"></app-project>
-          </div>
-          <div class="row mb-2">
-              <app-work-plan class="col-md-4"></app-work-plan>
-              <app-payroll class="col-md-4"></app-payroll>
-              <app-contact class="col-md-4"></app-contact>
-          </div>
-          <div class="row mb-2">
-              <app-service-request class="col-md-4"></app-service-request>
-              <app-travel-authority class="col-md-4"></app-travel-authority>
-              <app-budget class="col-md-4"></app-budget>
-          </div>
-      </div>
-  </div>
+<div>
+    <app-banner></app-banner>
+    <app-task-category-node></app-task-category-node>
+    <app-featured-task></app-featured-task>
+    <app-vendorclient (stateChanged)="handleStateChanged($event)"></app-vendorclient>
+    <app-howworks [state]="vendorClientState"></app-howworks>
+    <app-task-stats></app-task-stats>
+    <app-customersay></app-customersay>
+    <app-faq></app-faq>
+    <app-you-skilled></app-you-skilled>
 </div>

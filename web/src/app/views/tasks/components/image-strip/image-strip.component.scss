@@ -1,0 +1,12 @@
+.image-strip {
+    height: 160px;
+    // overflow: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.image-strip img {
+    width: 150px;
+    height: 150px;
+}

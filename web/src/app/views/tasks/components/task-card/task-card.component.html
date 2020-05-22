@@ -1,0 +1,18 @@
+<div *ngIf="task" (click)="ontaskcardclick()" class="task {{task.selected ? 'active': ''}}">
+    <p class="font-weight-bold m-0">
+        {{task.title}}
+        <span style="font-size: 16px;" class="float-right">{{task.rate.amount | currency : 'CAD'}}</span>
+    </p>
+    <p class="text-muted text-truncate m-0">
+        {{task.description}}
+    </p>
+    <p class="m-0">
+        <i class="fas fa-map-marker-alt"></i> {{task.location.city}}
+        <span class="float-right"><i class="fas fa-calendar"></i> {{task.scheduled_date | date}}</span>
+    </p>
+    <p class="m-0">
+        <span class="badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span>
+        <span class="text-muted">{{task.bidcount}} Offers</span>
+        <span class="badge badge-secondary float-right">{{task.category}}</span>
+    </p>
+</div>

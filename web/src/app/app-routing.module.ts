@@ -1,43 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: './views/home/home.module#HomeModule'
-  },
-  {
-    path: 'home',
-    loadChildren: './views/home/home.module#HomeModule'
-  },
-  {
-    path: 'user',
-    loadChildren: './views/user/user.module#UserModule'
-  },
-  {
-    path: 'dashboard',
-    loadChildren: './views/dashboard/dashboard.module#DashboardModule'
-  },
-  {
-    path: 'projects',
-    loadChildren: './views/projects/projects.module#ProjectsModule'
-  },
-  {
-    path: 'entities',
-    loadChildren: './views/entities/entities.module#EntitiesModule'
-  },
-  {
-    path: 'prodoc',
-    loadChildren: './views/pro-doc/pro-doc.module#ProDocModule'
-  },
-  {
-    path: 'stakeholders',
-    loadChildren: './views/stakeholders/stakeholders.module#StakeholdersModule'
-  }
+    { path: '', loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule) },
+    { path: 'home', loadChildren: () => import('./views/home/home.module').then(m => m.HomeModule) },
+    { path: 'user', loadChildren: () => import('./views/user/user.module').then(m => m.UserModule) },
+    { path: 'new', loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule) },
+    { path: 'mytask', loadChildren: () => import('./views/tasks/tasks.module').then(m => m.TasksModule) },
+    { path: 'corp', loadChildren: () => import('./views/corp/corp.module').then(m => m.CorpModule) },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, { useHash: false })],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

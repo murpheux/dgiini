@@ -1,0 +1,121 @@
+<section class="how-it-works" id='howItWorks'>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngIf="state === 'client'" class="client" #clientSteps>
+                    <h3 class="text-center text-web font-weight-bold">How It Works? 4 Easy Steps!</h3>
+                    <div class="border web-border mx-auto d-block"></div>
+                    <p class="text-center mt-1">
+                        Each month more than 7 million jobhunt turn to website in their search for work,
+                        <br>making over 160,000 applications everyday.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-file-alt fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-1</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Post Your Task</p>
+                            <p class="text-muted">
+                                Tell us about the task you need completed by including the location, brief description and your budget.
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-check fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-2</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Select Preferred Tasker</p>
+                            <p class="text-muted">
+                                Select from the many bids received based on your preferences (i.e. cost, rating, etc).
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-hand-holding-usd fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-3</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Coordinate with Tasker</p>
+                            <p class="text-muted">
+                                Coordinate with tasker on when, where and how task is to be performed.
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-hand-holding-usd fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-4</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Make Payment</p>
+                            <p class="text-muted">
+                                Once task is completed, you sign off on the task and payment is released to the tasker.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="state === 'tasker'" class="tasker" #taskerSteps>
+                    <h3 class="text-center text-web font-weight-bold">How It Works? 4 Easy Steps!</h3>
+                    <div class="border web-border mx-auto d-block"></div>
+                    <p class="text-center mt-1">
+                        Each month more than 7 million jobhunt turn to website in their search for work,
+                        <br>making over 160,000 applications everyday.
+                    </p>
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-search fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-1</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Bid For Tasks</p>
+                            <p class="text-muted">
+                                Search & bid on the tasks meeting your skills
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-address-card fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-2</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Coordinate with Client</p>
+                            <p class="text-muted">
+                                Talk to client and confirm client's details.
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-hand-holding-usd fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-3</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Complete Task</p>
+                            <p class="text-muted">
+                                Get the task done and ensure client signs off upon completion.
+                            </p>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-arrow-right fa-2x pt-5 text-web"></i>
+                        </div>
+                        <div class="p-2 text-center flex-fill">
+                            <i class="fas fa-hand-holding-usd fa-3x p-2 text-web"></i>
+                            <h4 class="text-dark font-weight-bold m-0">STEP-4</h4>
+                            <div class="border mt-1 mb-1 border-danger w-75 mx-auto"></div>
+                            <p class="m-0 font-weight-bold">Get Paid</p>
+                            <p class="text-muted">
+                                Money is deposited into your account once clients signs off on the task.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Tasker -->
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <button *ngIf="authService.loggedIn" class="btn btn-outline-web mx-auto d-block" (click)="authService.login()">Register Now</button>
+    </div>
+</section>

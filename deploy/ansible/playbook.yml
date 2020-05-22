@@ -1,9 +1,26 @@
-- hosts: all
-	become: true
-	roles:
-		qtaskr
+- hosts: scarlet
+  become: true
+  roles:
+    all
+  vars:
+    APP_NAME: dgiini
+    APP_SECRET: 113426983fbccc004ba606e4d4f30001ee
+    ARTIFACT_URL : http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
+  tasks:
+  - name: Download Application from Repo
+    get_url:
+      force: yes
+      url: "{{ ARTIFACT_URL }}"
+      dest: ~/deploy/
+      username: murpheux
+      password: '{{ APP_SECRET }}'
 
--host: ahost
-	become: true
-	roles:
-		webserver
+  - name: Extract downloaded file
+    unarchive:
+      src: ~/deploy/release_*.zip
+      dest: ~/deploy/app
+
+  - name: Deploy containers
+    docker_compose:
+      project_src: ~/deploy/app/archive/deploy/ansible/
+    register: output

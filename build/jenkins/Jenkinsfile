@@ -1,0 +1,205 @@
+#!groovy
+
+pipeline {
+    agent any
+    environment {
+        APP_NAME = 'dgiini'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        IMAGE_VERSION="v_${BUILD_NUMBER}"
+        NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
+        GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+    }
+    parameters {
+        string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
+    }
+    tools {
+        nodejs "node"
+        git "Default"
+    }
+    stages {
+        stage('preparation') {
+            steps {
+                deleteDir() /* clean up our workspace */
+
+                // Git repository
+                git branch: "${branch}", url: "${GIT_URL}"
+            }
+        }
+        stage('replace env files'){
+            steps {
+                writeFile file: 'env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://sdpro.dynu.com:7000/api",_.__env.enableDebug=!0}(this);'
+                sh '''
+                    mv env.js ${WORKSPACE}/web/src
+                '''
+            }
+        }
+        stage('install dependencies') {
+            parallel {
+                stage('install ms dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm install
+                        '''
+                    }
+                }
+                stage('install web dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm install
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Code analyse') {
+            parallel {
+                stage('web lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm run lint
+                        '''
+                    }
+                }
+                stage('ms lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm run lint
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Create version file') {
+            steps {
+                writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
+            }
+        }
+        // stage('run unit test') {
+        //     steps {
+        //         sh '''
+        //             cd ${WORKSPACE}/ms
+        //             npm run test test/unit
+        //         '''
+        //     }
+        // }
+        stage('build app') {
+            parallel {
+                stage('Build web') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm run build-docker
+                        '''
+                    }
+                }
+                stage('Build apigw') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/gw
+                            npm install
+                            npm run build
+                        '''
+                        sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml'
+                        sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
+                    }
+                }
+                stage('Build task.api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/mstask npm run build src/task.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/mstask/'
+                    }
+                }
+                stage('Build auth_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msauth npm run build src/auth.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msauth/'
+                    }
+                }
+                stage('Build msg_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msmsg npm run build src/msg.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/'
+                    }
+                }
+                stage('Build notify_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msnotify npm run build src/notify.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msnotify/'
+                    }
+                }
+                stage('Build bill_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msbill npm run build src/bill.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
+                        sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/'
+                    }
+                }
+            }
+        }
+        stage('Zip/Artifacts') {
+            steps {
+                zip zipFile: 'deploy.zip', archive: false, dir: 'deploy'
+                archiveArtifacts artifacts: 'deploy.zip', fingerprint: true
+
+                zip zipFile: 'web.zip', archive: false, dir: 'web/dist/dgiini'
+                archiveArtifacts artifacts: 'web.zip', fingerprint: true
+
+                zip zipFile: 'apigw.zip', archive: false, dir: 'gw/dist/apigw'
+                archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
+
+                zip zipFile: 'mstask.zip', archive: false, dir: 'ms/dist/mstask'
+                archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
+
+                zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
+                archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
+
+                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
+                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
+
+                zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
+                archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
+
+                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
+                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+            }
+        }
+        stage('clean') {
+            steps {
+                deleteDir() /* clean up our workspace */
+            }
+        }
+    }
+    post {
+        success {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: "Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!", tokenCredentialId: 'build-admin'
+        }
+        failure {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: "Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!", tokenCredentialId: 'build-admin'
+        }
+    }
+}

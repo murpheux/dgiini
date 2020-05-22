@@ -1,0 +1,227 @@
+https:
+  port: 7000
+  tls:
+    "default":
+        key: cert/dgiini.key.pem
+        cert: cert/dgiini.cert.pem
+admin:
+  port: 9876
+
+apiEndpoints:
+  authApiPreflight:
+    paths: '/api/auth/v1/*'
+    methods: OPTIONS
+  authApiDefault:
+    paths: ['/api/auth/v1/', '/api/auth/v1/users/stats/full',
+        '/api/auth/v1/findcity/:ip', '/api/auth/v1/vendors/:category']
+    methods: GET
+  authApi:
+    paths: '/api/auth/v1/*'
+
+  taskApiPreflight:
+    paths: '/api/task/v1/*'
+    methods: OPTIONS
+  taskApiDefault:
+    paths: ['/api/task/v1/', '/api/task/v1/categories', '/api/task/v1/tasks/search/:search',
+        '/api/task/v1/tasks', '/api/task/v1/tasks/:id', '/api/task/v1/tasks/stats/full',
+        '/api/task/v1/tasks/city/:city/category/*', '/api/task/v1/tasks/category/stats', '/api/task/v1/tasks/category/stats/:city']
+    methods: GET
+  taskApi:
+    paths: '/api/task/v1/*'
+
+  msgApiPreflight:
+    paths: '/api/msg/v1/*'
+    methods: OPTIONS
+  msgApiDefault:
+    paths: ['/api/msg/v1/', '/api/msg/v1/messages/task/:id']
+    methods: GET
+  msgApi:
+    paths: '/api/msg/v1/*'
+
+  notifyApiPreflight:
+    paths: '/api/notify/v1/*'
+    methods: OPTIONS
+  notifyApiDefault:
+    paths: '/api/notify/v1/'
+    methods: GET
+  notifyApi:
+    paths: '/api/notify/v1/*'
+  
+  billApiPreflight:
+    paths: '/api/bill/v1/*'
+    methods: OPTIONS
+  billApiDefault:
+    paths: '/api/bill/v1/'
+    methods: GET
+  billApi:
+    paths: '/api/bill/v1/*'
+
+serviceEndpoints:
+  authService:
+    url: 'http://localhost:8000'
+  taskService:
+    url: 'http://localhost:8002'
+  msgService:
+    url: 'http://localhost:8004'
+  notifyService:
+    url: 'http://localhost:8006'
+  billService:
+    url: 'http://localhost:8008'
+
+policies:
+  - basic-auth
+  - cors
+  - jwt
+  - log
+  - proxy
+
+pipelines:
+  authApiPreflightPipeline:
+    apiEndpoints:
+      - authApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: authService
+              changeOrigin: true 
+  authDefaultPipeline:
+    apiEndpoints:
+      - authApiDefault
+    policies:
+      - log: &log
+        - action:    # array of condition/actions objects
+            message: ${req.ip} - ${req.user} - ${req.method} ${req.originalUrl} ${JSON.stringify(req.body)} # parameter for log action
+      - 
+        cors: &cors
+        - 
+          action:
+            origin: '*'
+            methods: 'HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 600
+      - proxy: &as
+        - action:
+            serviceEndpoint: authService
+            changeOrigin: true  
+  authPipeline:
+    apiEndpoints:
+      - authApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: &jwt
+        - action:
+            secretOrPublicKeyFile: ./cert/murpheux.pem
+            checkCredentialExistence: false
+      - proxy: *as
+
+  taskApiPreflightPipeline:
+    apiEndpoints:
+      - taskApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: taskService
+              changeOrigin: true
+  taskDefaultPipeline:
+    apiEndpoints:
+      - taskApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &ts
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  taskPipeline:
+    apiEndpoints:
+      - taskApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ts
+  
+  msgApiPreflightPipeline:
+    apiEndpoints:
+      - msgApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: msgService
+              changeOrigin: true
+  msgDefaultPipeline:
+    apiEndpoints:
+      - msgApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &ms
+        - action:
+            serviceEndpoint: msgService
+            changeOrigin: true
+  msgPipeline:
+    apiEndpoints:
+      - msgApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ms
+
+  notifyApiPreflightPipeline:
+    apiEndpoints:
+      - notifyApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: notifyService
+              changeOrigin: true
+  notifyDefaultPipeline:
+    apiEndpoints:
+      - notifyApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &ns
+        - action:
+            serviceEndpoint: notifyService
+            changeOrigin: true
+  notifyPipeline:
+    apiEndpoints:
+      - notifyApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *ns
+
+  billApiPreflightPipeline:
+    apiEndpoints:
+      - billApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: billService
+              changeOrigin: true
+  billDefaultPipeline:
+    apiEndpoints:
+      - billApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &bs
+        - action:
+            serviceEndpoint: billService
+            changeOrigin: true
+  billPipeline:
+    apiEndpoints:
+      - billApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *bs

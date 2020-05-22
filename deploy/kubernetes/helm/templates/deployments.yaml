@@ -1,0 +1,765 @@
+# set DGIINI_VERSION before running 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.web.appName }}
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.web.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.web.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.web.appName }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NGINX_HOST
+              value: {{ .Values.web.domain }}
+            - name: NGINX_PORT
+              value: {{ .Values.webPort | squote }}
+          image: "{{ .Values.image.repository }}/{{ .Values.web.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.webPort }}
+              protocol: TCP
+          volumeMounts:
+            - name: dhparam
+              mountPath: "/etc/ssl/dh"
+            - name: nginx-cert
+              mountPath: "/etc/ssl/certs"
+              readOnly: true
+            - name: nginx-key
+              mountPath: "/etc/ssl/private"
+              readOnly: true
+            - name: dgiini-com
+              mountPath: "/etc/nginx/conf.d"
+            - name: https-redirect
+              mountPath: "/etc/nginx/default.d"
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: dhparam
+          secret:
+            defaultMode: 0400
+            secretName: dhparam
+            items:
+            - key: dhparam.pem
+              path: dhparam.pem
+        - name: nginx-cert
+          secret:
+            defaultMode: 0400
+            secretName: nginx-cert
+        - name: nginx-key
+          secret:
+            defaultMode: 0400
+            secretName: nginx-key
+        - name: nginx-self-signed
+          configMap:
+            name: nginx-self-signed
+        - name: nginx-ssl-params
+          configMap:
+            name: nginx-ssl-params
+        - name: dgiini-com
+          configMap:
+            name: dgiini-com
+        - name: https-redirect
+          configMap:
+            name: https-redirect
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.apigw.appName }}
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.apigw.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.apigw.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.apigw.appName }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: APP_NAME
+              value: {{ .Values.apigw.appServiceName }}
+            - name: APP_VERSION
+              value: {{ .Values.apigw.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.apigw.appBuild | squote }}
+          image: "{{ .Values.image.repository }}/{{ .Values.apigw.image }}:{{ .Values.version }}"
+          ports:
+            - name: https
+              containerPort: {{ .Values.apigwPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.auth.appName }}-api
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.auth.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.auth.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.auth.appName }}-api
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: DB_HOST
+              value: {{ .Values.auth.db.host }}
+            - name: DB_PORT
+              value: {{ .Values.auth.db.port | squote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+            - name: AUTH_DATABASE
+              value: {{ .Values.auth.db.name }}
+            - name: APP_NAME
+              value: {{ .Values.auth.appName }}
+            - name: APP_VERSION
+              value: {{ .Values.auth.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.auth.appBuild | squote }}
+            - name: COR_CLIENT_URL
+              value: {{ .Values.auth.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.auth.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.msPorts.authApiPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.task.appName }}-api
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.task.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.task.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.task.appName }}-api
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: DB_HOST
+              value: {{ .Values.task.db.host }}
+            - name: DB_PORT
+              value: {{ .Values.task.db.port | squote }}
+            - name: TASK_DATABASE
+              value: {{ .Values.task.db.name }}
+            - name: APP_NAME
+              value: {{ .Values.task.appName }}
+            - name: APP_VERSION
+              value: {{ .Values.task.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.task.appBuild | squote }}
+            - name: COR_CLIENT_URL
+              value: {{ .Values.task.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.task.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.msPorts.taskApiPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.msg.appName }}-api
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.msg.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.msg.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.msg.appName }}-api
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: DB_HOST
+              value: {{ .Values.msg.db.host }}
+            - name: DB_PORT
+              value: {{ .Values.msg.db.port | squote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+            - name: AUTH_DATABASE
+              value: {{ .Values.msg.db.name }}
+            - name: APP_NAME
+              value: {{ .Values.msg.appName }}
+            - name: APP_VERSION
+              value: {{ .Values.msg.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.msg.appBuild | squote }}
+            - name: COR_CLIENT_URL
+              value: {{ .Values.msg.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.msg.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.msPorts.msgApiPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.notify.appName }}-api
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.notify.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.notify.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.notify.appName }}-api
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: DB_HOST
+              value: {{ .Values.notify.db.host }}
+            - name: DB_PORT
+              value: {{ .Values.notify.db.port | squote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+            - name: AUTH_DATABASE
+              value: {{ .Values.notify.db.name }}
+            - name: APP_NAME
+              value: {{ .Values.notify.appName }}
+            - name: APP_VERSION
+              value: {{ .Values.notify.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.notify.appBuild | squote }}
+            - name: COR_CLIENT_URL
+              value: {{ .Values.notify.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.notify.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.msPorts.notifyApiPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.bill.appName }}-api
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.bill.appName }}-api
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.environment }}
+              {{- range $key, $val := .Values.msPorts }}
+            - name: {{ $key | snakecase | upper }}
+              value: {{ $val | squote }}
+              {{- end}}
+            - name: DB_HOST
+              value: {{ .Values.bill.db.host }}
+            - name: DB_PORT
+              value: {{ .Values.bill.db.port | squote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+            - name: AUTH_DATABASE
+              value: {{ .Values.bill.db.name }}
+            - name: APP_NAME
+              value: {{ .Values.bill.appName }}
+            - name: APP_VERSION
+              value: {{ .Values.bill.appVersion | squote }}
+            - name: APP_BUILD
+              value: {{ .Values.bill.appBuild | squote }}
+            - name: COR_CLIENT_URL
+              value: {{ .Values.bill.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.bill.image }}:{{ .Values.version }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.msPorts.billApiPort }}
+              protocol: TCP
+          # livenessProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # readinessProbe:
+          #   httpGet:
+          #     path: /ready
+          #     port: http
+          #   failureThreshold: 1
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 5
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          # startupProbe:
+          #   httpGet:
+          #     path: /live
+          #     port: http
+          #   failureThreshold: 3
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 5
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

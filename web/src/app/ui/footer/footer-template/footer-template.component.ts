@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { VERSION } from 'src/environments/version';
 
 @Component({
-  selector: 'app-footer-template',
-  templateUrl: './footer-template.component.html',
-  styleUrls: ['./footer-template.component.scss']
+    selector: 'app-footer-template',
+    templateUrl: './footer-template.component.html',
+    styleUrls: ['./footer-template.component.scss']
 })
 export class FooterTemplateComponent implements OnInit {
 
-  constructor() { }
+    // tslint:disable-next-line: no-any
+    version: any;
 
-  ngOnInit() {
-  }
+    constructor() { }
+
+    ngOnInit() {
+        this.version = VERSION;
+    }
 
 }

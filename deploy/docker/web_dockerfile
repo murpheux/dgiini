@@ -1,0 +1,12 @@
+FROM nginx:1.17.9-alpine
+
+WORKDIR /usr/share/nginx/html
+
+COPY app/nginx/default.conf /etc/nginx/conf.d/
+
+COPY app/nginx/dgiini.com.crt /etc/ssl/certs/
+COPY app/nginx/dgiini.com.key /etc/ssl/private/
+
+COPY app/nginx/dhparam.pem /etc/ssl/dh/
+
+COPY app/web/ /usr/share/nginx/html

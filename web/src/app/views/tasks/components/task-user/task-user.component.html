@@ -1,0 +1,235 @@
+<section class="page-wrapper">
+    <div class="page-heading text-white">
+        <div class="container">
+            <h3>My Tasks</h3>
+            <p>Monitor your tasks while using dgiini.</p>
+            <i class="fas fa-tasks shadow-icon"></i>
+        </div>
+    </div>
+
+    <div *ngIf="taskList" class="container tasks">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="task-box">
+                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="all-tasks-tab" data-toggle="tab" href="#all-tasks" role="tab" aria-controls="home" aria-selected="true">
+                  All Tasks <span class="badge badge-secondary">{{ taskList.length }}</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="posted-tasks-tab" data-toggle="tab" href="#posted-tasks" role="tab" aria-controls="profile" aria-selected="false">
+                  Posted Tasks <span class="badge badge-secondary">{{ taskList.length }}</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="drafted-tasks-tab" data-toggle="tab" href="#drafted-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Draft <span class="badge badge-secondary">0</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="assigned-tasks-tab" data-toggle="tab" href="#assigned-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Assigned <span class="badge badge-secondary">{{assignedTaskList.length}}</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="offer-pending-tab" data-toggle="tab" href="#offer-pending" role="tab" aria-controls="contact" aria-selected="false">
+                  Offer Pending <span class="badge badge-secondary">1</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="completed-tasks-tab" data-toggle="tab" href="#completed-tasks" role="tab" aria-controls="contact" aria-selected="false">
+                  Completed <span class="badge badge-secondary">{{completedTaskList.length}}</span>
+                </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="cancelled-tasks-tab" data-toggle="tab" href="#cancelled-tasks" role="tab" aria-controls="cancelled-tasks" aria-selected="false">
+                  Cancelled <span class="badge badge-secondary">{{cancelledTaskList.length}}</span>
+                </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="all-tasks" role="tabpanel" aria-labelledby="all-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="taskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                    <tr *ngFor="let task of taskList">
+                                        <td>{{task.title}}</td>
+                                        <td>{{task.description}}</td>
+                                        <td><span class=" badge badge-web">{{task.category}}</span></td>
+                                        <td>{{task.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{task.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="posted-tasks" role="tabpanel" aria-labelledby="posted-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="taskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr> 
+                                    <tr *ngFor="let task of taskList">
+                                        <td>{{task.title}}</td>
+                                        <td><span class=" badge badge-web">{{task.category}}</span></td>
+                                        <td>{{task.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{task.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{getStatusColor(task.status)}}">{{task.status}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="drafted-tasks" role="tabpanel" aria-labelledby="drafted-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="assigned-tasks" role="tabpanel" aria-labelledby="assigned-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="assignedTaskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                    <tr *ngFor="let assignedTask of assignedTaskList">
+                                        <td>{{assignedTask.title}}</td>
+                                        <td>{{assignedTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{assignedTask.category}}</span></td>
+                                        <td>{{assignedTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{assignedTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-primary">{{assignedTask.title}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="offer-pending" role="tabpanel" aria-labelledby="offer-pending-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Client Name</td>
+                                        <td>Task Description</td>
+                                        <td><span class=" badge badge-web">Cleaning</span></td>
+                                        <td>16, Jan 2020</td>
+                                        <td>100$</td>
+                                        <td><span class=" badge badge-warning">Offer Pendind</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="completed-tasks" role="tabpanel" aria-labelledby="completed-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="far fa-user"></i> Client</th>
+                                        <th><i class="fas fa-tasks"></i> Task</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+i                                </thead>
+                                <tbody>
+                                    <tr *ngIf="completedTaskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                    <tr *ngFor="let compTask of completedTaskList">
+                                        <td>{{compTask.title}}</td>
+                                        <td>{{compTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{compTask.category}}</span></td>
+                                        <td>{{compTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{compTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{getStatusColor(compTask.status)}}">{{compTask.status}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="cancelled-tasks" role="tabpanel" aria-labelledby="cancelled-tasks-tab">
+                            <table class="table bg-white table-hover w-100 border mt-4">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-tasks"></i> Task Details</th>
+                                        <th>Category</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Due On</th>
+                                        <th><i class="fas fa-dollar-sign"></i> Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="cancelledTaskList.length <= 0">
+                                        <td colspan="5" class="text-center font-weight-bold">No Task Found</td>
+                                    </tr>
+                                    <tr *ngFor="let canTask of cancelledTaskList">
+                                        <td>{{canTask.title}}</td>
+                                        <td>{{canTask.description}}</td>
+                                        <td><span class=" badge badge-web">{{canTask.category}}</span></td>
+                                        <td>{{canTask.scheduled_date | date:'medium'}}</td>
+                                        <td>C${{canTask.rate.amount}}</td>
+                                        <td><span class=" badge badge-{{getStatusColor(canTask.status)}}">{{canTask.status}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Col-ms-12 -->
+        </div>
+        <!-- End Row -->
+    </div>
+    <!-- End Container -->
+</section>

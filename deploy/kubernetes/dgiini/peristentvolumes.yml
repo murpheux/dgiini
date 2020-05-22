@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: dgiini-volume
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Block
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: do-block-storage
+  hostPath:
+    path: "/data/db"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  dgiini-volume-claim
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: do-block-storage
+  resources:
+    requests:
+      storage: 1Gi

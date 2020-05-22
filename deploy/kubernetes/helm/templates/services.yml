@@ -1,0 +1,109 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.web.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.web.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.webPort }}
+      targetPort: {{ .Values.webPort }}
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.apigw.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.apigw.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.apigwPort }}
+      targetPort: {{ .Values.apigwPort }}
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.auth.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.auth.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.msPorts.authApiPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.task.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.task.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.msPorts.taskApiPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.msg.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.msg.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.msPorts.msgApiPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.notify.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.notify.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.msPorts.notifyApiPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.bill.appName }}-service
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+spec:
+  selector:
+    app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.msPorts.billApiPort }}

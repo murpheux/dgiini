@@ -1,0 +1,35 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.auth.appName }}-hpa
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.appName }}-{{ .Values.auth.appName }}-api
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 75
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.appName }}-{{ .Values.task.appName }}-hpa
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.appName }}-{{ .Values.task.appName }}-api
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 75

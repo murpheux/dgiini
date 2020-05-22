@@ -1,11 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UiModule } from './ui/ui.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
-import { NotifyHeaderService } from './services/notify-header.service';
+import { UiModule } from './ui';
+import { EnvServiceProvider } from './shared/services/env.service.provider';
 
 @NgModule({
   declarations: [
@@ -13,14 +16,13 @@ import { NotifyHeaderService } from './services/notify-header.service';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     UiModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    NotifyHeaderService
-  ],
+  providers: [ EnvServiceProvider ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

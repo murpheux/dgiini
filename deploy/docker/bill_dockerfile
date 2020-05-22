@@ -1,0 +1,9 @@
+FROM node:13.10.1-alpine3.11
+
+WORKDIR /usr/src/app
+
+COPY app/msbill/ /usr/src/app
+
+RUN npm install --only=production
+
+CMD [ "node", "bill.api" ]

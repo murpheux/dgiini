@@ -1,41 +1,87 @@
-<header>
-    <div class="d-flex flex-row flex-wrap justify-content-around">
-        <div>
-            <a href="/">
-                <img src="assets/images/maple_logo.png" class="img-fluid">
-            </a>
-        </div>
-        <div>
-            <nav class="navbar top-nav navbar-expand-lg navbar-light">
-                <ul class="navbar-nav d-flex flex-row justify-content-center flex-wrap">
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./home']">Home</a>
-                    </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./dashboard']">Dashboard</a>
-                    </li>
-                    <li class="nav-itemp m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./projects']">Projects</a>
-                    </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" [routerLink]="['./entities']">Entities</a>
-                    </li>
-                    <li class="nav-item m-1" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                        <a class="nav-link" routerLinkActive="active" [routerLink]="['./stakeholders']">Stakeholders</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="d-flex flex-row sign-in-partial">
-            <div class="dropdown ml-1">
-                <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <img src="assets/images/default-avatar.png">
-            </button>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <a class="dropdown-item" [routerLink]="['./user/login']" *ngIf="!isLoggedIn">Sign in</a>
-                    <a class="dropdown-item" [routerLink]="['./user/logout']" *ngIf="isLoggedIn">Sign out</a>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="navbar">
+    <a class="navbar-brand" routerLink="/">
+        <img src="assets/images/logo.png" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="btn-group nav-item">
+                <a class="nav-link" routerLink="/browse">
+                    <i class="fas fa-search"></i> Browse Tasks
+                </a>
+                <a class="nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Toggle Task Categories</span>
+                </a>
+                <div class="dropdown-menu">
+                    <i class="fas fa-caret-up d-none"></i>
+                    <a *ngFor="let category of categories" class="dropdown-item" routerLink="/browse/{{ category }}"><i class="fas fa-{{ faImageMap[category] }} text-web"></i> {{ category }}</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="authService.loggedIn" class="nav-link" routerLink="/mytask"><i class="fas fa-list"></i> My Tasks</a>
+            </li>
+        </ul>
+        <span class="navbar-text ">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" (click)="openDialog()">
+            <a class="btn btn-outline-web"><i class="fas fa-plus"></i>
+              Post Task</a>
+          </li>
+          <li class="nav-item dropdown profile-icon profile-dropdown ml-3">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <img [src]="claim ? claim?.picture : 'assets/images/user.jpg'" class="profile-img border rounded-circle" alt="">
+              <span class="username">{{ claim ? claim?.name : "Guest" }}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <div class="container-fluid">
+                <div class="row">
+                    <div *ngIf="authService.loggedIn" class="col-md-6">
+                        <h5 class="dropdown-header px-0"><i class="fas fa-balance-scale-left"></i> Financial</h5>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/finance">Financial Dashboard</a>
+                        <a routerLink="/user/transactions">Transaction History</a>
+                        <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-chart-bar"></i> User Insight</h5>
+                        <div class="border mb-2"></div>
+                        <a routerLink="/user/statistics">User Statistics</a>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 *ngIf="authService.loggedIn" class="dropdown-header px-0"><i class="far fa-user"></i> Account</h4>
+                        <div class="border mb-2"></div>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/profile">My Profile</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/settings">User Setting</a>
+                        <h5 class="dropdown-header mt-2 px-0"><i class="fas fa-question-circle"></i> Help</h5>
+                        <div class="border mb-2"></div>
+                        <a *ngIf="authService.loggedIn" routerLink="/user/support">Get Support</a>
+                        <a *ngIf="authService.loggedIn" routerLink="/">Invite Friend</a>
+                        <a *ngIf="authService.loggedIn" (click)="logout()">Logout</a>
+                        <a *ngIf="!authService.loggedIn" (click)="authService.login()">Signup</a>
+                        <a *ngIf="!authService.loggedIn" (click)="authService.login()">Login</a>
+                    </div>
                 </div>
             </div>
         </div>
+        </li>
+        </ul>
+        </span>
+        <span class="navbar-text d-none">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="btn btn-outline-web" data-toggle="modal" data-target="#postTaskModal"><i class="fas fa-plus"></i>
+              Post Task</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-web" routerLink="/">Join Us</a>
+          </li>
+        </ul>
+      </span>
     </div>
-</header>
+</nav>

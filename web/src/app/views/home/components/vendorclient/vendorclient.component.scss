@@ -1,0 +1,109 @@
+/***********************************************************************
+*****************************  Tasker-Client  **************************
+************************************************************************/
+
+.tasker-client {
+    background-color: white;
+    background-image: -webkit-linear-gradient(30deg, #F7F7F7 50%, var(--theme-color) 50%);
+    width: 100%;
+    min-height: 410px;
+    padding: 50px 50px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.tasker-client .tasker h1 {
+    color: var(--theme-color);
+    transition: all 0.3s ease-in-out;
+}
+
+.tasker-client .tasker p {
+    width: 90%;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.tasker-client .client h1 {
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.tasker-client .client p {
+    width: 80%;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.tasker-client .client .btn {
+    border-color: white;
+    color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+.tasker-client .client .btn:hover {
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Active Cases For Tasker */
+
+.tasker-client.tasker-active {
+    background-image: -webkit-linear-gradient(30deg, var(--theme-color) 50%, #F7F7F7 50%);
+    opacity: 1;
+}
+
+.tasker-client.tasker-active .tasker h1 {
+    color: white;
+}
+
+.tasker-client.tasker-active .tasker p {
+    color: white;
+}
+
+.tasker-client.tasker-active .tasker .btn {
+    border-color: white !important;
+    color: white !important;
+}
+
+.tasker-client.tasker-active .tasker .btn:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+
+/* Fade Cases For Client */
+
+.tasker-client.client-fade .client h1 {
+    color: var(--theme-color) !important;
+}
+
+.tasker-client.client-fade .client p {
+    color: black !important;
+}
+
+.tasker-client.client-fade .client .btn {
+    border-color: var(--theme-color) !important;
+    color: var(--theme-color) !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .tasker-client {
+        padding: 50px 0px;
+        background-color: white;
+        background-image: -webkit-linear-gradient(90deg, var(--theme-color) 50%, #F7F7F7 50%);
+    }
+    .tasker-client .float-left {
+        margin-bottom: 50px;
+    }
+    .tasker-client .float-left p {
+        width: 100%;
+    }
+    .tasker-client .float-right p {
+        width: 100%;
+    }
+    .tasker-client.tasker-active {
+        background-image: -webkit-linear-gradient(90deg, #F7F7F7 50%, var(--theme-color) 50%);
+        opacity: 1;
+    }
+}

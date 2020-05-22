@@ -1,0 +1,355 @@
+#!groovy
+
+pipeline {
+    agent any
+    environment {
+        APP_NAME = 'dgiini'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        IMAGE_VERSION="v_${BUILD_NUMBER}"
+        NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
+        GIT_URL = 'ssh://jenkins@scarlet/projects.git/projects/dgiini'
+    }
+    parameters {
+        string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
+    }
+    tools {
+        nodejs "node"
+        git "Default"
+    }
+    stages {
+        stage('preparation') {
+            steps {
+                deleteDir() /* clean up our workspace */
+
+                // Git repository
+                git branch: "${branch}", url: "${GIT_URL}"
+
+                sh '''
+                    mkdir ${WORKSPACE}/app
+                '''
+            }
+        }
+        stage('install dependencies') {
+            parallel {
+                stage('install web dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm install
+                        '''
+                    }
+                }
+                stage('install ms dependency') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm install
+                        '''
+                    }
+                }
+            }
+        }
+        stage('Code analyse') {
+            parallel {
+                stage('web lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm run lint
+                        '''
+                    }
+                }
+                stage('ms lint') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            npm run lint
+                        '''
+                    }
+                }
+            }
+        }
+        // stage('Unit test') {
+        //     steps {
+        //         sh '''
+        //             cd ${WORKSPACE}/ms
+        //             npm run test
+        //         '''
+        //     }
+        // }
+        stage('Create version file') {
+            steps {
+                writeFile file: 'build_version', text: '{"version": "${BUILD_NUMBER}"}'
+            }
+        }
+        stage('build app') {
+            parallel {
+                stage('Build web') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/web
+                            npm run build-k8s
+                        '''
+                    }
+                }
+                stage('Build apigw') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/gw
+                            npm install
+                            npm run build
+                        '''
+                        sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/gw/dist/apigw/'
+                        sh 'cp ${WORKSPACE}/gw/config/gateway.config.k8s.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml'
+                        sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
+                    }
+                }
+                stage('Build task.api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/mstask npm run build src/task.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/mstask/'
+                    }
+                }
+                stage('Build auth_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msauth npm run build src/auth.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
+                    }
+                }
+                stage('Build msg_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msmsg npm run build src/msg.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
+                    }
+                }
+                stage('Build notify_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msnotify npm run build src/notify.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msnotify/'
+                    }
+                }
+                stage('Build bill_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msbill npm run build src/bill.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'
+                    }
+                }
+            }
+        }
+        stage('Zip/Artifacts') {
+            steps {
+                zip zipFile: 'deploy.zip', archive: false, dir: 'deploy'
+                archiveArtifacts artifacts: 'deploy.zip', fingerprint: true
+
+                zip zipFile: 'web.zip', archive: false, dir: 'web/dist/dgiini'
+                archiveArtifacts artifacts: 'web.zip', fingerprint: true
+
+                zip zipFile: 'apigw.zip', archive: false, dir: 'gw/dist/apigw'
+                archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
+
+                zip zipFile: 'mstask.zip', archive: false, dir: 'ms/dist/mstask'
+                archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
+
+                zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
+                archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
+
+                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
+                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
+
+                zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
+                archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
+
+                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
+                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+            }
+        }
+        stage('build images') {
+            parallel {
+                stage('build and publish web') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
+                                cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f web_dockerfile -t murpheux/dgiini_web:${BUILD_NUMBER} .
+
+                                docker login -u=${username} -p=${password}
+                                docker push murpheux/dgiini_web:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish apigw') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f gw_dockerfile -t murpheux/dgiini_apigw:${BUILD_NUMBER} .
+
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish auth') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f auth_dockerfile -t murpheux/dgiini_auth:${BUILD_NUMBER} .
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_auth:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish task') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username',
+                            passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f task_dockerfile -t murpheux/dgiini_task:${BUILD_NUMBER} .
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_task:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish msg') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f msg_dockerfile -t murpheux/dgiini_msg:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_msg:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage('build and publish notify') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f notify_dockerfile -t murpheux/dgiini_notify:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_notify:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage('build and publish bill') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f bill_dockerfile -t murpheux/dgiini_bill:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_bill:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('clean') {
+            steps {
+                deleteDir() /* clean up our workspace */
+            }
+        }
+    }
+    post {
+        success {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: 'Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+        }
+        failure {
+            slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: 'Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
+        }
+    }
+}

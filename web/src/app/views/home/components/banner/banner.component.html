@@ -1,0 +1,27 @@
+<div class="main-banner text-center">
+    <div class="banner-content">
+        <h1 class="font-weight-bold m-0">Great Task</h1>
+        <h1 class="m-0 mb-3">Greater Skill</h1>
+        <div class="d-flex">
+            <div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-search input-icon"></i></span>
+                    </div>
+                    <input type="text" class="form-control" [(ngModel)]="searchString" placeholder="Search Keywords">
+                </div>
+            </div>
+            <div *ngIf="currentCity" class="ml-2 mr-2">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-map-marker-alt input-icon"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Location" [value]="currentCity.city">
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-web" (click)="handleSearch()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

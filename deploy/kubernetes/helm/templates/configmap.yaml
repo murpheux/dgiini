@@ -1,0 +1,172 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-replica-config
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+data:
+  replica.json: |
+    {
+      "_id":"dgiiniRepl",
+      "members":[
+        {"_id":0,"host":"dgiini-db-0:27017"},
+        {"_id":1,"host":"dgiini-db-1:27017"},
+        {"_id":2,"host":"dgiini-db-2:27017"}
+      ]
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+data:
+  mongod.conf: |
+    # mongod.conf
+
+    # for documentation of all options, see:
+    #   http://docs.mongodb.org/manual/reference/configuration-options/
+
+    # Where and how to store data.
+    storage:
+      dbPath: /var/lib/mongodb
+      journal:
+        enabled: true
+    #  engine:
+    #  mmapv1:
+    #  wiredTiger:
+
+    # where to write logging data.
+    systemLog:
+      destination: file
+      logAppend: true
+      path: /var/log/mongodb/mongod.log
+
+    # network interfaces
+    net:
+      port: 27017
+      bindIp: 127.0.0.1
+
+
+    # how the process runs
+    processManagement:
+      timeZoneInfo: /usr/share/zoneinfo
+
+    #security:
+    setParameter:
+        enableLocalhostAuthBypass: false
+    security:
+        keyFile: /opt/mongo/keyfile.key
+        authorization: enabled
+
+    #operationProfiling:
+
+    replication:
+      replSetName: dgiiniRepl
+
+    #sharding:
+
+    ## Enterprise-Only Options:
+
+    #auditLog:
+
+    #snmp:
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-self-signed
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+data:
+  self-signed.conf: |
+    ssl_certificate /etc/ssl/certs/dgiini.com.crt;
+    ssl_certificate_key /etc/ssl/private/dgiini.com.key;
+  ssl-params.conf: |
+    ssl_protocols TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    ssl_dhparam /etc/nginx/dhparam.pem;
+    ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384;
+    ssl_ecdh_curve secp384r1; # Requires nginx >= 1.1.0
+    ssl_session_timeout  10m;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_tickets off; # Requires nginx >= 1.5.9
+    ssl_stapling on; # Requires nginx >= 1.3.7
+    ssl_stapling_verify on; # Requires nginx => 1.3.7
+    resolver 8.8.8.8 8.8.4.4 valid=300s;
+    resolver_timeout 5s;
+    # Disable strict transport security for now. You can uncomment the following
+    # line if you understand the implications.
+    # add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload";
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection "1; mode=block";
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dgiini-com
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+data:
+  default.conf: |
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        listen 443 ssl http2 default_server;
+        listen [::]:443 ssl http2 default_server;
+
+        ssl_certificate /etc/ssl/certs/dgiini.com.crt;
+        ssl_certificate_key /etc/ssl/private/dgiini.com.key;
+        ssl_dhparam /etc/ssl/dh/dhparam.pem;
+
+        server_name dgiini.com www.dgiini.com;
+        root /usr/share/nginx/html;
+
+        index index.html index.htm index.nginx-debian.html;
+    }
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: https-dgiini-com
+#   namespace: {{ .Values.appName }}
+#   labels:
+#     app: {{ .Values.appName }}
+#     environment: {{ .Values.environment }}
+# data:
+#   nginx.conf: |
+#     server {
+#         listen 443 http2 ssl;
+#         listen [::]:443 http2 ssl;
+
+#         include /etc/nginx/snippets/self-signed.conf;
+#         include /etc/nginx/snippets/ssl-params.conf;
+
+#         server_name dgiini.com www.dgiini.com;
+
+#         root /usr/share/nginx/html;
+#         index index.html index.htm index.nginx-debian.html;
+#     }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: https-redirect
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+    environment: {{ .Values.environment }}
+data:
+  ssl-redirect.conf: |
+    return 301 https://$host$request_uri/;

@@ -1,0 +1,7 @@
+- hosts: scarlet
+  become: true
+  roles:
+    all
+  tasks:
+  - name: installdocker
+    command: ./deploy.sh

@@ -1,0 +1,36 @@
+<section #sArea class="page-wrapper">
+       <app-task-filter [distanceToHome]="distanceToHome" [searchString]="searchString" (hideChanged)="handleHideChanged($event)" (categoriesChanged)="handleCategoryChanged($event)" (distanceChanged)="handleDistanceChanged($event)" (searchClicked)="handleSearchClicked($event)"
+            (cityChanged)="handleCityChanged($event)" [selectedCategory]="selectedCategory" [currentCity]="currentCity"></app-task-filter>
+
+    <div class="browse-tasks">
+        <div class="container-fluid">
+            <div class="row">
+                <div #scrollAreaGrp class="col-md-3">
+                    <div #scrollArea *ngIf="taskList" class="task-box">
+                        <p class="font-weight-bold float-right m-0 mb-2 text-web">{{taskCount}} Tasks Found</p>
+                        <div class="clearfix"></div>
+                        <div class="border mb-2"></div>
+                        <div class="task-list" (overflow)="handleOverflow($event)" (scroll)="handleScroll($event)">
+                            <div *ngFor="let task of taskList; let i = index" [ngClass]="i===taskList.length -1 ? 'lastOfMe': ''">
+                                <app-task-card (taskSelected)="handleTaskSelected($event)" [task]="task"></app-task-card>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <app-task-view *ngIf="currentTask" [currentUser]="currentUser" [task]="currentTask"></app-task-view>
+                </div>
+                <div class="col-md-3">
+                    <div class="recommended-taskers">
+                        <h5 class="font-weight-bold heading text-web">Recommended Taskers</h5>
+                        <div class="border mb-3"></div>
+                        <div *ngFor="let vendor of vendorModel" class="user-info">
+                            <app-vendor-card [vendor]="vendor"></app-vendor-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

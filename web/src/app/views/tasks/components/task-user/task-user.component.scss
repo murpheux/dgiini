@@ -1,0 +1,50 @@
+.tasks {
+    background-color: #F7F7F7;
+    padding-top: 40px;
+}
+
+.tasks .nav-item .nav-link {
+    color: var(--dark-color)
+}
+
+.tasks .nav-item .nav-link.active {
+    border-top: 2px solid;
+    border-top-color: var(--theme-color);
+    color: var(--theme-color);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.tasks .nav-item .nav-link .badge-secondary {
+    font-size: 12px;
+    width: 17px;
+    height: 17px;
+    border-radius: 999px;
+}
+
+.tasks .table {
+    border-color: #d4d4d4 !important
+}
+
+.tasks .table th {
+    border-color: #d4d4d4 !important;
+    color: var(--theme-color);
+    border-bottom: 1px solid var(--theme-color) !important
+}
+
+.tasks .table tbody tr {
+    cursor: pointer
+}
+
+.tasks .table tbody tr td .badge-web {
+    background-color: transparent;
+    color: var(--dark-color);
+    border: 1px solid var(--dark-color);
+}
+
+@media only screen and (max-width: 600px) {
+    .tasks .table {
+        display: block;
+        overflow: auto !important;
+    }
+}

@@ -1,0 +1,14 @@
+<div class="p-4">
+    <h1 class="alert alert-danger">Delete Project</h1>
+    <div>
+      <h5>{{confirmMessage}}?</h5>
+    </div>
+    <div>
+      <button id="btnDialogCancel" (click)="dialogRef.close(false)">
+       <fa-icon>arrow_back</fa-icon>
+        Cancel</button>
+      <button id="btnDialogConfirm"  (click)="dialogRef.close(true)">
+          <fa-icon>check_box</fa-icon>
+        Confirm</button>
+    </div>
+</div>

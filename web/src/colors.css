@@ -1,0 +1,12 @@
+:root{
+    --theme-color : #D80303;
+    --btn-hover   : rgb(190, 4, 4);
+    --link-hover  : rgb(190, 4, 4);
+    --success-color: #069335;
+    --primary-color: #0098DB;
+    --info-color   : #02A090;
+    --purple-color : #6C757D;
+    --golden-color : #CBA135;
+    --dark-color   : #6C757D;
+    --border-color : #d4d4d4;
+}

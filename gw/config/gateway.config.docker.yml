@@ -1,0 +1,242 @@
+https:
+  port: 443
+  tls:
+    "default":
+        key: cert/dgiini.key.pem
+        cert: cert/dgiini.cert.pem
+admin:
+  port: 9876
+apiEndpoints:
+  taskApiDefault:
+    paths: '/api/task/v1/'
+    methods: GET
+  taskApi:
+    paths: '/api/task/v1/*'
+  authApiDefault:
+    paths: '/api/auth/v1/'
+    methods: GET
+  authApi:
+    paths: '/api/auth/v1/*'
+  msgApiDefault:
+    paths: '/api/msg/v1/'
+    methods: GET
+  msgApi:
+    paths: '/api/msg/v1/*'
+  notifyApiDefault:
+    paths: '/api/notify/v1/'
+    methods: GET
+  notifyApi:
+    paths: '/api/notify/v1/*'
+  billApiDefault:
+    paths: '/api/bill/v1/'
+    methods: GET
+  billApi:
+    paths: '/api/bill/v1/*'
+
+serviceEndpoints:
+  authService:
+    url: 'http://auth_api'
+  taskService:
+    url: 'http://task_api'
+  msgService:
+    url: 'http://msg_api'
+  notifyService:
+    url: 'http://notify_api'
+  billService:
+    url: 'http://bill_api'
+
+policies:
+  - cors
+  - proxy
+
+pipelines:
+  taskDefaultPipeline:
+    apiEndpoints:
+      - taskApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  taskPipeline:
+    apiEndpoints:
+      - taskApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: taskService
+            changeOrigin: true
+  
+  authDefaultPipeline:
+    apiEndpoints:
+      - authApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: authService
+            changeOrigin: true 
+  authPipeline:
+    apiEndpoints:
+      - authApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: authService
+  
+  msgDefaultPipeline:
+    apiEndpoints:
+      - msgApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: msgService
+            changeOrigin: true
+  msgPipeline:
+    apiEndpoints:
+      - msgApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: msgService
+
+  notifyDefaultPipeline:
+    apiEndpoints:
+      - notifyApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: notifyService
+            changeOrigin: true
+  notifyPipeline:
+    apiEndpoints:
+      - notifyApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: notifyService
+
+  billDefaultPipeline:
+    apiEndpoints:
+      - billApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: billService
+            changeOrigin: true
+  billPipeline:
+    apiEndpoints:
+      - billApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: billService

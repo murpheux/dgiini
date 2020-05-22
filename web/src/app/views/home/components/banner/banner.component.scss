@@ -1,0 +1,59 @@
+/***********************************************************************
+******************************  Banner  ********************************
+************************************************************************/
+
+.main-banner {
+    background: url("/assets/images/banner.jpg") no-repeat;
+    background-size: cover;
+    background-color: var(--theme-color);
+    height: 80vh;
+    position: relative;
+}
+
+.main-banner .banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.main-banner .banner-content .input-group-text,
+.main-banner .banner-content .input-group-prepend {
+    background-color: white;
+    border-right-color: white;
+    border-radius: 5px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    width: 20px
+}
+
+.main-banner .banner-content .input-group-text i {
+    position: absolute;
+    z-index: 1200;
+    left: 8px
+}
+
+.main-banner .banner-content input {
+    border-left-color: white;
+}
+
+.main-banner .banner-content .input-group:focus-within .input-group-text {
+    border: 1px solid var(--theme-color);
+    color: var(--theme-color);
+    border-right-color: transparent;
+}
+
+@media only screen and (max-width: 600px) {
+    .main-banner {
+        height: 40vh;
+    }
+    .main-banner h1 {
+        font-size: 30px;
+    }
+    .main-banner .banner-content {
+        padding-top: 50px
+    }
+    .main-banner .d-flex {
+        width: 90vw
+    }
+}

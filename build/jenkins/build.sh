@@ -1,0 +1,1 @@
+ssh -l murpheux -p 53801 gru build $1 -p branch=develop

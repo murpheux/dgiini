@@ -1,0 +1,22 @@
+variable "do_token" {}
+variable "do_cluster_name" {}
+
+provider "digitalocean" {
+  token = var.do_token
+}
+
+resource "digitalocean_kubernetes_cluster" "dgiini_do_k8s_cluster" {
+  name    = var.do_cluster_name
+  region  = "sfo2"
+  version = "1.16.6-do.0"
+
+  node_pool {
+    name       = "worker-pool"
+    size       = "s-2vcpu-2gb"
+    node_count = 3
+  }
+}
+
+output "cluster-id" {
+  value = "${digitalocean_kubernetes_cluster.dgiini_do_k8s_cluster.id}"
+}

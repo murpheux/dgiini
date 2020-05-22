@@ -1,10 +1,2 @@
-[webui]
-
-
-[apigw]
-
-
-[microservies]
-
-
-[db]
+[server]
+scarlet

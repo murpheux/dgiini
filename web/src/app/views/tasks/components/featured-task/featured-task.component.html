@@ -1,0 +1,52 @@
+<section class="featured-tasks mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="font-weight-bold text-web">Featured Tasks</h3>
+                <div class="border web-border"></div>
+
+                <div class="feature-box">
+                    <div *ngFor="let task of featuredTasks" class="row p-3 bg-white border-bottom">
+                        <div class="col-md col-img">
+                            <img src="{{task.photos[0].photo}}" class="border rounded-lg w-100" alt="Task Image">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="m-0 d-inline text-dark text-truncate font-weight-bold"><a routerLink="/task/{{task._id}}" class="link">{{ task.title }}</a></p>
+                            <p class="m-0 d-inline float-right text-dark font-weight-bold">{{ task.rate.amount | currency : 'CAD' }}</p>
+                            <p class="m-0 text-web">{{ task.description }}</p>
+                            <p class="m-0"><i class="fas text-web fa-map-marker-alt"></i> {{task.location.city}}, {{task.location.state}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="float-right pt-3">
+                                <p class="badge badge-default">{{task.category}}</p>
+                                <!-- <i class="far fa-heart text-dark ml-2"></i> -->
+                            </div>
+                        </div>
+                        <div class="col-md col-btn">
+                            <button class="btn btn-outline-web mt-3 btn-sm" routerLink="/task/{{task._id}}">Bid Now</button>
+                        </div>
+                    </div>
+
+                    <!-- <button class="btn btn-web mx-auto d-block btn-sm m-2">View More</button> -->
+                </div>
+
+            </div>
+            <div class="col-md-3">
+                <h3 class="font-weight-bold text-web">Recent Tasks</h3>
+                <div class="border web-border"></div>
+                <div *ngFor="let rtask of recentTasks" class="recent-box p-3">
+                    <img src="{{rtask.photos[0].photo}}" class="border rounded-lg w-100" alt="Task Image">
+                    <h6 class="mb-0 mt-2 font-weight-bold text-truncate"><a routerLink="/task/{{rtask._id}}" class="link">{{ rtask.title }}</a></h6>
+                    <p class="m-0 text-web text-truncate">{{ rtask.description }}</p>
+                    <p class="m-0 d-inline"><i class="fas fa-map-marker-alt text-web"></i> {{rtask.location.city}}, {{rtask.location.state}}</p>
+                    <p class="m-0 d-inline float-right font-weight-bold">{{ rtask.rate.amount | currency : 'CAD' }}</p>
+                    <div>
+                        <span class="badge badge-default mt-2">{{ rtask.category }}</span>
+                        <button class="btn btn-web float-right btn-sm mt-1" routerLink="/task/{{rtask._id}}">Bid Now</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

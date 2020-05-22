@@ -13,8 +13,8 @@ export class GlobalErrorHandler implements ErrorHandler {
     const logger = this.injector.get(LoggingService);
     const notifier = this.injector.get(NotificationService);
 
-    let message;
-    let stackTrace;
+    let message: string;
+    const stackTrace = '';
     if (error instanceof HttpErrorResponse) {
       // Server error
       message = errorService.getServerErrorMessage(error);

@@ -1,0 +1,109 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-web-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-web
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-apigw-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-apigw
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-auth-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-auth
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-task-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-task
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-msg-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-msg
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-notify-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-notify
+  ports:
+    - protocol: TCP
+      port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dgiini-bill-service
+  namespace: dgiini
+  labels:
+    app: dgiini
+    environment: development
+spec:
+  selector:
+    app: dgiini-bill
+  ports:
+    - protocol: TCP
+      port: 80
