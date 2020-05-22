@@ -180,7 +180,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             created: currentDate,
             estimated_hours: formValues.subTaskForms[4].esthrs,
 
-            photo: this.photos,
+            photos: this.photos,
         };
 
         const validator = new TaskValidator();

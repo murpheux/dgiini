@@ -6,7 +6,7 @@ import mongodb from 'mongodb'
 import mgaccess from '../data/mongo.access'
 import validator from 'fluent-validator'
 import VALIDATION_MSG from '../shared/error_messages'
-import { validateBid } from '../shared/validator'
+import { validateBid, validateTask } from '../shared/validator'
 import { build_response, build_paging, enrich_paging } from '../shared/service.library'
 
 const ObjectId = mongodb.ObjectId
@@ -29,6 +29,24 @@ export class TaskController {
         const [count, data] = await invoke_getlist()
         const cnt = count.length > 0 ? count[0].count : 0
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
+    }
+
+    save_task = async (req, res) => {
+        const task = req.body
+        const validation = validateTask(task)
+    
+        if (validation.hasErrors()) {
+            res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+        } else {
+            // enrich
+            task.status = 'open'
+            task.posted_date = new Date()
+    
+            const invoke_updateone = async() => await mgaccess.create(this.db, this.TASK_COLL, task)
+    
+            const result = await invoke_updateone()
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', result.ops[0]))
+        }
     }
 
     get_tasks_by_city = async(req, res) => {
@@ -87,6 +105,19 @@ export class TaskController {
 
     get_task_stats_by_category = async(_req, res) => {
         const invoke_getstats = async() => await mgaccess.getCategoryStatistics(this.db, this.TASK_COLL, undefined)
+    
+        const tasks = await invoke_getstats()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
+    }
+
+    get_task_stats_by_category_and_city = async(req, res) => {
+        const city = req.params.city
+    
+        let paging = build_paging(req)
+        paging = enrich_paging(paging)
+        paging.filter = { 'location.city': city }
+
+        const invoke_getstats = async() => await mgaccess.getCategoryStatisticsByCity(this.db, this.TASK_COLL, paging)
     
         const tasks = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))

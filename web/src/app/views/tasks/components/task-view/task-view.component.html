@@ -41,10 +41,11 @@
             <div class="">
                 <app-google-map [latitude]="location.latitude" [longitude]="location.longitude" [mapTypeId]="location.mapType"></app-google-map>
             </div>
+            <hr class="mt-0">
             <div>
-                <app-image-strip [photos]="task.photo"></app-image-strip>
+                <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-message-sender></app-message-sender>
+            <app-message-sender *ngIf="authService.loggedIn"></app-message-sender>
         </div>
         <div>
 

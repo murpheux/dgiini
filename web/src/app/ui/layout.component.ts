@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { AuthService } from '../views/user/services/auth.service';
 import { UserService } from '../views/user/services/user.service';
 import { Constants } from '../shared/models/constants';
+import { UtilService } from '../shared/services/util.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-layout',
@@ -13,6 +15,7 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     constructor(
         private authService: AuthService,
         private userService: UserService,
+        private utilService: UtilService,
     ) { }
 
     ngOnInit() {
@@ -21,21 +24,22 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     ngAfterViewChecked() {
         if (this.authService.loggedIn) {
 
-            if (!localStorage.getItem(Constants.AUTH_LOGGEDIN_USER)) {
+            if (!this.utilService.getWithExpiry(Constants.AUTH_LOGGEDIN_USER)) {
                 this.authService.userToken$.subscribe(token => {
-                    localStorage.setItem(Constants.AUTH_LOGGEDIN_USER, token);
+                    this.utilService.setWithExpiry(Constants.AUTH_LOGGEDIN_USER, token, environment.auth_ttl);
                 });
 
                 this.authService.userClaims$.subscribe(claim => {
-                    localStorage.setItem(Constants.AUTH_USER_CLAIM, JSON.stringify(claim));
+                    this.utilService.setWithExpiry(Constants.AUTH_USER_CLAIM, JSON.stringify(claim), environment.auth_ttl);
                 });
 
                 this.authService.userProfile$.subscribe(profile => {
-                    localStorage.setItem(Constants.AUTH_USER_PROFILE, JSON.stringify(profile));
+                    this.utilService.setWithExpiry(Constants.AUTH_USER_PROFILE, JSON.stringify(profile), environment.auth_ttl);
 
                     // get user info from db
                     this.userService.getUserByEmail(profile.email).subscribe(response => {
-                        localStorage.setItem(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data));
+                        this.utilService.setWithExpiry(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data),
+                            environment.auth_ttl);
                     });
                 });
             }

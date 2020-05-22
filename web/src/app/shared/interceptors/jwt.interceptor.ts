@@ -14,7 +14,7 @@ export class JwtInterceptor implements HttpInterceptor {
             const currentToken = JSON.parse(authUserClaim);
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${currentToken.__raw}`
+                    Authorization: `Bearer ${JSON.parse(currentToken.value).__raw}`
                 }
             });
         }

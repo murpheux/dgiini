@@ -21,7 +21,7 @@ export interface ITask {
     status?: string;
     lastbid?: ITaskBid;
     bidcount?: number;
-    photo?: IPhoto[];
+    photos?: IPhoto[];
 }
 
 

@@ -1,7 +1,8 @@
-<div *ngIf="photos" class="mt-3">
+<div *ngIf="items" class="mt-3">
     <div class="border rounded-lg p-2">
+        <div>Job Photo(s)</div>
         <div class="container image-strip" gallerize>
-            <a src="" (click)="loadGallery()"><img class="ml-2 d-inline" *ngFor="let photo of photos" [alt]="photo.filename" [src]="photo.photo"></a>
+            <a (click)="loadGallery()"><img class="ml-2 d-inline" *ngFor="let item of items" [alt]="" [src]="item.data.thumb"></a>
         </div>
     </div>
 </div>

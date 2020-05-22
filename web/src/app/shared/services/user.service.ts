@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 const TOKEN = 'TOKEN';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  setToken(token: string): void {
-    localStorage.setItem(TOKEN, token);
-  }
+    setToken(token: string): void {
+        localStorage.setItem(TOKEN, token);
+    }
 
-  isLogged() {
-    return localStorage.getItem(TOKEN) !== undefined;
-  }
+    isLogged() {
+        return localStorage.getItem(TOKEN) !== undefined;
+    }
 }

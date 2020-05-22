@@ -342,6 +342,19 @@ module.exports = {
         })
     },
 
+    getCategoryStatisticsByCity: (db, collection, paging) => {
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection)
+                .aggregate([
+                    {'$match' : paging.filter },
+                    {'$group' : {_id:'$category', count:{$sum:1}}}
+                ]).toArray()
+
+            resolve(doc)
+        })
+    },
+
     searchTask: (db, collection, paging) => {
 
         return new Promise((resolve, reject) => {
@@ -385,7 +398,8 @@ module.exports = {
                                 status: 1,
                                 bidcount: { $size: '$bids' },
                                 scheduled_date: 1,
-                                lastbid: { $arrayElemAt: ['$bids', -1] }
+                                lastbid: { $arrayElemAt: ['$bids', -1] },
+                                photos: 1
                             }
                         }
                     ]).limit(paging.page_limit)
@@ -423,7 +437,8 @@ module.exports = {
                                 status: 1,
                                 bidcount: { $size: '$bids' },
                                 scheduled_date: 1,
-                                lastbid: { $arrayElemAt: ['$bids', -1] }
+                                lastbid: { $arrayElemAt: ['$bids', -1] },
+                                photos: 1
                             }
                         },
                         { $skip: paging.page_limit * (paging.page - 1) },

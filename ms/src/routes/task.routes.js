@@ -35,11 +35,13 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     const api = new TaskController(db)
 
     router.get('/tasks', asyncHandler(api.get_tasks))
+    router.post('/tasks', asyncHandler(api.save_task))
     router.get('/tasks/city/:city', asyncHandler(api.get_tasks_by_city))
     router.get('/tasks/user/:id', asyncHandler(api.get_user_task))
     router.get('/tasks/:id', asyncHandler(api.get_task_by_id))
     router.get('/tasks/stats/full', asyncHandler(api.get_task_stats_full))
     router.get('/tasks/category/stats', asyncHandler(api.get_task_stats_by_category))
+    router.get('/tasks/category/stats/:city', asyncHandler(api.get_task_stats_by_category_and_city))
     router.put('/tasks', asyncHandler(api.update_task))
     router.get('/tasks/category/:category', asyncHandler(api.get_task_by_category))
     router.delete('/tasks/:id', asyncHandler(api.delete_task_by_id))

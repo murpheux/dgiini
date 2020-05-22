@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
+import { AuthService } from 'src/app/views/user/services/auth.service';
 
 @Component({
     selector: 'app-vendorclient',
@@ -14,8 +15,16 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
     @ViewChild('taskerSteps', { static: true }) taskerSteps: ElementRef;
     @ViewChild('howItWorks', { static: true }) howItWorks: ElementRef;
 
+    @Output() stateChanged = new EventEmitter<string>();
+
+    private CLIENT_STATE = 'client';
+    private TASKER_STATE = 'tasker';
+
+    private currentState = this.CLIENT_STATE; // default
+
     constructor(
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        public authService: AuthService,
     ) { }
 
     ngOnInit() {
@@ -46,23 +55,19 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
 
 
     showTaskerSteps() {
-        this.clientSteps.nativeElement.classList.remove('d-block');
-        this.clientSteps.nativeElement.classList.add('d-none');
+        if (this.currentState !== this.TASKER_STATE) {
+            this.currentState = this.TASKER_STATE;
 
-        this.taskerSteps.nativeElement.classList.remove('d-none');
-        this.taskerSteps.nativeElement.classList.add('d-block');
-
-        document.querySelector('#howItWorks').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            this.stateChanged.emit(this.currentState);
+        }
     }
 
     showClientSteps() {
-        this.clientSteps.nativeElement.classList.remove('d-none');
-        this.clientSteps.nativeElement.classList.add('d-block');
+        if (this.currentState !== this.CLIENT_STATE) {
+            this.currentState = this.CLIENT_STATE;
 
-        this.taskerSteps.nativeElement.classList.remove('d-block');
-        this.taskerSteps.nativeElement.classList.add('d-none');
-
-        document.querySelector('#howItWorks').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            this.stateChanged.emit(this.currentState);
+        }
     }
 
 }

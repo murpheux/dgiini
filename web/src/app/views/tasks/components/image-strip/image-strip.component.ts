@@ -18,7 +18,9 @@ export class ImageStripComponent implements OnInit {
         this._photos = photos;
         if (photos) {
             this.items = photos.map(item => new ImageItem({ src: item.photo, thumb: item.photo }));
-            this.lightboxRef.load(this.items);
+            // this.lightboxRef.load(this.items);
+
+            this.init();
         }
     }
 
@@ -28,12 +30,18 @@ export class ImageStripComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.lightboxRef = this.gallery.ref('lightbox');
+        this.init();
+    }
 
-        this.lightboxRef.setConfig({
-            imageSize: ImageSize.Cover,
-            thumbPosition: ThumbnailsPosition.Top
-        });
+    init() {
+        if (!this.lightboxRef) {
+            this.lightboxRef = this.gallery.ref('lightbox');
+
+            this.lightboxRef.setConfig({
+                imageSize: ImageSize.Cover,
+                thumbPosition: ThumbnailsPosition.Top
+            });
+        }
 
         this.lightboxRef.load(this.items);
     }

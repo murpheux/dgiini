@@ -2,8 +2,8 @@
     <app-banner></app-banner>
     <app-task-category-node></app-task-category-node>
     <app-featured-task></app-featured-task>
-    <app-vendorclient></app-vendorclient>
-    <app-howworks></app-howworks>
+    <app-vendorclient (stateChanged)="handleStateChanged($event)"></app-vendorclient>
+    <app-howworks [state]="vendorClientState"></app-howworks>
     <app-task-stats></app-task-stats>
     <app-customersay></app-customersay>
     <app-faq></app-faq>

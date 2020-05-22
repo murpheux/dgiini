@@ -86,6 +86,7 @@ export class TaskViewComponent implements OnInit {
             mapType: 'normal',
             zoom: 5
         };
+
     }
 
     getUserTaskMessages() {

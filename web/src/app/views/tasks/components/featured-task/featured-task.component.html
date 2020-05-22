@@ -8,7 +8,7 @@
                 <div class="feature-box">
                     <div *ngFor="let task of featuredTasks" class="row p-3 bg-white border-bottom">
                         <div class="col-md col-img">
-                            <img src="assets/images/cleaning.jpg" class="border rounded-lg w-100" alt="Task Image">
+                            <img src="{{task.photos[0].photo}}" class="border rounded-lg w-100" alt="Task Image">
                         </div>
                         <div class="col-md-6">
                             <p class="m-0 d-inline text-dark text-truncate font-weight-bold"><a routerLink="/task/{{task._id}}" class="link">{{ task.title }}</a></p>
@@ -35,7 +35,7 @@
                 <h3 class="font-weight-bold text-web">Recent Tasks</h3>
                 <div class="border web-border"></div>
                 <div *ngFor="let rtask of recentTasks" class="recent-box p-3">
-                    <img src="assets/images/cleaning.jpg" class="border rounded-lg w-100" alt="Task Image">
+                    <img src="{{rtask.photos[0].photo}}" class="border rounded-lg w-100" alt="Task Image">
                     <h6 class="mb-0 mt-2 font-weight-bold text-truncate"><a routerLink="/task/{{rtask._id}}" class="link">{{ rtask.title }}</a></h6>
                     <p class="m-0 text-web text-truncate">{{ rtask.description }}</p>
                     <p class="m-0 d-inline"><i class="fas fa-map-marker-alt text-web"></i> {{rtask.location.city}}, {{rtask.location.state}}</p>

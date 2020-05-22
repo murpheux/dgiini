@@ -9,6 +9,7 @@ import { ICityLocation } from '../user/models/city';
 })
 export class HomeComponent implements OnInit {
     currentCity: ICityLocation;
+    vendorClientState = 'client'; // default client state
 
     constructor(
         private locationService: LocationService,
@@ -19,6 +20,10 @@ export class HomeComponent implements OnInit {
        this.locationService.getCurrentCity().then(data => {
            this.currentCity = data;
        });
+    }
+
+    handleStateChanged(state: string) {
+        this.vendorClientState = state;
     }
 
 }

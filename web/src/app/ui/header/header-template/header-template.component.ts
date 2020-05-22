@@ -9,6 +9,7 @@ import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { IUserClaim } from 'src/app/views/user/models/user';
 import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
+import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
     selector: 'app-header-template',
@@ -32,7 +33,8 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
         public taskService: TaskService,
         private dialog: MatDialog,
         private router: Router,
-        private ref: ChangeDetectorRef
+        private ref: ChangeDetectorRef,
+        private utilService: UtilService,
     ) {
         ref.detach();
         setInterval(() => { this.ref.detectChanges(); }, 2000);
@@ -84,6 +86,9 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
         }
 
         dialogRef.afterClosed().subscribe(result => { });
+    }
+
+    async login() {
     }
 
     async logout() {
