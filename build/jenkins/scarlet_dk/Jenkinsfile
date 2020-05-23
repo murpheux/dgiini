@@ -188,6 +188,160 @@ pipeline {
                 archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
             }
         }
+        stage('build images') {
+            parallel {
+                stage('build and publish web') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
+                                cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f web_dockerfile -t murpheux/dgiini_dk_web:${BUILD_NUMBER} .
+
+                                docker login -u=${username} -p=${password}
+                                docker push murpheux/dgiini_dk_web:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish apigw') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f gw_dockerfile -t murpheux/dgiini_dk_apigw:${BUILD_NUMBER} .
+
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_dk_apigw:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish auth') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username', passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f auth_dockerfile -t murpheux/dgiini_dk_auth:${BUILD_NUMBER} .
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_dk_auth:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish task') {
+                    steps {
+                        withCredentials([
+                            usernamePassword(credentialsId: 'docker-def-user',
+                            usernameVariable: 'username',
+                            passwordVariable: 'password')
+                        ]) {
+                            sh '''
+                                cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
+                                cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
+
+                                cd ${WORKSPACE}
+
+                                docker build --no-cache -f task_dockerfile -t murpheux/dgiini_dk_task:${BUILD_NUMBER} .
+                                
+                                docker login -u="${username}" -p="${password}"
+                                docker push murpheux/dgiini_dk_task:${BUILD_NUMBER}
+                            '''
+                        }
+                    }
+                }
+                stage('build and publish msg') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f msg_dockerfile -t murpheux/dgiini_dk_msg:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_dk_msg:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage('build and publish notify') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f notify_dockerfile -t murpheux/dgiini_dk_notify:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_dk_notify:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage('build and publish bill') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f bill_dockerfile -t murpheux/dgiini_dk_bill:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_dk_bill:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+            }
+        }
         stage('clean') {
             steps {
                 deleteDir() /* clean up our workspace */
