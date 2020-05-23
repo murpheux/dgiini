@@ -23,6 +23,10 @@ pipeline {
 
                 // Git repository
                 git branch: "${branch}", url: "${GIT_URL}"
+
+                sh '''
+                    mkdir ${WORKSPACE}/app
+                '''
             }
         }
         stage('replace env files'){
