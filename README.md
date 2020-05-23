@@ -179,6 +179,40 @@ $ mongoimport --host gru --db dg_taskdb --collection tasks --file tmp/task.json 
 
 ...Note: --jsonArray is important
 
+#### Database Configuration - Replica Set
+
+Replica Set architecture
+![replicaset architecture](docs/replicaset.svg)
+
+````mongo
+
+    rs.initiate({
+        "_id": "dbrepl",
+        "members": [{
+                "_id": 0,
+                "host": "dgiinidb0:27017"
+            },
+            {
+                "_id": 1,
+                "host": "dgiinidb1:27017"
+            },
+            {
+                "_id": 2,
+                "host": "dgiinidb2:27017"
+            }
+        ]
+    })
+````
+
+Check replicaset configuration
+
+````mongo
+
+    rs.conf()
+
+    rs.status()
+````
+
 ## Configuring Environment Variables
 
 Environment variables provided by .env file for micro-services. This can be overriden in any environment with equivalent environment variables.

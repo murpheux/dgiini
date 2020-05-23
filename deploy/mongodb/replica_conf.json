@@ -1,5 +1,5 @@
 {
-    "_id": "dgiiniRepl",
+    "_id": "dbrepl",
     "members": [{
             "_id": 0,
             "host": "dgiinidb0:27017"

@@ -4,22 +4,24 @@ services:
   dgiinidb0:
     hostname: dgiinidb0
     container_name: dgiinidb0
-    image: mongo:4.2.3-bionic
+    image: mongo:4.2.6-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb0:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
       - ${PWD}/mongod.conf:/etc
     environment:
-      REPLICA_CONFIG: '{"_id":"dgiiniRepl","members":[{"_id":0,"host":"dgiinidb0:27017"},{"_id":1,"host":"dgiinidb1:27017"},{"_id":2,"host":"dgiinidb2:27017"}]}'
+      REPLICA_CONFIG: '{"_id":"dbrepl","members":[{"_id":0,"host":"dgiinidb0:27017"},{"_id":1,"host":"dgiinidb1:27017"},{"_id":2,"host":"dgiinidb2:27017"}]}'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
     ports:
       - 27017:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dgiiniRepl']
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']
 
   dgiinidb1:
     hostname: dgiinidb1
     container_name: dgiinidb1
-    image: mongo:4.2.3-bionic
+    image: mongo:4.2.6-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb1:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
@@ -27,12 +29,12 @@ services:
     ports:
       - 27018:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dgiiniRepl']
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']
 
   dgiinidb2:
     hostname: dgiinidb2
     container_name: dgiinidb2
-    image: mongo:4.2.3-bionic
+    image: mongo:4.2.6-bionic
     volumes:
       - ${HOME}/data/dgiini/mongodb2:/var/lib/mongodb
       - ${PWD}/keyfile.key:/opt/mongo
@@ -40,4 +42,4 @@ services:
     ports:
       - 27019:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dgiiniRepl']
+    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']

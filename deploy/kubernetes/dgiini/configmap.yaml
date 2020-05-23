@@ -5,7 +5,7 @@ metadata:
 data:
   replica.json: |
     {
-      "_id":"dgiiniRepl",
+      "_id":"dbrepl",
       "members":[
         {"_id":0,"host":"dgiini-db-0:27017"},
         {"_id":1,"host":"dgiini-db-1:27017"},

@@ -2,7 +2,7 @@ version: "3.7"
 services:
   
     web:
-      image: gru:5000/dgiini/web:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_web:${DGIINI_VERSION}
       restart: always
       environment:
         - NGINX_HOST=sdpro.dynu.com
@@ -15,7 +15,7 @@ services:
           replicas: 1
 
     apigw:
-      image: gru:5000/dgiini/apigw:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_apigw:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -34,7 +34,7 @@ services:
           replicas: 1
 
     auth_api:
-      image: gru:5000/dgiini/auth:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_auth:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -55,7 +55,7 @@ services:
         replicas: 1
 
     task_api:
-      image: gru:5000/dgiini/task:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_task:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -74,7 +74,7 @@ services:
         replicas: 1
 
     msg_api:
-      image: gru:5000/dgiini/msg:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_msg:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -95,7 +95,7 @@ services:
         replicas: 1
 
     notify_api:
-      image: gru:5000/dgiini/notify:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_notify:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development
@@ -118,7 +118,7 @@ services:
         replicas: 1
 
     bill_api:
-      image: gru:5000/dgiini/bill:${DGIINI_VERSION}
+      image: murpheux/dgiini_dk_bill:${DGIINI_VERSION}
       restart: always
       environment:
         - NODE_ENV=development

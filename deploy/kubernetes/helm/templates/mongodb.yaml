@@ -57,7 +57,7 @@ spec:
           - -c
           - >
             if [ -f /data/db/admin-user.lock ]; then
-              mongod --replSet dgiiniRepl --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
+              mongod --replSet dbrepl --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
             else
               mongod --auth;
             fi;
