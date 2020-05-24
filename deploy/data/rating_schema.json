@@ -1,0 +1,6 @@
+{
+    "user": "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}",
+    "rating": "{{Number(util.sample([1, 2, 3, 4, 5]))}}",
+    "ratingsby" : "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}",
+    "created" : "{{Date(chance.date())}}"
+}

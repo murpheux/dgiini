@@ -10,7 +10,7 @@
 **/gw/.cache
 /tmp
 /out-tsc
-/data
+**/data/output
 **/nweb
 **/yweb
 deploy/**/release_*

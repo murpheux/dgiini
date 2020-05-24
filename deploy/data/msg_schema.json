@@ -1,0 +1,9 @@
+{
+    "from" :  "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}",
+    "to" :  "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}",
+    "message" : "{{chance.paragraph({ sentences: 3 })}}",
+    "task" : "5dbefb98745afd64828fa91e",
+    "replyto" : null,
+    "isRead" : false,
+    "sentdate" : "{{Date(chance.date())}}"
+}

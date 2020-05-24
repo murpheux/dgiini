@@ -9,7 +9,6 @@
         "zipcode": "{{chance.postal()}}"
     },
     "category": "{{util.sample(['Cleaning', 'Gardening', 'Handy Man', 'Furniture Assembly', 'Lawn Mowing', 'Snow Plowing', 'Childcare', 'Moving'])}}",
-    "roles": ["{{util.sample(['client', '\"client\", \"tasker\"'])}}"],
     "estimated_hours": "{{chance.integer({ min: 2, max: 10 })}}",
     "rate": {
         "unit": "{{util.sample(['hourly', 'total'])}}",
@@ -18,10 +17,9 @@
         "date": "{{Date(chance.date())}}"
     },
     "client": {
-        "id": "{{ObjectID()}}",
-        "name": "{{chance.name()}}"
+        "id": "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}"
     },
-    "status": "{{util.sample(['open', 'inprogress', 'completed'])}}",
+    "status": "{{util.sample(['open', 'progress', 'completed'])}}",
     "posted_date": "{{Date(chance.date())}}",
     "created": "{{Date(chance.date())}}",
     "scheduled_date": "{{Date(chance.date())}}",

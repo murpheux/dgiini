@@ -1,4 +1,106 @@
 {
-    "username": "",
-    "email": ""
+    "data": [
+        {
+            "_id": "{{ObjectID('5dbf935d4fb83acc85972e2a')}}",
+            "username": "dapo.onawole@gmail.com",
+            "email": "dapo.onawole@gmail.com",
+            "name": "Clement Onawole",
+            "phone": "+1587 225 9345",
+            "address": {
+                "street": "23 Chaparral Valley Common SE",
+                "city": "Calgary",
+                "state": "AB",
+                "zipcode": "T2X 0T4",
+                "country": "Canada"
+            },
+            "dob": "28/12/1975",
+            "skill_summary": "lorem ipsum dolor sit amet consetetur sadipscing",
+            "work_cities": [
+                "Calgary",
+                "Edmonton"
+            ],
+            "roles": [
+                "client",
+                "vendor"
+            ],
+            "how_heard": [
+                "Facebook",
+                "Friends",
+                "Website"
+            ],
+            "sin": "4847494748",
+            "qualifications": [
+                "B.Sc",
+                "MSC"
+            ],
+            "vehicles": [{
+                    "brand": "honda",
+                    "model": "accord",
+                    "year": "2014"
+                },
+                {
+                    "brand": "toyota",
+                    "model": "venza",
+                    "year": "2012"
+                }
+            ],
+            "picture": "https://lh3.googleusercontent.com/a-/AAuE7mBw_S80_cadRbCZ_x2FJCOfwHVHb47stDaqgPiTAw",
+            "jobdone_photos": [],
+            "isActive": true,
+            "isBanned": false,
+            "lastLogin": "{{Date(chance.date())}}",
+            "created": "{{Date(chance.date())}}"
+        },
+        {
+            "_id": "{{ObjectID('5dbf9754f026efce29d0c2f8')}}",
+            "username": "dorefuja@gmail.com",
+            "email": "dorefuja@gmail.com",
+            "name": "Dupe Orefuja",
+            "phone": "+1587 708 0480",
+            "address": {
+                "street": "46 Legacy Village SE",
+                "city": "Calgary",
+                "state": "AB",
+                "zipcode": "T2M 0N2",
+                "country": "Canada"
+            },
+            "dob": "16/06/1974",
+            "skill_summary": "lorem ipsum dolor sit amet consetetur sadipscing",
+            "work_cities": [
+                "Calgary",
+                "Edmonton"
+            ],
+            "roles": [
+                "client",
+                "vendor"
+            ],
+            "how_heard": [
+                "Facebook",
+                "Website"
+            ],
+            "sin": "86354735333",
+            "qualifications": [
+                "B.Sc",
+                "MSC",
+                "PHD"
+            ],
+            "vehicles": [{
+                    "brand": "chevrolet",
+                    "model": "malibu",
+                    "year": "2016"
+                },
+                {
+                    "brand": "nissan",
+                    "model": "pathfinder",
+                    "year": "2017"
+                }
+            ],
+            "picture": "https://lh3.googleusercontent.com/a-/AAuE7mBw_S80_cadRbCZ_x2FJCOfwHVHb47stDaqgPiTAw",
+            "jobdone_photos": [],
+            "isActive": true,
+            "isBanned": false,
+            "lastLogin": "{{Date(chance.date())}}",
+            "created": "{{Date(chance.date())}}"
+        }
+    ]
 }
