@@ -175,7 +175,7 @@ module.exports = {
         })
     },
 
-    getvendorsbyskill: (db, collection, paging, skill) => {
+    gettaskersbyskill: (db, collection, paging, skill) => {
         process_paging(paging)
 
         return new Promise((resolve, _) => {
@@ -314,13 +314,13 @@ module.exports = {
                 .aggregate([{
                     $facet: {
                         'client': [{ $match: {} }, { $count: 'client' }, ],
-                        'vendor': [{ $match: { roles: { $eq: 'vendor' } } }, { $count: 'vendor' }]
+                        'tasker': [{ $match: { roles: { $eq: 'tasker' } } }, { $count: 'tasker' }]
                     }
                 },
                 {
                     $project: {
                         'client': { $arrayElemAt: ['$client.client', 0] },
-                        'vendor': { $arrayElemAt: ['$vendor.vendor', 0] }
+                        'tasker': { $arrayElemAt: ['$tasker.tasker', 0] }
                     }
                 }
                 ]).toArray()

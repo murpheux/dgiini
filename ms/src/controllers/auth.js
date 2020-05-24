@@ -91,8 +91,8 @@ export class AuthenticationController {
     user_stats = async(_req, res) => {
         const invoke_getstats = async() => await mgaccess.getUserStatistics(this.db, this.USER_COLL, undefined)
     
-        const tasks = await invoke_getstats()
-        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
+        const stats = await invoke_getstats()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, stats[0]))
     }
 
     user_by_role = async(req, res) => {
@@ -105,11 +105,11 @@ export class AuthenticationController {
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
     }
 
-    vendor_by_skill = async(req, res) => {
+    tasker_by_skill = async(req, res) => {
         const skill = req.params.skill
         const paging = build_paging(req)
     
-        const invoke_getlist = async() => await mgaccess.getvendorsbyskill(this.db, this.USER_COLL, paging, skill)
+        const invoke_getlist = async() => await mgaccess.gettaskersbyskill(this.db, this.USER_COLL, paging, skill)
     
         const users = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))

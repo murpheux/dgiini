@@ -16,8 +16,8 @@ Pending
 --------
 - login with password
 - search
-- determine if client or vendor
-- upgrade to vendor
+- determine if client or tasker
+- upgrade to tasker
 - filter my task
 - Notify on accept bid
 - Reply message

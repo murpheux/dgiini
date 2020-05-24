@@ -10,7 +10,7 @@ import { Constants } from 'src/app/shared/models/constants';
 })
 export class HomeComponent implements OnInit {
     currentCity: ICityLocation;
-    vendorClientState = Constants.USER_ROLE_CLIENT; // default client state
+    taskerClientState = Constants.USER_ROLE_CLIENT; // default client state
 
     constructor(
         private locationService: LocationService,
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     }
 
     handleStateChanged(state: string) {
-        this.vendorClientState = state;
+        this.taskerClientState = state;
     }
 
 }

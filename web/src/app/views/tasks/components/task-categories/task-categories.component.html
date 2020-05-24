@@ -25,8 +25,8 @@
                     <div class="recommended-taskers">
                         <h5 class="font-weight-bold heading text-web">Recommended Taskers</h5>
                         <div class="border mb-3"></div>
-                        <div *ngFor="let vendor of vendorModel" class="user-info">
-                            <app-vendor-card [vendor]="vendor"></app-vendor-card>
+                        <div *ngFor="let tasker of taskerModel" class="user-info">
+                            <app-tasker-card [tasker]="tasker"></app-tasker-card>
                         </div>
                     </div>
                 </div>

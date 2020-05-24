@@ -33,7 +33,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     router.get('/users', asyncHandler(api.user_list))
     router.get('/users/stats/full', asyncHandler(api.user_stats))
     router.get('/users/role/:role', asyncHandler(api.user_by_role))
-    router.get('/vendors/:skill', asyncHandler(api.vendor_by_skill))
+    router.get('/taskers/:skill', asyncHandler(api.tasker_by_skill))
     router.get('/users/:username', asyncHandler(api.get_user))
     router.get('/usersx/:username', asyncHandler(api.get_user_ex))
     router.put('/users', asyncHandler(api.update_user))

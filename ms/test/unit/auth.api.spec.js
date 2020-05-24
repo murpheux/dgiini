@@ -64,7 +64,7 @@ describe('auth api controller', () => {
         await client.close()
     })
 
-    it('test promote to vendor', async () => {
+    it('test promote to tasker', async () => {
         const client = await mongoclient.connect(mongounit.getUrl(), {
             useUnifiedTopology: true,
         })
@@ -123,7 +123,7 @@ describe('auth api controller', () => {
         await client.close()
     })
 
-    it('test get vendor by skill', async () => {
+    it('test get tasker by skill', async () => {
         const client = await mongoclient.connect(mongounit.getUrl(), {
             useUnifiedTopology: true,
         })
@@ -131,7 +131,7 @@ describe('auth api controller', () => {
         const db = client.db(DB_NAME)
         const api = new AuthenticationController(db)
 
-        await api.vendor_by_skill(req, res)
+        await api.tasker_by_skill(req, res)
 
         expect(res.status).to.have.been.calledWith(HttpStatus.OK)
         await client.close()

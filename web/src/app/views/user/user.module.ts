@@ -6,7 +6,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LocationService } from './services/location.service';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
-import { BecomevendorComponent } from './components/becomevendor/becomevendor.component';
+import { BecometaskerComponent } from './components/becometasker/becometasker.component';
 import { UserService } from './services/user.service';
 import { AuthService } from './services/auth.service';
 import { UsersettingsComponent } from './components/usersettings/usersettings.component';
@@ -16,7 +16,7 @@ import { UserstatsComponent } from './components/userstats/userstats.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 
 @NgModule({
-  declarations: [UserprofileComponent, BecomevendorComponent,
+  declarations: [UserprofileComponent, BecometaskerComponent,
     UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
 export interface IMemberStats {
     client: number;
-    vendor: number;
+    tasker: number;
 }

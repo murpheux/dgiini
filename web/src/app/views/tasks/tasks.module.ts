@@ -23,7 +23,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { FeaturedTaskComponent } from './components/featured-task/featured-task.component';
 import { TaskStatsComponent } from './components/task-stats/task-stats.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { VendorModule } from '../vendor/vendor.module';
+import { VendorModule } from '../tasker/tasker.module';
 import { ImageStripComponent } from './components/image-strip/image-strip.component';
 
 @NgModule({

@@ -14,7 +14,7 @@ import { ContactusComponent } from './components/contactus/contactus.component';
 import { CallbackComponent } from '../user/pages/callback/callback.component';
 import { LoadingComponent } from '../user/components/loading/loading.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { VendorclientComponent } from './components/vendorclient/vendorclient.component';
+import { VendorclientComponent } from './components/taskerclient/taskerclient.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { YouSkilledComponent } from './components/you-skilled/you-skilled.component';
 import { UserModule } from '../user/user.module';

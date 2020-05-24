@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { AuthService } from 'src/app/views/user/services/auth.service';
-import { VendorService } from 'src/app/views/vendor/services/vendor.service';
+import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
@@ -19,7 +19,7 @@ import { Guid } from 'guid-typescript';
 export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterViewChecked {
     taskList: ITask[];
     taskCount: number;
-    vendorModel: IVendor[];
+    taskerModel: IVendor[];
     currentTask: ITask;
     currentVendor: IVendor;
     distanceToHome: number;
@@ -47,7 +47,7 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         private router: Router,
         private locationService: LocationService,
         private authService: AuthService,
-        private vendorService: VendorService,
+        private taskerService: TaskerService,
         private _element: ElementRef
     ) { }
 
@@ -191,14 +191,14 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     }
 
     getFeaturedVendor() {
-        this.vendorService.getFeaturedVendor().subscribe(success => {
-            this.vendorModel = success.payload.data;
+        this.taskerService.getFeaturedVendor().subscribe(success => {
+            this.taskerModel = success.payload.data;
         });
     }
 
     getRecommendedVendor(task: ITask) {
-        this.vendorService.getRecommendedVendor(task).subscribe(success => {
-            this.vendorModel = success.payload.data;
+        this.taskerService.getRecommendedVendor(task).subscribe(success => {
+            this.taskerModel = success.payload.data;
         });
     }
 
@@ -209,9 +209,9 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         this.currentTask.selected = true;
     }
 
-    handleVendorSelected(vendor: IVendor) {
+    handleVendorSelected(tasker: IVendor) {
         this.currentVendor.selected = false;
-        this.currentVendor = vendor;
+        this.currentVendor = tasker;
         this.currentVendor.selected = true;
     }
 
