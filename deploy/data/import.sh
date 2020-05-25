@@ -6,7 +6,7 @@ if [ $# -eq 0 ]
     exit
 fi
 
-mongoimport --host $1 --db dg_authdb --collection tasks --file user.json --jsonArray
+mongoimport --host $1 --db dg_authdb --collection users --file user.json --jsonArray
 mongoimport --host $1 --db dg_taskdb --collection tasks --file task.json --jsonArray
-mongoimport --host $1 --db dg_authdb --collection tasks --file ratings.json --jsonArray
-mongoimport --host $1 --db dg_messagedb --collection tasks --file message.json --jsonArray
+mongoimport --host $1 --db dg_authdb --collection ratings --file ratings.json --jsonArray
+mongoimport --host $1 --db dg_messagedb --collection messages --file message.json --jsonArray

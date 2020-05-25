@@ -12,10 +12,10 @@ pipeline {
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
     }
-    tools {
-        nodejs "node"
-        git "Default"
-    }
+    // tools {
+    //     nodejs "node"
+    //     git "Default"
+    // }
     stages {
         stage('preparation') {
             steps {

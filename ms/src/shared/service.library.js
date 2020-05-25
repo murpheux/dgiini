@@ -111,7 +111,6 @@ export const create_app_server = (app_name) => {
     var whitelist = set_whitelist(CLIENT_URL)
     var corsOptions = {
         origin: (origin, callback) => {
-            console.log(`===== ${process.env.NODE_ENV} ======`)
             if (whitelist.indexOf(origin) !== -1) { callback(null, true) } else { callback(new Error('Request blocked by CORS')) }
         }
     }
