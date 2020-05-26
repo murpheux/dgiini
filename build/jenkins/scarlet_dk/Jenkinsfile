@@ -219,7 +219,7 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/web"){
                             script {
-                                webImage = docker.build --no-cache "${REGISTRY}_web:${BUILD_NUMBER}"
+                                webImage = docker.build "${REGISTRY}_web:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
                                     webImage.push()
