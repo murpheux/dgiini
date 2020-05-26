@@ -205,8 +205,8 @@ pipeline {
                 stage('for web'){
                     steps {
                         sh '''
-                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/web/app/web
-                                cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/web/app/nginx
+                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
+                                cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
                         '''        
                     }
                 }
