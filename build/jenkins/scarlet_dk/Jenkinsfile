@@ -254,28 +254,28 @@ pipeline {
                 stage('for task'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/gw/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
                         '''        
                     }
                 }
                 stage('for msg'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/gw/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
                         '''        
                     }
                 }
                 stage('for notify'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/gw/dist/msnotify ${WORKSPACE}/deploy/docker/deploy/notify/app
+                            cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/deploy/docker/deploy/notify/app
                         '''        
                     }
                 }
                 stage('for bill'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/gw/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
+                            cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
                         '''        
                     }
                 }
