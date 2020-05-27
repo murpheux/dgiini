@@ -313,10 +313,10 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/auth"){
                             script {
-                                gwImage = docker.build "${REGISTRY}_auth:${BUILD_NUMBER}"
+                                authImage = docker.build "${REGISTRY}_auth:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    gwImage.push()
+                                    authImage.push()
                                 }
                             }
                         }
@@ -326,10 +326,10 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/task"){
                             script {
-                                gwImage = docker.build "${REGISTRY}_task:${BUILD_NUMBER}"
+                                taskImage = docker.build "${REGISTRY}_task:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    gwImage.push()
+                                    taskImage.push()
                                 }
                             }
                         }
@@ -339,10 +339,10 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/msg"){
                             script {
-                                gwImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
+                                msgImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    gwImage.push()
+                                    msgImage.push()
                                 }
                             }
                         }
@@ -352,10 +352,10 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/notify"){
                             script {
-                                gwImage = docker.build "${REGISTRY}_notify:${BUILD_NUMBER}"
+                                notifyImage = docker.build "${REGISTRY}_notify:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    gwImage.push()
+                                    notifyImage.push()
                                 }
                             }
                         }
@@ -365,10 +365,10 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/bill"){
                             script {
-                                gwImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
+                                billImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    gwImage.push()
+                                    billImage.push()
                                 }
                             }
                         }
