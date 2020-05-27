@@ -99,6 +99,13 @@ pipeline {
                 }
             }
         }
+        stage('unsure why this is required'){
+            steps {
+                dir("${WORKSPACE}/ms"){
+                    sh 'rm .babelrc'
+                }
+            }
+        }
         stage('build app') {
             parallel {
                 stage('Build web') {
