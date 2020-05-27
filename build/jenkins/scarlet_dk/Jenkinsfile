@@ -261,7 +261,7 @@ pipeline {
                 stage('for msg'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                            cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/deploy/docker/deploy/msg/app
                         '''        
                     }
                 }
