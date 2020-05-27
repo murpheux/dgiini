@@ -1,1 +1,1 @@
-ssh -l murpheux -p 53801 macho build $1 -p branch=develop
+ssh -l murpheux -p 53801 gru build $1 -p branch=develop

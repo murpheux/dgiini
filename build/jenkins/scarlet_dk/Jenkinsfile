@@ -90,87 +90,107 @@ pipeline {
                 writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
             }
         }
-        // stage('run unit test') {
-        //     steps {
-        //         sh '''
-        //             cd ${WORKSPACE}/ms
-        //             npm run test test/unit
-        //         '''
-        //     }
-        // }
+        stage('run unit test') {
+            steps {
+                dir("${WORKSPACE}/ms"){
+                    // sh '''
+                    //     npm run test test/unit
+                    // '''
+                }
+            }
+        }
         stage('build app') {
             parallel {
                 stage('Build web') {
                     steps {
+                        dir("${WORKSPACE}/web"){
+                            sh '''
+                                npm run build-docker
+                            '''
+                        }
+                    }
+                }
+                stage('Build apigw') {
+                    steps {
+                        dir("${WORKSPACE}/gw"){
+                            sh '''
+                                npm install
+                                npm run build
+                            '''
+                        }
                         sh '''
-                            cd ${WORKSPACE}/web
-                            npm run build-docker
+                            cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/
+                            cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml
+                            cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/
                         '''
                     }
                 }
-                // stage('Build apigw') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/gw
-                //             npm install
-                //             npm run build
-                //         '''
-                //         sh 'cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/'
-                //         sh 'cp ${WORKSPACE}/gw/config/gateway.config.docker.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml'
-                //         sh 'cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/'
-                //     }
-                // }
-                // stage('Build task.api') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/ms
-                //             OUT_DIR=dist/mstask npm run build src/task.api.js
-                //         '''
-                //         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/mstask/'
-                //     }
-                // }
-                // stage('Build auth_api') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/ms
-                //             OUT_DIR=dist/msauth npm run build src/auth.api.js
-                //         '''
-                //         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msauth/'
-                //     }
-                // }
-                // stage('Build msg_api') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/ms
-                //             OUT_DIR=dist/msmsg npm run build src/msg.api.js
-                //         '''
-                //         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/'
-                //     }
-                // }
-                // stage('Build notify_api') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/ms
-                //             OUT_DIR=dist/msnotify npm run build src/notify.api.js
-                //         '''
-                //         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msnotify/'
-                //     }
-                // }
-                // stage('Build bill_api') {
-                //     steps {
-                //         sh '''
-                //             cd ${WORKSPACE}/ms
-                //             OUT_DIR=dist/msbill npm run build src/bill.api.js
-                //         '''
-                //         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
-                //         sh 'cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/'
-                //     }
-                // }
+                stage('Build task.api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/mstask npm run build src/task.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/mstask/
+                        '''
+                    }
+                }
+                stage('Build auth_api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/msauth npm run build src/auth.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msauth/
+                        '''
+                    }
+                }
+                stage('Build msg_api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/msmsg npm run build src/msg.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/
+                        '''
+                    }
+                }
+                stage('Build notify_api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/msnotify npm run build src/notify.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msnotify/
+                        '''
+                    }
+                }
+                stage('Build bill_api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/msbill npm run build src/bill.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/
+                        '''
+                    }
+                }
             }
         }
         stage('Zip/Artifacts') {
@@ -181,23 +201,23 @@ pipeline {
                 zip zipFile: 'web.zip', archive: false, dir: 'web/dist/dgiini'
                 archiveArtifacts artifacts: 'web.zip', fingerprint: true
 
-                // zip zipFile: 'apigw.zip', archive: false, dir: 'gw/dist/apigw'
-                // archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
+                zip zipFile: 'apigw.zip', archive: false, dir: 'gw/dist/apigw'
+                archiveArtifacts artifacts: 'apigw.zip', fingerprint: true
 
-                // zip zipFile: 'mstask.zip', archive: false, dir: 'ms/dist/mstask'
-                // archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
+                zip zipFile: 'mstask.zip', archive: false, dir: 'ms/dist/mstask'
+                archiveArtifacts artifacts: 'mstask.zip', fingerprint: true
 
-                // zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
-                // archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
+                zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
+                archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
 
-                // zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
-                // archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
+                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
+                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
 
-                // zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
-                // archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
+                zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
+                archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
 
-                // zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
-                // archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
+                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
             }
         }
         stage('setup docker build') {
@@ -205,8 +225,50 @@ pipeline {
                 stage('for web'){
                     steps {
                         sh '''
-                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
-                                cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
+                            cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
+                            cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
+                        '''        
+                    }
+                }
+                stage('for apigw'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/deploy/docker/deploy/gw/app
+                        '''        
+                    }
+                }
+                stage('for auth'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/deploy/docker/deploy/auth/app
+                        '''        
+                    }
+                }
+                stage('for task'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                        '''        
+                    }
+                }
+                stage('for msg'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                        '''        
+                    }
+                }
+                stage('for notify'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/msnotify ${WORKSPACE}/deploy/docker/deploy/notify/app
+                        '''        
+                    }
+                }
+                stage('for bill'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
                         '''        
                     }
                 }
@@ -225,146 +287,86 @@ pipeline {
                                 }
                             }
                         }
-                        // sh '''
-                        //     cd ${WORKSPACE}
-
-                        //     docker build --no-cache -f web_dockerfile -t ${REGISTRY}_web:${BUILD_NUMBER} .
-
-                        //     docker login -u=${username} -p=${password}
-                        //     docker push ${REGISTRY}_web:${BUILD_NUMBER}
-                        // '''
                     }
                 }
-                // stage('build and publish apigw') {
-                //     steps {
-                //         withCredentials([
-                //             usernamePassword(credentialsId: 'docker-def-user',
-                //             usernameVariable: 'username', passwordVariable: 'password')
-                //         ]) {
-                //             sh '''
-                //                 cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
-                //                 cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
+                stage('build and publish apigw') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/gw"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_apigw:${BUILD_NUMBER}"
 
-                //                 cd ${WORKSPACE}
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish auth') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/auth"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_auth:${BUILD_NUMBER}"
 
-                //                 docker build --no-cache -f gw_dockerfile -t ${REGISTRY}_apigw:${BUILD_NUMBER} .
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish task') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/task"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_task:${BUILD_NUMBER}"
 
-                //                 docker login -u="${username}" -p="${password}"
-                //                 docker push ${REGISTRY}_apigw:${BUILD_NUMBER}
-                //             '''
-                //         }
-                //     }
-                // }
-                // stage('build and publish auth') {
-                //     steps {
-                //         withCredentials([
-                //             usernamePassword(credentialsId: 'docker-def-user',
-                //             usernameVariable: 'username', passwordVariable: 'password')
-                //         ]) {
-                //             sh '''
-                //                 cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
-                //                 cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish msg') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/msg"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
 
-                //                 cd ${WORKSPACE}
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish notify') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/notify"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_notify:${BUILD_NUMBER}"
 
-                //                 docker build --no-cache -f auth_dockerfile -t ${REGISTRY}_auth:${BUILD_NUMBER} .
-                                
-                //                 docker login -u="${username}" -p="${password}"
-                //                 docker push ${REGISTRY}_auth:${BUILD_NUMBER}
-                //             '''
-                //         }
-                //     }
-                // }
-                // stage('build and publish task') {
-                //     steps {
-                //         withCredentials([
-                //             usernamePassword(credentialsId: 'docker-def-user',
-                //             usernameVariable: 'username',
-                //             passwordVariable: 'password')
-                //         ]) {
-                //             sh '''
-                //                 cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
-                //                 cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish bill') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/bill"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
 
-                //                 cd ${WORKSPACE}
-
-                //                 docker build --no-cache -f task_dockerfile -t ${REGISTRY}_task:${BUILD_NUMBER} .
-                                
-                //                 docker login -u="${username}" -p="${password}"
-                //                 docker push ${REGISTRY}_task:${BUILD_NUMBER}
-                //             '''
-                //         }
-                //     }
-                // }
-                // stage('build and publish msg') {
-                //     steps {
-                //         script {
-                //             withCredentials([
-                //                 usernamePassword(credentialsId: 'docker-def-user',
-                //                 usernameVariable: 'username',
-                //                 passwordVariable: 'password')
-                //             ]) {
-                //                 sh '''
-                //                     cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/app
-                //                     cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}
-
-                //                     cd ${WORKSPACE}
-
-                //                     docker build --no-cache -f msg_dockerfile -t ${REGISTRY}_msg:${BUILD_NUMBER} .
-                                    
-                //                     docker login -u="${username}" -p="${password}"
-                //                     docker push ${REGISTRY}_msg:${BUILD_NUMBER}
-                //                 '''
-                //             }
-                //         }
-                //     }
-                // }
-                // stage('build and publish notify') {
-                //     steps {
-                //         script {
-                //             withCredentials([
-                //                 usernamePassword(credentialsId: 'docker-def-user',
-                //                 usernameVariable: 'username',
-                //                 passwordVariable: 'password')
-                //             ]) {
-                //                 sh '''
-                //                     cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/app
-                //                     cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}
-
-                //                     cd ${WORKSPACE}
-
-                //                     docker build --no-cache -f notify_dockerfile -t ${REGISTRY}_notify:${BUILD_NUMBER} .
-                                    
-                //                     docker login -u="${username}" -p="${password}"
-                //                     docker push ${REGISTRY}_notify:${BUILD_NUMBER}
-                //                 '''
-                //             }
-                //         }
-                //     }
-                // }
-                // stage('build and publish bill') {
-                //     steps {
-                //         script {
-                //             withCredentials([
-                //                 usernamePassword(credentialsId: 'docker-def-user',
-                //                 usernameVariable: 'username',
-                //                 passwordVariable: 'password')
-                //             ]) {
-                //                 sh '''
-                //                     cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/app
-                //                     cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}
-
-                //                     cd ${WORKSPACE}
-
-                //                     docker build --no-cache -f bill_dockerfile -t ${REGISTRY}_bill:${BUILD_NUMBER} .
-                                    
-                //                     docker login -u="${username}" -p="${password}"
-                //                     docker push ${REGISTRY}_bill:${BUILD_NUMBER}
-                //                 '''
-                //             }
-                //         }
-                //     }
-                // }
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('clean') {
