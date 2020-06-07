@@ -1,6 +1,6 @@
-# ::: dgiini
+# :::: dgiini
 
-## dgiini web application
+## dgiini web application (SPA)
 
 Application desgined using microservice architecture with SPA front-end and mongo db database. Apps has the followings microservices
 
@@ -184,34 +184,39 @@ $ mongoimport --host gru --db dg_taskdb --collection tasks --file tmp/task.json 
 Replica Set architecture
 ![replicaset architecture](docs/replicaset.svg)
 
-````mongo
-
-    rs.initiate({
-        "_id": "dbrepl",
-        "members": [{
-                "_id": 0,
-                "host": "dgiinidb0:27017"
-            },
-            {
-                "_id": 1,
-                "host": "dgiinidb1:27017"
-            },
-            {
-                "_id": 2,
-                "host": "dgiinidb2:27017"
-            }
-        ]
-    })
-````
+```mongo
+rs.initiate({
+    "_id": "dbrepl",
+    "members": [{
+            "_id": 0,
+            "host": "dgiinidb0:27017"
+        },
+        {
+            "_id": 1,
+            "host": "dgiinidb1:27017"
+        },
+        {
+            "_id": 2,
+            "host": "dgiinidb2:27017"
+        }
+    ]
+})
+```
 
 Check replicaset configuration
 
-````mongo
+```mongo
+rs.conf()
+rs.status()
+```
 
-    rs.conf()
+## Create Text index
 
-    rs.status()
-````
+In mongodb, in order to do a text search, text indexes need to be created
+
+```mongo
+db.tasks.find({ $text: { $search: "Need Cleaning" } })
+```
 
 ## Configuring Environment Variables
 

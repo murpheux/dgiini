@@ -9,7 +9,7 @@ pipeline {
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'git@github.com:murpheux/dgiini.git'
         REGISTRY = 'murpheux/dgiini_dk'
-        REGISTRY_CREDENTIAL = 'docker-hub'
+        REGISTRY_CREDENTIAL = 'docker_hub'
     }
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')

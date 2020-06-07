@@ -10,7 +10,7 @@ NOCOLOR='\033[0m' # No Color
 currentBuildNumber=$(ls -d release_* | sed -e 's/[^0-9]//g')
 
 # get latest build number
-latestBuildNumber=$(curl --user murpheux:$JK_TOKEN http://gru:8088/job/dgiini-dev-docker/lastBuild/buildNumber)
+latestBuildNumber=$(curl --user murpheux:$JK_TOKEN http://gru:8080/job/dgiini-dev-docker/lastBuild/buildNumber)
 
 if [[ $currentBuildNumber == $latestBuildNumber ]]; then
     echo -e "=> ${YELLOW}Build folder already exist in current folder ...${NOCOLOR}"
@@ -45,7 +45,7 @@ if [ -d "$CURR_DIR" ]; then
     rm -rf $CURR_DIR
 fi
 
-curl --user murpheux:$JK_TOKEN -O http://gru:8088/job/dgiini-dev-docker/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
+curl --user murpheux:$JK_TOKEN -O http://gru:8080/job/dgiini-dev-docker/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
 
 # unzip archives
 unzip release_$latestBuildNumber.zip -d release_$latestBuildNumber && rm release_$latestBuildNumber.zip

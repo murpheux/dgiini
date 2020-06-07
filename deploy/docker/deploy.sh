@@ -7,7 +7,7 @@ YELLOW='\033[1;33m'
 NOCOLOR='\033[0m' # No Color
 
 # prepare version
-latestBuildNumber=$(curl --user murpheux:$JK_TOKEN http://gru:8088/job/dgiini-dev-docker/lastBuild/buildNumber)
+latestBuildNumber=$(curl --user murpheux:$JK_TOKEN http://gru:8080/job/dgiini-dev-docker/lastBuild/buildNumber)
 
 export DGIINI_VERSION=$latestBuildNumber
 

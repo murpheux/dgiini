@@ -5,7 +5,7 @@
   vars:
     APP_NAME: dgiini
     APP_SECRET: 113426983fbccc004ba606e4d4f30001ee
-    ARTIFACT_URL : http://gru:8088/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
+    ARTIFACT_URL : http://gru:8080/job/dgiini/lastSuccessfulBuild/artifact/\*zip\*/release_$latestBuildNumber.zip
   tasks:
   - name: Download Application from Repo
     get_url:
