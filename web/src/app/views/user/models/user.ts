@@ -1,5 +1,6 @@
 import { IAddress } from '../../tasks/models/IAddress';
 import { Guid } from 'guid-typescript';
+import { IPhoto } from '../../tasks/models/IPhoto';
 
 
 export interface IUser {
@@ -13,7 +14,7 @@ export interface IUser {
     created: Date;
     lastLogin: Date;
     rating: number;
-    photo: [];
+    photo: IPhoto;
 
     aboutMember: string;
     joined: Date;

@@ -52,6 +52,7 @@
     "countrycitystatejson": "^0.2.16",
     "fluent-ts-validator": "^3.0.2",
     "guid-typescript": "^1.0.9",
+    "http-status-codes": "^1.4.0",
     "jquery": "^3.4.1",
     "ng-gallery": "^5.0.0-beta.2",
     "ngx-highlightjs": "^4.1.0-beta",

@@ -4,6 +4,9 @@ import { UserService } from '../views/user/services/user.service';
 import { Constants } from '../shared/models/constants';
 import { UtilService } from '../shared/services/util.service';
 import { environment } from 'src/environments/environment';
+import * as HttpStatus from 'http-status-codes';
+import { MatDialog } from '@angular/material/dialog';
+import { RegisterComponent } from '../views/user/components/register/register.component';
 
 @Component({
     selector: 'app-layout',
@@ -15,11 +18,10 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
     constructor(
         private authService: AuthService,
         private userService: UserService,
-        private utilService: UtilService,
+        private utilService: UtilService
     ) { }
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ngAfterViewChecked() {
         if (this.authService.loggedIn) {
@@ -38,8 +40,10 @@ export class LayoutComponent implements OnInit, AfterViewChecked {
 
                     // get user info from db
                     this.userService.getUserByEmail(profile.email).subscribe(response => {
-                        this.utilService.setWithExpiry(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data),
-                            environment.auth_ttl);
+                        if (response.code === 0) {
+                            this.utilService.setWithExpiry(Constants.AUTH_LOCAL_PROFILE, JSON.stringify(response.payload.data),
+                                environment.auth_ttl);
+                        }
                     });
                 });
             }

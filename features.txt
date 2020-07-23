@@ -36,3 +36,9 @@ Payment Items
 - Location service
 - Cloud Host Service
 - Fontawesome/Bootstrap template
+
+
+Rules
+------
+1. only a min of 18 years can be a member
+2. 

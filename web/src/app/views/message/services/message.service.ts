@@ -7,6 +7,7 @@ import { Guid } from 'guid-typescript';
 import { environment } from '../../../../environments/environment';
 import { UserService } from '../../user/services/user.service';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { IUser } from '../../user/models/user';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +17,11 @@ export class MessageService {
 
     constructor(
         private env: EnvService,
+        private userService: UserService,
         private http: HttpClient,
-        private userService: UserService
         ) {
             this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
-        }
+    }
 
     sendMessage(message: IMessage): Observable<IResponse> {
         const url = `${this.serviceUrl}`;

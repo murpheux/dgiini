@@ -44,7 +44,7 @@ export class UtilService {
         }
 
         return item.value;
-    }
+    } 
 
     deleteExpiredLS() {
         for (let i = 0; i < localStorage.length; i++) {

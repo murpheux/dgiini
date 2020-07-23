@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { IUserClaim } from 'src/app/views/user/models/user';
 import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
 import { UtilService } from 'src/app/shared/services/util.service';
+import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
 
 @Component({
     selector: 'app-header-template',
@@ -92,9 +93,14 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
     }
 
     async logout() {
-        this.clearStorageItems().then(_ => {
-            this.authService.logout();
-        });
+        localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
+        localStorage.removeItem(Constants.AUTH_USER_CLAIM);
+        localStorage.removeItem(Constants.AUTH_USER_PROFILE);
+        localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
+
+        // this.clearStorageItems().then(_ => {
+        //     this.authService.logout();
+        // });
     }
 
     clearStorageItems(): Promise<number> {
@@ -103,15 +109,9 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
         localStorage.removeItem(Constants.AUTH_USER_PROFILE);
         localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
 
-        return new Promise(resolve =>  resolve(0));
-    }
-
-    openRegisterDialog() {
-        // const registerRef = this.dialog.open(RegisterComponent, {
-        //     height: '600px',
-        //     width: '800px',
-        // });
-        // registerRef.afterClosed().subscribe(result => { });
+        return new Promise(resolve =>  {
+            setTimeout(() => { resolve(0); }, 4000);
+        });
     }
 
     changeLang(lang: string) {

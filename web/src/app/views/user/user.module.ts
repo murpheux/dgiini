@@ -14,10 +14,11 @@ import { SupportComponent } from './components/support/support.component';
 import { FinanceComponent } from './components/finance/finance.component';
 import { UserstatsComponent } from './components/userstats/userstats.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [UserprofileComponent, BecometaskerComponent,
-    UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent],
+    UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent, RegisterComponent],
   imports: [
     CommonModule,
     SharedModule,
