@@ -124,7 +124,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Close</button>
         <button #postBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()"><i class="fas fa-arrow-left"></i> Back</button>
-        <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postNextBtn [disabled]="currentTabOpen > 4 ? 'true' : forms[currentTabOpen - 1].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Continuex <i class="fas fa-arrow-right"></i></button>
+        <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postNextBtn [disabled]="currentTabOpen > 4 ? 'true' : forms[currentTabOpen - 1].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Next <i class="fas fa-arrow-right"></i></button>
         <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postPostBtn type="submit" class="btn btn-web next-btn register-btn d-none"><i class="fas fa-pen"></i> Register</button>
       </div>
   

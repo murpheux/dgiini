@@ -182,7 +182,7 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">Close</button>
       <button #postTaskBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()"><i class="fas fa-arrow-left"></i> Back</button>
-      <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskNextBtn [disabled]="currentTabOpen > 5 ? 'true' : forms[currentTabOpen - 1].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Continuex <i class="fas fa-arrow-right"></i></button>
+      <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskNextBtn [disabled]="currentTabOpen > 5 ? 'true' : forms[currentTabOpen - 1].invalid" type="button" class="btn btn-web next-btn" (click)="nextTab()">Next <i class="fas fa-arrow-right"></i></button>
       <button (mouseenter)="mouseoverSave=true" (mouseleave)="mouseoverSave=false" #postTaskPostBtn type="submit" class="btn btn-web next-btn post-task-btn d-none"><i class="fas fa-pen"></i> Post Task</button>
     </div>
 

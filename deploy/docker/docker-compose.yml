@@ -3,8 +3,8 @@ services:
 
     web:
         build:
-          context: .
-          dockerfile: web_dockerfile
+          context: ./deploy/web
+          dockerfile: dockerfile
         depends_on:
             - apigw
         environment:
@@ -18,8 +18,8 @@ services:
 
     apigw:
         build:
-          context: .
-          dockerfile: gw_dockerfile
+          context: ./deploy/gw
+          dockerfile: dockerfile
         depends_on:
             - auth_api
             - task_api
@@ -42,8 +42,8 @@ services:
 
     auth_api:
         build:
-          context: .
-          dockerfile: auth_dockerfile
+          context: ./deploy/auth
+          dockerfile: dockerfile
         depends_on:
             - db
         environment:
@@ -64,8 +64,8 @@ services:
 
     task_api:
         build:
-          context: .
-          dockerfile: task_dockerfile
+          context: ./deploy/task
+          dockerfile: dockerfile
         depends_on:
             - db
         environment:
@@ -86,8 +86,8 @@ services:
 
     msg_api:
         build:
-          context: .
-          dockerfile: msg_dockerfile
+          context: ./deploy/msg
+          dockerfile: dockerfile
         depends_on:
             - db
         environment:
@@ -108,8 +108,8 @@ services:
 
     notify_api:
         build:
-          context: .
-          dockerfile: notify_dockerfile
+          context: ./deploy/notify
+          dockerfile: dockerfile
         depends_on:
             - db
         environment:
@@ -132,8 +132,8 @@ services:
 
     bill_api:
         build:
-          context: .
-          dockerfile: bill_dockerfile
+          context: ./deploy/bill
+          dockerfile: dockerfile
         depends_on:
             - db
         environment:
