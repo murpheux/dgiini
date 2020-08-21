@@ -1,7 +1,7 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
 
 @Directive({
-    selector: '[appDigitOnly]'
+    selector: '[appDigitOnly]',
 })
 export class DigitOnlyDirective {
     private navigationKeys = [
@@ -16,7 +16,7 @@ export class DigitOnlyDirective {
         'ArrowRight',
         'Clear',
         'Copy',
-        'Paste'
+        'Paste',
     ];
     inputElement: HTMLElement;
     constructor(public el: ElementRef) {
@@ -25,7 +25,7 @@ export class DigitOnlyDirective {
     }
 
     @HostListener('keydown', ['$event'])
-    onKeyDown(e: KeyboardEvent) {
+    onKeyDown(e: KeyboardEvent): void {
         if (
             // Allow: Delete, Backspace, Tab, Escape, Enter
             ['46', '8', '9', '27', '13'].indexOf(e.key) !== -1 ||
@@ -39,11 +39,11 @@ export class DigitOnlyDirective {
             (e.key === '88' && e.metaKey === true) || // Cmd+X (Mac)
             (e.key >= '35' && e.key <= '39') // Home, End, Left, Right
         ) {
-            return;  // let it happen, don't do anything
+            return; // let it happen, don't do anything
         }
         // Ensure that it is a number and stop the keypress
         if (
-            (e.shiftKey || (e.key < '48' || e.key > '57')) &&
+            (e.shiftKey || e.key < '48' || e.key > '57') &&
             (e.key < '96' || e.key > '105')
         ) {
             e.preventDefault();
@@ -51,7 +51,7 @@ export class DigitOnlyDirective {
     }
 
     @HostListener('paste', ['$event'])
-    onPaste(event: ClipboardEvent) {
+    onPaste(event: ClipboardEvent): void {
         event.preventDefault();
         const pastedInput: string = event.clipboardData
             .getData('text/plain')
@@ -60,12 +60,10 @@ export class DigitOnlyDirective {
     }
 
     @HostListener('drop', ['$event'])
-    onDrop(event: DragEvent) {
+    onDrop(event: DragEvent): void {
         event.preventDefault();
-        const textData = event.dataTransfer
-            .getData('text').replace(/\D/g, '');
+        const textData = event.dataTransfer.getData('text').replace(/\D/g, '');
         this.inputElement.focus();
         document.execCommand('insertText', false, textData);
     }
-
 }

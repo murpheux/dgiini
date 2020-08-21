@@ -8,10 +8,9 @@ import { ICityLocation } from 'src/app/views/user/models/city';
 @Component({
     selector: 'app-carousel',
     templateUrl: './carousel.component.html',
-    styleUrls: ['./carousel.component.scss']
+    styleUrls: ['./carousel.component.scss'],
 })
 export class CarouselComponent implements OnInit {
-
     searchFormGroup: FormGroup;
     currentCity: ICityLocation;
 
@@ -19,21 +18,20 @@ export class CarouselComponent implements OnInit {
         private locationService: LocationService,
         private formBuilder: FormBuilder,
         private taskService: TaskService,
-        private router: Router,
-    ) { }
+        private router: Router
+    ) {}
 
-    ngOnInit() {
-        this.locationService.getCurrentCity().then(city => {
+    ngOnInit(): void {
+        this.locationService.getCurrentCity().then((city) => {
             this.currentCity = city;
         });
 
         this.searchFormGroup = this.formBuilder.group({
-            search: this.formBuilder.control('', [Validators.required])
+            search: this.formBuilder.control('', [Validators.required]),
         });
     }
 
-    handleSearch(searchValues) {
+    handleSearch(searchValues): void {
         this.router.navigate(['/tasks/search/' + searchValues.search]);
     }
-
 }

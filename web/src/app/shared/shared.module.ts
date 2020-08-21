@@ -23,21 +23,48 @@ import { GoogleMapsModule } from '@angular/google-maps';
 
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { NgLetDirective } from './directives/ng-let/ng-let.directive';
 
 @NgModule({
-    declarations: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-        OverlayLoaderComponent, ContentLoaderComponent, DigitOnlyDirective, GoogleMapComponent],
-    exports: [LoaderComponent, CommingSoonComponent, ConfirmDialogComponent,
-        OverlayLoaderComponent, ContentLoaderComponent, GoogleMapComponent],
+    declarations: [
+        LoaderComponent,
+        CommingSoonComponent,
+        ConfirmDialogComponent,
+        OverlayLoaderComponent,
+        ContentLoaderComponent,
+        DigitOnlyDirective,
+        GoogleMapComponent,
+        NgLetDirective,
+    ],
+    exports: [
+        LoaderComponent,
+        CommingSoonComponent,
+        ConfirmDialogComponent,
+        OverlayLoaderComponent,
+        ContentLoaderComponent,
+        GoogleMapComponent,
+    ],
     providers: [
         UtilService,
         LoadingService,
         AuthGuard,
         //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
-        { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: NoHttpCacheInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ServerErrorInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: NoHttpCacheInterceptor,
+            multi: true,
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     ],
     imports: [
         CommonModule,
@@ -47,8 +74,6 @@ import { LightboxModule } from 'ng-gallery/lightbox';
         GalleryModule,
         LightboxModule,
     ],
-    entryComponents: [
-        ConfirmDialogComponent,
-    ],
+    entryComponents: [ConfirmDialogComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

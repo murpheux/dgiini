@@ -1,7 +1,6 @@
 import { Guid } from 'guid-typescript';
 import { IAddress } from '../../tasks/models/IAddress';
 
-
 export interface ITask {
     id: Guid;
     title: string;
@@ -12,7 +11,6 @@ export interface ITask {
     estimated_hours: number;
     category: string;
 }
-
 
 export interface IClient {
     id: Guid;
@@ -29,5 +27,5 @@ export enum Currency {
     USD,
     CAD,
     GBP,
-    NGN
+    NGN,
 }

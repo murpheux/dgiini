@@ -10,17 +10,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    CoreModule,
-    SharedModule,
-    TasksModule,
-    UserModule,
-    MatDialogModule,
-    MatIconModule,
-  ],
-  declarations: [HeaderTemplateComponent],
-  exports: [HeaderTemplateComponent]
+    imports: [
+        CommonModule,
+        RouterModule,
+        CoreModule,
+        SharedModule,
+        TasksModule,
+        UserModule,
+        MatDialogModule,
+        MatIconModule,
+    ],
+    declarations: [HeaderTemplateComponent],
+    exports: [HeaderTemplateComponent]
 })
-export class HeaderModule { }
+export class HeaderModule {}

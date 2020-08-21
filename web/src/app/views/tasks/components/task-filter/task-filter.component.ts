@@ -3,13 +3,19 @@ import { FormControl } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, switchMap, startWith } from 'rxjs/operators';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    switchMap,
+    startWith,
+} from 'rxjs/operators';
 import { ICityLocation } from 'src/app/views/user/models/city';
 
 @Component({
     selector: 'app-task-filter',
     templateUrl: './task-filter.component.html',
-    styleUrls: ['./task-filter.component.scss']
+    styleUrls: ['./task-filter.component.scss'],
 })
 export class TaskFilterComponent implements OnInit {
     categoryCol1: string[];
@@ -33,30 +39,38 @@ export class TaskFilterComponent implements OnInit {
     @Output() categoriesChanged = new EventEmitter();
     @Output() searchClicked = new EventEmitter();
 
-    constructor(private taskService: TaskService) { }
+    constructor(private taskService: TaskService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getTaskCategories();
-        this.cities = ['Calgary', 'Edmonton', 'Red Deer', 'Montreal', 'Toronto', 'Vancouver'];
+        this.cities = [
+            'Calgary',
+            'Edmonton',
+            'Red Deer',
+            'Montreal',
+            'Toronto',
+            'Vancouver',
+        ];
 
         this.distanceToHome = 50; // default 50kms
 
-        this.searchControl.valueChanges.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-                map(term => {
+        this.searchControl.valueChanges
+            .pipe(
+                debounceTime(300),
+                distinctUntilChanged(),
+                map((term) => {
                     this.searchClicked.emit(term);
                 })
-        ).subscribe();
+            )
+            .subscribe();
 
-        this.filteredOptions = this.cityControl.valueChanges
-            .pipe(
+        this.filteredOptions = this.cityControl.valueChanges.pipe(
             startWith(''),
-            map(value => this._filter(value))
+            map((value) => this._filter(value))
         );
     }
 
-    chechInSelected(category: string) {
+    chechInSelected(category: string): boolean {
         if (this.selectedCategory) {
             return this.selectedCategory.includes(category);
         } else {
@@ -66,11 +80,13 @@ export class TaskFilterComponent implements OnInit {
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
-        return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+        return this.cities.filter((option) =>
+            option.toLowerCase().includes(filterValue)
+        );
     }
 
-    getTaskCategories() {
-        this.taskService.getTaskCategories().subscribe(response => {
+    getTaskCategories(): void {
+        this.taskService.getTaskCategories().subscribe((response) => {
             const categoryList: string[] = response.payload.data;
 
             this.categoryCol1 = categoryList.slice(0, categoryList.length / 2);
@@ -78,20 +94,20 @@ export class TaskFilterComponent implements OnInit {
         });
     }
 
-    onCityChanged(city: string) {
+    onCityChanged(city: string): void {
         this.currentCity.city = city;
         this.cityChanged.emit(city);
     }
 
-    onDistanceChanged() {
+    onDistanceChanged(): void {
         this.distanceChanged.emit(this.distanceToHome);
     }
 
-    onHideChanged(event: MatSlideToggleChange) {
+    onHideChanged(event: MatSlideToggleChange): void {
         this.hideChanged.emit(event.checked);
     }
 
-    formatLabel(value: number | null) {
+    formatLabel(value: number | null): number {
         if (!value) {
             return this.distanceToHome;
         }
@@ -105,18 +121,24 @@ export class TaskFilterComponent implements OnInit {
     }
 
     // tslint:disable-next-line: no-any
-    onCategoriesChanged(event: any) {
+    onCategoriesChanged(event: any): void {
         if (event.target) {
-            this.selectedCategory = this.selectedCategory ? this.selectedCategory : [];
+            this.selectedCategory = this.selectedCategory
+                ? this.selectedCategory
+                : [];
 
             if (event.target.checked) {
                 this.selectedCategory.push(event.currentTarget.id);
                 this.categoriesChanged.emit(this.selectedCategory);
             } else {
                 // wrap in promise to ensure it's done
-                new Promise(resolve => {
-                    resolve(this.selectedCategory.filter((ele) => ele !== event.currentTarget.id));
-                }).then(res => {
+                new Promise((resolve) => {
+                    resolve(
+                        this.selectedCategory.filter(
+                            (ele) => ele !== event.currentTarget.id
+                        )
+                    );
+                }).then((res) => {
                     this.categoriesChanged.emit(res);
                     this.selectedCategory = res as string[];
                 });
@@ -124,12 +146,12 @@ export class TaskFilterComponent implements OnInit {
         }
     }
 
-    onSearchClicked() {
+    onSearchClicked(): void {
         this.searchClicked.emit(this.searchString);
     }
 
     // tslint:disable-next-line: no-any
-    onValueChange(event: any) {
+    onValueChange(event: any): void {
         this.distanceToHome = event.target.value;
     }
 }

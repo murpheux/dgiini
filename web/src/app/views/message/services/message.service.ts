@@ -10,7 +10,7 @@ import { EnvService } from 'src/app/shared/services/env.service';
 import { IUser } from '../../user/models/user';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class MessageService {
     private serviceUrl = undefined;
@@ -18,9 +18,9 @@ export class MessageService {
     constructor(
         private env: EnvService,
         private userService: UserService,
-        private http: HttpClient,
-        ) {
-            this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
+        private http: HttpClient
+    ) {
+        this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
     }
 
     sendMessage(message: IMessage): Observable<IResponse> {
@@ -48,16 +48,19 @@ export class MessageService {
         return this.http.get<IResponse>(url);
     }
 
-    enrichMessages(messages: IMessage[]) {
-        if (!messages) { return; }
+    enrichMessages(messages: IMessage[]): void {
+        if (!messages) {
+            return;
+        }
 
-        const userList = messages.map(m => m.from)
+        const userList = messages
+            .map((m) => m.from)
             .filter((value, index, self) => self.indexOf(value) === index);
 
         if (userList) {
-            this.userService.getUserList(userList).subscribe(res => {
-                messages.forEach(m => {
-                    res.payload.data.filter(user => {
+            this.userService.getUserList(userList).subscribe((res) => {
+                messages.forEach((m) => {
+                    res.payload.data.filter((user) => {
                         m.from = m.from === user._id ? user : m.from;
                     });
                 });

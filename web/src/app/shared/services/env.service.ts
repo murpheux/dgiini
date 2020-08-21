@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class EnvService {
-
     // The values that are defined here are the default values that can
     // be overridden by env.js
 
@@ -17,5 +16,5 @@ export class EnvService {
     // whether file is loaded
     public envFileLoaded = false;
 
-    constructor() { }
+    constructor() {}
 }

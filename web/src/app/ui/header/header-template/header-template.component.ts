@@ -1,44 +1,48 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+    ChangeDetectorRef, Component,
+    OnDestroy, OnInit
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { faUser, faPowerOff } from '@fortawesome/free-solid-svg-icons';
-import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
-import { AuthService } from 'src/app/views/user/services/auth.service';
-import { Constants } from 'src/app/shared/models/constants';
-import { TaskService } from 'src/app/views/tasks/services/task.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { IUserClaim } from 'src/app/views/user/models/user';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
-import { UtilService } from 'src/app/shared/services/util.service';
-import { RegisterComponent } from 'src/app/views/user/components/register/register.component';
+import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
+import { TaskService } from 'src/app/views/tasks/services/task.service';
 
 @Component({
     selector: 'app-header-template',
     templateUrl: './header-template.component.html',
-    styleUrls: ['./header-template.component.scss']
+    styleUrls: ['./header-template.component.scss'],
 })
-export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class HeaderTemplateComponent
+    implements OnInit, OnDestroy {
     selectedLanguage = 'en';
     subscription: Subscription;
     isCollapsed = true;
     categories: string[] = [];
-    claim: IUserClaim;
     faImageMap = {
-        Cleaning: 'sun', Gardening: 'tree', 'Handy Man': 'wrench',
-        'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        Childcare: 'baby-carriage', Moving: 'truck'
+        Cleaning: 'sun',
+        Gardening: 'tree',
+        'Handy Man': 'wrench',
+        'Furniture Assembly': 'tools',
+        'Lawn Mowing': 'users',
+        'Snow Plowing': 'laptop',
+        Childcare: 'baby-carriage',
+        Moving: 'truck',
     };
 
     constructor(
-        public authService: AuthService,
         public taskService: TaskService,
+        public authService: AuthService,
         private dialog: MatDialog,
         private router: Router,
-        private ref: ChangeDetectorRef,
-        private utilService: UtilService,
+        private ref: ChangeDetectorRef
     ) {
         ref.detach();
-        setInterval(() => { this.ref.detectChanges(); }, 2000);
+        setInterval(() => {
+            this.ref.detectChanges();
+        }, 2000);
 
         this.router.routeReuseStrategy.shouldReuseRoute = () => {
             return false;
@@ -52,69 +56,43 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
         });
     }
 
-    ngOnInit() {
+    async ngOnInit(): Promise<void> {
         this.getTaskCategories();
     }
 
-    ngAfterViewChecked() {
-        if (this.authService.loggedIn) {
-            if (localStorage.getItem(Constants.AUTH_USER_CLAIM)) {
-                this.claim = JSON.parse(localStorage.getItem(Constants.AUTH_USER_CLAIM));
-            }
-        }
-    }
-
-    getTaskCategories() {
-        this.taskService.getTaskCategories().subscribe(response => {
+    getTaskCategories(): void {
+        this.taskService.getTaskCategories().subscribe((response) => {
             this.categories = response.payload.data.slice(0, 8);
         });
     }
 
-    openDialog() {
+    async openDialog(): Promise<void> {
         let dialogRef;
 
-        if (this.authService.loggedIn) {
+        if (await this.authService.isLoggedIn$) {
             dialogRef = this.dialog.open(TaskCreateComponent, {
                 height: '570px',
                 width: '800px',
             });
-        }
-        else  {
+        } else {
             dialogRef = this.dialog.open(NologinComponent, {
                 height: '570px',
                 width: '350px',
             });
         }
 
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
-    async login() {
+    async login(): Promise<void> {
+        this.authService.login();
     }
 
-    async logout() {
-        localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
-        localStorage.removeItem(Constants.AUTH_USER_CLAIM);
-        localStorage.removeItem(Constants.AUTH_USER_PROFILE);
-        localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
-
-        // this.clearStorageItems().then(_ => {
-        //     this.authService.logout();
-        // });
+    async logout(): Promise<void> {
+        this.authService.logout();
     }
 
-    clearStorageItems(): Promise<number> {
-        localStorage.removeItem(Constants.AUTH_LOGGEDIN_USER);
-        localStorage.removeItem(Constants.AUTH_USER_CLAIM);
-        localStorage.removeItem(Constants.AUTH_USER_PROFILE);
-        localStorage.removeItem(Constants.AUTH_LOCAL_PROFILE);
-
-        return new Promise(resolve =>  {
-            setTimeout(() => { resolve(0); }, 4000);
-        });
-    }
-
-    changeLang(lang: string) {
+    changeLang(lang: string): void {
         if (lang === localStorage.getItem('locale')) {
             return;
         }
@@ -128,7 +106,7 @@ export class HeaderTemplateComponent implements OnInit, OnDestroy, AfterViewChec
         window.location.reload();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         // unsubscribe to ensure no memory leaks
         if (this.subscription) {
             this.subscription.unsubscribe();

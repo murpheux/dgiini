@@ -8,15 +8,12 @@ import { EnvService } from 'src/app/shared/services/env.service';
 import { IUser } from '../models/user';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class UserService {
     private serviceUrl = undefined;
 
-    constructor(
-        private env: EnvService,
-        private http: HttpClient
-    ) {
+    constructor(private env: EnvService, private http: HttpClient) {
         this.serviceUrl = `${env.apiUrl}/auth/v1`;
     }
 
@@ -31,7 +28,9 @@ export class UserService {
     }
 
     getUserList(userids: Guid[]): Observable<IResponse> {
-        const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(u => '"' + u + '"')}]}`;
+        const url = `${this.serviceUrl}/users?filter={"_id":[${userids.map(
+            (u) => '"' + u + '"'
+        )}]}`;
         return this.http.get<IResponse>(url);
     }
 

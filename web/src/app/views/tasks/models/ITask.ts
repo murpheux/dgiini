@@ -4,7 +4,10 @@ import { IAddress } from './IAddress';
 import { ITaskBid } from './ITaskBid';
 import { IPhoto } from './IPhoto';
 
-export enum TaskType { InPerson, Online }
+export enum TaskType {
+    InPerson,
+    Online,
+}
 
 export interface ITask {
     _id?: Guid;
@@ -24,7 +27,6 @@ export interface ITask {
     photos?: IPhoto[];
 }
 
-
 export class ClientSlim {
     id: Guid;
     name: string;
@@ -41,16 +43,16 @@ export class Quotation {
 export enum Currency {
     USD = 'USD',
     CAD = 'CAD',
-    GBP = 'GBP'
+    GBP = 'GBP',
 }
 
 export enum RateUnit {
     Total,
-    Hourly
+    Hourly,
 }
 
 export enum Recurrence {
     Daily,
     Weekly,
-    Monthly
+    Monthly,
 }

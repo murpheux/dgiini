@@ -1,22 +1,34 @@
-import { Component, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter, ViewChild, AfterViewChecked } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ElementRef,
+    ViewChildren,
+    QueryList,
+    AfterViewInit,
+    Output,
+    EventEmitter,
+    ViewChild,
+    AfterViewChecked,
+} from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
-import { AuthService } from 'src/app/views/user/services/auth.service';
 import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
 import { IUser, IVendor } from 'src/app/views/user/models/user';
 import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { Guid } from 'guid-typescript';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-task-categories',
     templateUrl: './task-categories.component.html',
-    styleUrls: ['./task-categories.component.scss']
+    styleUrls: ['./task-categories.component.scss'],
 })
-export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class TaskCategoriesComponent
+    implements OnInit, AfterViewInit, AfterViewChecked {
     taskList: ITask[];
     taskCount: number;
     taskerModel: IVendor[];
@@ -29,16 +41,21 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     currentCity: ICityLocation;
     currentUser: IUser;
 
-    @ViewChild('inputTag', { static: true}) set inputTag(input: ElementRef|null) {
-        if (!input) { return; }
+    @ViewChild('inputTag', { static: true }) set inputTag(
+        input: ElementRef | null
+    ) {
+        if (!input) {
+            return;
+        }
 
         // do something
         // doSomething(input);
     }
 
     // @ViewChildren('task') tasks: QueryList<any>;
-    @ViewChild('scrollAreaGrp', { static: true}) scrollDiv: ElementRef;
+    @ViewChild('scrollAreaGrp', { static: true }) scrollDiv: ElementRef;
 
+    // tslint:disable-next-line: variable-name
     private _intersectionObserver?: IntersectionObserver;
 
     constructor(
@@ -48,43 +65,51 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         private locationService: LocationService,
         private authService: AuthService,
         private taskerService: TaskerService,
+        // tslint:disable-next-line: variable-name
         private _element: ElementRef
-    ) { }
+    ) {}
 
-    ngOnInit() {
-        this.locationService.getCurrentCity().then(city => {
+    async ngOnInit(): Promise<void> {
+        this.locationService.getCurrentCity().then((city) => {
             this.currentCity = city;
 
-            this.route.params.subscribe(params => {
-                if (params['category']) {
-                    const category = params['category'];
+            this.route.params.subscribe((params) => {
+                if (params.category) {
+                    const category = params.category;
 
                     this.selectedCategory = [category];
                     this.getTasksByCategory(category, this.currentCity.city);
-                } else if (params['searchstr']) {
-                    this.searchString = params['searchstr'];
+                } else if (params.searchstr) {
+                    this.searchString = params.searchstr;
                     this.searchTask(this.searchString);
-                } else if (params['taskid']) {
-                    this.getTask(params['taskid']);
+                } else if (params.taskid) {
+                    this.getTask(params.taskid);
                 } else {
-                    this.taskService.getTaskCategories().subscribe(response => {
-                        this.selectedCategory = response.payload.data; // select all categories
-                        this.getTasksByCategories(this.selectedCategory, this.currentCity.city);
-                    });
+                    this.taskService
+                        .getTaskCategories()
+                        .subscribe((response) => {
+                            this.selectedCategory = response.payload.data; // select all categories
+                            this.getTasksByCategories(
+                                this.selectedCategory,
+                                this.currentCity.city
+                            );
+                        });
                 }
             });
         });
 
-        if (this.authService.loggedIn) {
+        if (await this.authService.isLoggedIn$.toPromise()) {
             if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
-                this.currentUser = JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE));
+                this.currentUser = JSON.parse(
+                    localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)
+                );
             }
         }
 
         this.distanceToHome = this.defaultDistanceToHome;
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // this.tasks.forEach(
         //   task => task.nativeElement.addEventListener('click', () => {
         //     let item: any;
@@ -96,7 +121,9 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         //   })
         // );
 
-        const lastCard = this.scrollDiv.nativeElement.querySelector('.lastOfMe');
+        const lastCard = this.scrollDiv.nativeElement.querySelector(
+            '.lastOfMe'
+        );
 
         if (lastCard) {
             console.log(JSON.stringify(lastCard));
@@ -118,30 +145,35 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
     ngAfterViewChecked(): void {
         // const lastCard = this.scrollDiv.nativeElement.querySelector('.lastOfMe');
         // const lastCard = this.scrollDiv.nativeElement.querySelector('.task-list div:last-child');
-
         // if (lastCard) {
         //     console.log(JSON.stringify(lastCard));
         // }
     }
 
-    private checkForIntersection = (entries: Array<IntersectionObserverEntry>) => {
+    private checkForIntersection = (
+        entries: Array<IntersectionObserverEntry>
+    ) => {
         entries.forEach((entry: IntersectionObserverEntry) => {
             if (this.checkIfIntersecting(entry)) {
-
-                this._intersectionObserver.unobserve((this._element.nativeElement) as Element);
+                this._intersectionObserver.unobserve(
+                    this._element.nativeElement as Element
+                );
                 this._intersectionObserver.disconnect();
             }
         });
-    }
+    };
 
-    private checkIfIntersecting(entry: IntersectionObserverEntry) {
+    private checkIfIntersecting(entry: IntersectionObserverEntry): any {
         // tslint:disable-next-line: no-any
-        return (entry as any).isIntersecting && entry.target === this._element.nativeElement;
+        return (
+            (entry as any).isIntersecting &&
+            entry.target === this._element.nativeElement
+        );
     }
 
-    getTask(taskid: Guid) {
+    getTask(taskid: Guid): void {
         if (taskid) {
-            this.taskService.getTask(taskid).subscribe(success => {
+            this.taskService.getTask(taskid).subscribe((success) => {
                 this.currentTask = success.payload.data;
 
                 if (this.currentTask) {
@@ -152,9 +184,9 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         }
     }
 
-    searchTask(searchstr: string) {
+    searchTask(searchstr: string): void {
         if (searchstr) {
-            this.taskService.searchTask(searchstr).subscribe(success => {
+            this.taskService.searchTask(searchstr).subscribe((success) => {
                 this.taskList = success.payload.data;
                 this.taskCount = success.payload.count;
 
@@ -165,67 +197,71 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
                 }
             });
         } else {
-            this.getTasksByCategories(this.selectedCategory, this.currentCity.city);
+            this.getTasksByCategories(
+                this.selectedCategory,
+                this.currentCity.city
+            );
         }
     }
 
-    getTasksByCategory(category: string, city: string) {
+    getTasksByCategory(category: string, city: string): void {
         this.getTasksByCategories([category], city);
     }
 
-    getTasksByCategories(categories: string[], city: string) {
-        this.taskService.getTasksByCategoriesAndCity(categories, city).subscribe(success => {
-            this.taskList = success.payload.data;
-            this.taskCount = success.payload.count;
+    getTasksByCategories(categories: string[], city: string): void {
+        this.taskService
+            .getTasksByCategoriesAndCity(categories, city)
+            .subscribe((success) => {
+                this.taskList = success.payload.data;
+                this.taskCount = success.payload.count;
 
-            if (this.taskList !== undefined && this.taskList.length !== 0) {
-                this.taskService.enrichTasks(this.taskList);
-                this.currentTask = this.taskList[0];
-                this.currentTask.selected = true;
-            }
+                if (this.taskList !== undefined && this.taskList.length !== 0) {
+                    this.taskService.enrichTasks(this.taskList);
+                    this.currentTask = this.taskList[0];
+                    this.currentTask.selected = true;
+                }
 
-            if (this.taskList && this.taskList.length > 0) {
-                this.getRecommendedVendor(this.taskList[0]);
-            }
-        });
+                if (this.taskList && this.taskList.length > 0) {
+                    this.getRecommendedVendor(this.taskList[0]);
+                }
+            });
     }
 
-    getFeaturedVendor() {
-        this.taskerService.getFeaturedVendor().subscribe(success => {
+    getFeaturedVendor(): void {
+        this.taskerService.getFeaturedVendor().subscribe((success) => {
             this.taskerModel = success.payload.data;
         });
     }
 
-    getRecommendedVendor(task: ITask) {
-        this.taskerService.getRecommendedVendor(task).subscribe(success => {
+    getRecommendedVendor(task: ITask): void {
+        this.taskerService.getRecommendedVendor(task).subscribe((success) => {
             this.taskerModel = success.payload.data;
         });
     }
 
-    handleTaskSelected(task: ITask) {
+    handleTaskSelected(task: ITask): void {
         this.currentTask.selected = false;
         this.currentTask = task;
         this.getRecommendedVendor(task);
         this.currentTask.selected = true;
     }
 
-    handleVendorSelected(tasker: IVendor) {
+    handleVendorSelected(tasker: IVendor): void {
         this.currentVendor.selected = false;
         this.currentVendor = tasker;
         this.currentVendor.selected = true;
     }
 
-    handleCityChanged(city: string) {
+    handleCityChanged(city: string): void {
         this.currentCity.city = city;
         this.locationService.setCurrentCity(city);
 
         this.getTasksByCategories(this.selectedCategory, city);
     }
 
-    handleDistanceChanged(distance: number) {
-    }
+    handleDistanceChanged(distance: number): void {}
 
-    handleCategoryChanged(categories: string[]) {
+    handleCategoryChanged(categories: string[]): void {
         if (categories.length === 0) {
             this.getTasksByCategories([], this.currentCity.city);
         } else {
@@ -233,17 +269,14 @@ export class TaskCategoriesComponent implements OnInit, AfterViewInit, AfterView
         }
     }
 
-    handleHideChanged(state: boolean) {
-    }
+    handleHideChanged(state: boolean): void {}
 
-    handleSearchClicked(searchString: string) {
+    handleSearchClicked(searchString: string): void {
         this.searchTask(searchString);
     }
 
     // tslint:disable-next-line: no-any
-    handleScroll(event: any) {
-    }
+    handleScroll(event: any): void {}
 
-    handleOverflow(event: any) {
-    }
+    handleOverflow(event: any): void {}
 }

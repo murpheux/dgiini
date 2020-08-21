@@ -11,7 +11,7 @@ import { ITaskBid } from '../models/ITaskBid';
 import { EnvService } from 'src/app/shared/services/env.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class TaskService {
     private serviceUrl = undefined;
@@ -62,7 +62,9 @@ export class TaskService {
     }
 
     getTasksByCategories(category: string[]): Observable<IResponse> {
-        const url = `${this.serviceUrl}/category/${encodeURIComponent(JSON.stringify(category))}`;
+        const url = `${this.serviceUrl}/category/${encodeURIComponent(
+            JSON.stringify(category)
+        )}`;
         return this.http.get<IResponse>(url);
     }
 
@@ -76,8 +78,15 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
-    getTasksByCategoriesAndCity(category: string[], city: string): Observable<IResponse> {
-        const url = `${this.serviceUrl}/city/${city}/category/${encodeURIComponent(JSON.stringify(category))}`;
+    getTasksByCategoriesAndCity(
+        category: string[],
+        city: string
+    ): Observable<IResponse> {
+        const url = `${
+            this.serviceUrl
+        }/city/${city}/category/${encodeURIComponent(
+            JSON.stringify(category)
+        )}`;
         return this.http.get<IResponse>(url);
     }
 
@@ -86,9 +95,9 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
-    saveTask(task: ITask) {
+    saveTask(task: ITask): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
-        return this.http.post(url, task);
+        return this.http.post<IResponse>(url, task);
     }
 
     saveBid(bid: ITaskBid): Observable<IResponse> {
@@ -96,12 +105,12 @@ export class TaskService {
         return this.http.post<IResponse>(url, bid);
     }
 
-    searchTask(searchstr: string) {
+    searchTask(searchstr: string): Observable<IResponse> {
         const url = `${this.serviceUrl}/search/${searchstr}`;
         return this.http.get<IResponse>(url);
     }
 
-    searchUserTask(searchstr: string, user: Guid) {
+    searchUserTask(searchstr: string, user: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}/${user}/search/${searchstr}`;
         return this.http.get<IResponse>(url);
     }
@@ -116,20 +125,23 @@ export class TaskService {
         return this.http.put<IResponse>(url, { _id: id, cancelled: true });
     }
 
-    updateTask(id: Guid, task: ITask) {
+    updateTask(id: Guid, task: ITask): Observable<IResponse> {
         const url = `${this.serviceUrl}/${id}`;
-        return this.http.put(url, task);
+        return this.http.put<IResponse>(url, task);
     }
 
-    deleteTask(id: Guid) {
+    deleteTask(id: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}/${id}`;
-        return this.http.delete(url);
+        return this.http.delete<IResponse>(url);
     }
 
-    enrichTasks(tasks: ITask[]) {
-        if (!tasks) { return; }
+    enrichTasks(tasks: ITask[]): void {
+        if (!tasks) {
+            return;
+        }
 
-        const userList = tasks.map(m => m.client.id)
+        const userList = tasks
+            .map((m) => m.client.id)
             .filter((value, index, self) => self.indexOf(value) === index);
 
         // this.locationService.getUserList(userList).subscribe(res => {
@@ -141,7 +153,7 @@ export class TaskService {
         // });
     }
 
-    getStatusColor(status: string) {
+    getStatusColor(status: string): string {
         let stats = 'danger';
 
         switch (status) {
@@ -160,5 +172,4 @@ export class TaskService {
 
         return stats;
     }
-
 }

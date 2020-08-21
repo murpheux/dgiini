@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ITask } from '../../models/ITask';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from '../task-create/task-create.component';
-import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
 import { IUser } from 'src/app/views/user/models/user';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-task-user',
     templateUrl: './task-user.component.html',
-    styleUrls: ['./task-user.component.scss']
+    styleUrls: ['./task-user.component.scss'],
 })
 export class TaskUserComponent implements OnInit {
     public taskList: ITask[];
@@ -28,17 +28,20 @@ export class TaskUserComponent implements OnInit {
         private router: Router,
         public dialog: MatDialog,
         private authService: AuthService
-    ) { }
+    ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
-            this.currentUser = JSON.parse(JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)).value);
+            this.currentUser = JSON.parse(
+                JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE))
+                    .value
+            );
             this.getUserTasks(this.currentUser);
         }
     }
 
-    getUserTasks(user: IUser) {
-        this.taskService.getUserTasks(user._id).subscribe(success => {
+    getUserTasks(user: IUser): void {
+        this.taskService.getUserTasks(user._id).subscribe((success) => {
             this.taskList = success.payload.data;
 
             if (this.taskList !== undefined && this.taskList.length !== 0) {
@@ -48,43 +51,50 @@ export class TaskUserComponent implements OnInit {
 
             this.taskService.enrichTasks(this.taskList);
 
-            this.completedTaskList = this.taskList.filter(task => task.status === 'completed');
-            this.cancelledTaskList = this.taskList.filter(task => task.status === 'cancelled');
-            this.assignedTaskList = this.taskList.filter(task => task.status === 'assigned');
+            this.completedTaskList = this.taskList.filter(
+                (task) => task.status === 'completed'
+            );
+            this.cancelledTaskList = this.taskList.filter(
+                (task) => task.status === 'cancelled'
+            );
+            this.assignedTaskList = this.taskList.filter(
+                (task) => task.status === 'assigned'
+            );
         });
     }
 
-    searchUserTask(searchstr: string) {
-        this.taskService.searchUserTask(searchstr, this.currentUser._id).subscribe(success => {
-            this.taskList = success.payload.data;
+    searchUserTask(searchstr: string): void {
+        this.taskService
+            .searchUserTask(searchstr, this.currentUser._id)
+            .subscribe((success) => {
+                this.taskList = success.payload.data;
 
-            if (this.taskList !== undefined && this.taskList.length !== 0) {
-                this.taskService.enrichTasks(this.taskList);
-                this.currentTask = this.taskList[0];
-                this.currentTask.selected = true;
-            }
-        });
+                if (this.taskList !== undefined && this.taskList.length !== 0) {
+                    this.taskService.enrichTasks(this.taskList);
+                    this.currentTask = this.taskList[0];
+                    this.currentTask.selected = true;
+                }
+            });
     }
 
-    handleTaskSelected(task: ITask) {
+    handleTaskSelected(task: ITask): void {
         this.currentTask.selected = false;
         this.currentTask = task;
         this.currentTask.selected = true;
     }
 
-    openDialog() {
+    openDialog(): void {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',
         });
 
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
-    hangleToggleChanged(filter: string) {
-    }
+    hangleToggleChanged(filter: string): void {}
 
-    handleSearchClicked(searchString: string) {
+    handleSearchClicked(searchString: string): void {
         this.searchUserTask(searchString);
     }
 

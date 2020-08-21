@@ -1,62 +1,108 @@
 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="job-details-tab" data-toggle="tab" href="#job-details" role="tab" aria-controls="job-details" aria-selected="true">
+        <a
+            class="nav-link active"
+            id="job-details-tab"
+            data-toggle="tab"
+            href="#job-details"
+            role="tab"
+            aria-controls="job-details"
+            aria-selected="true"
+        >
             <i class="fas fa-tasks"></i> Task Details
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+        <a
+            class="nav-link"
+            id="profile-tab"
+            data-toggle="tab"
+            href="#profile"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+        >
             <i class="far fa-file-alt"></i> Proposals
         </a>
     </li>
 </ul>
 <div class="task-detail-box">
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="job-details" role="tabpanel" aria-labelledby="job-details-tab">
+        <div
+            class="tab-pane fade show active"
+            id="job-details"
+            role="tabpanel"
+            aria-labelledby="job-details-tab"
+        >
             <h3 class="heading">
                 <span class="font-weight-bold">Task Details</span>
-                <span class="float-right price">{{ currentPrice | currency : 'CAD' }}</span>
+                <span class="float-right price">{{
+                    currentPrice | currency: "CAD"
+                }}</span>
             </h3>
             <div class="border mb-3"></div>
-            <h4 class="heading">{{task.title | titlecase}}
-                <span class="badge badge-outline-success float-right">{{task.status | titlecase}}</span>
+            <h4 class="heading">
+                {{ task.title | titlecase }}
+                <span class="badge badge-outline-success float-right">{{
+                    task.status | titlecase
+                }}</span>
             </h4>
             <p class="text-justify text">
-                {{task.description}}
+                {{ task.description }}
             </p>
-            <hr class="mb-0">
+            <hr class="mb-0" />
             <div class="d-flex text">
                 <div class="p-1 flex-fill">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-user"></i> Posted By</span><br> {{task.client.name}}
+                    <span class="font-weight-bold text-dark"
+                        ><i class="fas fa-user"></i> Posted By</span
+                    ><br />
+                    {{ task.client.name }}
                 </div>
                 <div class="p-1 flex-fill text-center">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-calendar"></i> Date</span><br> {{task.scheduled_date | date}}
+                    <span class="font-weight-bold text-dark"
+                        ><i class="fas fa-calendar"></i> Date</span
+                    ><br />
+                    {{ task.scheduled_date | date }}
                 </div>
                 <div class="p-1 flex-fill text-right">
-                    <span class="font-weight-bold text-dark"><i class="fas fa-map-marker-alt"></i> Location</span><br> {{task.location.city}} {{task.location.state}}
+                    <span class="font-weight-bold text-dark"
+                        ><i class="fas fa-map-marker-alt"></i> Location</span
+                    ><br />
+                    {{ task.location.city }} {{ task.location.state }}
                 </div>
             </div>
             <div class="clearfix"></div>
-            <hr class="mt-0">
+            <hr class="mt-0" />
             <div class="">
-                <app-google-map [latitude]="location.latitude" [longitude]="location.longitude" [mapTypeId]="location.mapType"></app-google-map>
+                <app-google-map
+                    [latitude]="location.latitude"
+                    [longitude]="location.longitude"
+                    [mapTypeId]="location.mapType"
+                ></app-google-map>
             </div>
-            <hr class="mt-0">
+            <hr class="mt-0" />
             <div>
                 <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-message-sender *ngIf="authService.loggedIn"></app-message-sender>
+            <app-message-sender *ngIf="isloggedIn"></app-message-sender>
         </div>
-        <div>
-
-        </div>
-        <div *ngIf="messages" class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <div></div>
+        <div
+            *ngIf="messages"
+            class="tab-pane fade"
+            id="profile"
+            role="tabpanel"
+            aria-labelledby="profile-tab"
+        >
             <h3 class="heading">
                 Proposals
-                <span class="float-right">{{messages.length}} Bids</span>
+                <span class="float-right">{{ messages.length }} Bids</span>
             </h3>
-            <hr>
-            <app-message-list [messages]="messages" (messageToReply)="handleMessagedToReply($event)"></app-message-list>
+            <hr />
+            <app-message-list
+                [messages]="messages"
+                (messageToReply)="handleMessagedToReply($event)"
+            ></app-message-list>
         </div>
     </div>
 </div>

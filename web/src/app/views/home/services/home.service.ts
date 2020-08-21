@@ -5,9 +5,8 @@ import { Observable } from 'rxjs';
 import { IResponse } from '../../tasks/models/IResponse';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class HomeService {
-
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 }

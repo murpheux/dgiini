@@ -7,16 +7,17 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 
-
-
 @NgModule({
-    declarations: [RecommendTaskerComponent, TaskerCardComponent, FeaturedTaskerComponent],
-    imports: [
-        CommonModule,
-        SharedModule,
-        CoreModule,
-        MaterialDesignModule,
+    declarations: [
+        RecommendTaskerComponent,
+        TaskerCardComponent,
+        FeaturedTaskerComponent,
     ],
-    exports: [RecommendTaskerComponent, TaskerCardComponent, FeaturedTaskerComponent]
+    imports: [CommonModule, SharedModule, CoreModule, MaterialDesignModule],
+    exports: [
+        RecommendTaskerComponent,
+        TaskerCardComponent,
+        FeaturedTaskerComponent,
+    ],
 })
-export class VendorModule { }
+export class VendorModule {}

@@ -27,11 +27,20 @@ import { VendorModule } from '../tasker/tasker.module';
 import { ImageStripComponent } from './components/image-strip/image-strip.component';
 
 @NgModule({
-    declarations: [TaskDetailsComponent,
-        TaskCreateComponent, TaskCategoriesComponent,
-        TaskFilterComponent, TaskDeleteDialogComponent, TaskCardComponent,
-        TaskCategoryNodeComponent, TaskViewComponent,
-        TaskUserComponent, FeaturedTaskComponent, TaskStatsComponent, ImageStripComponent],
+    declarations: [
+        TaskDetailsComponent,
+        TaskCreateComponent,
+        TaskCategoriesComponent,
+        TaskFilterComponent,
+        TaskDeleteDialogComponent,
+        TaskCardComponent,
+        TaskCategoryNodeComponent,
+        TaskViewComponent,
+        TaskUserComponent,
+        FeaturedTaskComponent,
+        TaskStatsComponent,
+        ImageStripComponent,
+    ],
     imports: [
         CommonModule,
         TasksRoutingModule,
@@ -42,20 +51,21 @@ import { ImageStripComponent } from './components/image-strip/image-strip.compon
         FontAwesomeModule,
         MessageModule,
         VendorModule,
-        NgxMaterialTimepickerModule
+        NgxMaterialTimepickerModule,
     ],
-    entryComponents: [
-        TaskDeleteDialogComponent,
-      ],
-    exports: [TaskCategoriesComponent, TaskStatsComponent,
-        TaskCreateComponent, TaskCardComponent, FeaturedTaskComponent,
-        TaskCategoryNodeComponent],
-    providers: [TaskService]
+    entryComponents: [TaskDeleteDialogComponent],
+    exports: [
+        TaskCategoriesComponent,
+        TaskStatsComponent,
+        TaskCreateComponent,
+        TaskCardComponent,
+        FeaturedTaskComponent,
+        TaskCategoryNodeComponent,
+    ],
+    providers: [TaskService],
 })
 export class TasksModule {
-
-    contructor() {
+    contructor(): void {
         library.add(faCoffee, faStar);
     }
-
 }

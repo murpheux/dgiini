@@ -1,4 +1,3 @@
-
 export class Constants {
     public static readonly AUTH_LOGGEDIN_USER = 'AuthLoggedInUser';
     public static readonly AUTH_USER_CLAIM = 'AuthUserToken';

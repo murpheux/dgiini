@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    OnDestroy,
+    AfterViewInit,
+    ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { ITask } from '../../models/ITask';
@@ -10,10 +16,9 @@ import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.co
 @Component({
     selector: 'app-task-details',
     templateUrl: './task-details.component.html',
-    styleUrls: ['./task-details.component.scss']
+    styleUrls: ['./task-details.component.scss'],
 })
 export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
-
     // tslint:disable-next-line: no-any
     subscription: any;
     model: ITask;
@@ -29,11 +34,11 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         private cd: ChangeDetectorRef,
         private router: Router,
         public dialog: MatDialog
-    ) { }
+    ) {}
 
-    ngOnInit() {
-        this.subscription = this.route.params.subscribe(params => {
-            const id = params['id'];
+    ngOnInit(): void {
+        this.subscription = this.route.params.subscribe((params) => {
+            const id = params.id;
             this.getTask(id);
         });
     }
@@ -46,74 +51,93 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cd.detectChanges();
     }
 
-    initializeContent() {
-    }
+    initializeContent(): void {}
 
-    setEditMode() {
+    setEditMode(): void {
         this.readonly = true;
     }
 
     getTask(id: Guid): void {
-        this.taskService.getTask(id).subscribe(response => {
-                this.model = response.payload.data.result;
-                this.buildForms();
-            });
-    }
-
-    buildForms() {
-        this.taskFormGroup = this.formBuilder.group({
-            id: this.formBuilder.control(this.model._id, [ Validators.required ]),
-            title: this.formBuilder.control(this.model.title, [ Validators.required ]),
-            description: this.formBuilder.control(this.model.description, [ Validators.required ]),
-            category: this.formBuilder.control(this.model.category, [Validators.required]),
-            clientid: this.formBuilder.control(this.model.client.id, [Validators.required]),
-            clientname: this.formBuilder.control(this.model.client.name, [Validators.required]),
-            street: this.formBuilder.control(this.model.location.street, [Validators.required]),
-            city: this.formBuilder.control(this.model.location.city, [Validators.required]),
-            state: this.formBuilder.control(this.model.location.state, [Validators.required]),
-            zipcode: this.formBuilder.control(this.model.location.zipcode, [Validators.required]),
-            country: this.formBuilder.control(this.model.location.country, [Validators.required]),
-            estimated_hours: this.formBuilder.control(this.model.estimated_hours, [Validators.required]),
+        this.taskService.getTask(id).subscribe((response) => {
+            this.model = response.payload.data.result;
+            this.buildForms();
         });
     }
 
-    handleUpdateTask() {
+    buildForms(): void {
+        this.taskFormGroup = this.formBuilder.group({
+            id: this.formBuilder.control(this.model._id, [Validators.required]),
+            title: this.formBuilder.control(this.model.title, [
+                Validators.required,
+            ]),
+            description: this.formBuilder.control(this.model.description, [
+                Validators.required,
+            ]),
+            category: this.formBuilder.control(this.model.category, [
+                Validators.required,
+            ]),
+            clientid: this.formBuilder.control(this.model.client.id, [
+                Validators.required,
+            ]),
+            clientname: this.formBuilder.control(this.model.client.name, [
+                Validators.required,
+            ]),
+            street: this.formBuilder.control(this.model.location.street, [
+                Validators.required,
+            ]),
+            city: this.formBuilder.control(this.model.location.city, [
+                Validators.required,
+            ]),
+            state: this.formBuilder.control(this.model.location.state, [
+                Validators.required,
+            ]),
+            zipcode: this.formBuilder.control(this.model.location.zipcode, [
+                Validators.required,
+            ]),
+            country: this.formBuilder.control(this.model.location.country, [
+                Validators.required,
+            ]),
+            estimated_hours: this.formBuilder.control(
+                this.model.estimated_hours,
+                [Validators.required]
+            ),
+        });
+    }
 
+    handleUpdateTask(): void {
         this.model.title = this.taskFormGroup.value.title;
         this.model.description = this.taskFormGroup.value.description;
 
-        this.taskService.updateTask(this.model._id, this.model).subscribe(d => {
-            this.model = undefined;
-            this.router.navigate(['tasks']);
-        });
+        this.taskService
+            .updateTask(this.model._id, this.model)
+            .subscribe((d) => {
+                this.model = undefined;
+                this.router.navigate(['tasks']);
+            });
     }
 
-    handleCancel() {
+    handleCancel(): void {
         this.model = undefined;
         this.router.navigate(['tasks']);
     }
 
-    handleBack() {
+    handleBack(): void {
         this.model = undefined;
         this.router.navigate(['tasks']);
     }
 
-
-    handleDeleteTask(id: Guid) {
-        this.taskService.deleteTask(id).subscribe(result => {
-
-        });
+    handleDeleteTask(id: Guid): void {
+        this.taskService.deleteTask(id).subscribe((result) => {});
         this.router.navigate(['tasks']);
     }
 
-    openConfirmationDialog(id: Guid) {
+    openConfirmationDialog(id: Guid): void {
         this.dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
-            disableClose: false
+            disableClose: false,
         });
         this.dialogRef.componentInstance.confirmMessage = `Are you sure you want to delete task '${this.model._id}' ?`;
 
-        this.dialogRef.afterClosed().subscribe(result => {
-
+        this.dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 this.handleDeleteTask(id);
             } else {
@@ -121,5 +145,4 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         });
     }
-
 }

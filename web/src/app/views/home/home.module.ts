@@ -21,45 +21,42 @@ import { UserModule } from '../user/user.module';
 import { BannerComponent } from './components/banner/banner.component';
 import { NologinComponent } from './components/nologin/nologin.component';
 
-export function hljsLanguages() {
+export function hljsLanguages(): any {
     return [{ name: 'json', func: json }];
 }
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    CarouselComponent,
-    CustomersayComponent,
-    HowworksComponent,
-    ContactusComponent,
-    CallbackComponent,
-    LoadingComponent,
-    VendorclientComponent,
-    FaqComponent,
-    YouSkilledComponent,
-    BannerComponent,
-    NologinComponent,
-  ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule,
-    SharedModule,
-    MaterialDesignModule,
-    TasksModule,
-    UserModule,
-    HighlightModule,
-  ],
-  providers: [
-    {
-      provide: HIGHLIGHT_OPTIONS,
-      useValue: {
-        languages: hljsLanguages
-      }
-    }
-  ],
-  exports: [
-    HomeComponent
-  ]
-
+    declarations: [
+        HomeComponent,
+        CarouselComponent,
+        CustomersayComponent,
+        HowworksComponent,
+        ContactusComponent,
+        CallbackComponent,
+        LoadingComponent,
+        VendorclientComponent,
+        FaqComponent,
+        YouSkilledComponent,
+        BannerComponent,
+        NologinComponent,
+    ],
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+        SharedModule,
+        MaterialDesignModule,
+        TasksModule,
+        UserModule,
+        HighlightModule,
+    ],
+    providers: [
+        {
+            provide: HIGHLIGHT_OPTIONS,
+            useValue: {
+                languages: hljsLanguages,
+            },
+        },
+    ],
+    exports: [HomeComponent],
 })
-export class HomeModule { }
+export class HomeModule {}

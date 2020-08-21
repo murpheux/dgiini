@@ -7,7 +7,7 @@ import { IMemberStats } from '../../models/IMemberStats';
 @Component({
     selector: 'app-task-stats',
     templateUrl: './task-stats.component.html',
-    styleUrls: ['./task-stats.component.scss']
+    styleUrls: ['./task-stats.component.scss'],
 })
 export class TaskStatsComponent implements OnInit {
     taskStats: ITaskStats;
@@ -15,22 +15,22 @@ export class TaskStatsComponent implements OnInit {
 
     constructor(
         private taskService: TaskService,
-        private userService: UserService,
-    ) { }
+        private userService: UserService
+    ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.getTaskStatistics();
         this.getUserStatstics();
     }
 
-    getTaskStatistics() {
-        this.taskService.getTaskStatistics().subscribe(result => {
+    getTaskStatistics(): void {
+        this.taskService.getTaskStatistics().subscribe((result) => {
             this.taskStats = result.payload.data;
         });
     }
 
-    getUserStatstics() {
-        this.userService.getUserStatstics().subscribe(result => {
+    getUserStatstics(): void {
+        this.userService.getUserStatstics().subscribe((result) => {
             this.userStats = result.payload.data;
         });
     }

@@ -7,23 +7,30 @@ import { ICityLocation } from 'src/app/views/user/models/city';
 @Component({
     selector: 'app-task-category-node',
     templateUrl: './task-category-node.component.html',
-    styleUrls: ['./task-category-node.component.scss']
+    styleUrls: ['./task-category-node.component.scss'],
 })
 export class TaskCategoryNodeComponent implements OnInit {
     categories: string[] = [];
     categoryStats: any;
     currentCity: ICityLocation;
-    faImageMap = { Cleaning: 'sun', Gardening: 'tree', 'Handy Man': 'wrench',
-        'Furniture Assembly': 'tools', 'Lawn Mowing': 'users', 'Snow Plowing': 'laptop',
-        Childcare: 'baby-carriage', Moving: 'truck' };
+    faImageMap = {
+        Cleaning: 'sun',
+        Gardening: 'tree',
+        'Handy Man': 'wrench',
+        'Furniture Assembly': 'tools',
+        'Lawn Mowing': 'users',
+        'Snow Plowing': 'laptop',
+        Childcare: 'baby-carriage',
+        Moving: 'truck',
+    };
 
     constructor(
         private locationService: LocationService,
         private taskService: TaskService,
         private router: Router
-        ) { }
+    ) {}
 
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
         this.getTaskCategories();
         this.getCategoryStat();
 
@@ -31,44 +38,48 @@ export class TaskCategoryNodeComponent implements OnInit {
 
         if (this.currentCity) {
             this.getCategoryStatByCity(this.currentCity.city);
-        }
-        else {
+        } else {
             this.getCategoryStat();
         }
     }
 
-    getTaskCategories() {
-        this.taskService.getTaskCategories().subscribe(response => {
+    getTaskCategories(): void {
+        this.taskService.getTaskCategories().subscribe((response) => {
             this.categories = response.payload.data.slice(0, 8);
         });
     }
 
-    handleCategory(category) {
+    handleCategory(category): void {
         this.router.navigate([`/tasks/category/${category}`]);
     }
 
-    getCategoryStat() {
-        this.taskService.getCategoryStats().subscribe(response => {
-            this.categoryStats = this.convertArrayToObject(response.payload.data, '_id');
+    getCategoryStat(): void {
+        this.taskService.getCategoryStats().subscribe((response) => {
+            this.categoryStats = this.convertArrayToObject(
+                response.payload.data,
+                '_id'
+            );
         });
     }
 
-    getCategoryStatByCity(city: string) {
-        this.taskService.getCategoryStatsByCity(city).subscribe(response => {
-            this.categoryStats = this.convertArrayToObject(response.payload.data, '_id');
+    getCategoryStatByCity(city: string): void {
+        this.taskService.getCategoryStatsByCity(city).subscribe((response) => {
+            this.categoryStats = this.convertArrayToObject(
+                response.payload.data,
+                '_id'
+            );
         });
     }
 
     convertArrayToObject = (array, key) => {
         const initialValue = {};
         return array.reduce((obj, item) => {
-          return {
-            ...obj,
-            [item[key]]: item,
-          };
+            return {
+                ...obj,
+                [item[key]]: item,
+            };
         }, initialValue);
-    }
+    };
 
     getstat = (category) => this.categoryStats[category]?.count;
-
 }

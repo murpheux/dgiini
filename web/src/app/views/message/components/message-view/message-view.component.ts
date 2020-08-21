@@ -2,12 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IMessage } from '../../models/message';
 import { faReply } from '@fortawesome/free-solid-svg-icons';
 import { Guid } from 'guid-typescript';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-message-view',
     templateUrl: './message-view.component.html',
-    styleUrls: ['./message-view.component.scss']
+    styleUrls: ['./message-view.component.scss'],
 })
 export class MessageViewComponent implements OnInit {
     @Input() message: IMessage;
@@ -15,14 +15,11 @@ export class MessageViewComponent implements OnInit {
 
     faReply = faReply;
 
-    constructor(
-        private authService: AuthService
-    ) { }
+    constructor(private authService: AuthService) {}
 
-    ngOnInit() {
-    }
+    ngOnInit(): void {}
 
-    handleReply() {
+    handleReply(): void {
         this.messageToReply.emit(this.message);
     }
 }

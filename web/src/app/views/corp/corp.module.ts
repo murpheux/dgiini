@@ -7,14 +7,15 @@ import { AboutComponent } from './components/about/about.component';
 import { TocComponent } from './components/about/toc/toc.component';
 import { PrivacyComponent } from './components/about/privacy/privacy.component';
 
-
 @NgModule({
-  declarations: [ AboutComponent, PageNotFoundComponent, PrivacyComponent, TocComponent ],
-  imports: [
-    CommonModule,
-    CorpRoutingModule
-  ],
-  entryComponents: [ AboutComponent ],
-  exports: []
+    declarations: [
+        AboutComponent,
+        PageNotFoundComponent,
+        PrivacyComponent,
+        TocComponent,
+    ],
+    imports: [CommonModule, CorpRoutingModule],
+    entryComponents: [AboutComponent],
+    exports: [],
 })
-export class CorpModule { }
+export class CorpModule {}

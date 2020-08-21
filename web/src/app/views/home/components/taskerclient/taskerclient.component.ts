@@ -1,16 +1,23 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ElementRef,
+    AfterViewInit,
+    Output,
+    EventEmitter,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
-import { AuthService } from 'src/app/views/user/services/auth.service';
 import { Constants } from 'src/app/shared/models/constants';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-taskerclient',
     templateUrl: './taskerclient.component.html',
-    styleUrls: ['./taskerclient.component.scss']
+    styleUrls: ['./taskerclient.component.scss'],
 })
 export class VendorclientComponent implements OnInit, AfterViewInit {
-
     @ViewChild('tasker', { static: true }) tasker: ElementRef;
     @ViewChild('clientSteps', { static: true }) clientSteps: ElementRef;
     @ViewChild('taskerSteps', { static: true }) taskerSteps: ElementRef;
@@ -22,13 +29,12 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
 
     constructor(
         private dialog: MatDialog,
-        public authService: AuthService,
-    ) { }
+        public authService: AuthService
+    ) {}
 
-    ngOnInit() {
-    }
+    ngOnInit(): void {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.tasker.nativeElement.addEventListener('mouseover', () => {
             const box = document.getElementById('clientTaskerBox');
             box.classList.add('tasker-active');
@@ -42,17 +48,16 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
         });
     }
 
-    openDialog() {
+    openDialog(): void {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',
         });
 
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
-
-    showTaskerSteps() {
+    showTaskerSteps(): void {
         if (this.currentState !== Constants.USER_ROLE_TASKER) {
             this.currentState = Constants.USER_ROLE_TASKER;
 
@@ -60,12 +65,11 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
         }
     }
 
-    showClientSteps() {
+    showClientSteps(): void {
         if (this.currentState !== Constants.USER_ROLE_CLIENT) {
             this.currentState = Constants.USER_ROLE_CLIENT;
 
             this.stateChanged.emit(this.currentState);
         }
     }
-
 }

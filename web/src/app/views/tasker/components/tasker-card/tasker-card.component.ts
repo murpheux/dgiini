@@ -2,21 +2,19 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { IVendor } from 'src/app/views/user/models/user';
 
 @Component({
-  selector: 'app-tasker-card',
-  templateUrl: './tasker-card.component.html',
-  styleUrls: ['./tasker-card.component.scss']
+    selector: 'app-tasker-card',
+    templateUrl: './tasker-card.component.html',
+    styleUrls: ['./tasker-card.component.scss'],
 })
 export class TaskerCardComponent implements OnInit {
     @Input() tasker: IVendor;
     @Output() taskerSelected = new EventEmitter();
 
-    constructor() { }
+    constructor() {}
 
-    ngOnInit() {
-    }
+    ngOnInit(): void {}
 
-    ontaskercardclick() {
+    ontaskercardclick(): void {
         this.taskerSelected.emit(this.tasker);
     }
-
 }

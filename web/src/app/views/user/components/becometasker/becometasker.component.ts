@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-becometasker',
-  templateUrl: './becometasker.component.html',
-  styleUrls: ['./becometasker.component.scss']
+    selector: 'app-becometasker',
+    templateUrl: './becometasker.component.html',
+    styleUrls: ['./becometasker.component.scss'],
 })
 export class BecometaskerComponent implements OnInit {
+    constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+    ngOnInit(): void {}
 }

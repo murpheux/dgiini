@@ -2,7 +2,13 @@
     <div class="border rounded-lg p-2">
         <div>Job Photo(s)</div>
         <div class="container image-strip" gallerize>
-            <a (click)="loadGallery()"><img class="ml-2 d-inline" *ngFor="let item of items" [alt]="" [src]="item.data.thumb"></a>
+            <a (click)="loadGallery()"
+                ><img
+                    class="ml-2 d-inline"
+                    *ngFor="let item of items"
+                    [alt]=""
+                    [src]="item.data.thumb"
+            /></a>
         </div>
     </div>
 </div>

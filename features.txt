@@ -30,7 +30,7 @@ Payment Items
 - SSL
 - Domain name: dginni.com .ca .org .edu
 - Payment system/gateway
-- Okta/Auth0
+- Okta/Auth0 - change to keycloak
 - SendGrid
 - Twilio
 - Location service

@@ -5,12 +5,12 @@ export const environment = {
     auth0: {
         domain: 'murpheux.auth0.com',
         clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
-        callbackURL: 'https://dgiini-web-service'
+        callbackURL: 'https://dgiini-web-service',
     },
 
-    provider:  {
+    provider: {
         ip: 'http://api.ipify.org/?format=json',
-        proxy: 'https://cors-anywhere.herokuapp.com'
+        proxy: 'https://cors-anywhere.herokuapp.com',
     },
 
     auth_ttl: 3600000, // 1hr
@@ -18,5 +18,5 @@ export const environment = {
     countries: [
         { name: 'Canada', code: 'ca' },
         { name: 'United States', code: 'us' },
-    ]
+    ],
 };

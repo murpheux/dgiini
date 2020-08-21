@@ -4,11 +4,8 @@ import { FooterTemplateComponent } from './footer-template/footer-template.compo
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MaterialDesignModule,
-  ],
-  declarations: [FooterTemplateComponent],
-  exports: [FooterTemplateComponent]
+    imports: [CommonModule, MaterialDesignModule],
+    declarations: [FooterTemplateComponent],
+    exports: [FooterTemplateComponent],
 })
-export class FooterModule { }
+export class FooterModule {}

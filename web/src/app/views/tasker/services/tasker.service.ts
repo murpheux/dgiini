@@ -9,15 +9,14 @@ import { ITask } from '../../tasks/models/ITask';
 import { EnvService } from 'src/app/shared/services/env.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class TaskerService {
-
     constructor(
         private env: EnvService,
         private http: HttpClient,
         private locationService: LocationService
-    ) { }
+    ) {}
 
     getFeaturedVendor(): Observable<IResponse> {
         const url = `${this.env.apiUrl}/auth/v1/users/role/tasker`;

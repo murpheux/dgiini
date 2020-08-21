@@ -1,14 +1,16 @@
 <div>
     <h6 class="alert alert-danger">Confirm Delete !!</h6>
     <div>
-      <p>{{confirmMessage}}?</p>
+        <p>{{ confirmMessage }}?</p>
     </div>
     <div>
-      <button id="btnDialogCancel" (click)="dialogRef.close(false)">
-       <fa-icon>arrow_back</fa-icon>
-        Cancel</button>
-      <button id="btnDialogConfirm"  (click)="dialogRef.close(true)">
-          <fa-icon>check_box</fa-icon>
-        Confirm</button>
+        <button id="btnDialogCancel" (click)="dialogRef.close(false)">
+            <fa-icon>arrow_back</fa-icon>
+            Cancel
+        </button>
+        <button id="btnDialogConfirm" (click)="dialogRef.close(true)">
+            <fa-icon>check_box</fa-icon>
+            Confirm
+        </button>
     </div>
 </div>

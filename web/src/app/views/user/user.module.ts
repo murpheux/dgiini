@@ -8,7 +8,6 @@ import { LocationService } from './services/location.service';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { BecometaskerComponent } from './components/becometasker/becometasker.component';
 import { UserService } from './services/user.service';
-import { AuthService } from './services/auth.service';
 import { UsersettingsComponent } from './components/usersettings/usersettings.component';
 import { SupportComponent } from './components/support/support.component';
 import { FinanceComponent } from './components/finance/finance.component';
@@ -17,16 +16,24 @@ import { TransactionsComponent } from './components/transactions/transactions.co
 import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
-  declarations: [UserprofileComponent, BecometaskerComponent,
-    UsersettingsComponent, SupportComponent, FinanceComponent, UserstatsComponent, TransactionsComponent, RegisterComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    CoreModule,
-    UserRoutingModule,
-    MaterialDesignModule
-  ],
-  providers: [LocationService, UserService, AuthService ],
-  exports: [ UserprofileComponent ]
+    declarations: [
+        UserprofileComponent,
+        BecometaskerComponent,
+        UsersettingsComponent,
+        SupportComponent,
+        FinanceComponent,
+        UserstatsComponent,
+        TransactionsComponent,
+        RegisterComponent,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        CoreModule,
+        UserRoutingModule,
+        MaterialDesignModule,
+    ],
+    providers: [LocationService, UserService],
+    exports: [UserprofileComponent],
 })
-export class UserModule { }
+export class UserModule {}

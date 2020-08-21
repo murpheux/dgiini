@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class UtilService {
-
-    constructor() { }
+    constructor() {}
 
     capitalize(word): string {
         return word.charAt(0).toUpperCase() + word.substring(1);
@@ -16,15 +15,18 @@ export class UtilService {
     }
 
     formatMoney(amount): string {
-        return amount && `$${(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`;
+        return (
+            amount &&
+            `$${amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
+        );
     }
 
-    setWithExpiry(key: string, value: any, ttl: number) {
+    setWithExpiry(key: string, value: any, ttl: number): void {
         const now = new Date();
 
         const item = {
             value,
-            expiry: now.getTime() + ttl
+            expiry: now.getTime() + ttl,
         };
 
         localStorage.setItem(key, JSON.stringify(item));
@@ -33,7 +35,9 @@ export class UtilService {
     getWithExpiry(key: string): any {
         const itemStr = localStorage.getItem(key);
 
-        if (!itemStr) { return null; }
+        if (!itemStr) {
+            return null;
+        }
 
         const item = JSON.parse(itemStr);
         const now = new Date();
@@ -44,9 +48,9 @@ export class UtilService {
         }
 
         return item.value;
-    } 
+    }
 
-    deleteExpiredLS() {
+    deleteExpiredLS(): void {
         for (let i = 0; i < localStorage.length; i++) {
             const eachitem = localStorage.getItem(localStorage.key(i));
             const eachkey = localStorage.key(i);

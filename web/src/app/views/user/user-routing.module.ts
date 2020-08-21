@@ -10,19 +10,39 @@ import { UserstatsComponent } from './components/userstats/userstats.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 
 const routes: Routes = [
-//   { path: '',  component: RegisterComponent, canActivate: []  },
-//   { path: 'register',  component: RegisterComponent, canActivate: []  },
-  { path: 'profile',  component: UserprofileComponent, canActivate: [AuthGuard] },
-  { path: 'settings',  component: UsersettingsComponent, canActivate: [AuthGuard]  },
-  { path: 'support',  component: SupportComponent, canActivate: []  },
-  { path: 'finance',  component: FinanceComponent, canActivate: [AuthGuard]  },
-  { path: 'transactions',  component: TransactionsComponent, canActivate: [AuthGuard]  },
-  { path: 'statistics',  component: UserstatsComponent, canActivate: [AuthGuard]  },
-  { path: 'upgrade',  component: BecometaskerComponent, canActivate: [AuthGuard]  }
+    //   { path: '',  component: RegisterComponent, canActivate: []  },
+    //   { path: 'register',  component: RegisterComponent, canActivate: []  },
+    {
+        path: 'profile',
+        component: UserprofileComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'settings',
+        component: UsersettingsComponent,
+        canActivate: [AuthGuard],
+    },
+    { path: 'support', component: SupportComponent, canActivate: [] },
+    { path: 'finance', component: FinanceComponent, canActivate: [AuthGuard] },
+    {
+        path: 'transactions',
+        component: TransactionsComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'statistics',
+        component: UserstatsComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'upgrade',
+        component: BecometaskerComponent,
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class UserRoutingModule { }
+export class UserRoutingModule {}

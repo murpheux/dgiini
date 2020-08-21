@@ -1,4 +1,4 @@
 export interface IQueryBuilder {
-  toQueryMap: () => Map<string, string>;
-  toQueryString: () => string;
+    toQueryMap: () => Map<string, string>;
+    toQueryString: () => string;
 }

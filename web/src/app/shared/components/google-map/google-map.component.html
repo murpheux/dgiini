@@ -1,18 +1,22 @@
 <div class="mt-3">
     <div class="border rounded-lg p-2">
-        <google-map height="200px"
-                    width="100%"
-                    [center]="center"
-                    [zoom]="zoom"
-                    (mapClick)="addMarker($event)"
-                    (mapMousemove)="move($event)"
-                    (mapRightclick)="removeLastMarker()">
-        <map-marker #marker
-                    *ngFor="let markerPosition of markerPositions"
-                    [position]="markerPosition"
-                    [options]="markerOptions"
-                    (mapClick)="openInfoWindow(marker)"></map-marker>
-        <map-info-window>Info Window content</map-info-window>
+        <google-map
+            height="200px"
+            width="100%"
+            [center]="center"
+            [zoom]="zoom"
+            (mapClick)="addMarker($event)"
+            (mapMousemove)="move($event)"
+            (mapRightclick)="removeLastMarker()"
+        >
+            <map-marker
+                #marker
+                *ngFor="let markerPosition of markerPositions"
+                [position]="markerPosition"
+                [options]="markerOptions"
+                (mapClick)="openInfoWindow(marker)"
+            ></map-marker>
+            <map-info-window>Info Window content</map-info-window>
         </google-map>
     </div>
 </div>

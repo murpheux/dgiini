@@ -13,17 +13,21 @@ import { MessageViewComponent } from './components/message-view/message-view.com
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
-  declarations: [MessageSenderComponent, MessageListComponent, MessageViewComponent],
-  imports: [
-    CommonModule,
-    MessageRoutingModule,
-    SharedModule,
-    CoreModule,
-    MaterialDesignModule,
-    FontAwesomeModule,
-    NgxUiLoaderModule,
-  ],
-  exports: [MessageSenderComponent, MessageListComponent],
-providers: [MessageService]
+    declarations: [
+        MessageSenderComponent,
+        MessageListComponent,
+        MessageViewComponent,
+    ],
+    imports: [
+        CommonModule,
+        MessageRoutingModule,
+        SharedModule,
+        CoreModule,
+        MaterialDesignModule,
+        FontAwesomeModule,
+        NgxUiLoaderModule,
+    ],
+    exports: [MessageSenderComponent, MessageListComponent],
+    providers: [MessageService],
 })
-export class MessageModule { }
+export class MessageModule {}

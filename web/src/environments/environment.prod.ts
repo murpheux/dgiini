@@ -1,4 +1,3 @@
-
 export const environment = {
     production: false,
 
@@ -10,13 +9,13 @@ export const environment = {
     auth0: {
         domain: 'murpheux.auth0.com',
         clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
-        callbackURL: 'https://www.dgiini.com'
+        callbackURL: 'https://www.dgiini.com',
     },
 
     version: '0.0.1',
     auth_ttl: 3600000, // 1hr
 
     keys: {
-        gmap: ''
-    }
+        gmap: '',
+    },
 };

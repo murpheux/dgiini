@@ -6,20 +6,31 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TaskService } from '../../services/task.service';
 import { IUser } from 'src/app/views/user/models/user';
-import { faDollarSign, faCheck, faTimes, faFileAlt, faUserCircle, faMapMarkedAlt, faCalendar, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { AuthService } from 'src/app/views/user/services/auth.service';
+import {
+    faDollarSign,
+    faCheck,
+    faTimes,
+    faFileAlt,
+    faUserCircle,
+    faMapMarkedAlt,
+    faCalendar,
+    faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { ILocation } from 'src/app/shared/models/ILocation';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-task-view',
     templateUrl: './task-view.component.html',
-    styleUrls: ['./task-view.component.scss']
+    styleUrls: ['./task-view.component.scss'],
 })
 export class TaskViewComponent implements OnInit {
+    // tslint:disable-next-line: variable-name
     private _task: ITask;
     public messages: IMessage[];
     public currentPrice: number;
     public owned: boolean;
+    isloggedIn: boolean;
     public messageToReply: IMessage;
     location: ILocation;
 
@@ -44,7 +55,9 @@ export class TaskViewComponent implements OnInit {
             if (task.client.id) {
                 this.owned = task.client.id === this.currentUser._id;
             } else {
-                this.owned = (task.client as unknown as IUser)._id === this.currentUser._id;
+                this.owned =
+                    ((task.client as unknown) as IUser)._id ===
+                    this.currentUser._id;
             }
         } else {
             this.getTaskMessages();
@@ -67,9 +80,9 @@ export class TaskViewComponent implements OnInit {
         private notificationService: NotificationService,
         private taskService: TaskService,
         public authService: AuthService
-    ) { }
+    ) {}
 
-    ngOnInit() {
+    async ngOnInit(): Promise<void> {
         if (this.task.lastbid) {
             this.currentPrice = this.task.lastbid.amount;
         } else {
@@ -84,46 +97,50 @@ export class TaskViewComponent implements OnInit {
             latitude: -28.68352,
             longitude: -147.20785,
             mapType: 'normal',
-            zoom: 5
+            zoom: 5,
         };
 
+        this.isloggedIn = await this.authService.isLoggedIn$.toPromise();
     }
 
-    getUserTaskMessages() {
-        this.messageService.getUserTaskMessages(this.task._id, this.currentUser._id).subscribe(success => {
-            this.messages = success.payload.data;
-            this.messageService.enrichMessages(this.messages);
-        });
+    getUserTaskMessages(): void {
+        this.messageService
+            .getUserTaskMessages(this.task._id, this.currentUser._id)
+            .subscribe((success) => {
+                this.messages = success.payload.data;
+                this.messageService.enrichMessages(this.messages);
+            });
     }
 
-    getTaskMessages() {
-        this.messageService.getTaskMessages(this.task._id).subscribe(success => {
-            this.messages = success.payload.data;
-            // this.messageService.enrichMessages(this.messages);
-        });
+    getTaskMessages(): void {
+        this.messageService
+            .getTaskMessages(this.task._id)
+            .subscribe((success) => {
+                this.messages = success.payload.data;
+                // this.messageService.enrichMessages(this.messages);
+            });
     }
 
-    handleMessageSent(message: IMessage) {
+    handleMessageSent(message: IMessage): void {
         message.sentdate = new Date();
         message.from = this.currentUser;
 
         this.messages.unshift(message);
     }
 
-    handleMessagedToReply(message: IMessage) {
+    handleMessagedToReply(message: IMessage): void {
         this.messageToReply = message;
     }
 
-    handleAcceptOffer() {
-        this.taskService.acceptBid(this.task.lastbid.id).subscribe(resp => {
+    handleAcceptOffer(): void {
+        this.taskService.acceptBid(this.task.lastbid.id).subscribe((resp) => {
             this.notificationService.showSuccess('Offer accepted!');
         });
     }
 
-    handleCancelTask() {
-        this.taskService.cancelTask(this.task._id).subscribe(resp => {
+    handleCancelTask(): void {
+        this.taskService.cancelTask(this.task._id).subscribe((resp) => {
             this.notificationService.showSuccess('Task Cancelled!');
         });
     }
-
 }

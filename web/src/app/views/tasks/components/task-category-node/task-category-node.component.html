@@ -1,6 +1,8 @@
 <section class="categories mt-4 mb-4">
     <div class="container">
-        <h3 class="text-center font-weight-bold text-web">Popular Categories</h3>
+        <h3 class="text-center font-weight-bold text-web">
+            Popular Categories
+        </h3>
         <div class="border web-border mx-auto"></div>
         <div class="row">
             <div *ngFor="let category of categories" class="col-md-3">
@@ -8,9 +10,13 @@
                     <a routerLink="/browse/{{ category }}">
                         <i class="fas fa-sun box-background"></i>
                         <i class="fas fa-{{ faImageMap[category] }}"></i>
-                        <div class="border category-border mx-auto mt-2 mb-2"></div>
+                        <div
+                            class="border category-border mx-auto mt-2 mb-2"
+                        ></div>
                         <p class="m-0 title">{{ category }}</p>
-                        <p *ngIf="categoryStats" class="m-0 jobs-open">{{ getstat(category) }} Tasks Open</p>
+                        <p *ngIf="categoryStats" class="m-0 jobs-open">
+                            {{ getstat(category) }} Tasks Open
+                        </p>
                     </a>
                 </div>
             </div>

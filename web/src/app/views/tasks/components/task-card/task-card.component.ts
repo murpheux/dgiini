@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges,
+    SimpleChange,
+} from '@angular/core';
 import { ITask } from '../../models/ITask';
 import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { TaskService } from '../../services/task.service';
@@ -6,7 +15,7 @@ import { TaskService } from '../../services/task.service';
 @Component({
     selector: 'app-task-card',
     templateUrl: './task-card.component.html',
-    styleUrls: ['./task-card.component.scss']
+    styleUrls: ['./task-card.component.scss'],
 })
 export class TaskCardComponent implements OnInit {
     @Input() task: ITask;
@@ -16,11 +25,9 @@ export class TaskCardComponent implements OnInit {
     faCalendar = faCalendar;
     faMapMarkerAlt = faMapMarkerAlt;
 
-    constructor(
-        private taskService: TaskService
-    ) { }
+    constructor(private taskService: TaskService) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.task.lastbid) {
             this.currentPrice = this.task.lastbid.amount;
         } else {
@@ -28,10 +35,9 @@ export class TaskCardComponent implements OnInit {
         }
     }
 
-    ontaskcardclick() {
+    ontaskcardclick(): void {
         this.taskSelected.emit(this.task);
     }
 
     getStatusColor = (status) => this.taskService.getStatusColor(status);
-
 }

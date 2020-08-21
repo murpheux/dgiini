@@ -2,7 +2,6 @@ import { IAddress } from '../../tasks/models/IAddress';
 import { Guid } from 'guid-typescript';
 import { IPhoto } from '../../tasks/models/IPhoto';
 
-
 export interface IUser {
     _id: Guid;
     name: string;
@@ -32,13 +31,11 @@ export interface IMemberReview {
 }
 
 export interface IClient extends IUser {
-
     address: IAddress;
     email: string;
     creditCard: ICreditCard;
     rating: number;
 }
-
 
 export interface IVendor extends IUser {
     address: IAddress;

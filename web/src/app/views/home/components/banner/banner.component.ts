@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-banner',
     templateUrl: './banner.component.html',
-    styleUrls: ['./banner.component.scss']
+    styleUrls: ['./banner.component.scss'],
 })
 export class BannerComponent implements OnInit {
     currentCity: ICityLocation;
@@ -14,15 +14,14 @@ export class BannerComponent implements OnInit {
 
     constructor(
         private locationService: LocationService,
-        private router: Router,
-    ) { }
+        private router: Router
+    ) {}
 
-    async ngOnInit() {
+    async ngOnInit(): Promise<void> {
         this.currentCity = await this.locationService.getCurrentCity();
     }
 
-    handleSearch() {
+    handleSearch(): void {
         this.router.navigate([`/search/${this.searchString}`]);
     }
-
 }

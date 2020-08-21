@@ -2,37 +2,82 @@
     <app-loader *ngIf="!model"></app-loader>
     <div>
         <div class="d-flex flex-row justify-content-between">
+            <div class="p-2"></div>
             <div class="p-2">
-
-            </div>
-            <div class="p-2">
-                <button [hidden]="readonly" color="warn" id="btnEditTask" (click)="setEditMode()">Edit</button>
-                <button [hidden]="!readonly" color="warn" id="btnEditTask" (click)="handleUpdateTask()">Save</button>
-                <button [hidden]="!readonly" color="warn" id="btnEditTask" (click)="handleCancel()">Cancel</button>
-                <button color="warn" id="btnDeleteTask" (click)="openConfirmationDialog(model._id)">Delete</button>
+                <button
+                    [hidden]="readonly"
+                    color="warn"
+                    id="btnEditTask"
+                    (click)="setEditMode()"
+                >
+                    Edit
+                </button>
+                <button
+                    [hidden]="!readonly"
+                    color="warn"
+                    id="btnEditTask"
+                    (click)="handleUpdateTask()"
+                >
+                    Save
+                </button>
+                <button
+                    [hidden]="!readonly"
+                    color="warn"
+                    id="btnEditTask"
+                    (click)="handleCancel()"
+                >
+                    Cancel
+                </button>
+                <button
+                    color="warn"
+                    id="btnDeleteTask"
+                    (click)="openConfirmationDialog(model._id)"
+                >
+                    Delete
+                </button>
             </div>
         </div>
-
-
     </div>
     <div *ngIf="model">
-        <form *ngIf="taskFormGroup" [formGroup]="taskFormGroup" (ngSubmit)="handleUpdateTask()">
+        <form
+            *ngIf="taskFormGroup"
+            [formGroup]="taskFormGroup"
+            (ngSubmit)="handleUpdateTask()"
+        >
             <ng-template matStepLabel>Task Details</ng-template>
             <div>
                 <div class="d-flex flex-row flex-wrap justify-content-center">
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Id</label>
-                            <input readonly matInput placeholder="Placeholder" formControlName="id">
+                            <input
+                                readonly
+                                matInput
+                                placeholder="Placeholder"
+                                formControlName="id"
+                            />
                             <span>settings</span>
                         </div>
                     </div>
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Title</label>
-                            <input [readonly]="!readonly" matInput placeholder="Title" formControlName="title">
-                            <div *ngIf="taskFormGroup.controls['title'].invalid">
-                                <span *ngIf="taskFormGroup.controls['title'].errors.required">Title is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="Title"
+                                formControlName="title"
+                            />
+                            <div
+                                *ngIf="taskFormGroup.controls['title'].invalid"
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['title'].errors
+                                            .required
+                                    "
+                                    >Title is required</span
+                                >
                             </div>
                         </div>
                     </div>
@@ -41,18 +86,49 @@
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Description</label>
-                            <input [readonly]="!readonly" matInput placeholder="Placeholder" formControlName="description">
-                            <div *ngIf="taskFormGroup.controls['description'].invalid">
-                                <span *ngIf="taskFormGroup.controls['description'].errors.required">Description is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="Placeholder"
+                                formControlName="description"
+                            />
+                            <div
+                                *ngIf="
+                                    taskFormGroup.controls['description']
+                                        .invalid
+                                "
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['description']
+                                            .errors.required
+                                    "
+                                    >Description is required</span
+                                >
                             </div>
                         </div>
                     </div>
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Category</label>
-                            <input [readonly]="!readonly" matInput placeholder="Category" formControlName="category">
-                            <div *ngIf="taskFormGroup.controls['category'].invalid">
-                                <span *ngIf="taskFormGroup.controls['category'].errors.required">Category is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="Category"
+                                formControlName="category"
+                            />
+                            <div
+                                *ngIf="
+                                    taskFormGroup.controls['category'].invalid
+                                "
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['category']
+                                            .errors.required
+                                    "
+                                    >Category is required</span
+                                >
                             </div>
                         </div>
                     </div>
@@ -61,18 +137,42 @@
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Street</label>
-                            <input [readonly]="!readonly" matInput placeholder="Placeholder" formControlName="street">
-                            <div *ngIf="taskFormGroup.controls['street'].invalid">
-                                <span *ngIf="taskFormGroup.controls['street'].errors.required">Street is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="Placeholder"
+                                formControlName="street"
+                            />
+                            <div
+                                *ngIf="taskFormGroup.controls['street'].invalid"
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['street'].errors
+                                            .required
+                                    "
+                                    >Street is required</span
+                                >
                             </div>
                         </div>
                     </div>
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>City</label>
-                            <input [readonly]="!readonly" matInput placeholder="city" formControlName="city">
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="city"
+                                formControlName="city"
+                            />
                             <div *ngIf="taskFormGroup.controls['city'].invalid">
-                                <span *ngIf="taskFormGroup.controls['city'].errors.required">City is required</span>
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['city'].errors
+                                            .required
+                                    "
+                                    >City is required</span
+                                >
                             </div>
                         </div>
                     </div>
@@ -81,18 +181,46 @@
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>State</label>
-                            <input [readonly]="!readonly" matInput placeholder="state" formControlName="state">
-                            <div *ngIf="taskFormGroup.controls['state'].invalid">
-                                <span *ngIf="taskFormGroup.controls['state'].errors.required">State is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="state"
+                                formControlName="state"
+                            />
+                            <div
+                                *ngIf="taskFormGroup.controls['state'].invalid"
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['state'].errors
+                                            .required
+                                    "
+                                    >State is required</span
+                                >
                             </div>
                         </div>
                     </div>
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Zip Code</label>
-                            <input [readonly]="!readonly" matInput placeholder="zipcode" formControlName="zipcode">
-                            <div *ngIf="taskFormGroup.controls['zipcode'].invalid">
-                                <span *ngIf="taskFormGroup.controls['zipcode'].errors.required">Zip Code is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="zipcode"
+                                formControlName="zipcode"
+                            />
+                            <div
+                                *ngIf="
+                                    taskFormGroup.controls['zipcode'].invalid
+                                "
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['zipcode'].errors
+                                            .required
+                                    "
+                                    >Zip Code is required</span
+                                >
                             </div>
                         </div>
                     </div>
@@ -101,25 +229,61 @@
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Country</label>
-                            <input [readonly]="!readonly" matInput placeholder="country" formControlName="country">
-                            <div *ngIf="taskFormGroup.controls['country'].invalid">
-                                <span *ngIf="taskFormGroup.controls['country'].errors.required">Country is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="country"
+                                formControlName="country"
+                            />
+                            <div
+                                *ngIf="
+                                    taskFormGroup.controls['country'].invalid
+                                "
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls['country'].errors
+                                            .required
+                                    "
+                                    >Country is required</span
+                                >
                             </div>
                         </div>
                     </div>
                     <div class="flex-fill p-1">
                         <div class="full-width">
                             <label>Estimated Hours</label>
-                            <input [readonly]="!readonly" matInput placeholder="zipcode" formControlName="estimated_hours">
-                            <div *ngIf="taskFormGroup.controls['estimated_hours'].invalid">
-                                <span *ngIf="taskFormGroup.controls['estimated_hours'].errors.required">Est. Hours is required</span>
+                            <input
+                                [readonly]="!readonly"
+                                matInput
+                                placeholder="zipcode"
+                                formControlName="estimated_hours"
+                            />
+                            <div
+                                *ngIf="
+                                    taskFormGroup.controls['estimated_hours']
+                                        .invalid
+                                "
+                            >
+                                <span
+                                    *ngIf="
+                                        taskFormGroup.controls[
+                                            'estimated_hours'
+                                        ].errors.required
+                                    "
+                                    >Est. Hours is required</span
+                                >
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="d-flex flex-row">
-                    <div class="m-2"><button id="btnBack" (click)='handleBack()'>Back</button></div>
+                    <div class="m-2">
+                        <button id="btnBack" (click)="handleBack()">
+                            Back
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>

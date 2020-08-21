@@ -9,9 +9,10 @@ import { IUser } from 'src/app/views/user/models/user';
 @Component({
     selector: 'app-message-sender',
     templateUrl: './message-sender.component.html',
-    styleUrls: ['./message-sender.component.scss']
+    styleUrls: ['./message-sender.component.scss'],
 })
 export class MessageSenderComponent implements OnInit {
+    // tslint:disable-next-line: variable-name
     private _task: Guid;
     public messageInReply: IMessage;
     public mouseoverSave = false;
@@ -44,14 +45,13 @@ export class MessageSenderComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
-        public notification: NotificationService,
-    ) { }
+        public notification: NotificationService
+    ) {}
 
-    ngOnInit() { }
+    ngOnInit(): void {}
 
     // tslint:disable-next-line: no-any
-    handleSubmit(formValues: any) {
-
+    handleSubmit(formValues: any): void {
         // update model
         const msg: IMessage = {
             from: this.from,
@@ -61,19 +61,20 @@ export class MessageSenderComponent implements OnInit {
             replyto: this.messageInReply ? this.messageInReply._id : undefined,
         };
 
-        this.messageService.sendMessageForTask(this.task, msg).subscribe(success => {
-            this.message = '';
-            this.messageSent.emit(msg);
+        this.messageService
+            .sendMessageForTask(this.task, msg)
+            .subscribe((success) => {
+                this.message = '';
+                this.messageSent.emit(msg);
 
-            this.notification.showSuccess('message sent!');
-        });
+                this.notification.showSuccess('message sent!');
+            });
 
         this.messageInReply = undefined;
     }
 
-    handleCancel() {
+    handleCancel(): void {
         this.message = '';
         this.messageInReply = undefined;
     }
-
 }
