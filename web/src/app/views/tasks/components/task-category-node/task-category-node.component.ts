@@ -79,7 +79,7 @@ export class TaskCategoryNodeComponent implements OnInit {
                 [item[key]]: item,
             };
         }, initialValue);
-    };
+    }
 
     getstat = (category) => this.categoryStats[category]?.count;
 }

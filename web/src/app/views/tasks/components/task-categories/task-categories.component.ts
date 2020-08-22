@@ -161,7 +161,7 @@ export class TaskCategoriesComponent
                 this._intersectionObserver.disconnect();
             }
         });
-    };
+    }
 
     private checkIfIntersecting(entry: IntersectionObserverEntry): any {
         // tslint:disable-next-line: no-any

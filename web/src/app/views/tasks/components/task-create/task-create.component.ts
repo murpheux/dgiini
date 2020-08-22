@@ -390,7 +390,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             reader.readAsDataURL(file);
             reader.onload = () => resolve(reader.result);
             reader.onerror = (error) => reject(error);
-        });
+        })
 
     thumbnailify = (base64Image, targetSize, callback) => {
         const img = new Image();
@@ -419,7 +419,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         };
 
         img.src = base64Image;
-    };
+    }
 
     //   const sourceImage = document.getElementById("source-image");
     //   const thumbnail = document.getElementById("thumbnail");
