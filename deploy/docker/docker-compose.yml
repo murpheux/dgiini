@@ -11,7 +11,7 @@ services:
             - NGINX_HOST=sdpro.dynu.com
             - NGINX_PORT=80
         ports:
-            - "9000:80"
+            - "8443:80"
         container_name: web
         networks:
             - dgiininet
@@ -57,7 +57,7 @@ services:
             - APP_NAME=auth_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=https://sdpro.dynu.com:8443
         container_name: auth_api
         networks:
             - dgiininet
@@ -79,7 +79,7 @@ services:
             - APP_NAME=task_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=https://sdpro.dynu.com:8443
         container_name: task_api
         networks:
             - dgiininet
@@ -101,7 +101,7 @@ services:
             - APP_NAME=msg_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=https://sdpro.dynu.com:8443
         container_name: msg_api
         networks:
             - dgiininet
@@ -125,7 +125,7 @@ services:
             - APP_BUILD=0.0.1.00237
             - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
             - SENDGRID_API_KEY=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
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=https://sdpro.dynu.com:8443
         container_name: notify_api
         networks:
             - dgiininet
@@ -147,7 +147,7 @@ services:
             - APP_NAME=bill_api/microservices
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
-            - COR_CLIENT_URL=https://sdpro.dynu.com:9000
+            - COR_CLIENT_URL=https://sdpro.dynu.com:8443
         container_name: bill_api
         networks:
             - dgiininet

@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { IUser } from '../../models/user';
-import { LocationService } from '../../services/location.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ImageFilType } from 'src/app/views/tasks/models/IPhoto';
 import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { IProfile, IUser } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
     selector: 'app-register',
@@ -34,31 +32,22 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: AuthService,
         private userService: UserService,
-        private locationService: LocationService,
         private notificationService: NotificationService,
-        public dialogRef: MatDialogRef<RegisterComponent>
+        public dialogRef: MatDialogRef<RegisterComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: IProfile
     ) {}
 
     ngOnInit(): void {
-        this.initializeContent();
-        this.buildForm();
-
         this.user = {
             _id: undefined,
-            username: '',
-            password: '',
-            name: '',
-            source: '',
-            role: '',
-            rating: 5,
-            photo: undefined,
-            created: undefined,
-            lastLogin: undefined,
-            aboutMember: undefined,
-            joined: undefined,
+            username: this.data.email,
+            name: this.data.name,
+            role: [],
         };
+
+        this.initializeContent();
+        this.buildForm();
     }
 
     async initializeContent(): Promise<void> {}
@@ -69,7 +58,7 @@ export class RegisterComponent implements OnInit {
         this.userForm = this.formBuilder.group({
             subUserForms: this.formBuilder.array([
                 this.formBuilder.group({
-                    name: this.formBuilder.control('', [
+                    name: this.formBuilder.control(this.user.name, [
                         Validators.required,
                         Validators.minLength(10),
                         Validators.maxLength(50),

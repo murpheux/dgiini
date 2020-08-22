@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
+import { UserService } from 'src/app/views/user/services/user.service';
 
 @Component({
     selector: 'app-header-template',
@@ -34,6 +35,7 @@ export class HeaderTemplateComponent
 
     constructor(
         public taskService: TaskService,
+        public userService: UserService,
         public authService: AuthService,
         private dialog: MatDialog,
         private router: Router,
@@ -112,4 +114,5 @@ export class HeaderTemplateComponent
             this.subscription.unsubscribe();
         }
     }
+
 }

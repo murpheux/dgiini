@@ -6,7 +6,7 @@ import * as HttpStatus from 'http-status-codes';
 import { UserService } from '../user/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../user/components/register/register.component';
-import { IUser } from '../user/models/user';
+import { IUser, IProfile } from '../user/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class HomeComponent implements OnInit {
     currentUser: IUser;
+    profile: IProfile;
     currentCity: ICityLocation;
     taskerClientState = Constants.USER_ROLE_CLIENT; // default client state
 
@@ -26,28 +27,24 @@ export class HomeComponent implements OnInit {
         private locationService: LocationService
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.locationService.getCurrentCity().then((data) => {
             this.currentCity = data;
         });
 
-        this.loadRegisterDialog();
+        if (this.authService.isLoggedIn$) {
+            this.authService.userProfile$.subscribe(profile => {
 
-        if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
-            this.currentUser = JSON.parse(
-                localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)
-            );
-
-            // get user info from db
-            this.userService
-                .getUserByEmail(this.currentUser.username)
-                .subscribe((response) => {
-                    if (response.code === HttpStatus.NOT_FOUND) {
-                        this.loadRegisterDialog();
-                    } else {
-                        console.log('user was found!');
-                    }
-                });
+                if (profile) {
+                    this.userService
+                        .getUserByEmail(profile.email)
+                        .subscribe(response => {
+                            if (response.code === HttpStatus.NOT_FOUND) {
+                                this.loadRegisterDialog(profile);
+                            }
+                        });
+                }
+            });
         }
     }
 
@@ -55,12 +52,13 @@ export class HomeComponent implements OnInit {
         this.taskerClientState = state;
     }
 
-    loadRegisterDialog(): void {
+    loadRegisterDialog(profile: any): void {
         let dialogRef;
 
         dialogRef = this.dialog.open(RegisterComponent, {
             height: '570px',
             width: '800px',
+            data:  profile
         });
     }
 }

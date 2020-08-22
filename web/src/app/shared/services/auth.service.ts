@@ -25,6 +25,7 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
     isLoggedIn$ = new BehaviorSubject(false); // NEW
+    requestedScopes = 'openid profile email read:messages write:messages';
 
     // Create an observable of Auth0 instance of client
     auth0Client$ = (from(
@@ -33,7 +34,7 @@ export class AuthService {
             client_id: environment.auth0.clientId,
             redirect_uri: `${window.location.origin}`,
             // audience: `https://${environment.auth0.domain}/api/v2/`,
-            // scope: 'openid profile email',
+            scope: this.requestedScopes,
             // useRefreshTokens: true,
             cacheLocation: 'localstorage', // valid values are: 'memory' or 'localstorage'
         })
@@ -59,7 +60,15 @@ export class AuthService {
     );
     // Create subject and public observable of user profile data
     private userProfileSubject$ = new BehaviorSubject<any>(null);
+    // tslint:disable-next-line: no-any
+    private userTokenSubject$ = new BehaviorSubject<any>(null);
+    // tslint:disable-next-line: no-any
+    private userClaimsSubject$ = new BehaviorSubject<any>(null);
+
     userProfile$ = this.userProfileSubject$.asObservable();
+    userToken$ = this.userTokenSubject$.asObservable();
+    userClaims$ = this.userClaimsSubject$.asObservable();
+
     // Create a local property for login status
     loggedIn: boolean = null;
 
@@ -77,6 +86,22 @@ export class AuthService {
         return this.auth0Client$.pipe(
             concatMap((client: Auth0Client) => from(client.getUser(options))),
             tap((user) => this.userProfileSubject$.next(user))
+        );
+    }
+
+    // tslint:disable-next-line: no-any
+    getClaims$(options?): Observable<any> {
+        return this.auth0Client$.pipe(
+            concatMap((client: Auth0Client) => from(client.getIdTokenClaims(options))),
+            tap(claims => this.userClaimsSubject$.next(claims))
+        );
+    }
+
+    // tslint:disable-next-line: no-any
+    getToken$(options?): Observable<any> {
+        return this.auth0Client$.pipe(
+            concatMap((client: Auth0Client) => from(client.getTokenSilently(options))),
+            tap(token => this.userTokenSubject$.next(token))
         );
     }
 
@@ -147,6 +172,7 @@ export class AuthService {
                     // Redirect callback complete; get user and login status
                     return combineLatest([
                         this.getUser$(),
+                        this.getClaims$(), this.getToken$(),
                         this.isAuthenticated$,
                     ]);
                 })

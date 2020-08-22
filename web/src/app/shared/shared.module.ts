@@ -48,12 +48,12 @@ import { NgLetDirective } from './directives/ng-let/ng-let.directive';
         UtilService,
         LoadingService,
         AuthGuard,
-        //  { provide: ErrorHandler, useClass: GlobalErrorHandler },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ServerErrorInterceptor,
-            multi: true,
-        },
+        // { provide: ErrorHandler, useClass: GlobalErrorHandler },
+        // {
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: ServerErrorInterceptor,
+        //     multi: true,
+        // },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: LoadingInterceptor,

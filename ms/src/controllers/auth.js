@@ -129,7 +129,7 @@ export class AuthenticationController {
             if (user) {
                 res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, user))
             } else {
-                res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
+                res.status(HttpStatus.OK).json(build_response(HttpStatus.NOT_FOUND, NOTFOUND_MSG, username))
             }
         }
     }
