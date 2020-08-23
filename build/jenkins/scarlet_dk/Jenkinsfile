@@ -95,9 +95,9 @@ pipeline {
                 stage('web test') {
                     steps {
                         dir("${WORKSPACE}/web"){
-                            sh '''
-                                npm run test
-                            '''
+                            // sh '''
+                            //     npm run test
+                            // '''
                         }
                     }
                 }
