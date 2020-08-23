@@ -4,7 +4,7 @@ export const environment = {
     // AUTH0
     auth0: {
         domain: 'murpheux.auth0.com',
-        clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
+        clientId: 'CMVPqSIb_wIkCr6gfdCk2q9JPDJh41CW',
         callbackURL: 'https://sdpro.dynu.com:8443',
     },
 
@@ -12,8 +12,6 @@ export const environment = {
         ip: 'http://api.ipify.org/?format=json',
         proxy: 'https://cors-anywhere.herokuapp.com',
     },
-
-    auth_ttl: 3600000, // 1hr
 
     countries: [
         { name: 'Canada', code: 'ca' },

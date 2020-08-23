@@ -1,21 +1,20 @@
 export const environment = {
-    production: false,
-
-    gateway: {
-        api: 'https://www.dgiini.com/api',
-    },
+    production: true,
 
     // AUTH0
     auth0: {
         domain: 'murpheux.auth0.com',
-        clientId: 'EKaZmjHFRlGyTS1Fgoxg98KplWV913aK',
-        callbackURL: 'https://www.dgiini.com',
+        clientId: 'CMVPqSIb_wIkCr6gfdCk2q9JPDJh41CW',
+        callbackURL: 'https://localhost:8443',
     },
 
-    version: '0.0.1',
-    auth_ttl: 3600000, // 1hr
-
-    keys: {
-        gmap: '',
+    provider: {
+        ip: 'http://api.ipify.org/?format=json',
+        proxy: 'https://cors-anywhere.herokuapp.com',
     },
+
+    countries: [
+        { name: 'Canada', code: 'ca' },
+        { name: 'United States', code: 'us' },
+    ],
 };
