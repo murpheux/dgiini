@@ -12,7 +12,7 @@
     },
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --ssl true --ssl-cert ssl/server.crt --ssl-key ssl/server.key",
+        "start": "ng serve --base-href --ssl true --ssl-cert ssl/server.crt --ssl-key ssl/server.key",
         "build": "ng build",
         "compile": "ngc -p tsconfig.json",
         "build-dev": "ng build --base-href",
@@ -20,7 +20,7 @@
         "build-docker": "ng build --base-href --configuration=docker",
         "build-k8s": "ng build --base-href --configuration=k8s",
         "startx": "npm run config -- --environment=dev && ng serve --environment=dev",
-        "test": "ng test",
+        "test": "ng test --watch=false --browsers ChromeHeadless",
         "lint": "ng lint",
         "tslint": "npx tslint --project tsconfig.json --fix",
         "e2e": "ng e2e",

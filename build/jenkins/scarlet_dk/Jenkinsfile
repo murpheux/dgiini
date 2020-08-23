@@ -91,12 +91,26 @@ pipeline {
             }
         }
         stage('run unit test') {
-            steps {
-                dir("${WORKSPACE}/ms"){
-                    // sh '''
-                    //     npm run test test/unit
-                    // '''
+            parallel {
+                stage('web test') {
+                    steps {
+                        dir("${WORKSPACE}/web"){
+                            sh '''
+                                npm run test
+                            '''
+                        }
+                    }
                 }
+                stage('ms test') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            // sh '''
+                            //     npm run test test/unit
+                            // '''
+                        }
+                    }
+                }
+                
             }
         }
         stage('unsure why this is required'){

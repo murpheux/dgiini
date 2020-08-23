@@ -24,18 +24,3 @@ const getWithExpiry = (key) => {
 
     return item.value
 }
-
-const deleteExpiredLS = () => {
-
-    let eachitem;
-    var eachkey;
-    var dummyitem;
-    
-    for (var i = 0; i < localStorage.length; i++){
-        eachitem = localStorage.getItem(localStorage.key(i));
-        eachkey = localStorage.key(i);
-        if (eachitem.includes("expiry")) {
-            dummyitem = getWithExpiry(eachkey);
-        }
-    }
-}

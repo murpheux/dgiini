@@ -92,7 +92,7 @@
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
-                        *ngIf="(authService.userProfile$ | async) === false"
+                        *ngIf="(authService.userProfile$ | async) === null"
                     >
                         <img
                             [src]="'assets/images/user.jpg'"

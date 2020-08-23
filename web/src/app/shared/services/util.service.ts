@@ -50,13 +50,4 @@ export class UtilService {
         return item.value;
     }
 
-    deleteExpiredLS(): void {
-        for (let i = 0; i < localStorage.length; i++) {
-            const eachitem = localStorage.getItem(localStorage.key(i));
-            const eachkey = localStorage.key(i);
-            if (eachitem.includes('expiry')) {
-                this.getWithExpiry(eachkey);
-            }
-        }
-    }
 }
