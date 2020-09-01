@@ -4,8 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ImageFilType } from 'src/app/views/tasks/models/IPhoto';
 import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
-import { IProfile, IUser } from '../../models/user';
+import { IProfile, IUser, IClient, IAddress } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import { range } from 'rxjs';
+import { toArray, take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-register',
@@ -26,9 +28,13 @@ export class RegisterComponent implements OnInit {
     userForm: FormGroup;
     user: IUser;
     activeStepIndex: number;
+    yearList: number[];
 
     mouseoverSave = false;
-    percentage = [0, 5, 25, 50, 75, 100];
+    percentage = [25, 50, 75, 100];
+    monthInYear = ['January', 'February', 'March', 'April', 'May',
+        'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    howHeardList = ['website', 'word of mouth', 'campaign flyers', 'radio', 'tv', 'others'];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -41,19 +47,28 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.user = {
             _id: undefined,
-            username: this.data.email,
-            name: this.data.name,
-            role: [],
+            username: this.data?.email,
+            name: this.data?.name,
+            role: [ 'client' ], // default for new user
         };
 
         this.initializeContent();
         this.buildForm();
     }
 
-    async initializeContent(): Promise<void> {}
+    initializeContent(): void {
+        const year = (new Date()).getFullYear();
+
+        range(year - 100, 101)
+            .pipe(toArray())
+            .subscribe(rng => {
+                this.yearList = rng.reverse();
+            });
+    }
 
     buildForm(): void {
         this.activeStepIndex = 0;
+        const currentYear = (new Date()).getFullYear();
 
         this.userForm = this.formBuilder.group({
             subUserForms: this.formBuilder.array([
@@ -67,12 +82,14 @@ export class RegisterComponent implements OnInit {
                         Validators.required,
                         Validators.maxLength(50),
                     ]),
-                    dob: this.formBuilder.control('', [
+                    month: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.maxLength(1000),
+                    ]),
+                    year: this.formBuilder.control(currentYear, [
+                        Validators.required,
+                        Validators.max(currentYear),
                     ]),
                 }),
-                this.formBuilder.group({}), // dummy
                 this.formBuilder.group({
                     street: this.formBuilder.control('', [Validators.required]),
                     city: this.formBuilder.control('Calgary', [
@@ -104,31 +121,37 @@ export class RegisterComponent implements OnInit {
 
     // tslint:disable-next-line: no-any
     handleSave(formValues: any): void {
-        const currentDate = new Date();
 
-        this.user.name = formValues.subTaskForms[0].title;
-        // description: formValues.subTaskForms[0].description,
-        // category: formValues.subTaskForms[0].category,
+        const client: IClient = {
+            _id: this.user._id,
+            name: formValues.subUserForms[0].name,
+            username: this.user.username,
+            email: this.user.username,
+            phone: formValues.subUserForms[0].phone,
+            role: this.user.role,
+            dob: {
+                month: formValues.subUserForms[0].month,
+                year: formValues.subUserForms[0].year
+            },
+            address: {
+                street: formValues.subUserForms[1].street,
+                city: formValues.subUserForms[1].city,
+                state: formValues.subUserForms[1].state,
+                country: formValues.subUserForms[1].country,
+                zipcode: formValues.subUserForms[1].zipcode
+            },
+            how_heard: formValues.subUserForms[2].howHeard
+        };
 
-        // location: {
-        //     street: formValues.subTaskForms[2].street,
-        //     city: formValues.subTaskForms[2].city,
-        //     state: formValues.subTaskForms[2].state,
-        //     country: formValues.subTaskForms[2].country,
-        //     zipcode: formValues.subTaskForms[2].zipcode
-        // },
-
-        // scheduled_date: new Date(`${formValues.subTaskForms[3].date} ${formValues.subTaskForms[3].time}`),
-        // created: currentDate,
-        // estimated_hours: formValues.subTaskForms[4].esthrs,
+        console.log(JSON.stringify(client));
 
         const validator = new UserValidator();
-        const result = validator.validate(this.user);
+        const result = validator.validate(client);
 
         if (result.isValid) {
-            this.userService.saveUser(this.user).subscribe((success) => {
+            this.userService.saveClient(client).subscribe(success => {
                 this.notificationService.showSuccess(
-                    'Task saved successfully!'
+                    'User information saved successfully!'
                 );
                 this.dialogRef.close();
             });
@@ -145,10 +168,11 @@ export class RegisterComponent implements OnInit {
     }
 
     nextTab(): boolean {
-        if (this.currentTabOpen > 4) {
+        if (this.currentTabOpen > 3) {
             return false;
         }
 
+        const currentTab = this.currentTabOpen;
         const currentTabId = `#register-step-${this.currentTabOpen}`;
 
         // Close current Tab
@@ -166,7 +190,7 @@ export class RegisterComponent implements OnInit {
         $(newTabId).removeClass('fade');
         $(newTabId).removeClass('d-none');
 
-        const progressBar = this.postProgressBar.nativeElement;
+        // const progressBar = this.postProgressBar.nativeElement;
 
         switch (this.currentTabOpen) {
             case 1:
@@ -174,31 +198,29 @@ export class RegisterComponent implements OnInit {
 
             case 2:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postBackBtn.nativeElement.classList.remove('d-none');
                 break;
 
             case 3:
-            // case 4:
-            case 4:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 break;
 
-            case 5:
+            case 4:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postNextBtn.nativeElement.classList.add('d-none');
                 this.postPostBtn.nativeElement.classList.remove('d-none');
@@ -217,10 +239,12 @@ export class RegisterComponent implements OnInit {
         $(currentTabId).addClass('fade');
         $(currentTabId).addClass('d-none');
 
-        // Increment To Next Tab
+        // Decrement To Next Tab
         this.currentTabOpen--;
 
         // Open Next Tab
+        let currentTab = this.currentTabOpen;
+        currentTab--;
         const nextTabId = `#register-step-${this.currentTabOpen}`;
 
         $(nextTabId).addClass('active');
@@ -230,31 +254,29 @@ export class RegisterComponent implements OnInit {
         switch (this.currentTabOpen) {
             case 1:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postBackBtn.nativeElement.classList.add('d-none');
                 break;
 
             case 2:
-            // case 3:
-            case 3:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 break;
 
-            case 4:
+            case 3:
                 this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
+                    this.percentage[currentTab]
                 }%`;
                 this.postNextBtn.nativeElement.classList.remove('d-none');
                 this.postPostBtn.nativeElement.classList.add('d-none');
@@ -264,24 +286,4 @@ export class RegisterComponent implements OnInit {
                 break;
         }
     }
-
-    handleFileInput(files: FileList): void {
-        Array.from(files).forEach(async (file) => {
-            const base64 = await this.imageFileToBase64(file);
-            this.photoImg.nativeElement.src = base64;
-            this.user.photo = {
-                filename: file.name,
-                photo: base64.toString(),
-                filetype: ImageFilType['image/png'],
-            };
-        });
-    }
-
-    imageFileToBase64 = (file) =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
-        })
 }

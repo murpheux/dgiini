@@ -27,7 +27,7 @@ services:
         - APP_NAME=apigw/apigw
         - APP_VERSION=0.1
       ports:
-          - "7000:443"
+          - "8800:443"
       networks:
           - dgiininet
       deploy:

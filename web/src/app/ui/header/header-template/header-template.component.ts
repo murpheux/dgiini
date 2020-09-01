@@ -10,6 +10,7 @@ import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { UserService } from 'src/app/views/user/services/user.service';
+import { BecometaskerComponent } from 'src/app/views/user/components/becometasker/becometasker.component';
 
 @Component({
     selector: 'app-header-template',
@@ -68,7 +69,18 @@ export class HeaderTemplateComponent
         });
     }
 
-    async openDialog(): Promise<void> {
+    async upgradeToVendor(): Promise<void> {
+        let dialogRef;
+
+        dialogRef = this.dialog.open(BecometaskerComponent, {
+            height: '570px',
+            width: '800px',
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {});
+    }
+
+    async postTask(): Promise<void> {
         let dialogRef;
 
         if (await this.authService.isLoggedIn$) {
@@ -92,20 +104,6 @@ export class HeaderTemplateComponent
 
     async logout(): Promise<void> {
         this.authService.logout();
-    }
-
-    changeLang(lang: string): void {
-        if (lang === localStorage.getItem('locale')) {
-            return;
-        }
-        if (lang === 'en') {
-            localStorage.setItem('locale', 'en');
-        } else if (lang === 'fr') {
-            localStorage.setItem('locale', 'fr');
-        } else {
-            localStorage.setItem('locale', 'es');
-        }
-        window.location.reload();
     }
 
     ngOnDestroy(): void {

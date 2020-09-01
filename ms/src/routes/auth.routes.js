@@ -28,7 +28,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     const api = new AuthenticationController(db)
 
     router.post('/login', asyncHandler(api.login))
-    router.post('/register', asyncHandler(api.register))
+    router.post('/users', asyncHandler(api.register))
     router.post('/promote', asyncHandler(api.promote))
     router.get('/users', asyncHandler(api.user_list))
     router.get('/users/stats/full', asyncHandler(api.user_stats))

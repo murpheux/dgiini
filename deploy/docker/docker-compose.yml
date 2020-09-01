@@ -35,7 +35,7 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
         ports:
-            - "7000:443"
+            - "8800:443"
         container_name: apigw
         networks:
             - dgiininet

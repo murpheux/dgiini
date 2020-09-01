@@ -61,7 +61,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
     photos: IPhoto[] = [];
 
     mouseoverSave = false;
-    percentage = [0, 16, 33, 50, 66, 83, 100];
+    percentage = [16, 33, 50, 66, 83, 100];
 
     // tslint:disable-next-line: no-any
     optionsKeys: any;
@@ -79,7 +79,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         private authService: AuthService,
         private locationService: LocationService,
         public dialogRef: MatDialogRef<TaskCreateComponent>
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.initializeContent();
@@ -253,6 +253,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             return false;
         }
 
+        const currentTab = this.currentTabOpen;
         const currentTabId = `#post-task-step-${this.currentTabOpen}`;
 
         // Close current Tab
@@ -278,11 +279,11 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
             case 2:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskBackBtn.nativeElement.classList.remove('d-none');
                 break;
 
@@ -290,20 +291,20 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             case 4:
             case 5:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 break;
 
             case 6:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskNextBtn.nativeElement.classList.add('d-none');
                 this.postTaskPostBtn.nativeElement.classList.remove('d-none');
                 break;
@@ -325,6 +326,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         this.currentTabOpen--;
 
         // Open Next Tab
+        const currentTab = this.currentTabOpen  - 1;
         const nextTabId = `#post-task-step-${this.currentTabOpen}`;
 
         $(nextTabId).addClass('active');
@@ -334,11 +336,11 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         switch (this.currentTabOpen) {
             case 1:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskBackBtn.nativeElement.classList.add('d-none');
                 break;
 
@@ -346,20 +348,20 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             case 3:
             case 4:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 break;
 
             case 5:
                 this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[this.currentTabOpen]
-                }%`;
+                    this.percentage[currentTab]
+                    }%`;
                 this.postTaskNextBtn.nativeElement.classList.remove('d-none');
                 this.postTaskPostBtn.nativeElement.classList.add('d-none');
                 break;

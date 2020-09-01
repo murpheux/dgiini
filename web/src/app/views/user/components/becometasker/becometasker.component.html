@@ -1,3 +1,295 @@
-<p>
-    becometasker works!
-</p>
+<div class="" id="registerUserModal">
+    <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="handleSave(userForm.value)">
+        <!-- Modal body -->
+        <div class="modal-body">
+            <h4 class="modal-title text-web font-weight-bold mb-2">
+                <i class="fas fa-pen"></i> Welcome - Update User Info
+                <span #postProgressText class="float-right percentage">{{percentage[0]}}%</span>
+            </h4>
+            <div class="progress" style="height: 7px;">
+                <div #postProgressBar class="progress-bar bg-web" style="width: 20%; height: 7px;"></div>
+            </div>
+
+            <div class="register-form pt-3">
+                <div formArrayName="subUserForms">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div formGroupName="0">
+                            <div class="tab-pane container p-0 active" id="register-step-1">
+                                <div class="form-group mb-2">
+                                    <label for="name">Account No</label>
+                                    <em *ngIf="
+                                            forms[0].controls.name?.invalid &&
+                                            (forms[0].controls.name?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="accountNo" id="accountNo" name="accountNo" placeholder="Account Number" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="phone">Bank Name</label>
+                                    <em *ngIf="
+                                            forms[0].controls.bankName?.invalid &&
+                                            (forms[0].controls.bankName?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                        <select class="form-control" id="bankName" name="bankName" formControlName="bankName">
+                                            <option value="">-- Select Bank/Inst --</option>
+                                            <option *ngFor="
+                                                let bank of banks
+                                            " value="{{ bank }}">{{ bank }}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="name">Transit No</label>
+                                    <em *ngIf="
+                                            forms[0].controls.transitNo?.invalid &&
+                                            (forms[0].controls.transitNo?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="transitNo" id="transitNo" name="transitNo" placeholder="Transit Number" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="name">Institution No</label>
+                                    <em *ngIf="
+                                            forms[0].controls.insitutionNo?.invalid &&
+                                            (forms[0].controls.insitutionNo?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
+                                </div>
+                                <hr>
+                                <div class="form-group mb-2">
+                                    <label for="street">Street</label>
+                                    <em *ngIf="
+                                            forms[2].controls.street?.invalid &&
+                                            (forms[2].controls.street
+                                                ?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" id="street" name="street" formControlName="street" placeholder="Street" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="city">City</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="city" name="city" formControlName="city" placeholder="City" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="state">State</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="state" name="state" formControlName="state" placeholder="State" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="zipcode">Zip Code</label>
+                                            <em *ngIf="
+                                                    forms[1].controls.zipcode
+                                                        ?.invalid &&
+                                                    (forms[1].controls.zipcode
+                                                        ?.touched ||
+                                                        mouseoverSave)
+                                                ">Required</em>
+                                            <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode" placeholder="Zip Code" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="country">Country</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="country" name="country" formControlName="country" placeholder="Country" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div formGroupName="1">
+                            <div class="tab-pane container p-0 active" id="register-step-1">
+                                <div class="form-group mb-2">
+                                    <label for="cardno">Card No</label>
+                                    <em *ngIf="
+                                            forms[0].controls.cardno?.invalid &&
+                                            (forms[0].controls.cardno?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="cardno" id="cardno" name="cardno" placeholder="Card Number" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="nameoncard">Name on Card</label>
+                                    <em *ngIf="
+                                            forms[0].controls.nameoncard?.invalid &&
+                                            (forms[0].controls.nameoncard?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                        <select class="form-control" id="nameoncard" name="nameoncard" formControlName="nameoncard">
+                                            <option value="">-- Select Bank/Inst --</option>
+                                            <option *ngFor="
+                                                let bank of banks
+                                            " value="{{ bank }}">{{ bank }}</option>
+                                        </select>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="name">Expiry</label>
+                                    <em *ngIf="
+                                            forms[0].controls.expiry?.invalid &&
+                                            (forms[0].controls.expiry?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="expiry" id="expiry" name="expiry" placeholder="Expiry" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="name">CV2</label>
+                                    <em *ngIf="
+                                            forms[0].controls.cv2?.invalid &&
+                                            (forms[0].controls.cv2?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" formControlName="cv2" id="cv2" name="cv2" placeholder="CV2" />
+                                </div>
+                                <hr>
+                                <div class="form-group mb-2">
+                                    <label for="street">Street</label>
+                                    <em *ngIf="
+                                            forms[2].controls.street?.invalid &&
+                                            (forms[2].controls.street
+                                                ?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="text" class="form-control" id="street" name="street" formControlName="street" placeholder="Street" />
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="city">City</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="city" name="city" formControlName="city" placeholder="City" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="state">State</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="state" name="state" formControlName="state" placeholder="State" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="zipcode">Zip Code</label>
+                                            <em *ngIf="
+                                                    forms[1].controls.zipcode
+                                                        ?.invalid &&
+                                                    (forms[1].controls.zipcode
+                                                        ?.touched ||
+                                                        mouseoverSave)
+                                                ">Required</em>
+                                            <input type="text" class="form-control" id="zipcode" name="zipcode" formControlName="zipcode" placeholder="Zip Code" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="country">Country</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="country" name="country" formControlName="country" placeholder="Country" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div formGroupName="2">
+                            <div
+                                class="tab-pane container p-0 fade d-none"
+                                id="post-task-step-2"
+                            >
+                                <p class="font-weight-bold">
+                                    Attachments (Optional)
+                                </p>
+                                <div class="mb-2">
+                                    <label for="">Uploaded Images</label>
+                                    <div class="clearfix"></div>
+                                    <div
+                                        *ngFor="
+                                            let photo of photos;
+                                            let i = index
+                                        "
+                                        class="d-inline-block"
+                                        tabindex="0"
+                                        data-toggle="tooltip"
+                                        title="{{ photo.filename }}"
+                                    >
+                                        <div class="img d-inline">
+                                            <i
+                                                class="fas fa-times"
+                                                (click)="removeUpload(i)"
+                                            ></i>
+                                            <img
+                                                src="assets/images/file.png"
+                                                class="border"
+                                                alt="Task Img"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-2 files">
+                                    <label for="task-drag-image"
+                                        >Upload Image</label
+                                    >
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        class="form-control"
+                                        id="task-drag-image"
+                                        (change)="
+                                            handleFileInput($event.target.files)
+                                        "
+                                        multiple
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- </form> -->
+                        <div class="tab-pane container p-0 fade d-none" id="register-step-4">
+                            <p class="font-weight-bold">Confirm Details</p>
+                            <p class="m-0 font-weight-bold">Name</p>
+                            <p>{{ forms[0].get("name")?.value }}</p>
+                            <p class="m-0 font-weight-bold">Phone</p>
+                            <p>{{ forms[0].get("phone")?.value }}</p>
+                            <p class="m-0 font-weight-bold">Date of Birth</p>
+                            <p>{{ forms[0].get("dob")?.value }}</p>
+                            <p class="m-0 font-weight-bold">Address</p>
+                            <p>
+                                {{ forms[1].get("street")?.value }},
+                                {{ forms[1].get("city")?.value }},
+                                {{ forms[1].get("state")?.value }},
+                                {{ forms[1].get("zipcode")?.value }},
+                                {{ forms[1].get("country")?.value }}
+                            </p>
+                            <p class="m-0 font-weight-bold">How heard?</p>
+                            <p>{{ forms[2].get("howheard")?.value }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+                Close
+            </button>
+            <button #postBackBtn type="button" class="btn btn-primary back-btn d-none" (click)="previousTab()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postNextBtn [disabled]="
+                    currentTabOpen > 3
+                        ? 'true'
+                        : forms[currentTabOpen - 1].invalid
+                " type="button" class="btn btn-web next-btn" (click)="nextTab()">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+            <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postPostBtn type="submit" class="btn btn-web next-btn register-btn d-none">
+                <i class="fas fa-pen"></i> Register
+            </button>
+        </div>
+    </form>
+</div>

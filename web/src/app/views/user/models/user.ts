@@ -1,17 +1,16 @@
-import { IAddress } from '../../tasks/models/IAddress';
 import { Guid } from 'guid-typescript';
 import { IPhoto } from '../../tasks/models/IPhoto';
 
 export interface IProfile {
     email: string;
-    email_verfified: boolean;
+    email_verfified?: boolean;
     name: string;
-    family_name: string;
-    given_name: string;
-    nickname: string;
+    family_name?: string;
+    given_name?: string;
+    nickname?: string;
     picture: string;
-    sub: string;
-    updated_at: string;
+    sub?: string;
+    updated_at?: string;
 }
 
 export interface IClaim {
@@ -39,12 +38,11 @@ export interface IUser {
     username: string;
     password?: string;
     source?: string;
-    role: [];
+    role: string[];
 
     created?: Date;
     lastLogin?: Date;
     rating?: number;
-    photo?: IPhoto;
 
     aboutMember?: string;
     joined?: Date;
@@ -61,29 +59,41 @@ export interface IMemberReview {
     created: Date;
 }
 
-export interface IClient extends IUser {
-    address: IAddress;
-    email: string;
-    creditCard: ICreditCard;
-    rating: number;
+export interface IAddress {
+    street: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    country: string;
 }
 
-export interface IVendor extends IUser {
-    address: IAddress;
+export interface IClient extends IUser {
+    address?: IAddress;
     email: string;
-    bankAccount: IBankInfo;
-    creditCard: ICreditCard;
-    jobDonePhotos: [];
-    vehicicle: IVehicle[];
-    qualifications: string[];
-    residentCity: string;
-    skill_summary: string;
-    skills: string[];
-    picture: string;
-    sin: string;
-    rating: number;
+    phone: string;
+    dob?: IDateOfBirth;
+    creditCard?: ICreditCard;
+    rating?: number;
+    how_heard?: string;
+}
 
-    selected: boolean;
+export interface IDateOfBirth {
+    day?: number;
+    month: string;
+    year: number;
+}
+
+export interface IVendor extends IClient {
+    bankAccount?: IBankInfo;
+    creditCard?: ICreditCard;
+    jobDonePhotos?: [];
+    vehicles?: IVehicle[];
+    qualifications?: string[];
+    residentCity?: string;
+    skill_summary?: string;
+    skills?: string[];
+    sin?: string;
+    rating?: number;
 }
 
 export interface IBankInfo {
@@ -106,5 +116,4 @@ export interface IVehicle {
     brand: string;
     model: string;
     year: string;
-    photos: [];
 }

@@ -60,5 +60,7 @@ export class HomeComponent implements OnInit {
             width: '800px',
             data:  profile
         });
+
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 }

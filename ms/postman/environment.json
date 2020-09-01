@@ -24,7 +24,7 @@
 		},
 		{
 			"key": "apigwurl",
-			"value": "https://localhost:7000",
+			"value": "https://localhost:8800",
 			"enabled": true
 		},
 		{

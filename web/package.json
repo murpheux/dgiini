@@ -12,7 +12,7 @@
     },
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --base-href --ssl true --ssl-cert ssl/server.crt --ssl-key ssl/server.key",
+        "start": "ng serve --base-href --ssl true --ssl-cert ssl/server.crt --ssl-key ssl/server.key --host 0.0.0.0 --disableHostCheck true",
         "build": "ng build",
         "compile": "ngc -p tsconfig.json",
         "build-dev": "ng build --base-href",
