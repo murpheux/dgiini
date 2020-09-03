@@ -100,6 +100,13 @@ module.exports = {
         return validation
     },
 
+    validateReview: (review) => {
+        const validatetion = validator()
+            .validate(review.comment).isNotEmpty()
+
+        return validatetion
+    },
+
     extend: (validator) => {
         // custom validators
         validator.add('isCountry', 'Value is not a country', (country) => {

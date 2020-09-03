@@ -93,7 +93,7 @@ module.exports = {
             })
 
             const data = new Promise((resolve, reject) => {
-                const data = db.collection(collection).find(paging.filter).sort(paging.sort_keys)
+                const data = db.collection(collection).find(paging.filter) //.sort(paging.sort_keys)
                     .skip(paging.page_limit * (paging.page - 1)).limit(paging.page_limit)
                     .toArray()
 
