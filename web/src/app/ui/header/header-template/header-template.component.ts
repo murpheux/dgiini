@@ -11,6 +11,7 @@ import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { UserService } from 'src/app/views/user/services/user.service';
 import { BecometaskerComponent } from 'src/app/views/user/components/becometasker/becometasker.component';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
     selector: 'app-header-template',
@@ -33,6 +34,7 @@ export class HeaderTemplateComponent
         Childcare: 'baby-carriage',
         Moving: 'truck',
     };
+    isVendor = false;
 
     constructor(
         public taskService: TaskService,
@@ -40,7 +42,8 @@ export class HeaderTemplateComponent
         public authService: AuthService,
         private dialog: MatDialog,
         private router: Router,
-        private ref: ChangeDetectorRef
+        private ref: ChangeDetectorRef,
+        private toastr: NotificationService,
     ) {
         ref.detach();
         setInterval(() => {
@@ -83,17 +86,20 @@ export class HeaderTemplateComponent
     async postTask(): Promise<void> {
         let dialogRef;
 
-        if (await this.authService.isLoggedIn$) {
-            dialogRef = this.dialog.open(TaskCreateComponent, {
-                height: '570px',
-                width: '800px',
-            });
-        } else {
-            dialogRef = this.dialog.open(NologinComponent, {
-                height: '570px',
-                width: '350px',
-            });
-        }
+        this.authService.isLoggedIn$.subscribe(state => {
+            if (state) {
+                dialogRef = this.dialog.open(TaskCreateComponent, {
+                    height: '570px',
+                    width: '800px',
+                });
+            } else {
+                dialogRef = this.dialog.open(NologinComponent, {
+                    height: '570px',
+                    width: '350px',
+                });
+            }
+
+        });
 
         dialogRef.afterClosed().subscribe((result) => {});
     }

@@ -7,6 +7,7 @@ import { TaskCreateComponent } from '../task-create/task-create.component';
 import { Constants } from 'src/app/shared/models/constants';
 import { IUser } from 'src/app/views/user/models/user';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
     selector: 'app-task-user',
@@ -27,17 +28,17 @@ export class TaskUserComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
-        private authService: AuthService
+        private authService: AuthService,
+        private utilService: UtilService
     ) {}
 
     ngOnInit(): void {
-        if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
-            this.currentUser = JSON.parse(
-                JSON.parse(localStorage.getItem(Constants.AUTH_LOCAL_PROFILE))
-                    .value
-            );
-            this.getUserTasks(this.currentUser);
-        }
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.currentUser = user;
+                this.getUserTasks(user);
+            }
+        });
     }
 
     getUserTasks(user: IUser): void {

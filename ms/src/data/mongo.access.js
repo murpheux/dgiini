@@ -452,6 +452,6 @@ module.exports = {
             return Promise.all([count, data])
         }
 
-    }
+    },
 
 }

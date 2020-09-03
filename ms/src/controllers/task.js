@@ -257,7 +257,7 @@ export class TaskController {
         })
     
         const paging = build_paging(req)
-        paging.filter = { 'location.city': city, category: { $in: categories } }
+        paging.filter = { 'location.city': city, category: { $in: categories }, status: { '$ne': 'completed'} }
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, 0, validation.getErrors()))

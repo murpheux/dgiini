@@ -11,10 +11,14 @@ import { retry, catchError } from 'rxjs/operators';
 import { NotificationService } from '../services/notification.service';
 import { Constants } from '../models/constants';
 import * as HttpStatus from 'http-status-codes';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class ServerErrorInterceptor implements HttpInterceptor {
-    constructor(private notifier: NotificationService) {}
+    constructor(
+        private notifier: NotificationService,
+        private authService: AuthService
+    ) {}
     // tslint:disable-next-line: no-any
     intercept(
         request: HttpRequest<any>,
@@ -33,17 +37,16 @@ export class ServerErrorInterceptor implements HttpInterceptor {
                     // server-side error
                     switch (error.status) {
                         case HttpStatus.UNAUTHORIZED:
-                            const authUserProfile = localStorage.getItem(
-                                Constants.AUTH_USER_PROFILE
-                            );
-                            if (authUserProfile) {
-                                const currentUser = JSON.parse(authUserProfile);
-                                request = request.clone({
-                                    setHeaders: {
-                                        Authorization: `Bearer ${currentUser.accessToken}`,
-                                    },
-                                });
-                            }
+                            this.authService.userClaims$.subscribe(claim => {
+                                if (claim) {
+
+                                    request = request.clone({
+                                        setHeaders: {
+                                            Authorization: `Bearer ${claim.__raw}`,
+                                        },
+                                    });
+                                }
+                            });
                             break;
 
                         case HttpStatus.BAD_REQUEST:

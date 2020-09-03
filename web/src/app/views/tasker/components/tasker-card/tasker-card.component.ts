@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { IVendor } from 'src/app/views/user/models/user';
+import { IVendor } from 'src/app/views/user/models/vendor';
 
 @Component({
     selector: 'app-tasker-card',

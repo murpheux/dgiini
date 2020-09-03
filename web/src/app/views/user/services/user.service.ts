@@ -5,7 +5,8 @@ import { IResponse } from '../../tasks/models/IResponse';
 import { environment } from 'src/environments/environment';
 import { Guid } from 'guid-typescript';
 import { EnvService } from 'src/app/shared/services/env.service';
-import { IClient, IVendor } from '../models/user';
+import { IClient } from '../models/client';
+import { IVendor } from '../models/vendor';
 
 @Injectable({
     providedIn: 'root',

@@ -17,17 +17,17 @@
                                                 class="d-block mx-auto user-picture"
                                             >
                                                 <img
-                                                    src="assets/images/user.jpg"
+                                                    [src]="currentUser.picture"
                                                     alt="User Image"
                                                 />
                                             </div>
                                             <p class="m-0 mt-2 text-muted">
                                                 <i class="fas fa-user"></i>
-                                                Member Since : Jan, 2020
+                                                Member Since : {{ currentUser?.created | date }}
                                             </p>
                                             <p class="m-0 mb-2 text-muted">
                                                 <i class="fas fa-clock"></i>
-                                                Last Login : 2 hours ago
+                                                Last Login : {{ currentUser?.lastLogin | date }}
                                             </p>
                                             <div class="badge badge-web p-1">
                                                 <i class="fas fa-trophy"></i>
@@ -46,8 +46,7 @@
                                                 {{ currentUser?.name }}
                                             </h3>
                                             <h4>
-                                                [Tag Line] - We love to
-                                                entertain our customer
+                                                {{ currentUser?.username }}
                                             </h4>
                                             <p class="m-0 text-justify">
                                                 [About Tasker] - Lorem ipsum

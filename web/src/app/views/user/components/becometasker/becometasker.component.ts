@@ -1,12 +1,15 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IUser, IProfile, IVendor } from '../../models/user';
+import { IUser } from '../../models/user';
+import { IProfile } from '../../models/profile';
+import { IVendor } from '../../models/vendor';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from '../../services/user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
 import { range } from 'rxjs';
 import { toArray, take } from 'rxjs/operators';
+import { IPhoto, ImageFilType } from 'src/app/views/tasks/models/IPhoto';
 
 @Component({
     selector: 'app-becometasker',
@@ -28,6 +31,7 @@ export class BecometaskerComponent implements OnInit {
     user: IUser;
     activeStepIndex: number;
     autoYearList: number[];
+    photos: IPhoto[] = [];
 
     mouseoverSave = false;
     percentage = [25, 50, 75, 100];
@@ -192,6 +196,25 @@ export class BecometaskerComponent implements OnInit {
     cancel(): void {
         this.dialogRef.close();
     }
+
+    handleFileInput(files: FileList): void {
+        Array.from(files).forEach(async (file) => {
+            const base64 = await this.imageFileToBase64(file);
+            this.photos.push({
+                filename: file.name,
+                photo: base64.toString(),
+                filetype: ImageFilType['image/png'],
+            });
+        });
+    }
+
+    imageFileToBase64 = (file) =>
+        new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+        })
 
     nextTab(): boolean {
         if (this.currentTabOpen > 3) {

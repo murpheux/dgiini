@@ -6,8 +6,10 @@ import * as HttpStatus from 'http-status-codes';
 import { UserService } from '../user/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegisterComponent } from '../user/components/register/register.component';
-import { IUser, IProfile } from '../user/models/user';
+import { IUser } from '../user/models/user';
+import { IProfile } from '../user/models/profile';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
     selector: 'app-home',
@@ -24,7 +26,8 @@ export class HomeComponent implements OnInit {
         private dialog: MatDialog,
         private authService: AuthService,
         private userService: UserService,
-        private locationService: LocationService
+        private locationService: LocationService,
+        private utilService: UtilService,
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -41,6 +44,10 @@ export class HomeComponent implements OnInit {
                         .subscribe(response => {
                             if (response.code === HttpStatus.NOT_FOUND) {
                                 this.loadRegisterDialog(profile);
+                            }
+                            else if (response.code === HttpStatus.OK) {
+                                const user = response.payload.data;
+                                this.authService.updateLoginUser(this.utilService.getUserFromProfile(profile, user));
                             }
                         });
                 }

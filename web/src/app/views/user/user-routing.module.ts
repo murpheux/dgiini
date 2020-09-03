@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserprofileComponent } from './components/userprofile/userprofile.component';
 import { BecometaskerComponent } from './components/becometasker/becometasker.component';
-import { AuthGuard } from 'src/app/shared/guards/auth-guard';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { UsersettingsComponent } from './components/usersettings/usersettings.component';
 import { SupportComponent } from './components/support/support.component';
 import { FinanceComponent } from './components/finance/finance.component';

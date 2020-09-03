@@ -16,11 +16,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { LocationService } from 'src/app/views/user/services/location.service';
 import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
-import { IUser, IVendor } from 'src/app/views/user/models/user';
+import { IUser } from 'src/app/views/user/models/user';
+import { IVendor } from 'src/app/views/user/models/vendor';
 import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { Guid } from 'guid-typescript';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { UtilService } from 'src/app/shared/services/util.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -66,7 +68,8 @@ export class TaskCategoriesComponent
         private authService: AuthService,
         private taskerService: TaskerService,
         // tslint:disable-next-line: variable-name
-        private _element: ElementRef
+        private _element: ElementRef,
+        private utilService: UtilService
     ) {}
 
     async ngOnInit(): Promise<void> {
@@ -77,36 +80,42 @@ export class TaskCategoriesComponent
                 if (params.category) {
                     const category = params.category;
 
-                    this.selectedCategory = [category];
-                    this.getTasksByCategory(category, this.currentCity.city);
+                    if (category === 'browse') {
+                        this.getTasksByCity();
+                    } else {
+                        this.selectedCategory = [category];
+                        this.getTasksByCategory(category, this.currentCity.city);
+                    }
                 } else if (params.searchstr) {
                     this.searchString = params.searchstr;
                     this.searchTask(this.searchString);
                 } else if (params.taskid) {
                     this.getTask(params.taskid);
                 } else {
-                    this.taskService
-                        .getTaskCategories()
-                        .subscribe((response) => {
-                            this.selectedCategory = response.payload.data; // select all categories
-                            this.getTasksByCategories(
-                                this.selectedCategory,
-                                this.currentCity.city
-                            );
-                        });
+                    this.getTasksByCity();
                 }
             });
         });
 
-        if (await this.authService.isLoggedIn$.toPromise()) {
-            if (localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)) {
-                this.currentUser = JSON.parse(
-                    localStorage.getItem(Constants.AUTH_LOCAL_PROFILE)
-                );
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.currentUser = user;
             }
-        }
+        });
 
         this.distanceToHome = this.defaultDistanceToHome;
+    }
+
+    getTasksByCity(): void {
+        this.taskService
+            .getTaskCategories()
+            .subscribe((response) => {
+                this.selectedCategory = response.payload.data; // select all categories
+                this.getTasksByCategories(
+                    this.selectedCategory,
+                    this.currentCity.city
+                );
+            });
     }
 
     ngAfterViewInit(): void {

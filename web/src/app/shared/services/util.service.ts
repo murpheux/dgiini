@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IUser } from 'src/app/views/user/models/user';
 
 @Injectable({
     providedIn: 'root',
@@ -30,6 +31,21 @@ export class UtilService {
         };
 
         localStorage.setItem(key, JSON.stringify(item));
+    }
+
+    getUserFromProfile(profile: any, appUser: any): IUser {
+        const user: IUser = {
+            _id: appUser._id,
+            username: profile.email,
+            name: profile.name,
+            role: appUser.role,
+            picture: profile.picture,
+
+            created: appUser.created,
+            lastLogin: appUser.lastLogin,
+        };
+
+        return user;
     }
 
     getWithExpiry(key: string): any {

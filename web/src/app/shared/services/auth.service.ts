@@ -19,6 +19,7 @@ import {
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { IUser } from 'src/app/views/user/models/user';
 
 @Injectable({
     providedIn: 'root',
@@ -26,6 +27,9 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
     isLoggedIn$ = new BehaviorSubject(false); // NEW
     requestedScopes = 'openid profile email read:messages write:messages';
+
+    loginUserSubject$ = new BehaviorSubject<IUser>(null);
+    loginUser = this.loginUserSubject$.asObservable();
 
     // Create an observable of Auth0 instance of client
     auth0Client$ = (from(
@@ -152,6 +156,10 @@ export class AuthService {
                 appState: { target: redirectPath },
             });
         });
+    }
+
+    updateLoginUser(user: IUser): void {
+        this.loginUserSubject$.next(user);
     }
 
     public handleAuthCallback(): void {
