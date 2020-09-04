@@ -43,6 +43,7 @@ services:
         - AUTH_API_PORT=80
         - NOTIFY_API_PORT=80
         - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - AUTH_DATABASE=dg_authdb
@@ -62,6 +63,9 @@ services:
         - TASK_API_PORT=80
         - MSG_API_PORT=80
         - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
         - TASK_DATABASE=dg_taskdb
@@ -83,9 +87,10 @@ services:
         - AUTH_API_PORT=80
         - NOTIFY_API_PORT=80
         - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
-        - TASK_DATABASE=dg_msgdb
+        - MSG_DATABASE=dg_msgdb
         - APP_NAME=msg_api/microservices
         - APP_VERSION=0.1
         - COR_CLIENT_URL=https://sdpro.dynu.com:8443
@@ -104,9 +109,10 @@ services:
         - AUTH_API_PORT=80
         - NOTIFY_API_PORT=80
         - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
-        - TASK_DATABASE=dg_notifydb
+        - NOTIFY_DATABASE=dg_notifydb
         - APP_NAME=notify_api/microservices
         - APP_VERSION=0.1
         - SMTP_PW=cG9ienhxaWZhcHpremZnZgo=
@@ -127,10 +133,33 @@ services:
         - AUTH_API_PORT=80
         - NOTIFY_API_PORT=80
         - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
         - DB_HOST=dgiini_db
         - DB_PORT=27017
-        - TASK_DATABASE=dg_msbill
+        - BILL_DATABASE=dg_msbill
         - APP_NAME=bill_api/microservices
+        - APP_VERSION=0.1
+        - COR_CLIENT_URL=https://sdpro.dynu.com:8443
+      networks:
+        - dgiininet
+      deploy:
+        replicas: 1
+
+    review_api:
+      image: murpheux/dgiini_dk_review:${DGIINI_VERSION}
+      restart: always
+      environment:
+        - NODE_ENV=development
+        - TASK_API_PORT=80
+        - MSG_API_PORT=80
+        - AUTH_API_PORT=80
+        - NOTIFY_API_PORT=80
+        - BILL_API_PORT=80
+        - REVIEW_API_PORT=80
+        - DB_HOST=dgiini_db
+        - DB_PORT=27017
+        - REVIEW_DATABASE=dg_msreview
+        - APP_NAME=review_api/microservices
         - APP_VERSION=0.1
         - COR_CLIENT_URL=https://sdpro.dynu.com:8443
       networks:

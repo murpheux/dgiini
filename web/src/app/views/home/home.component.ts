@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationService } from '../user/services/location.service';
-import { ICityLocation } from '../user/models/city';
-import { Constants } from 'src/app/shared/models/constants';
-import * as HttpStatus from 'http-status-codes';
-import { UserService } from '../user/services/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { RegisterComponent } from '../user/components/register/register.component';
-import { IUser } from '../user/models/user';
-import { IProfile } from '../user/models/profile';
+import * as HttpStatus from 'http-status-codes';
+import { Constants } from 'src/app/shared/models/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UtilService } from 'src/app/shared/services/util.service';
+import { RegisterComponent } from '../user/components/register/register.component';
+import { ICityLocation } from '../user/models/city';
+import { IProfile } from '../user/models/profile';
+import { IUser } from '../user/models/user';
+import { LocationService } from '../user/services/location.service';
+import { UserService } from '../user/services/user.service';
 
 @Component({
     selector: 'app-home',
@@ -61,13 +61,23 @@ export class HomeComponent implements OnInit {
 
     loadRegisterDialog(profile: any): void {
         let dialogRef;
+        let vl = 0;
 
-        dialogRef = this.dialog.open(RegisterComponent, {
-            height: '570px',
-            width: '800px',
-            data:  profile
+        this.utilService.indexSubject$.subscribe(val => {
+            vl = val;
+            vl++;
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        if (vl === 1) {
+            this.utilService.updateIndex(vl);
+
+            dialogRef = this.dialog.open(RegisterComponent, {
+                height: '570px',
+                width: '800px',
+                data:  profile
+            });
+
+            dialogRef.afterClosed().subscribe((result) => {});
+        }
     }
 }

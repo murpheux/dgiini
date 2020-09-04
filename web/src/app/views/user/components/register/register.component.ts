@@ -1,15 +1,14 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { ImageFilType } from 'src/app/views/tasks/models/IPhoto';
-import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
-import { IUser } from '../../models/user';
-import { IProfile } from '../../models/profile';
-import { IClient } from '../../models/client';
-import { UserService } from '../../services/user.service';
 import { range } from 'rxjs';
-import { toArray, take } from 'rxjs/operators';
+import { toArray } from 'rxjs/operators';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
+import { IClient } from '../../models/client';
+import { IProfile } from '../../models/profile';
+import { IUser } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-register',
@@ -144,8 +143,6 @@ export class RegisterComponent implements OnInit {
             },
             how_heard: formValues.subUserForms[2].howHeard
         };
-
-        console.log(JSON.stringify(client));
 
         const validator = new UserValidator();
         const result = validator.validate(client);

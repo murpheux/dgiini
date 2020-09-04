@@ -1,9 +1,6 @@
-import { Component, OnInit, Input, AfterViewChecked } from '@angular/core';
-import { LocationService } from '../../services/location.service';
-import { IUser } from '../../models/user';
-import { Constants } from 'src/app/shared/models/constants';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UtilService } from 'src/app/shared/services/util.service';
+import { IUser } from '../../models/user';
 
 @Component({
     selector: 'app-userprofile',
@@ -14,8 +11,7 @@ export class UserprofileComponent implements OnInit {
     currentUser: IUser;
 
     constructor(
-        private authService: AuthService,
-        private utilService: UtilService
+        private authService: AuthService
     ) {}
 
     ngOnInit(): void {

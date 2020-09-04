@@ -1,29 +1,24 @@
 import {
-    Component,
-    OnInit,
-    ChangeDetectorRef,
-    AfterViewInit,
-    ViewChild,
-    ElementRef,
+    AfterViewInit, ChangeDetectorRef, Component,
+    ElementRef, OnInit,
+    ViewChild
 } from '@angular/core';
 import {
-    FormBuilder,
+    FormArray, FormBuilder,
     FormGroup,
-    Validators,
-    FormArray,
-    FormControl,
+    Validators
 } from '@angular/forms';
-import { TaskService } from '../../services/task.service';
-import { Router } from '@angular/router';
-import { ITask, TaskType, RateUnit, Currency } from '../../models/ITask';
-import { TaskValidator } from '../../models/Validators/TaskValidator';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { LocationService } from 'src/app/views/user/services/location.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import * as $ from 'jquery';
-import { ICityLocation } from 'src/app/views/user/models/city';
-import { IPhoto, ImageFilType } from '../../models/IPhoto';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { ICityLocation } from 'src/app/views/user/models/city';
+import { LocationService } from 'src/app/views/user/services/location.service';
+import { ImageFilType, IPhoto } from '../../models/IPhoto';
+import { Currency, ITask, RateUnit, TaskType } from '../../models/ITask';
+import { TaskValidator } from '../../models/Validators/TaskValidator';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-create',

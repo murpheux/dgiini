@@ -155,6 +155,16 @@ pipeline {
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'
                     }
                 }
+                stage('Build review_api') {
+                    steps {
+                        sh '''
+                            cd ${WORKSPACE}/ms
+                            OUT_DIR=dist/msreview npm run build src/review.api.js
+                        '''
+                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msreview/'
+                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msreview/'
+                    }
+                }
             }
         }
         stage('Zip/Artifacts') {
@@ -182,6 +192,9 @@ pipeline {
 
                 zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
                 archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+
+                zip zipFile: 'msreview.zip', archive: false, dir: 'ms/dist/msreview'
+                archiveArtifacts artifacts: 'msreview.zip', fingerprint: true
             }
         }
         stage('build images') {
@@ -331,6 +344,29 @@ pipeline {
                                     
                                     docker login -u="${username}" -p="${password}"
                                     docker push murpheux/dgiini_bill:${BUILD_NUMBER}
+                                '''
+                            }
+                        }
+                    }
+                }
+                stage('build and publish review') {
+                    steps {
+                        script {
+                            withCredentials([
+                                usernamePassword(credentialsId: 'docker-def-user',
+                                usernameVariable: 'username',
+                                passwordVariable: 'password')
+                            ]) {
+                                sh '''
+                                    cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/app
+                                    cp ${WORKSPACE}/deploy/docker/review_dockerfile ${WORKSPACE}
+
+                                    cd ${WORKSPACE}
+
+                                    docker build --no-cache -f review_dockerfile -t murpheux/dgiini_review:${BUILD_NUMBER} .
+                                    
+                                    docker login -u="${username}" -p="${password}"
+                                    docker push murpheux/dgiini_review:${BUILD_NUMBER}
                                 '''
                             }
                         }

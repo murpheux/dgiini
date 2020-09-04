@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
-import { Observable, Subject, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { ITask } from '../models/ITask';
-import { IResponse } from '../models/IResponse';
+import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
-import { LocationService } from '../../user/services/location.service';
-import { ITaskBid } from '../models/ITaskBid';
+import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { LocationService } from '../../user/services/location.service';
+import { IResponse } from '../models/IResponse';
+import { ITask } from '../models/ITask';
+import { ITaskBid } from '../models/ITaskBid';
 
 @Injectable({
     providedIn: 'root',

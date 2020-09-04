@@ -77,7 +77,6 @@ export const set_whitelist = (client_url) => {
         whitelist.push(undefined) // for postman
     }
 
-    console.log(whitelist)
     return whitelist
 }
 

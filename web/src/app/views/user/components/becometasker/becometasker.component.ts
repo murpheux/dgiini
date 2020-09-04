@@ -173,8 +173,6 @@ export class BecometaskerComponent implements OnInit {
             role: this.user.role,
         };
 
-        console.log(JSON.stringify(vendor));
-
         const validator = new UserValidator();
         const result = validator.validate(vendor);
 

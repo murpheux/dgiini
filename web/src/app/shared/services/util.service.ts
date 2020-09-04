@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { IUser } from 'src/app/views/user/models/user';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UtilService {
+    indexSubject$ = new BehaviorSubject<number>(0);
+
     constructor() {}
+
+    updateIndex(val: number): void {
+        this.indexSubject$.next(val);
+    }
 
     capitalize(word): string {
         return word.charAt(0).toUpperCase() + word.substring(1);
@@ -38,8 +45,12 @@ export class UtilService {
             _id: appUser._id,
             username: profile.email,
             name: profile.name,
+            firstname: profile.given_name,
+            lastname: profile.family_name,
             role: appUser.role,
             picture: profile.picture,
+            address: appUser.address,
+            phone: appUser.phone,
 
             created: appUser.created,
             lastLogin: appUser.lastLogin,

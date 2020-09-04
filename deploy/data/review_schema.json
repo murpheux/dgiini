@@ -1,0 +1,8 @@
+{
+    "reviewer": {
+        "id": "{{ObjectID(util.sample(['5dbf935d4fb83acc85972e2a', '5dbf9754f026efce29d0c2f8']))}}"
+    },
+    "comment": "{{chance.paragraph({ sentences: 1 })}}",
+    "rating": "{{chance.integer({ min: 1, max: 5 })}}",
+    "date": "{{Date(chance.date())}}"
+}

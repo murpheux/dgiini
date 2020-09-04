@@ -34,6 +34,7 @@ pipeline {
                     mkdir ${WORKSPACE}/deploy/docker/deploy/msg/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/notify/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/bill/app
+                    mkdir ${WORKSPACE}/deploy/docker/deploy/review/app
                 '''
             }
         }
@@ -212,6 +213,19 @@ pipeline {
                         '''
                     }
                 }
+                stage('Build review_api') {
+                    steps {
+                        dir("${WORKSPACE}/ms"){
+                            sh '''
+                                OUT_DIR=dist/msreview npm run build src/review.api.js
+                            '''
+                        }
+                        sh '''
+                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msreview/
+                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msreview/
+                        '''
+                    }
+                }
             }
         }
         stage('Zip/Artifacts') {
@@ -239,6 +253,9 @@ pipeline {
 
                 zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
                 archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+
+                zip zipFile: 'msreview.zip', archive: false, dir: 'ms/dist/msreview'
+                archiveArtifacts artifacts: 'msreview.zip', fingerprint: true
             }
         }
         stage('setup docker build') {
@@ -290,6 +307,13 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
+                        '''        
+                    }
+                }
+                stage('for review'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/deploy/docker/deploy/review/app
                         '''        
                     }
                 }
@@ -383,6 +407,19 @@ pipeline {
 
                                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
                                     billImage.push()
+                                }
+                            }
+                        }
+                    }
+                }
+                stage('build and publish review') {
+                    steps {
+                        dir("${WORKSPACE}/deploy/docker/deploy/review"){
+                            script {
+                                reviewImage = docker.build "${REGISTRY}_review:${BUILD_NUMBER}"
+
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    reviewImage.push()
                                 }
                             }
                         }
