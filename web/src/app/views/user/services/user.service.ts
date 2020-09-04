@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { IResponse } from '../../tasks/models/IResponse';
-import { environment } from 'src/environments/environment';
+import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
+import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { IResponse } from '../../tasks/models/IResponse';
 import { IClient } from '../models/client';
 import { IVendor } from '../models/vendor';
 
@@ -37,6 +36,7 @@ export class UserService {
         const url = `${this.serviceUrl}?filter={"_id":[${userids.map(
             (u) => '"' + u + '"'
         )}]}`;
+
         return this.http.get<IResponse>(url);
     }
 

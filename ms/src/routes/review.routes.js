@@ -29,6 +29,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     const api = new ReviewController(db)
 
     router.get('/reviews', asyncHandler(api.get_reviews))
+    router.get('/reviews/:id', asyncHandler(api.get_user_reviews))
     router.post('/reviews', asyncHandler(api.save_review))
 })
 

@@ -18,6 +18,6 @@ export interface IUser {
     lastLogin?: Date;
     rating?: number;
 
-    aboutMember?: string;
+    summary?: string;
     joined?: Date;
 }

@@ -12,7 +12,7 @@ apiEndpoints:
     paths: '/api/auth/v1/*'
     methods: OPTIONS
   authApiDefault:
-    paths: ['/api/auth/v1/', '/api/auth/v1/users/:username', '/api/auth/v1/users/stats/full',
+    paths: ['/api/auth/v1/', '/api/auth/v1/users', '/api/auth/v1/users/:username', '/api/auth/v1/users/stats/full',
         '/api/auth/v1/findcity/:ip', '/api/auth/v1/taskers/:category']
     methods: GET
   authApi:
@@ -56,6 +56,15 @@ apiEndpoints:
   billApi:
     paths: '/api/bill/v1/*'
 
+  reviewApiPreflight:
+    paths: '/api/review/v1/*'
+    methods: OPTIONS
+  reviewApiDefault:
+    paths: ['/api/review/v1/', '/api/review/v1/reviews']
+    methods: GET
+  reviewApi:
+    paths: '/api/review/v1/*'
+
 serviceEndpoints:
   authService:
     url: 'http://localhost:8000'
@@ -67,6 +76,8 @@ serviceEndpoints:
     url: 'http://localhost:8006'
   billService:
     url: 'http://localhost:8008'
+  reviewService:
+    url: 'http://localhost:8010'
 
 policies:
   - basic-auth
@@ -220,6 +231,33 @@ pipelines:
   billPipeline:
     apiEndpoints:
       - billApi
+    policies:
+      - log: *log
+      - cors: *cors
+      - jwt: *jwt
+      - proxy: *bs
+
+  reviewApiPreflightPipeline:
+    apiEndpoints:
+      - reviewApiPreflight
+    policies:
+      - proxy:
+          - action:
+              serviceEndpoint: reviewService
+              changeOrigin: true
+  reviewDefaultPipeline:
+    apiEndpoints:
+      - reviewApiDefault
+    policies:
+      - log: *log
+      - cors: *cors
+      - proxy: &bs
+        - action:
+            serviceEndpoint: reviewService
+            changeOrigin: true
+  reviewPipeline:
+    apiEndpoints:
+      - reviewApi
     policies:
       - log: *log
       - cors: *cors

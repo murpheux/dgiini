@@ -51,6 +51,7 @@ export class UtilService {
             picture: profile.picture,
             address: appUser.address,
             phone: appUser.phone,
+            summary: appUser.summary,
 
             created: appUser.created,
             lastLogin: appUser.lastLogin,

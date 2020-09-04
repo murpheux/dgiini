@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
-import { LocationService } from '../../user/services/location.service';
+import { UserService } from '../../user/services/user.service';
 import { IResponse } from '../models/IResponse';
 import { ITask } from '../models/ITask';
 import { ITaskBid } from '../models/ITaskBid';
@@ -18,7 +18,7 @@ export class TaskService {
     constructor(
         private env: EnvService,
         private http: HttpClient,
-        private locationService: LocationService
+        private userService: UserService
     ) {
         this.serviceUrl = `${env.apiUrl}/task/v1/tasks`;
         this.bidServiceUrl = `${env.apiUrl}/task/v1/bids`;
@@ -142,13 +142,13 @@ export class TaskService {
             .map((m) => m.client.id)
             .filter((value, index, self) => self.indexOf(value) === index);
 
-        // this.locationService.getUserList(userList).subscribe(res => {
-        //     tasks.forEach(m => {
-        //         res.payload.filter(user => {
-        //             m.client = m.client.id === user._id ? user : m.client;
-        //         });
-        //     });
-        // });
+        this.userService.getUserList(userList).subscribe(res => {
+            tasks.forEach(m => {
+                res.payload.data.filter(user => {
+                    m.client = m.client.id === user._id ? user : m.client;
+                });
+            });
+        });
     }
 
     getStatusColor(status: string): string {

@@ -106,9 +106,11 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
             this.categoryList = response.payload.data;
         });
 
-        if (await this.authService.isLoggedIn$.toPromise()) {
-            this.currentUser = await this.authService.getUser$();
-        }
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.currentUser = user;
+            }
+        });
     }
 
     buildForm(): void {
@@ -119,12 +121,12 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 this.formBuilder.group({
                     title: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.minLength(10),
+                        Validators.minLength(3),
                         Validators.maxLength(50),
                     ]),
                     description: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.minLength(25),
+                        Validators.minLength(15),
                         Validators.maxLength(1000),
                     ]),
                     category: this.formBuilder.control('', [

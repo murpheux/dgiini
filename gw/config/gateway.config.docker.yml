@@ -32,6 +32,11 @@ apiEndpoints:
     methods: GET
   billApi:
     paths: '/api/bill/v1/*'
+  reviewApiDefault:
+    paths: '/api/review/v1/'
+    methods: GET
+  reviewApi:
+    paths: '/api/review/v1/*'
 
 serviceEndpoints:
   authService:
@@ -44,6 +49,8 @@ serviceEndpoints:
     url: 'http://notify_api'
   billService:
     url: 'http://bill_api'
+  reviewService:
+    url: 'http://review_api'
 
 policies:
   - cors
@@ -240,3 +247,41 @@ pipelines:
       - proxy:
         - action:
             serviceEndpoint: billService
+
+  reviewDefaultPipeline:
+    apiEndpoints:
+      - reviewApiDefault
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: reviewService
+            changeOrigin: true
+  reviewPipeline:
+    apiEndpoints:
+      - reviewApi
+    policies:
+      - 
+        cors:
+        - 
+          action:
+            origin: '*'
+            methods: 'OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE'
+            allowedHeaders: 'Origin,X-Requested-With,contentType,Content-Type,Accept,Authorization'
+            preflightContinue: true
+            optionsSuccessStatus: 204
+            credentials: true
+            maxAge: 21600
+      - proxy:
+        - action:
+            serviceEndpoint: reviewService

@@ -1,28 +1,26 @@
 import {
-    Component,
-    OnInit,
-    ElementRef,
-    ViewChildren,
-    QueryList,
-    AfterViewInit,
-    Output,
-    EventEmitter,
-    ViewChild,
-    AfterViewChecked,
+    AfterViewChecked, AfterViewInit, Component,
+
+    ElementRef, OnInit,
+
+
+
+
+
+
+    ViewChild
 } from '@angular/core';
-import { TaskService } from '../../services/task.service';
-import { ITask } from '../../models/ITask';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-import { LocationService } from 'src/app/views/user/services/location.service';
-import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
-import { IUser } from 'src/app/views/user/models/user';
-import { IVendor } from 'src/app/views/user/models/vendor';
-import { Constants } from 'src/app/shared/models/constants';
-import { ICityLocation } from 'src/app/views/user/models/city';
 import { Guid } from 'guid-typescript';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UtilService } from 'src/app/shared/services/util.service';
+import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
+import { ICityLocation } from 'src/app/views/user/models/city';
+import { IUser } from 'src/app/views/user/models/user';
+import { IVendor } from 'src/app/views/user/models/vendor';
+import { LocationService } from 'src/app/views/user/services/location.service';
+import { ITask } from '../../models/ITask';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-categories',
@@ -133,10 +131,6 @@ export class TaskCategoriesComponent
         const lastCard = this.scrollDiv.nativeElement.querySelector(
             '.lastOfMe'
         );
-
-        if (lastCard) {
-            console.log(JSON.stringify(lastCard));
-        }
 
         // const options = {
         //     root: document.querySelector('#scrollArea'),

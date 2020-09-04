@@ -29,6 +29,19 @@ export class ReviewController {
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
     }
 
+    get_user_reviews = async (req, res) => {
+        const id = req.params.id
+
+        let paging = build_paging(req)
+        paging.filter = { 'to': ObjectId(id) }
+    
+        const invoke_getlist = async() => await mgaccess.getlist(this.db, this.REVIEW_COLL, paging)
+    
+        const [count, data] = await invoke_getlist()
+        const cnt = count.length > 0 ? count[0].count : 0
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', cnt, data))
+    }
+
     save_review = async (req, res) => {
         const review = req.body
         const validation = validateReview(review)

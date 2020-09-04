@@ -6,12 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
-import { UserService } from 'src/app/views/user/services/user.service';
 import { BecometaskerComponent } from 'src/app/views/user/components/becometasker/becometasker.component';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UserService } from 'src/app/views/user/services/user.service';
 
 @Component({
     selector: 'app-header-template',
@@ -64,6 +64,13 @@ export class HeaderTemplateComponent
 
     async ngOnInit(): Promise<void> {
         this.getTaskCategories();
+
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                console.log(user.role.includes('vendor'));
+                this.isVendor = user.role.includes('vendor');
+            }
+        });
     }
 
     getTaskCategories(): void {

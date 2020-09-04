@@ -50,6 +50,7 @@ export class RegisterComponent implements OnInit {
             _id: undefined,
             username: this.data?.email,
             name: this.data?.name,
+            picture: this.data?.picture,
             role: [ 'client' ], // default for new user
         };
 
@@ -107,6 +108,7 @@ export class RegisterComponent implements OnInit {
                     ]),
                 }),
                 this.formBuilder.group({
+                    summary: this.formBuilder.control('', []),
                     howHeard: this.formBuilder.control('', [
                         Validators.required,
                     ]),
@@ -141,7 +143,9 @@ export class RegisterComponent implements OnInit {
                 country: formValues.subUserForms[1].country,
                 zipcode: formValues.subUserForms[1].zipcode
             },
-            how_heard: formValues.subUserForms[2].howHeard
+            how_heard: formValues.subUserForms[2].howHeard,
+            summary: formValues.subUserForms[2].summary,
+            picture: this.user.picture
         };
 
         const validator = new UserValidator();
