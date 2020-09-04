@@ -1,13 +1,6 @@
 import {
     AfterViewChecked, AfterViewInit, Component,
-
     ElementRef, OnInit,
-
-
-
-
-
-
     ViewChild
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -146,11 +139,6 @@ export class TaskCategoriesComponent
     }
 
     ngAfterViewChecked(): void {
-        // const lastCard = this.scrollDiv.nativeElement.querySelector('.lastOfMe');
-        // const lastCard = this.scrollDiv.nativeElement.querySelector('.task-list div:last-child');
-        // if (lastCard) {
-        //     console.log(JSON.stringify(lastCard));
-        // }
     }
 
     private checkForIntersection = (

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../services/task.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ITask } from '../../models/ITask';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskCreateComponent } from '../task-create/task-create.component';
-import { Constants } from 'src/app/shared/models/constants';
-import { IUser } from 'src/app/views/user/models/user';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UtilService } from 'src/app/shared/services/util.service';
+import { IUser } from 'src/app/views/user/models/user';
+import { ITask } from '../../models/ITask';
+import { TaskService } from '../../services/task.service';
+import { TaskCreateComponent } from '../task-create/task-create.component';
 
 @Component({
     selector: 'app-task-user',

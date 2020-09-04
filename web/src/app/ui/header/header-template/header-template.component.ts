@@ -67,7 +67,6 @@ export class HeaderTemplateComponent
 
         this.authService.loginUserSubject$.subscribe(user => {
             if (user) {
-                console.log(user.role.includes('vendor'));
                 this.isVendor = user.role.includes('vendor');
             }
         });
@@ -82,9 +81,18 @@ export class HeaderTemplateComponent
     async upgradeToVendor(): Promise<void> {
         let dialogRef;
 
-        dialogRef = this.dialog.open(BecometaskerComponent, {
-            height: '570px',
-            width: '800px',
+        this.authService.isLoggedIn$.subscribe(state => {
+            if (state) {
+                dialogRef = this.dialog.open(BecometaskerComponent, {
+                    height: '570px',
+                    width: '800px',
+                });
+            } else {
+                dialogRef = this.dialog.open(NologinComponent, {
+                    height: '570px',
+                    width: '350px',
+                });
+            }
         });
 
         dialogRef.afterClosed().subscribe((result) => {});

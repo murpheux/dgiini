@@ -68,7 +68,7 @@ export class TaskController {
         var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
     
         const paging = build_paging(req)
-        paging.filter = { 'client.id': ObjectId(id) }
+        paging.filter = { 'client.id': id }
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
