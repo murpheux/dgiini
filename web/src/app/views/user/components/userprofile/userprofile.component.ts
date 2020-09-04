@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ReviewService } from 'src/app/views/review/services/review.service';
+import { IReview } from 'src/app/views/review/models/review';
 import { IUser } from '../../models/user';
 
 @Component({
@@ -9,9 +11,11 @@ import { IUser } from '../../models/user';
 })
 export class UserprofileComponent implements OnInit {
     currentUser: IUser;
+    reviews: IReview[];
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private reviewService: ReviewService
     ) {}
 
     ngOnInit(): void {
@@ -19,6 +23,10 @@ export class UserprofileComponent implements OnInit {
             if (user) {
                 this.currentUser = user;
             }
+        });
+
+        this.reviewService.getUserReviews().subscribe(res => {
+            this.reviews = res.payload.data;
         });
     }
 }

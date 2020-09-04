@@ -169,102 +169,32 @@
                                 <hr />
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="review">
-                                            <img
-                                                src="assets/images/user.jpg"
-                                                alt="User Image"
-                                            />
-                                            <div class="review-details">
-                                                <p class="font-weight-bold m-0">
-                                                    Full Name
-                                                </p>
-                                                <p class="m-0">
-                                                    <i
-                                                        class="fas fa-map-marker-alt text-web"
-                                                    ></i>
-                                                    Country
-                                                </p>
-                                                <p class="mt-2">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit,
-                                                    sed do eiusmod tempor
-                                                    incididunt ut labore et
-                                                    dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis
-                                                    nostrud exercitation ullamco
-                                                    laboris nisi ut aliquip ex
-                                                    ea commodo consequat.
-                                                </p>
-                                                <p class="text-muted">
-                                                    1 month ago
-                                                </p>
+                                        <div *ngFor="let review of reviews">
+                                            <div class="review">
+                                                <img
+                                                    src="assets/images/user.jpg"
+                                                    alt="User Image"
+                                                />
+                                                <div class="review-details">
+                                                    <p class="font-weight-bold m-0">
+                                                        Full Name
+                                                    </p>
+                                                    <p class="m-0">
+                                                        <i
+                                                            class="fas fa-map-marker-alt text-web"
+                                                        ></i>
+                                                        Country
+                                                    </p>
+                                                    <p class="mt-2">
+                                                        {{ review.comment }}
+                                                    </p>
+                                                    <p class="text-muted">
+                                                        1 month ago
+                                                    </p>
+                                                </div>
                                             </div>
+                                            <hr />
                                         </div>
-                                        <hr />
-                                        <div class="review">
-                                            <img
-                                                src="assets/images/user.jpg"
-                                                alt="User Image"
-                                            />
-                                            <div class="review-details">
-                                                <p class="font-weight-bold m-0">
-                                                    Full Name
-                                                </p>
-                                                <p class="m-0">
-                                                    <i
-                                                        class="fas fa-map-marker-alt text-web"
-                                                    ></i>
-                                                    Country
-                                                </p>
-                                                <p class="mt-2">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit,
-                                                    sed do eiusmod tempor
-                                                    incididunt ut labore et
-                                                    dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis
-                                                    nostrud exercitation ullamco
-                                                    laboris nisi ut aliquip ex
-                                                    ea commodo consequat.
-                                                </p>
-                                                <p class="text-muted">
-                                                    1 month ago
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div class="review">
-                                            <img
-                                                src="assets/images/user.jpg"
-                                                alt="User Image"
-                                            />
-                                            <div class="review-details">
-                                                <p class="font-weight-bold m-0">
-                                                    Full Name
-                                                </p>
-                                                <p class="m-0">
-                                                    <i
-                                                        class="fas fa-map-marker-alt text-web"
-                                                    ></i>
-                                                    Country
-                                                </p>
-                                                <p class="mt-2">
-                                                    Lorem ipsum dolor sit amet,
-                                                    consectetur adipiscing elit,
-                                                    sed do eiusmod tempor
-                                                    incididunt ut labore et
-                                                    dolore magna aliqua. Ut enim
-                                                    ad minim veniam, quis
-                                                    nostrud exercitation ullamco
-                                                    laboris nisi ut aliquip ex
-                                                    ea commodo consequat.
-                                                </p>
-                                                <p class="text-muted">
-                                                    1 month ago
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr />
                                         <button
                                             class="btn btn-outline-web d-block mx-auto btn-sm mb-1"
                                         >
