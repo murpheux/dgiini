@@ -417,6 +417,27 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         img.src = base64Image;
     }
 
+
+    calculateAmount(unit: string, amount: number, duration: number): string {
+        let result = 0;
+
+        switch (unit) {
+            case 'Total':
+                result = amount;
+                break;
+
+            case 'Hourly':
+                result = amount * duration;
+                break;
+
+            default:
+                result = 0;
+                break;
+        }
+
+        return result.toString();
+    }
+
     //   const sourceImage = document.getElementById("source-image");
     //   const thumbnail = document.getElementById("thumbnail");
 

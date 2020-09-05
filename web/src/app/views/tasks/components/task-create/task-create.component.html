@@ -411,6 +411,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <div class="float-right text-success font-weight-bold text-xl-right"> {{ calculateAmount(forms[4].get("unit")?.value, forms[4].get("amount")?.value, forms[4].get("duration")?.value) | currency: "CAD" }}</div>
+                                </div>
                             </div>
                         </div>
                         <!-- </form> -->

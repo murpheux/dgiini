@@ -44,7 +44,7 @@
                             >
                                 Posted Tasks
                                 <span class="badge badge-secondary">{{
-                                    taskList.length
+                                    postedTaskList.length
                                 }}</span>
                             </a>
                         </li>
@@ -216,6 +216,7 @@
                                             Total
                                         </th>
                                         <th>Status</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -227,7 +228,7 @@
                                             No Task Found
                                         </td>
                                     </tr>
-                                    <tr *ngFor="let task of taskList">
+                                    <tr *ngFor="let task of postedTaskList">
                                         <td>{{ task.title }}</td>
                                         <td>
                                             <span class="badge badge-web">{{
@@ -248,6 +249,10 @@
                                                 }}"
                                                 >{{ task.status }}</span
                                             >
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning mr-1" (click)="handleEdit(task)">Edit</button>
+                                            <button class="btn btn-warning mr-1" (click)="handleCancel(task)">Cancel</button>
                                         </td>
                                     </tr>
                                 </tbody>

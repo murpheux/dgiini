@@ -1,16 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
-    faCalendar, faCheck, faDollarSign,
-
-
-    faFileAlt,
-
-
-
-    faInfoCircle, faMapMarkedAlt, faTimes,
-
-    faUserCircle
+    faCalendar, faCheck, faDollarSign, faFileAlt,
+    faInfoCircle, faMapMarkedAlt, faTimes, faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { ILocation } from 'src/app/shared/models/ILocation';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -18,7 +10,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { IUser } from 'src/app/views/user/models/user';
 import { IMessage } from '../../../message/models/message';
 import { MessageService } from '../../../message/services/message.service';
-import { ITask } from '../../models/ITask';
+import { ITask, TaskStatus } from '../../models/ITask';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -46,6 +38,7 @@ export class TaskViewComponent implements OnInit {
     faFileAlt = faFileAlt;
 
     @Input() currentUser: IUser;
+    @Output() taskStatusChanged = new EventEmitter<ITask>();
 
     @Input()
     set task(task: ITask) {
@@ -142,6 +135,8 @@ export class TaskViewComponent implements OnInit {
 
     handleCancelTask(): void {
         this.taskService.cancelTask(this.task._id).subscribe((resp) => {
+            this.task.status = TaskStatus.cancelled;
+            this.taskStatusChanged.emit(this.task);
             this.notificationService.showSuccess('Task Cancelled!');
         });
     }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
 import { UserService } from '../../user/services/user.service';
 import { IResponse } from '../models/IResponse';
-import { ITask } from '../models/ITask';
+import { ITask, TaskStatus } from '../models/ITask';
 import { ITaskBid } from '../models/ITaskBid';
 
 @Injectable({
@@ -120,7 +120,7 @@ export class TaskService {
 
     cancelTask(id: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
-        return this.http.put<IResponse>(url, { _id: id, cancelled: true });
+        return this.http.put<IResponse>(url, { id, status: TaskStatus.cancelled });
     }
 
     updateTask(id: Guid, task: ITask): Observable<IResponse> {
@@ -155,11 +155,11 @@ export class TaskService {
         let stats = 'danger';
 
         switch (status) {
-            case 'completed':
+            case TaskStatus.completed:
                 stats = 'success';
                 break;
 
-            case 'open':
+            case TaskStatus.open:
                 stats = 'warning';
                 break;
 

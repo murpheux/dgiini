@@ -131,6 +131,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
             const id = task.id
+            task.cancalled_date = new Date()
             delete task['id']
     
             const invoke_updateone = async() => await mgaccess.updateone(this.db, this.TASK_COLL, id, task)
@@ -257,7 +258,7 @@ export class TaskController {
         })
     
         const paging = build_paging(req)
-        paging.filter = { 'location.city': city, category: { $in: categories }, status: { '$ne': 'completed'} }
+        paging.filter = { 'location.city': city, category: { $in: categories }, status: { '$nin': ['completed', 'cancelled']} }
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, 0, validation.getErrors()))

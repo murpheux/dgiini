@@ -266,6 +266,11 @@ export class TaskCategoriesComponent
         this.searchTask(searchString);
     }
 
+    handleStatusChanged(task: ITask): void {
+        const i = this.taskList.indexOf(task);
+        this.taskList.splice(i, 1);
+    }
+
     // tslint:disable-next-line: no-any
     handleScroll(event: any): void {}
 

@@ -48,6 +48,7 @@
                         *ngIf="currentTask"
                         [currentUser]="currentUser"
                         [task]="currentTask"
+                        (taskStatusChanged)="handleStatusChanged($event)"
                     ></app-task-view>
                 </div>
                 <div class="col-md-3">

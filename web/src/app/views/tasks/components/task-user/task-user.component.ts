@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UtilService } from 'src/app/shared/services/util.service';
 import { IUser } from 'src/app/views/user/models/user';
-import { ITask } from '../../models/ITask';
+import { ITask, TaskStatus } from '../../models/ITask';
 import { TaskService } from '../../services/task.service';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 
@@ -16,6 +14,7 @@ import { TaskCreateComponent } from '../task-create/task-create.component';
 export class TaskUserComponent implements OnInit {
     public taskList: ITask[];
     public completedTaskList: ITask[];
+    public postedTaskList: ITask[];
     public cancelledTaskList: ITask[];
     public assignedTaskList: ITask[];
     public currentTask: ITask;
@@ -24,11 +23,8 @@ export class TaskUserComponent implements OnInit {
 
     constructor(
         private taskService: TaskService,
-        private route: ActivatedRoute,
-        private router: Router,
         public dialog: MatDialog,
         private authService: AuthService,
-        private utilService: UtilService
     ) {}
 
     ngOnInit(): void {
@@ -51,14 +47,18 @@ export class TaskUserComponent implements OnInit {
 
             this.taskService.enrichTasks(this.taskList);
 
+            this.postedTaskList = this.taskList.filter(
+                (task) => task.status === TaskStatus.open
+            );
+
             this.completedTaskList = this.taskList.filter(
-                (task) => task.status === 'completed'
+                (task) => task.status === TaskStatus.completed
             );
             this.cancelledTaskList = this.taskList.filter(
-                (task) => task.status === 'cancelled'
+                (task) => task.status === TaskStatus.cancelled
             );
             this.assignedTaskList = this.taskList.filter(
-                (task) => task.status === 'assigned'
+                (task) => task.status === TaskStatus.assigned
             );
         });
     }

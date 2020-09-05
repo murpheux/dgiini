@@ -23,7 +23,7 @@ export interface ITask {
     created: Date;
     rate: Quotation;
     selected?: boolean;
-    status?: string;
+    status?: TaskStatus;
     lastbid?: ITaskBid;
     bidcount?: number;
     photos?: IPhoto[];
@@ -51,4 +51,12 @@ export enum Recurrence {
     Daily,
     Weekly,
     Monthly,
+}
+
+export enum  TaskStatus {
+    open = 'open',
+    accepted = 'accepted',
+    assigned = 'assigned',
+    cancelled = 'cancelled',
+    completed = 'completed'
 }
