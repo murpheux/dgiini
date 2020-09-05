@@ -57,7 +57,10 @@
                                         ">Required</em>
                                     <input type="text" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
                                 </div>
-                                <hr>
+                            </div>
+                        </div>
+                        <div formGroupName="1">
+                            <div class="tab-pane container p-0 active d-none" id="register-step-1">
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
@@ -105,8 +108,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="1">
-                            <div class="tab-pane container p-0 active" id="register-step-1">
+                        <div formGroupName="2">
+                            <div class="tab-pane container p-0 active d-none" id="register-step-1">
                                 <div class="form-group mb-2">
                                     <label for="cardno">Card No</label>
                                     <em *ngIf="
@@ -196,7 +199,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="2">
+                        <div formGroupName="3">
                             <div
                                 class="tab-pane container p-0 fade d-none"
                                 id="post-task-step-2"
