@@ -82,7 +82,9 @@ export class BecometaskerComponent implements OnInit {
                     ]),
                     insitutionNo: this.formBuilder.control(currentYear, [
                         Validators.required,
-                    ]),
+                    ])
+                }),
+                this.formBuilder.group({
                     street: this.formBuilder.control('', [Validators.required]),
                     city: this.formBuilder.control('Calgary', [
                         Validators.required,
@@ -95,7 +97,7 @@ export class BecometaskerComponent implements OnInit {
                     ]),
                     zipcode: this.formBuilder.control('', [
                         Validators.required,
-                    ]),
+                    ])
                 }),
                 this.formBuilder.group({
                     cardno: this.formBuilder.control('', [
@@ -111,6 +113,8 @@ export class BecometaskerComponent implements OnInit {
                         Validators.required,
                     ]),
                     cv2: this.formBuilder.control(currentYear),
+                }),
+                this.formBuilder.group({
                     street: this.formBuilder.control('', [Validators.required]),
                     city: this.formBuilder.control('Calgary', [
                         Validators.required,
@@ -124,6 +128,9 @@ export class BecometaskerComponent implements OnInit {
                     zipcode: this.formBuilder.control('', [
                         Validators.required,
                     ]),
+                }),
+                this.formBuilder.group({    // image level
+
                 }),
                 this.formBuilder.group({
                     brand: this.formBuilder.control('', [

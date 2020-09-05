@@ -151,7 +151,10 @@
                                         ">Required</em>
                                     <input type="text" class="form-control" formControlName="cv2" id="cv2" name="cv2" placeholder="CV2" />
                                 </div>
-                                <hr>
+                            </div>
+                        </div>
+                        <div formGroupName="3">
+                            <div class="tab-pane container p-0 active d-none" id="register-step-1">
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
@@ -199,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="3">
+                        <div formGroupName="4">
                             <div
                                 class="tab-pane container p-0 fade d-none"
                                 id="post-task-step-2"
@@ -248,6 +251,44 @@
                                         multiple
                                     />
                                 </div>
+                            </div>
+                        </div>
+                        <div formGroupName="5">
+                            <div class="tab-pane container p-0 active d-none" id="register-step-1">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="city">Brand</label>
+                                            <select class="form-control" id="brand" name="brand" formControlName="brand">
+                                                <option value="">-- Select Brand --</option>
+                                                <option *ngFor="
+                                                    let vbrand of vehicleBrands
+                                                " value="{{ vbrand }}">{{ vbrand }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="state">Model</label>
+                                            <input type="text" [readonly]="true" class="form-control" id="model" name="model" formControlName="model" placeholder="Model" />
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group mb-2">
+                                            <label for="state">Year</label>
+                                            <select class="form-control" id="year" name="year" formControlName="year">
+                                                <option value="">-- Select Year --</option>
+                                                <option *ngFor="
+                                                    let year of autoYearList
+                                                " value="{{ year }}">{{ year }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div formGroupName="6">
+                            <div class="tab-pane container p-0 active d-none" id="register-step-1">
                             </div>
                         </div>
                         <!-- </form> -->
