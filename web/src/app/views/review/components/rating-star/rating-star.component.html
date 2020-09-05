@@ -1,0 +1,7 @@
+<div *ngIf="rating > 0" class="rating">
+    <i *ngFor='let in of counter(rating)' class="fas fa-star text-warning"></i>
+    <i *ngIf="isExtra(rating)" class="fas fa-star-half-alt text-warning"></i>
+    <i *ngFor='let in of counter(maxNumber - rating)' class="far fa-star text-warning"></i>
+    <span class="badge badge-rating"
+        >{{ rating }}</span>
+</div>

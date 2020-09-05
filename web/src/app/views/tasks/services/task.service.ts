@@ -139,13 +139,13 @@ export class TaskService {
         }
 
         const userList = tasks
-            .map((m) => m.client.id)
+            .map((m) => m.client)
             .filter((value, index, self) => self.indexOf(value) === index);
 
         this.userService.getUserList(userList).subscribe(res => {
             tasks.forEach(m => {
                 res.payload.data.filter(user => {
-                    m.client = m.client.id === user._id ? user : m.client;
+                    m.clientUser = m.client === user._id ? user : m.client;
                 });
             });
         });

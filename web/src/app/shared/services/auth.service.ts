@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
 import {
-    from,
-    of,
-    Observable,
     BehaviorSubject,
-    combineLatest,
-    throwError,
+    combineLatest, from,
+
+    Observable, of,
+
+
+
+    throwError
 } from 'rxjs';
 import {
-    tap,
     catchError,
     concatMap,
-    shareReplay,
-    filter,
-    switchMap,
+
+    filter, shareReplay,
+
+    switchMap, tap
 } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { IUser } from 'src/app/views/user/models/user';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -117,7 +119,7 @@ export class AuthService {
                 if (loggedIn) {
                     // If authenticated, get user and set in app
                     // NOTE: you could pass options here if needed
-                    return this.getUser$();
+                    return combineLatest([this.getUser$(), this.getClaims$(), this.getToken$()]);
                 }
                 // If not authenticated, return stream that emits 'false'
                 return of(loggedIn);

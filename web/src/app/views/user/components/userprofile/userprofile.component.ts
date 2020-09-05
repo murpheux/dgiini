@@ -12,6 +12,7 @@ import { IUser } from '../../models/user';
 export class UserprofileComponent implements OnInit {
     currentUser: IUser;
     reviews: IReview[];
+    isVendor = false;
 
     constructor(
         private authService: AuthService,
@@ -22,6 +23,7 @@ export class UserprofileComponent implements OnInit {
         this.authService.loginUserSubject$.subscribe(user => {
             if (user) {
                 this.currentUser = user;
+                this.isVendor = user.role.includes('vendor');
             }
         });
 
@@ -32,5 +34,10 @@ export class UserprofileComponent implements OnInit {
                 this.reviewService.enrichReviews(this.reviews);
             }
         });
+    }
+
+    average(): number {
+        const nums = this.reviews.map(m => m.rating);
+        return nums.reduce((x, y) => x + y, 0)  / nums.length;
     }
 }

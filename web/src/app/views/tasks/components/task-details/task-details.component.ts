@@ -1,16 +1,15 @@
 import {
-    Component,
-    OnInit,
-    OnDestroy,
     AfterViewInit,
-    ChangeDetectorRef,
+    ChangeDetectorRef, Component,
+
+    OnDestroy, OnInit
 } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TaskService } from '../../services/task.service';
-import { ITask } from '../../models/ITask';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Guid } from 'guid-typescript';
+import { ITask } from '../../models/ITask';
+import { TaskService } from '../../services/task.service';
 import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.component';
 
 @Component({
@@ -76,10 +75,10 @@ export class TaskDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
             category: this.formBuilder.control(this.model.category, [
                 Validators.required,
             ]),
-            clientid: this.formBuilder.control(this.model.client.id, [
+            clientid: this.formBuilder.control(this.model.client, [
                 Validators.required,
             ]),
-            clientname: this.formBuilder.control(this.model.client.name, [
+            clientname: this.formBuilder.control(this.model.client, [
                 Validators.required,
             ]),
             street: this.formBuilder.control(this.model.location.street, [

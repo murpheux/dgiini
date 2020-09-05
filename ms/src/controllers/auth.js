@@ -49,8 +49,10 @@ export class AuthenticationController {
             // enrich
             user.isActive = true
             user.isBanned = false
-            user.lastLogin = null
-            user.created = new Date()
+            
+            const dt = new Date()
+            user.lastLogin = dt
+            user.created = dt
     
             const invoke_updateone = async() => await mgaccess.create(this.db, this.USER_COLL, user)
     

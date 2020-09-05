@@ -15,7 +15,7 @@
                         ></div>
                         <p class="m-0 title">{{ category }}</p>
                         <p *ngIf="categoryStats" class="m-0 jobs-open">
-                            {{ getstat(category) }} Tasks Open
+                            {{ getstat(category) || 0 }} Tasks Open
                         </p>
                     </a>
                 </div>

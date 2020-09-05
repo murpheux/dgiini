@@ -12,7 +12,7 @@
                     >
                         <div class="col-md col-img">
                             <img
-                                src="{{ task.photos[0].photo }}"
+                                src="{{ task.photos[0] ? task.photos[0].photo : '/assets/images/preview.png' }}"
                                 class="border rounded-lg w-100"
                                 alt="Task Image"
                             />
@@ -65,7 +65,7 @@
                 <div class="border web-border"></div>
                 <div *ngFor="let rtask of recentTasks" class="recent-box p-3">
                     <img
-                        src="{{ rtask.photos[0].photo }}"
+                        src="{{ rtask.photos[0] ? rtask.photos[0].photo : '/assets/images/preview.png' }}"
                         class="border rounded-lg w-100"
                         alt="Task Image"
                     />

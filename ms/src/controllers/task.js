@@ -68,7 +68,7 @@ export class TaskController {
         var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
     
         const paging = build_paging(req)
-        paging.filter = { 'client.id': id }
+        paging.filter = { 'client': id }
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
@@ -230,7 +230,7 @@ export class TaskController {
         const id = req.params.id
     
         const paging = build_paging(req)
-        paging.filter = { 'client.id': id, title: { $regex: '.*' + searchstr + '.*' } }
+        paging.filter = { 'client': id, title: { $regex: '.*' + searchstr + '.*' } }
     
         var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
     

@@ -61,7 +61,7 @@
                             <div class="clearfix"></div>
 
                             <!-- Portfolio Box -->
-                            <div
+                            <div *ngIf="isVendor"
                                 class="border portfolio-section p-2 pl-4 mb-2 mt-3 bg-white"
                             >
                                 <h3 class="text-web">
@@ -164,6 +164,7 @@
                                                     <p class="font-weight-bold m-0">
                                                         {{ review.fromUser.name }}
                                                     </p>
+                                                    <app-rating-star [rating]="review.rating" ></app-rating-star>
                                                     <p class="m-0">
                                                         <i
                                                             class="fas fa-map-marker-alt text-web"
@@ -212,15 +213,15 @@
                                     Time
                                 </h5>
                                 <hr />
-                                <div class="rating">
+                                <div *ngIf="reviews" class="rating">
                                     <i class="fas fa-star text-warning"></i>
                                     <i class="fas fa-star text-warning"></i>
                                     <i class="fas fa-star text-warning"></i>
                                     <i class="fas fa-star text-warning"></i>
                                     <i class="fas fa-star text-warning"></i>
-                                    <span class="font-weight-bold">(5)</span>
+                                    <span class="font-weight-bold">({{average()}})</span>
                                     <br />
-                                    <span class="text-muted">10 Reviews</span>
+                                    <span class="text-muted"> {{ reviews.length }} Reviews</span>
                                 </div>
                             </div>
 
@@ -247,18 +248,11 @@
                                         On Time
                                     </h5>
                                     <hr />
-                                    <div class="rating">
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <i class="fas fa-star text-warning"></i>
-                                        <span class="badge badge-rating"
-                                            >5.0</span
-                                        >
+                                    <div *ngIf="reviews">
+                                        <app-rating-star [rating]="average()" ></app-rating-star>
                                         <br />
                                         <span class="text-muted"
-                                            >10 Reviews</span
+                                            >{{ reviews.length }} Reviews</span
                                         >
                                     </div>
                                 </div>

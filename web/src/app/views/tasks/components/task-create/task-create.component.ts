@@ -209,10 +209,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 date: currentDate,
             },
 
-            client: {
-                id: this.currentUser._id,
-                name: this.currentUser.name,
-            },
+            client: this.currentUser._id,
 
             scheduled_date: new Date(
                 `${formValues.subTaskForms[3].date} ${formValues.subTaskForms[3].time}`

@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
 import {
-    HttpRequest,
-    HttpHandler,
-    HttpEvent,
-    HttpInterceptor,
+    HttpEvent, HttpHandler,
+
+    HttpInterceptor, HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Constants } from '../models/constants';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -23,6 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
 
         this.authService.userClaims$.subscribe(claim => {
+
             if (claim) {
                 request = request.clone({
                     setHeaders: {

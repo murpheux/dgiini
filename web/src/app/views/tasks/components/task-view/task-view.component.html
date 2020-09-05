@@ -22,7 +22,7 @@
             aria-controls="profile"
             aria-selected="false"
         >
-            <i class="far fa-file-alt"></i> Proposals
+            <i class="far fa-file-alt"></i> Bids
         </a>
     </li>
 </ul>
@@ -56,7 +56,7 @@
                     <span class="font-weight-bold text-dark"
                         ><i class="fas fa-user"></i> Posted By</span
                     ><br />
-                    {{ task.client.name }}
+                    {{ task.clientUser?.name }}
                 </div>
                 <div class="p-1 flex-fill text-center">
                     <span class="font-weight-bold text-dark"

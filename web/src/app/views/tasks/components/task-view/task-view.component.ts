@@ -1,23 +1,25 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ITask } from '../../models/ITask';
-import { MessageService } from '../../../message/services/message.service';
-import { IMessage } from '../../../message/models/message';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { TaskService } from '../../services/task.service';
-import { IUser } from 'src/app/views/user/models/user';
 import {
-    faDollarSign,
-    faCheck,
-    faTimes,
+    faCalendar, faCheck, faDollarSign,
+
+
     faFileAlt,
-    faUserCircle,
-    faMapMarkedAlt,
-    faCalendar,
-    faInfoCircle,
+
+
+
+    faInfoCircle, faMapMarkedAlt, faTimes,
+
+    faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { ILocation } from 'src/app/shared/models/ILocation';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { IUser } from 'src/app/views/user/models/user';
+import { IMessage } from '../../../message/models/message';
+import { MessageService } from '../../../message/services/message.service';
+import { ITask } from '../../models/ITask';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-view',
@@ -52,8 +54,8 @@ export class TaskViewComponent implements OnInit {
         if (this.currentUser) {
             this.getUserTaskMessages();
 
-            if (task.client.id) {
-                this.owned = task.client.id === this.currentUser._id;
+            if (task.client) {
+                this.owned = task.client === this.currentUser._id;
             } else {
                 this.owned =
                     ((task.client as unknown) as IUser)._id ===
@@ -90,7 +92,7 @@ export class TaskViewComponent implements OnInit {
         }
 
         if (this.currentUser) {
-            this.owned = this._task.client.id === this.currentUser._id;
+            this.owned = this._task.client === this.currentUser._id;
         }
 
         this.location = {

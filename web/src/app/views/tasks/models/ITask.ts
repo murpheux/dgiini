@@ -1,8 +1,9 @@
 import { Guid } from 'guid-typescript';
-
+import { IUser } from '../../user/models/user';
 import { IAddress } from './IAddress';
-import { ITaskBid } from './ITaskBid';
 import { IPhoto } from './IPhoto';
+import { ITaskBid } from './ITaskBid';
+
 
 export enum TaskType {
     InPerson,
@@ -14,7 +15,8 @@ export interface ITask {
     title: string;
     description: string;
     category: string;
-    client: ClientSlim;
+    client: Guid;
+    clientUser?: IUser;
     scheduled_date: Date;
     location: IAddress;
     estimated_hours: number;
@@ -25,12 +27,6 @@ export interface ITask {
     lastbid?: ITaskBid;
     bidcount?: number;
     photos?: IPhoto[];
-}
-
-export class ClientSlim {
-    id: Guid;
-    name: string;
-    photo?: string;
 }
 
 export class Quotation {
