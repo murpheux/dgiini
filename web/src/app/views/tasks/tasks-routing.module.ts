@@ -7,7 +7,7 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 
 const routes: Routes = [
     { path: '', component: TaskCategoriesComponent, canActivate: [] },
-    // { path: 'new', component: TaskCreateComponent, canActivate: [] },
+    { path: 'new', component: TaskCreateComponent, canActivate: [] },
     { path: 'my', component: TaskUserComponent, canActivate: [ ] },
     // { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
     {
@@ -15,16 +15,16 @@ const routes: Routes = [
         component: TaskCategoriesComponent,
         canActivate: [],
     },
-    // {
-    //     path: 'task/:taskid',
-    //     component: TaskCategoriesComponent,
-    //     canActivate: [],
-    // },
-    // {
-    //     path: 'search/:searchstr',
-    //     component: TaskCategoriesComponent,
-    //     canActivate: [],
-    // },
+    {
+        path: 'id/:taskid',
+        component: TaskCategoriesComponent,
+        canActivate: [],
+    },
+    {
+        path: 'search/:searchstr',
+        component: TaskCategoriesComponent,
+        canActivate: [],
+    },
 ];
 
 @NgModule({

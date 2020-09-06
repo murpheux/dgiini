@@ -215,6 +215,11 @@ rs.status()
 In mongodb, in order to do a text search, text indexes need to be created
 
 ```mongo
+db.tasks.getIndexes()
+db.tasks.createIndex( { title: "text", description: "text" } )
+
+then, this can work
+
 db.tasks.find({ $text: { $search: "Need Cleaning" } })
 ```
 
@@ -223,3 +228,7 @@ db.tasks.find({ $text: { $search: "Need Cleaning" } })
 Environment variables provided by .env file for micro-services. This can be overriden in any environment with equivalent environment variables.
 
 Refer to .env file for details of environment variables.
+
+## Common Errors
+
+## MongoError: text index required for $text query
