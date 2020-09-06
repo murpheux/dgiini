@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CarouselComponent } from './components/carousel/carousel.component';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { TasksModule } from '../tasks/tasks.module';
 import json from 'highlight.js/lib/languages/json';
@@ -28,7 +27,6 @@ export function hljsLanguages(): any {
 @NgModule({
     declarations: [
         HomeComponent,
-        CarouselComponent,
         CustomersayComponent,
         HowworksComponent,
         ContactusComponent,

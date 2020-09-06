@@ -109,6 +109,7 @@ export class TaskService {
     }
 
     searchUserTask(searchstr: string, user: Guid): Observable<IResponse> {
+        console.log(searchstr);
         const url = `${this.serviceUrl}/${user}/search/${searchstr}`;
         return this.http.get<IResponse>(url);
     }
