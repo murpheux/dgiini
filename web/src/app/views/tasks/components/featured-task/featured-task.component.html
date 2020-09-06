@@ -32,7 +32,7 @@
                             >
                                 {{ task.rate.amount | currency: "CAD" }}
                             </p>
-                            <p class="m-0 text-web">{{ task.description }}</p>
+                            <p class="m-0 text-web">{{ task.description | slice:0:80 }} ...</p>
                             <p class="m-0">
                                 <i class="fas text-web fa-map-marker-alt"></i>
                                 {{ task.location.city }},

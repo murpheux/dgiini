@@ -78,7 +78,6 @@ export class TaskCategoriesComponent
                         this.getTasksByCategory(category, this.currentCity.city);
                     }
                 } else if (params.searchstr) {
-                    console.log(params.searchstr);
                     this.searchString = params.searchstr;
                     this.searchTask(this.searchString);
                 } else if (params.taskid) {

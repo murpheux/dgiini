@@ -218,7 +218,7 @@ export class TaskController {
         const searchstr = req.params.searchstr
     
         const paging = build_paging(req)
-        paging.filter = { $text: { $search: '"' + searchstr + '"' } }
+        paging.filter = { $text: { $search: '"' + searchstr + '"' }, status: { '$nin': ['completed', 'cancelled']} }
     
         const invoke_getlist = async() => await mgaccess.searchTask(this.db, this.TASK_COLL, paging)
     

@@ -412,7 +412,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="float-right text-success font-weight-bold text-xl-right"> {{ calculateAmount(forms[4].get("unit")?.value, forms[4].get("amount")?.value, forms[4].get("duration")?.value) | currency: "CAD" }}</div>
+                                    <div class="float-right big-text text-success font-weight-bold text-xl-right"> {{ calculateAmount(forms[4].get("unit")?.value, forms[4].get("amount")?.value, forms[4].get("duration")?.value) | currency: "CAD" }}</div>
                                 </div>
                             </div>
                         </div>
@@ -422,12 +422,12 @@
                             id="post-task-step-6"
                         >
                             <p class="font-weight-bold">Confirm Details</p>
-                            <p class="m-0 font-weight-bold">Task Title</p>
-                            <p>{{ forms[0].get("title")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Task Description</p>
+                            <p class="m-0 font-weight-bold">{{ forms[0].get("title")?.value }}</p>
                             <p>{{ forms[0].get("description")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Task Category</p>
-                            <p>{{ forms[0].get("category")?.value }}</p>
+                            <p>
+                                <span class="m-0 font-weight-bold">Task Category:</span>
+                                <span>{{ forms[0].get("category")?.value }}</span>
+                            </p>
                             <p class="m-0 font-weight-bold">Address</p>
                             <p>
                                 {{ forms[2].get("street")?.value }},
@@ -436,19 +436,16 @@
                                 {{ forms[2].get("zipcode")?.value }},
                                 {{ forms[2].get("country")?.value }}
                             </p>
-                            <p class="m-0 font-weight-bold">
-                                Expected Completion
-                            </p>
                             <p>
-                                {{ forms[3].get("date")?.value }}
-                                {{ forms[3].get("time")?.value }}
+                                <span class="m-0 font-weight-bold">Expected Completion</span>
+                                <span>
+                                    {{ forms[3].get("date")?.value }}
+                                    {{ forms[3].get("time")?.value }}
+                                </span>
                             </p>
-                            <p class="m-0 font-weight-bold">Rate</p>
-                            <p>
-                                {{ forms[4].get("unit")?.value }}, C$
-                                {{ forms[4].get("amount")?.value }},
-                                {{ forms[4].get("duration")?.value }} hrs
-                            </p>
+                            <div class="amount">
+                                <div class="float-right big-text text-success font-weight-bold text-xl-right"> {{ calculateAmount(forms[4].get("unit")?.value, forms[4].get("amount")?.value, forms[4].get("duration")?.value) | currency: "CAD" }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>

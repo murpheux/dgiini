@@ -43,7 +43,7 @@
             <div class="border mb-3"></div>
             <h4 class="heading">
                 {{ task.title | titlecase }}
-                <span class="badge badge-outline-{{taskService.getStatusColor(task.status)}} float-right">{{
+                <span class="badge badge-outline-success float-right">{{
                     task.status | titlecase
                 }}</span>
             </h4>

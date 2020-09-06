@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { LocationService } from 'src/app/views/user/services/location.service';
-import { ICityLocation } from 'src/app/views/user/models/city';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ICityLocation } from 'src/app/views/user/models/city';
+import { LocationService } from 'src/app/views/user/services/location.service';
 
 @Component({
     selector: 'app-banner',
@@ -13,8 +13,8 @@ export class BannerComponent implements OnInit {
     searchString: string;
 
     @HostListener('document:keypress', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) { 
-        if (event.key == 'Enter') {
+    handleKeyboardEvent(event: KeyboardEvent): void {
+        if (event.key === 'Enter') {
             this.handleSearch();
         }
     }
