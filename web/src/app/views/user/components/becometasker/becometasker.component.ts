@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { IUser } from '../../models/user';
-import { IProfile } from '../../models/profile';
-import { IVendor } from '../../models/vendor';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { UserService } from '../../services/user.service';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
 import { range } from 'rxjs';
-import { toArray, take } from 'rxjs/operators';
-import { IPhoto, ImageFilType } from 'src/app/views/tasks/models/IPhoto';
+import { toArray } from 'rxjs/operators';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { ImageFilType, IPhoto } from 'src/app/views/tasks/models/IPhoto';
+import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
+import { IProfile } from '../../models/profile';
+import { IUser } from '../../models/user';
+import { IVendor } from '../../models/vendor';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-becometasker',
@@ -80,22 +80,22 @@ export class BecometaskerComponent implements OnInit {
                     transitNo: this.formBuilder.control('', [
                         Validators.required,
                     ]),
-                    insitutionNo: this.formBuilder.control(currentYear, [
+                    insitutionNo: this.formBuilder.control('', [
                         Validators.required,
                     ])
                 }),
                 this.formBuilder.group({
-                    street: this.formBuilder.control('', [Validators.required]),
-                    city: this.formBuilder.control('Calgary', [
+                    bkstreet: this.formBuilder.control('', [Validators.required]),
+                    bkcity: this.formBuilder.control('Calgary', [
                         Validators.required,
                     ]),
-                    state: this.formBuilder.control('AB', [
+                    bkstate: this.formBuilder.control('AB', [
                         Validators.required,
                     ]),
-                    country: this.formBuilder.control('Canada', [
+                    bkcountry: this.formBuilder.control('Canada', [
                         Validators.required,
                     ]),
-                    zipcode: this.formBuilder.control('', [
+                    bkzipcode: this.formBuilder.control('', [
                         Validators.required,
                     ])
                 }),
@@ -111,21 +111,20 @@ export class BecometaskerComponent implements OnInit {
                     ]),
                     expiry: this.formBuilder.control('', [
                         Validators.required,
-                    ]),
-                    cv2: this.formBuilder.control(currentYear),
+                    ])
                 }),
                 this.formBuilder.group({
-                    street: this.formBuilder.control('', [Validators.required]),
-                    city: this.formBuilder.control('Calgary', [
+                    ccstreet: this.formBuilder.control('', [Validators.required]),
+                    cccity: this.formBuilder.control('Calgary', [
                         Validators.required,
                     ]),
-                    state: this.formBuilder.control('AB', [
+                    ccstate: this.formBuilder.control('AB', [
                         Validators.required,
                     ]),
-                    country: this.formBuilder.control('Canada', [
+                    cccountry: this.formBuilder.control('Canada', [
                         Validators.required,
                     ]),
-                    zipcode: this.formBuilder.control('', [
+                    cczipcode: this.formBuilder.control('', [
                         Validators.required,
                     ]),
                 }),
@@ -222,7 +221,7 @@ export class BecometaskerComponent implements OnInit {
         })
 
     nextTab(): boolean {
-        if (this.currentTabOpen > 3) {
+        if (this.currentTabOpen > 7) {
             return false;
         }
 
@@ -278,6 +277,15 @@ export class BecometaskerComponent implements OnInit {
                 }%`;
                 this.postNextBtn.nativeElement.classList.add('d-none');
                 this.postPostBtn.nativeElement.classList.remove('d-none');
+                break;
+
+            case 5:
+                break;
+
+            case 6:
+                break;
+
+            case 7:
                 break;
 
             default:

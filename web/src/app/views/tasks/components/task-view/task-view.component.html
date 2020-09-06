@@ -43,7 +43,7 @@
             <div class="border mb-3"></div>
             <h4 class="heading">
                 {{ task.title | titlecase }}
-                <span class="badge badge-outline-success float-right">{{
+                <span class="badge badge-outline-{{taskService.getStatusColor(task.status)}} float-right">{{
                     task.status | titlecase
                 }}</span>
             </h4>
@@ -74,6 +74,7 @@
             <div class="clearfix"></div>
             <hr class="mt-0" />
             <div *ngIf="task.status !== 'cancelled' && task.status !== 'completed'" class="float-right m-2">
+                <button class="btn btn-warning ml-2" (click)="handleEdit()">Edit</button>
                 <button class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
                 <button class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
             </div>

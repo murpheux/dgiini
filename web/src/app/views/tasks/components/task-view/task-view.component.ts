@@ -73,7 +73,7 @@ export class TaskViewComponent implements OnInit {
         private messageService: MessageService,
         private dialog: MatDialog,
         private notificationService: NotificationService,
-        private taskService: TaskService,
+        public taskService: TaskService,
         public authService: AuthService
     ) {}
 
@@ -139,5 +139,8 @@ export class TaskViewComponent implements OnInit {
             this.taskStatusChanged.emit(this.task);
             this.notificationService.showSuccess('Task Cancelled!');
         });
+    }
+
+    handleEdit(): void {
     }
 }
