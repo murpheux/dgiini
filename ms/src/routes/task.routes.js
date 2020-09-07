@@ -41,6 +41,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     router.get('/tasks/:id', asyncHandler(api.get_task_by_id))
     router.get('/tasks/stats/full', asyncHandler(api.get_task_stats_full))
     router.get('/tasks/category/stats', asyncHandler(api.get_task_stats_by_category))
+    router.get('/tasks/status/stats/:id', asyncHandler(api.get_user_task_stats_by_status))
     router.get('/tasks/category/stats/:city', asyncHandler(api.get_task_stats_by_category_and_city))
     router.put('/tasks', asyncHandler(api.update_task))
     router.get('/tasks/category/:category', asyncHandler(api.get_task_by_category))

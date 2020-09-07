@@ -110,6 +110,14 @@ export class TaskController {
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
     }
 
+    get_user_task_stats_by_status = async(req, res) => {
+        const id = req.params.id
+        const invoke_getstats = async() => await mgaccess.getUserStatusStatistics(this.db, this.TASK_COLL, id)
+    
+        const tasks = await invoke_getstats()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
+    }
+
     get_task_stats_by_category_and_city = async(req, res) => {
         const city = req.params.city
     

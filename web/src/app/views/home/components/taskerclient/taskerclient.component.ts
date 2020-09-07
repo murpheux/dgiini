@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Constants } from 'src/app/shared/models/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
+import { BecometaskerComponent } from 'src/app/views/user/components/becometasker/becometasker.component';
+import { NologinComponent } from '../nologin/nologin.component';
 
 @Component({
     selector: 'app-taskerclient',
@@ -78,5 +80,25 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
 
             this.stateChanged.emit(this.currentState);
         }
+    }
+
+    async upgradeToVendor(): Promise<void> {
+        let dialogRef;
+
+        this.authService.isLoggedIn$.subscribe(state => {
+            if (state) {
+                dialogRef = this.dialog.open(BecometaskerComponent, {
+                    height: '570px',
+                    width: '800px',
+                });
+            } else {
+                dialogRef = this.dialog.open(NologinComponent, {
+                    height: '570px',
+                    width: '350px',
+                });
+            }
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 }

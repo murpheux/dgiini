@@ -342,6 +342,19 @@ module.exports = {
         })
     },
 
+    getUserStatusStatistics: (db, collection, id) => {
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection)
+                .aggregate([
+                    {$match: {'client': {'$eq': id}}},
+                    {'$group' : {_id:'$status', count:{$sum:1}}}
+                ]).toArray()
+
+            resolve(doc)
+        })
+    },
+
     getCategoryStatisticsByCity: (db, collection, paging) => {
 
         return new Promise((resolve, _) => {

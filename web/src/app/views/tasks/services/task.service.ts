@@ -76,6 +76,11 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
+    getUserStatusStats(id: Guid): Observable<IResponse> {
+        const url = `${this.serviceUrl}/status/stats/${id}`;
+        return this.http.get<IResponse>(url);
+    }
+
     getTasksByCategoriesAndCity(
         category: string[],
         city: string
