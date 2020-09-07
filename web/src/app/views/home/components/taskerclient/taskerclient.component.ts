@@ -1,16 +1,21 @@
 import {
-    Component,
-    OnInit,
-    ViewChild,
+    AfterViewInit, Component,
+
+
     ElementRef,
-    AfterViewInit,
-    Output,
+
+
     EventEmitter,
+    Input, OnInit,
+
+
+
+    Output, ViewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { Constants } from 'src/app/shared/models/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 
 @Component({
     selector: 'app-taskerclient',
@@ -23,6 +28,7 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
     @ViewChild('taskerSteps', { static: true }) taskerSteps: ElementRef;
     @ViewChild('howItWorks', { static: true }) howItWorks: ElementRef;
 
+    @Input() role: string[];
     @Output() stateChanged = new EventEmitter<string>();
 
     private currentState = Constants.USER_ROLE_CLIENT; // default
@@ -32,7 +38,8 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
         public authService: AuthService
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+    }
 
     ngAfterViewInit(): void {
         this.tasker.nativeElement.addEventListener('mouseover', () => {

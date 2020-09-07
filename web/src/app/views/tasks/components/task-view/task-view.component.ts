@@ -95,7 +95,9 @@ export class TaskViewComponent implements OnInit {
             zoom: 5,
         };
 
-        this.isloggedIn = await this.authService.isLoggedIn$.toPromise();
+        this.authService.isLoggedIn$.subscribe(status => {
+            this.isloggedIn = status;
+        });
     }
 
     getUserTaskMessages(): void {

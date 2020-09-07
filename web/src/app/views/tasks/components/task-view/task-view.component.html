@@ -12,7 +12,7 @@
             <i class="fas fa-tasks"></i> Task Details
         </a>
     </li>
-    <li class="nav-item">
+    <li *ngIf="isloggedIn && messages" class="nav-item">
         <a
             class="nav-link"
             id="profile-tab"
@@ -74,9 +74,9 @@
             <div class="clearfix"></div>
             <hr class="mt-0" />
             <div *ngIf="isloggedIn && task.status !== 'cancelled' && task.status !== 'completed'" class="float-right m-2">
-                <button class="btn btn-warning ml-2" (click)="handleEdit()">Edit</button>
-                <button class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
-                <button class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
+                <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleEdit()">Edit</button>
+                <button *ngIf="task.client !== currentUser._id" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
+                <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
             </div>
             <div class="">
                 <app-google-map
@@ -89,7 +89,7 @@
             <div>
                 <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-message-sender *ngIf="isloggedIn"></app-message-sender>
+            <app-message-sender *ngIf="isloggedIn && task.client !== currentUser._id"></app-message-sender>
         </div>
         <div></div>
         <div

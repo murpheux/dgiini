@@ -21,13 +21,63 @@
                             >
                                 <a
                                     class="nav-link active"
-                                    id="v-pills-home-tab"
+                                    id="v-pills-prof-tab"
                                     data-toggle="pill"
-                                    href="#v-pills-home"
+                                    href="#v-pills-prof"
                                     role="tab"
-                                    aria-controls="v-pills-home"
+                                    aria-controls="v-pills-prof"
                                     aria-selected="true"
                                     ><i class="far fa-user"></i> Profile</a
+                                >
+                                <a
+                                    class="nav-link"
+                                    id="v-pills-social-tab"
+                                    data-toggle="pill"
+                                    href="#v-pills-social"
+                                    role="tab"
+                                    aria-controls="v-pills-social"
+                                    aria-selected="false"
+                                    ><i class="far fa-building"></i> Social</a
+                                >
+                                <a
+                                    class="nav-link"
+                                    id="v-pills-city-tab"
+                                    data-toggle="pill"
+                                    href="#v-pills-city"
+                                    role="tab"
+                                    aria-controls="v-pills-city"
+                                    aria-selected="false"
+                                    ><i class="far fa-building"></i> Job Cities</a
+                                >
+                                <a
+                                    class="nav-link"
+                                    id="v-pills-skill-tab"
+                                    data-toggle="pill"
+                                    href="#v-pills-skill"
+                                    role="tab"
+                                    aria-controls="v-pills-skill"
+                                    aria-selected="false"
+                                    ><i class="far fa-futbol"></i> Skills</a
+                                >
+                                <a
+                                    class="nav-link"
+                                    id="v-pills-qual-tab"
+                                    data-toggle="pill"
+                                    href="#v-pills-qual"
+                                    role="tab"
+                                    aria-controls="v-pills-qual"
+                                    aria-selected="false"
+                                    ><i class="far fa-registered"></i> Qualifications</a
+                                >
+                                <a
+                                    class="nav-link"
+                                    id="v-pills-lic-tab"
+                                    data-toggle="pill"
+                                    href="#v-pills-lic"
+                                    role="tab"
+                                    aria-controls="v-pills-lic"
+                                    aria-selected="false"
+                                    ><i class="far fa-id-badge"></i> Licenses</a
                                 >
                                 <a
                                     class="nav-link"
@@ -57,9 +107,9 @@
                             <div class="tab-content" id="v-pills-tabContent">
                                 <div
                                     class="tab-pane fade show active"
-                                    id="v-pills-home"
+                                    id="v-pills-prof"
                                     role="tabpanel"
-                                    aria-labelledby="v-pills-home-tab"
+                                    aria-labelledby="v-pills-prof-tab"
                                 >
                                     <h4>
                                         <i class="far fa-user"></i> Profile
@@ -183,6 +233,20 @@
                                                 />
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-2">
+                                                <label for="phone"
+                                                    >Email</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="email"
+                                                    [(ngModel)]="currentUser.username"
+                                                    placeholder="Email"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr />
                                     <button class="btn btn-web float-right">
@@ -190,6 +254,183 @@
                                     </button>
                                     <div class="clearfix"></div>
                                 </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="v-pills-social"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-social-tab"
+                                >
+                                    <h4>
+                                        <i class="far fa-user"></i> Social
+                                    </h4>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-2">
+                                                <label for="website"
+                                                    >Website</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="website"
+                                                    placeholder="www.website.com"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-2">
+                                                <label for="facebook"
+                                                    >Facebook</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="facebook"
+                                                    placeholder=""
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-2">
+                                                <label for="twitter"
+                                                    >Twitter</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="twitter"
+                                                    placeholder=""
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-2">
+                                                <label for="linkedin"
+                                                    >LinkedIn</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="linkedin"
+                                                    placeholder=""
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />    
+                                    <button class="btn btn-web float-right">
+                                        Save Changes
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                
+                                <div
+                                    class="tab-pane fade"
+                                    id="v-pills-city"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-city-tab"
+                                >
+                                    <h4>
+                                        <i class="far fa-user"></i> Job
+                                        City
+                                    </h4>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-2">
+                                                <label for="firstname"
+                                                    >Job City</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="city"
+                                                    [(ngModel)]="currentCity"
+                                                    placeholder="City"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                    <hr />    
+                                    <button class="btn btn-web float-right">
+                                        Save Changes
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="v-pills-skill"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-skill-tab"
+                                >
+                                    <h4>
+                                        <i class="far fa-user"></i> Skills
+                                    </h4>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                    <hr />    
+                                    <button class="btn btn-web float-right">
+                                        Save Changes
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="v-pills-qual"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-qual-tab"
+                                >
+                                    <h4>
+                                        <i class="far fa-user"></i> Qualifications
+                                    </h4>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                    <hr />    
+                                    <button class="btn btn-web float-right">
+                                        Save Changes
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                                <div
+                                    class="tab-pane fade"
+                                    id="v-pills-lic"
+                                    role="tabpanel"
+                                    aria-labelledby="v-pills-lic-tab"
+                                >
+                                    <h4>
+                                        <i class="far fa-user"></i> Licenses
+                                    </h4>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+                                        </div>
+                                    </div>
+                                    <hr />    
+                                    <button class="btn btn-web float-right">
+                                        Save Changes
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+
                                 <!--End Profile Tab-->
                                 <div
                                     class="tab-pane fade"

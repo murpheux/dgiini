@@ -3,7 +3,6 @@ services:
   
     web:
       image: murpheux/dgiini_dk_web:${DGIINI_VERSION}
-      restart: always
       environment:
         - NGINX_HOST=sdpro.dynu.com
         - NGINX_PORT=80
@@ -16,7 +15,6 @@ services:
 
     apigw:
       image: murpheux/dgiini_dk_apigw:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -35,7 +33,6 @@ services:
 
     auth_api:
       image: murpheux/dgiini_dk_auth:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -57,7 +54,6 @@ services:
 
     task_api:
       image: murpheux/dgiini_dk_task:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -79,7 +75,6 @@ services:
 
     msg_api:
       image: murpheux/dgiini_dk_msg:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -101,7 +96,6 @@ services:
 
     notify_api:
       image: murpheux/dgiini_dk_notify:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -125,7 +119,6 @@ services:
 
     bill_api:
       image: murpheux/dgiini_dk_bill:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -147,7 +140,6 @@ services:
 
     review_api:
       image: murpheux/dgiini_dk_review:${DGIINI_VERSION}
-      restart: always
       environment:
         - NODE_ENV=development
         - TASK_API_PORT=80
@@ -169,7 +161,6 @@ services:
 
     db:
       image: mongo:4.2.3-bionic
-      restart: always
       volumes:
         - /home/murpheux/data:/data/db
       ports:

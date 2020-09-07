@@ -2,7 +2,7 @@
     <app-banner></app-banner>
     <app-task-category-node></app-task-category-node>
     <app-featured-task></app-featured-task>
-    <app-taskerclient
+    <app-taskerclient [role]="role"
         (stateChanged)="handleStateChanged($event)"
     ></app-taskerclient>
     <app-howworks [state]="taskerClientState"></app-howworks>

@@ -28,11 +28,17 @@
                         account.
                     </p>
                     <div class="clearfix"></div>
-                    <button
+                    <button *ngIf="!role"
                         class="btn btn-outline-web"
                         (click)="authService.login()"
                     >
                         Get Started
+                    </button>
+                    <button *ngIf="role?.includes('client')"
+                        class="btn btn-outline-web"
+                        (click)="authService.login()"
+                    >
+                        Become Tasker
                     </button>
                 </div>
             </div>
@@ -59,7 +65,7 @@
                         them know the quality of their job.
                     </p>
                     <div class="clearfix"></div>
-                    <button
+                    <button *ngIf="!role?.includes('client')"
                         class="btn btn-outline-default float-right border"
                         (click)="authService.login()"
                     >

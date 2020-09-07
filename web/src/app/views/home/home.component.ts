@@ -22,6 +22,8 @@ export class HomeComponent implements OnInit {
     currentCity: ICityLocation;
     taskerClientState = Constants.USER_ROLE_CLIENT; // default client state
 
+    role: string[];
+
     constructor(
         private dialog: MatDialog,
         private authService: AuthService,
@@ -53,6 +55,12 @@ export class HomeComponent implements OnInit {
                 }
             });
         }
+
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.role = user.role;
+            }
+        });
     }
 
     handleStateChanged(state: string): void {

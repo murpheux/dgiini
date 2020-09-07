@@ -5,9 +5,11 @@ import { range } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
+import { ICityLocation } from '../../models/city';
 import { IClient } from '../../models/client';
 import { IProfile } from '../../models/profile';
 import { IUser } from '../../models/user';
+import { LocationService } from '../../services/location.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -16,6 +18,8 @@ import { UserService } from '../../services/user.service';
     styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+    currentCity: ICityLocation;
+    
     public currentTabOpen = 1;
     @ViewChild('postBackBtn', { static: false }) postBackBtn: ElementRef;
     @ViewChild('postNextBtn', { static: false }) postNextBtn: ElementRef;
@@ -41,11 +45,12 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private userService: UserService,
         private notificationService: NotificationService,
+        private locationService: LocationService,
         public dialogRef: MatDialogRef<RegisterComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IProfile
     ) {}
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
         this.user = {
             _id: undefined,
             username: this.data?.email,
@@ -53,6 +58,8 @@ export class RegisterComponent implements OnInit {
             picture: this.data?.picture,
             role: [ 'client' ], // default for new user
         };
+
+        this.currentCity = await this.locationService.getCurrentCity();
 
         this.initializeContent();
         this.buildForm();
@@ -143,6 +150,7 @@ export class RegisterComponent implements OnInit {
                 country: formValues.subUserForms[1].country,
                 zipcode: formValues.subUserForms[1].zipcode
             },
+            job_city: this.currentCity.city,
             how_heard: formValues.subUserForms[2].howHeard,
             summary: formValues.subUserForms[2].summary,
             picture: this.user.picture
