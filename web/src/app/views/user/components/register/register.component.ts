@@ -19,7 +19,7 @@ import { UserService } from '../../services/user.service';
 })
 export class RegisterComponent implements OnInit {
     currentCity: ICityLocation;
-    
+
     public currentTabOpen = 1;
     @ViewChild('postBackBtn', { static: false }) postBackBtn: ElementRef;
     @ViewChild('postNextBtn', { static: false }) postNextBtn: ElementRef;
