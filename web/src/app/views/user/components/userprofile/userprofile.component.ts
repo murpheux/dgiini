@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { IReview } from 'src/app/views/review/models/review';
 import { ReviewService } from 'src/app/views/review/services/review.service';
-import { IUser } from '../../models/user';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
+import { IUser } from '../../models/user';
+import { IVendor } from '../../models/vendor';
+import { UserService } from '../../services/user.service';
 
 @Component({
     selector: 'app-userprofile',
@@ -15,11 +17,13 @@ export class UserprofileComponent implements OnInit {
     reviews: IReview[];
     isVendor = false;
     stats: any[];
+    vendor: IVendor;
 
     constructor(
         private authService: AuthService,
         private reviewService: ReviewService,
-        private taskService: TaskService
+        private taskService: TaskService,
+        private userServive: UserService,
     ) { }
 
     ngOnInit(): void {
@@ -27,6 +31,12 @@ export class UserprofileComponent implements OnInit {
             if (user) {
                 this.currentUser = user;
                 this.isVendor = user.role.includes('vendor');
+
+                if (this.isVendor) {
+                    this.userServive.getUserByEmail(this.currentUser.username).subscribe(res => {
+                        this.vendor = res.payload.data;
+                    });
+                }
             }
         });
 
