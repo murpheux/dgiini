@@ -29,7 +29,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
 
     router.post('/login', asyncHandler(api.login))
     router.post('/users', asyncHandler(api.register))
-    router.post('/promote', asyncHandler(api.promote))
+    router.put('/promote', asyncHandler(api.promote))
     router.get('/users', asyncHandler(api.user_list))
     router.get('/users/stats/full', asyncHandler(api.user_stats))
     router.get('/users/role/:role', asyncHandler(api.user_by_role))

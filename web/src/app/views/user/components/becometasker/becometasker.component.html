@@ -1,4 +1,4 @@
-<div class="" id="registerUserModal">
+<div class="" id="becomeTaskerUserModal">
     <form [formGroup]="userForm" autocomplete="off" (ngSubmit)="handleSave(userForm.value)">
         <!-- Modal body -->
         <div class="modal-body">
@@ -10,12 +10,51 @@
                 <div #postProgressBar class="progress-bar bg-web" style="width: 20%; height: 7px;"></div>
             </div>
 
-            <div class="register-form pt-3">
+            <div class="become-tasker-form pt-3">
                 <div formArrayName="subUserForms">
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div formGroupName="0">
-                            <div class="tab-pane container p-0 active" id="register-step-1">
+                            <div class="tab-pane container p-0 active" id="become-tasker-step-1">
+                                <div class="form-group mb-2">
+                                    <label for="skillSummary">Skill Summary</label>
+                                    <em *ngIf="
+                                            forms[0].controls.skillSummary?.invalid &&
+                                            (forms[0].controls.skillSummary?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <textarea type="text" rows="5" class="form-control" formControlName="skillSummary" id="skillSummary" name="skillSummary" placeholder="..." required></textarea>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <div>
+                                        <label>Seleect applicable Skills</label>
+                                    </div>
+                                    <span *ngFor="let skill of skills" (click)="onSelectSkill($event)" class="badge badge-pill badge-secondary mr-1">{{skill}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div formGroupName="1">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-2">
+                                <div class="form-group mb-2">
+                                    <label for="website">Website</label>
+                                    <input type="text" class="form-control" formControlName="website" id="website" name="website" placeholder="www.website.com" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="facebook">Facebook</label>
+                                    <input type="text" class="form-control" formControlName="facebook" id="facebook" name="facebook" placeholder="@username" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="twitter">Twitter</label>
+                                    <input type="text" class="form-control" formControlName="twitter" id="twitter" name="twitter" placeholder="@username" />
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="linkedin">LinkedIn</label>
+                                    <input type="text" class="form-control" formControlName="linkedin" id="linkedin" name="linkedin" placeholder="@username" />
+                                </div>
+                            </div>
+                        </div>
+                        <div formGroupName="2">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-3">
                                 <div class="form-group mb-2">
                                     <label for="name">Account No</label>
                                     <em *ngIf="
@@ -59,13 +98,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="1">
-                            <div class="tab-pane container p-0 active d-none" id="register-step-2">
+                        <div formGroupName="3">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-4">
+                                <p class="font-weight-bold">
+                                    Bank Branch locations address
+                                </p>
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
-                                            forms[2].controls.bkstreet?.invalid &&
-                                            (forms[2].controls.bkstreet
+                                            forms[1].controls.bkstreet?.invalid &&
+                                            (forms[1].controls.bkstreet
                                                 ?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
@@ -108,8 +150,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="2">
-                            <div class="tab-pane container p-0 active d-none" id="register-step-3">
+                        <div formGroupName="4">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-5">
                                 <div class="form-group mb-2">
                                     <label for="cardno">Card No</label>
                                     <em *ngIf="
@@ -126,12 +168,7 @@
                                             (forms[2].controls.nameoncard?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
-                                        <select class="form-control" id="nameoncard" name="nameoncard" formControlName="nameoncard">
-                                            <option value="">-- Select Bank/Inst --</option>
-                                            <option *ngFor="
-                                                let bank of banks
-                                            " value="{{ bank }}">{{ bank }}</option>
-                                        </select>
+                                        <input type="text" class="form-control" formControlName="nameoncard" id="nameoncard" name="nameoncard" placeholder="Name" />
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="name">Expiry</label>
@@ -144,8 +181,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="3">
-                            <div class="tab-pane container p-0 active d-none" id="register-step-4">
+                        <div formGroupName="5">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-6">
+                                <p class="font-weight-bold">
+                                    Credit card billing address
+                                </p>
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
@@ -193,10 +233,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="4">
+                        <div formGroupName="6">
                             <div
-                                class="tab-pane container p-0 fade d-none"
-                                id="post-task-step-4"
+                                class="tab-pane container active p-0 d-none"
+                                id="become-tasker-step-7"
                             >
                                 <p class="font-weight-bold">
                                     Attachments (Optional)
@@ -244,13 +284,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="5">
-                            <div class="tab-pane container p-0 active d-none" id="register-step-5">
-                                <div class="form-row">
+                        <div formGroupName="7">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-8">
+                                <div class="form-row" *ngFor="let vh of vehicleList; let idx = index">
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-sm btn-danger float-right" (click)="deleteVehicle(idx)">
+                                            <i class="fas fa-minus"></i>
+                                          </button>
+                                    </div>
                                     <div class="col">
                                         <div class="form-group mb-2">
-                                            <label for="city">Brand</label>
-                                            <select class="form-control" id="brand" name="brand" formControlName="brand">
+                                            <label>Brand</label>
+                                            <select class="form-control" id="brand" name="brand" (change)="getVehicleModel($event, idx);">
                                                 <option value="">-- Select Brand --</option>
                                                 <option *ngFor="
                                                     let vbrand of vehicleBrands
@@ -260,14 +305,19 @@
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-2">
-                                            <label for="state">Model</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="model" name="model" formControlName="model" placeholder="Model" />
+                                            <label>Model</label>
+                                            <select class="form-control" id="model" name="model">
+                                                <option value="">-- Select Model --</option>
+                                                <option *ngFor="
+                                                    let vModel of vehicleModels[idx]
+                                                " value="{{ vModel }}">{{ vModel }}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group mb-2">
-                                            <label for="state">Year</label>
-                                            <select class="form-control" id="year" name="year" formControlName="year">
+                                            <label>Year</label>
+                                            <select class="form-control" id="year" name="year">
                                                 <option value="">-- Select Year --</option>
                                                 <option *ngFor="
                                                     let year of autoYearList
@@ -276,24 +326,24 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div formGroupName="6">
-                            <div class="tab-pane container p-0 active d-none" id="register-step-6">
+                                <div>
+                                    <div class="col-2">
+                                        <button type="button" class="btn btn-sm btn-success float-right" (click)="addVehicle()">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- </form> -->
-                        <div class="tab-pane container p-0 fade d-none" id="register-step-7">
+                        <div class="tab-pane container p-0 fade d-none" id="become-tasker-step-9">
                             <p class="font-weight-bold">Confirm Details</p>
-                            <p class="m-0 font-weight-bold">Account No</p>
+                            <p class="m-0 font-weight-bold">Bank Info</p>
                             <p>{{ forms[0].get("accountNo")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Bank Name</p>
                             <p>{{ forms[0].get("bankName")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Transit No</p>
                             <p>{{ forms[0].get("transitNo")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Inst No</p>
                             <p>{{ forms[0].get("insitutionNo")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Address</p>
+                            <p class="m-0 font-weight-bold">Bank Address</p>
                             <p>
                                 {{ forms[1].get("bkstreet")?.value }},
                                 {{ forms[1].get("bkcity")?.value }},
@@ -301,13 +351,11 @@
                                 {{ forms[1].get("bkzipcode")?.value }},
                                 {{ forms[1].get("bkcountry")?.value }}
                             </p>
-                            <p class="m-0 font-weight-bold">Card No</p>
+                            <p class="m-0 font-weight-bold">Card</p>
                             <p>{{ forms[2].get("cardno")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Name on Card</p>
                             <p>{{ forms[2].get("nameoncard")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Expiry</p>
                             <p>{{ forms[2].get("expiry")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Address</p>
+                            <p class="m-0 font-weight-bold">Billing Address</p>
                             <p>
                                 {{ forms[3].get("ccstreet")?.value }},
                                 {{ forms[3].get("cccity")?.value }},
@@ -330,14 +378,14 @@
                 <i class="fas fa-arrow-left"></i> Back
             </button>
             <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postNextBtn [disabled]="
-                    currentTabOpen > 3
+                    currentTabOpen > 9
                         ? 'true'
                         : forms[currentTabOpen - 1].invalid
                 " type="button" class="btn btn-web next-btn" (click)="nextTab()">
                 Next <i class="fas fa-arrow-right"></i>
             </button>
-            <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postPostBtn type="submit" class="btn btn-web next-btn register-btn d-none">
-                <i class="fas fa-pen"></i> Register
+            <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postPostBtn type="submit" class="btn btn-web next-btn become-tasker-btn d-none">
+                <i class="fas fa-pen"></i> Become Tasker
             </button>
         </div>
     </form>

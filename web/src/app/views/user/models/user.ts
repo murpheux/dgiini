@@ -3,7 +3,7 @@ import { IAddress } from './address';
 
 export interface IUser {
     _id?: Guid;
-    name: string;
+    name?: string;
     firstname?: string;
     lastname?: string;
     username: string;

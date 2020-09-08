@@ -267,38 +267,20 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
         const progressBar = this.postTaskProgressBar.nativeElement;
 
+        this.postTaskProgressBar.nativeElement.style.width = `${
+            this.percentage[currentTab]
+            }%`;
+        this.postTaskProgressText.nativeElement.innerHTML = `${
+            this.percentage[currentTab]
+            }%`;
+
         switch (this.currentTabOpen) {
-            case 1:
-                break;
 
             case 2:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
                 this.postTaskBackBtn.nativeElement.classList.remove('d-none');
                 break;
 
-            case 3:
-            case 4:
-            case 5:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
-                break;
-
             case 6:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
                 this.postTaskNextBtn.nativeElement.classList.add('d-none');
                 this.postTaskPostBtn.nativeElement.classList.remove('d-none');
                 break;
@@ -327,35 +309,19 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         $(nextTabId).removeClass('fade');
         $(nextTabId).removeClass('d-none');
 
+        this.postTaskProgressBar.nativeElement.style.width = `${
+            this.percentage[currentTab]
+            }%`;
+        this.postTaskProgressText.nativeElement.innerHTML = `${
+            this.percentage[currentTab]
+            }%`;
+
         switch (this.currentTabOpen) {
             case 1:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
                 this.postTaskBackBtn.nativeElement.classList.add('d-none');
                 break;
 
-            case 2:
-            case 3:
-            case 4:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
-                break;
-
             case 5:
-                this.postTaskProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                    }%`;
-                this.postTaskProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                    }%`;
                 this.postTaskNextBtn.nativeElement.classList.remove('d-none');
                 this.postTaskPostBtn.nativeElement.classList.add('d-none');
                 break;

@@ -75,7 +75,7 @@
             <hr class="mt-0" />
             <div *ngIf="isloggedIn && task.status !== 'cancelled' && task.status !== 'completed'" class="float-right m-2">
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleEdit()">Edit</button>
-                <button *ngIf="task.client !== currentUser._id" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
+                <button *ngIf="task.client !== currentUser._id && isVendor" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
             </div>
             <div class="">
@@ -89,7 +89,7 @@
             <div>
                 <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-message-sender *ngIf="isloggedIn && task.client !== currentUser._id"></app-message-sender>
+            <app-message-sender *ngIf="isVendor"></app-message-sender>
         </div>
         <div></div>
         <div

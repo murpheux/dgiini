@@ -4,6 +4,6 @@ export interface ICreditCard {
     cardNumber: string;
     nameOnCard: string;
     expiry: string;
-    cv2: string;
+    cv2?: string;
     billingAddress?: IAddress;
 }

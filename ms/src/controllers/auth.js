@@ -63,17 +63,13 @@ export class AuthenticationController {
 
     promote = async(req, res) => {
         let user = req.body
-        const validation = validateClient(user)
+        const validation = validateVendor(user)
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
             // enrich
-            user.isActive = true
-            user.isBanned = false
-            user.lastLogin = null
-            user.created = new Date()
-    
+            user.becomeVendor = new Date()
             const invoke_updateone = async() => await mgaccess.create(this.db, this.USER_COLL, user)
     
             const result = await invoke_updateone()

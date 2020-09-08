@@ -6,8 +6,8 @@ import { IUser } from './user';
 
 export interface IClient extends IUser {
     address?: IAddress;
-    email: string;
-    phone: string;
+    email?: string;
+    phone?: string;
     dob?: IDateOfBirth;
     creditCard?: ICreditCard;
     rating?: number;

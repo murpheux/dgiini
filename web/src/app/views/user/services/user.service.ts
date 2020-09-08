@@ -23,8 +23,8 @@ export class UserService {
     }
 
     upgradeClient(user: IVendor): Observable<IResponse> {
-        const url = `${this.serviceUrl}/upgrade`;
-        return this.http.post<IResponse>(url, user);
+        const url = `${this.serviceUrl}/promote`;
+        return this.http.put<IResponse>(url, user);
     }
 
     getUserByEmail(email: string): Observable<IResponse> {

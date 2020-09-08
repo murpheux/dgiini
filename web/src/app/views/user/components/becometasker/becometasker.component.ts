@@ -3,11 +3,12 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { range } from 'rxjs';
 import { toArray } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ImageFilType, IPhoto } from 'src/app/views/tasks/models/IPhoto';
-import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
 import { IProfile } from '../../models/profile';
 import { IUser } from '../../models/user';
+import { IVehicle } from '../../models/vehicle';
 import { IVendor } from '../../models/vendor';
 import { UserService } from '../../services/user.service';
 
@@ -28,19 +29,31 @@ export class BecometaskerComponent implements OnInit {
     @ViewChild('photoImg', { static: false }) photoImg: ElementRef;
 
     userForm: FormGroup;
-    user: IUser;
+    currentUser: IUser;
     activeStepIndex: number;
     autoYearList: number[];
     photos: IPhoto[] = [];
+    selectedSkills: string[] = [];
 
     mouseoverSave = false;
-    percentage = [25, 50, 75, 100];
+    percentage = [12, 20, 35, 45, 50, 65, 75, 90, 100];
     banks = ['bmo', 'scotia', 'td', 'rbc', 'simpli', 'cibc', 'tangerine', 'hsbc'];
-    vehicleBrands = ['honda', 'toyota', 'ford', 'chevrolet', 'acura', 'infiniti', 'dogde', 'ram'];
+    vehicleBrands = [];
+    skills = ['capentry', 'welder', 'childcare', 'babysitter', 'mover', 'sweeper'];
+    vehicles: {[key: string]: string[]} = {
+        honda: ['civic', 'city', 'accord'],
+        toyota: ['corolla', 'camry', 'sienna', 'avalon', 'venza'],
+        ford: ['fussion', 'freestar'],
+        chevrolet: ['trax'],
+        acura: ['legend', 'mdx', 'rdx', 'tlx', 'ilx', 'rlx'],
+    };
+    vehicleModels: string[][] = [];
+    vehicleList: IVehicle[] = [];
 
     constructor(
         private formBuilder: FormBuilder,
         private userService: UserService,
+        private authService: AuthService,
         private notificationService: NotificationService,
         public dialogRef: MatDialogRef<BecometaskerComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IProfile
@@ -49,6 +62,15 @@ export class BecometaskerComponent implements OnInit {
     ngOnInit(): void {
         this.initializeContent();
         this.buildForm();
+
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.currentUser = user;
+            }
+        });
+
+        this.vehicleBrands = Object.keys(this.vehicles);
+        this.vehicleList.push({brand: '', model: '', year: ''});
     }
 
     initializeContent(): void {
@@ -68,20 +90,36 @@ export class BecometaskerComponent implements OnInit {
         this.userForm = this.formBuilder.group({
             subUserForms: this.formBuilder.array([
                 this.formBuilder.group({
+                    skillSummary: this.formBuilder.control('', [
+                        Validators.required,
+                        Validators.minLength(10),
+                        Validators.maxLength(1000),
+                    ]),
+                }),
+                this.formBuilder.group({
+                    website: this.formBuilder.control('', []),
+                    facebook: this.formBuilder.control('', []),
+                    twitter: this.formBuilder.control('', []),
+                    linkedin: this.formBuilder.control('', []),
+                }),
+                this.formBuilder.group({
                     accountNo: this.formBuilder.control('', [
                         Validators.required,
                         Validators.minLength(10),
-                        Validators.maxLength(50),
+                        Validators.maxLength(10),
                     ]),
                     bankName: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.maxLength(50),
                     ]),
                     transitNo: this.formBuilder.control('', [
                         Validators.required,
+                        Validators.minLength(5),
+                        Validators.maxLength(5)
                     ]),
                     insitutionNo: this.formBuilder.control('', [
                         Validators.required,
+                        Validators.minLength(3),
+                        Validators.maxLength(3)
                     ])
                 }),
                 this.formBuilder.group({
@@ -102,12 +140,12 @@ export class BecometaskerComponent implements OnInit {
                 this.formBuilder.group({
                     cardno: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.minLength(10),
-                        Validators.maxLength(50),
+                        Validators.minLength(12),
+                        Validators.maxLength(16),
                     ]),
                     nameoncard: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.maxLength(50),
+                        Validators.maxLength(40),
                     ]),
                     expiry: this.formBuilder.control('', [
                         Validators.required,
@@ -125,20 +163,6 @@ export class BecometaskerComponent implements OnInit {
                         Validators.required,
                     ]),
                     cczipcode: this.formBuilder.control('', [
-                        Validators.required,
-                    ]),
-                }),
-                this.formBuilder.group({    // image level
-
-                }),
-                this.formBuilder.group({
-                    brand: this.formBuilder.control('', [
-                        Validators.required,
-                    ]),
-                    model: this.formBuilder.control('', [
-                        Validators.required,
-                    ]),
-                    year: this.formBuilder.control('', [
                         Validators.required,
                     ]),
                 }),
@@ -171,30 +195,65 @@ export class BecometaskerComponent implements OnInit {
     handleSave(formValues: any): void {
 
         const vendor: IVendor = {
-            _id: this.user._id,
-            name: formValues.subUserForms[0].name,
-            username: this.user.username,
-            email: this.user.username,
-            phone: formValues.subUserForms[0].phone,
-            role: this.user.role,
+            _id: this.currentUser._id,
+            username: this.currentUser.username,
+            role: this.currentUser.role,
+            skill_summary: formValues.subUserForms[0].skillSummary,
+            skills: this.selectedSkills,
+            social: {
+                website: formValues.subUserForms[1].website,
+                facebook: formValues.subUserForms[1].facebook,
+                twitter: formValues.subUserForms[1].twitter,
+                linkedin: formValues.subUserForms[1].linkedin,
+            },
+            bankAccount: {
+                accountNo: formValues.subUserForms[2].accountno,
+                bankName: formValues.subUserForms[2].bankName,
+                transitNo: formValues.subUserForms[2].transitNo,
+                insitutionNo: formValues.subUserForms[2].insitutionNo,
+                address: {
+                    street: formValues.subUserForms[3].bkstreet,
+                    city: formValues.subUserForms[3].bkcity,
+                    state: formValues.subUserForms[3].bkstate,
+                    country: formValues.subUserForms[3].bkcountry,
+                    zipcode: formValues.subUserForms[3].bkzipcode
+                }
+            },
+            creditCard: {
+                cardNumber: formValues.subUserForms[4].cardno,
+                nameOnCard: formValues.subUserForms[4].nameoncard,
+                expiry: formValues.subUserForms[4].expiry,
+                billingAddress: {
+                    street: formValues.subUserForms[5].ccstreet,
+                    city: formValues.subUserForms[5].cccity,
+                    state: formValues.subUserForms[5].ccstate,
+                    country: formValues.subUserForms[5].cccountry,
+                    zipcode: formValues.subUserForms[5].cczipcode
+                }
+            },
+            jobDonePhotos: this.photos,
+            vehicles: this.vehicleList
         };
 
-        const validator = new UserValidator();
-        const result = validator.validate(vendor);
+        vendor.role.push('vendor'); // make vendor
+        console.log(vendor);
 
-        if (result.isValid) {
-            this.userService.upgradeClient(vendor).subscribe(success => {
-                this.notificationService.showSuccess(
-                    'User information saved successfully!'
-                );
-                this.dialogRef.close();
-            });
-        } else {
-            const messages = result.getFailureMessages();
-            this.notificationService.showWarning(
-                `Input is invalid - ${messages}`
-            );
-        }
+        // const validator = new UserValidator();
+        // const result = validator.validate(vendor);
+
+        // if (result.isValid) {
+        //     this.userService.upgradeClient(vendor).subscribe(_ => {
+        //         this.notificationService.showSuccess(
+        //             'User information saved successfully!'
+        //         );
+        //         this.dialogRef.close();
+        //     });
+        // } else {
+        //     const messages = result.getFailureMessages();
+        //     this.notificationService.showWarning(
+        //         `Input is invalid - ${messages}`
+        //     );
+        // }
     }
 
     cancel(): void {
@@ -220,72 +279,50 @@ export class BecometaskerComponent implements OnInit {
             reader.onerror = (error) => reject(error);
         })
 
+    hideForm(form: string): void {
+        $(form).removeClass('active');
+        $(form).addClass('fade');
+        $(form).addClass('d-none');
+    }
+
+    showForm(form: string): void {
+        $(form).addClass('active');
+        $(form).removeClass('fade');
+        $(form).removeClass('d-none');
+    }
+
     nextTab(): boolean {
-        if (this.currentTabOpen > 7) {
+        if (this.currentTabOpen > 9) {
             return false;
         }
 
         const currentTab = this.currentTabOpen;
-        const currentTabId = `#register-step-${this.currentTabOpen}`;
+        const currentTabId = `#become-tasker-step-${this.currentTabOpen}`;
 
         // Close current Tab
-        $(currentTabId).removeClass('active');
-        $(currentTabId).addClass('fade');
-        $(currentTabId).addClass('d-none');
-
+        this.hideForm(currentTabId);
         // Increment To Next Tab
         this.currentTabOpen++;
 
         // Open Next Tab
-        const newTabId = `#register-step-${this.currentTabOpen}`;
+        const newTabId = `#become-tasker-step-${this.currentTabOpen}`;
+        this.showForm(newTabId);
 
-        $(newTabId).addClass('active');
-        $(newTabId).removeClass('fade');
-        $(newTabId).removeClass('d-none');
-
-        // const progressBar = this.postProgressBar.nativeElement;
+        this.postProgressBar.nativeElement.style.width = `${
+            this.percentage[currentTab]
+        }%`;
+        this.postProgressText.nativeElement.innerHTML = `${
+            this.percentage[currentTab]
+        }%`;
 
         switch (this.currentTabOpen) {
-            case 1:
-                break;
-
             case 2:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
                 this.postBackBtn.nativeElement.classList.remove('d-none');
                 break;
 
-            case 3:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
-                break;
-
-            case 4:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
+            case 9:
                 this.postNextBtn.nativeElement.classList.add('d-none');
                 this.postPostBtn.nativeElement.classList.remove('d-none');
-                break;
-
-            case 5:
-                break;
-
-            case 6:
-                break;
-
-            case 7:
                 break;
 
             default:
@@ -295,11 +332,9 @@ export class BecometaskerComponent implements OnInit {
 
     previousTab(): void {
         // Close current Tab
-        const currentTabId = `#register-step-${this.currentTabOpen}`;
+        const currentTabId = `#become-tasker-step-${this.currentTabOpen}`;
 
-        $(currentTabId).removeClass('active');
-        $(currentTabId).addClass('fade');
-        $(currentTabId).addClass('d-none');
+        this.hideForm(currentTabId);
 
         // Decrement To Next Tab
         this.currentTabOpen--;
@@ -307,39 +342,23 @@ export class BecometaskerComponent implements OnInit {
         // Open Next Tab
         let currentTab = this.currentTabOpen;
         currentTab--;
-        const nextTabId = `#register-step-${this.currentTabOpen}`;
+        const nextTabId = `#become-tasker-step-${this.currentTabOpen}`;
 
-        $(nextTabId).addClass('active');
-        $(nextTabId).removeClass('fade');
-        $(nextTabId).removeClass('d-none');
+        this.showForm(nextTabId);
+
+        this.postProgressBar.nativeElement.style.width = `${
+            this.percentage[currentTab]
+        }%`;
+        this.postProgressText.nativeElement.innerHTML = `${
+            this.percentage[currentTab]
+        }%`;
 
         switch (this.currentTabOpen) {
             case 1:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
                 this.postBackBtn.nativeElement.classList.add('d-none');
                 break;
 
-            case 2:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
-                break;
-
-            case 3:
-                this.postProgressBar.nativeElement.style.width = `${
-                    this.percentage[currentTab]
-                }%`;
-                this.postProgressText.nativeElement.innerHTML = `${
-                    this.percentage[currentTab]
-                }%`;
+            case 8:
                 this.postNextBtn.nativeElement.classList.remove('d-none');
                 this.postPostBtn.nativeElement.classList.add('d-none');
                 break;
@@ -347,5 +366,38 @@ export class BecometaskerComponent implements OnInit {
             default:
                 break;
         }
+    }
+
+    removeUpload(index: number): void {
+        this.photos.splice(index, 1);
+    }
+
+    onSelectSkill(event): void {
+        const val = event.currentTarget.innerText;
+
+        if (this.selectedSkills.includes(val)) {
+            $(event.currentTarget).removeClass('badge-primary');
+            $(event.currentTarget).addClass('badge-secondary');
+
+            const i = this.selectedSkills.indexOf(val);
+            this.selectedSkills.splice(i, 1);
+        } else {
+            $(event.currentTarget).removeClass('badge-secondary');
+            $(event.currentTarget).addClass('badge-primary');
+
+            this.selectedSkills.push(val);
+        }
+    }
+
+    getVehicleModel(event, index): void {
+        this.vehicleModels[index] = this.vehicles[event.currentTarget.value];
+    }
+
+    addVehicle(): void {
+        this.vehicleList.push({brand: '', model: '', year: ''});
+    }
+
+    deleteVehicle(index: number): void {
+        this.vehicleList.splice(index, 1);
     }
 }

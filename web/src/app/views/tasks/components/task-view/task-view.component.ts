@@ -27,6 +27,7 @@ export class TaskViewComponent implements OnInit {
     isloggedIn: boolean;
     public messageToReply: IMessage;
     location: ILocation;
+    isVendor = false;
 
     faDollarSign = faDollarSign;
     faCheck = faCheck;
@@ -97,6 +98,12 @@ export class TaskViewComponent implements OnInit {
 
         this.authService.isLoggedIn$.subscribe(status => {
             this.isloggedIn = status;
+        });
+
+        this.authService.loginUserSubject$.subscribe(user => {
+            if (user) {
+                this.isVendor = user.role.includes('vendor');
+            }
         });
     }
 
