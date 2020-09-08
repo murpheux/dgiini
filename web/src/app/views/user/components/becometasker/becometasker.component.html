@@ -29,7 +29,7 @@
                                     <div>
                                         <label>Seleect applicable Skills</label>
                                     </div>
-                                    <span *ngFor="let skill of skills" (click)="onSelectSkill($event)" class="badge badge-pill badge-secondary mr-1">{{skill}}</span>
+                                    <span *ngFor="let skill of skills" (click)="onSelectSkill($event)" class="badge badge-pill badge-secondary big-badge mr-1">{{skill}}</span>
                                 </div>
                             </div>
                         </div>
@@ -58,17 +58,17 @@
                                 <div class="form-group mb-2">
                                     <label for="name">Account No</label>
                                     <em *ngIf="
-                                            forms[0].controls.name?.invalid &&
-                                            (forms[0].controls.name?.touched ||
+                                            forms[2].controls.name?.invalid &&
+                                            (forms[2].controls.name?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
-                                    <input type="text" class="form-control" formControlName="accountNo" id="accountNo" name="accountNo" placeholder="Account Number" />
+                                    <input type="number" class="form-control" formControlName="accountNo" id="accountNo" name="accountNo" placeholder="Account Number" />
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="phone">Bank Name</label>
                                     <em *ngIf="
-                                            forms[0].controls.bankName?.invalid &&
-                                            (forms[0].controls.bankName?.touched ||
+                                            forms[2].controls.bankName?.invalid &&
+                                            (forms[2].controls.bankName?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
                                         <select class="form-control" id="bankName" name="bankName" formControlName="bankName">
@@ -81,20 +81,20 @@
                                 <div class="form-group mb-2">
                                     <label for="name">Transit No</label>
                                     <em *ngIf="
-                                            forms[0].controls.transitNo?.invalid &&
-                                            (forms[0].controls.transitNo?.touched ||
+                                            forms[2].controls.transitNo?.invalid &&
+                                            (forms[2].controls.transitNo?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
-                                    <input type="text" class="form-control" formControlName="transitNo" id="transitNo" name="transitNo" placeholder="Transit Number" />
+                                    <input type="number" class="form-control" formControlName="transitNo" id="transitNo" name="transitNo" placeholder="Transit Number" />
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="name">Institution No</label>
                                     <em *ngIf="
-                                            forms[0].controls.insitutionNo?.invalid &&
-                                            (forms[0].controls.insitutionNo?.touched ||
+                                            forms[2].controls.insitutionNo?.invalid &&
+                                            (forms[2].controls.insitutionNo?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
-                                    <input type="text" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
+                                    <input type="number" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
                                 </div>
                             </div>
                         </div>
@@ -106,8 +106,8 @@
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
-                                            forms[1].controls.bkstreet?.invalid &&
-                                            (forms[1].controls.bkstreet
+                                            forms[3].controls.bkstreet?.invalid &&
+                                            (forms[3].controls.bkstreet
                                                 ?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
@@ -132,9 +132,9 @@
                                         <div class="form-group mb-2">
                                             <label for="zipcode">Zip Code</label>
                                             <em *ngIf="
-                                                    forms[1].controls.bkzipcode
+                                                    forms[3].controls.bkzipcode
                                                         ?.invalid &&
-                                                    (forms[1].controls.bkzipcode
+                                                    (forms[3].controls.bkzipcode
                                                         ?.touched ||
                                                         mouseoverSave)
                                                 ">Required</em>
@@ -155,8 +155,8 @@
                                 <div class="form-group mb-2">
                                     <label for="cardno">Card No</label>
                                     <em *ngIf="
-                                            forms[2].controls.cardno?.invalid &&
-                                            (forms[2].controls.cardno?.touched ||
+                                            forms[4].controls.cardno?.invalid &&
+                                            (forms[4].controls.cardno?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
                                     <input type="text" class="form-control" formControlName="cardno" id="cardno" name="cardno" placeholder="Card Number" />
@@ -164,8 +164,8 @@
                                 <div class="form-group mb-2">
                                     <label for="nameoncard">Name on Card</label>
                                     <em *ngIf="
-                                            forms[2].controls.nameoncard?.invalid &&
-                                            (forms[2].controls.nameoncard?.touched ||
+                                            forms[4].controls.nameoncard?.invalid &&
+                                            (forms[4].controls.nameoncard?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
                                         <input type="text" class="form-control" formControlName="nameoncard" id="nameoncard" name="nameoncard" placeholder="Name" />
@@ -173,8 +173,8 @@
                                 <div class="form-group mb-2">
                                     <label for="name">Expiry</label>
                                     <em *ngIf="
-                                            forms[2].controls.expiry?.invalid &&
-                                            (forms[2].controls.expiry?.touched ||
+                                            forms[4].controls.expiry?.invalid &&
+                                            (forms[4].controls.expiry?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
                                     <input type="text" class="form-control" formControlName="expiry" id="expiry" name="expiry" placeholder="Expiry" />
@@ -189,8 +189,8 @@
                                 <div class="form-group mb-2">
                                     <label for="street">Street</label>
                                     <em *ngIf="
-                                            forms[3].controls.ccstreet?.invalid &&
-                                            (forms[3].controls.ccstreet
+                                            forms[5].controls.ccstreet?.invalid &&
+                                            (forms[5].controls.ccstreet
                                                 ?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
@@ -215,9 +215,9 @@
                                         <div class="form-group mb-2">
                                             <label for="zipcode">Zip Code</label>
                                             <em *ngIf="
-                                                    forms[3].controls.cczipcode
+                                                    forms[5].controls.cczipcode
                                                         ?.invalid &&
-                                                    (forms[3].controls.cczipcode
+                                                    (forms[5].controls.cczipcode
                                                         ?.touched ||
                                                         mouseoverSave)
                                                 ">Required</em>
@@ -242,7 +242,7 @@
                                     Attachments (Optional)
                                 </p>
                                 <div class="mb-2">
-                                    <label for="">Uploaded Images</label>
+                                    <label>Uploaded Images</label>
                                     <div class="clearfix"></div>
                                     <div
                                         *ngFor="
@@ -268,7 +268,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-2 files">
-                                    <label for="task-drag-image"
+                                    <label 
                                         >Upload Image</label
                                     >
                                     <input
@@ -306,7 +306,7 @@
                                     <div class="col">
                                         <div class="form-group mb-2">
                                             <label>Model</label>
-                                            <select class="form-control" id="model" name="model">
+                                            <select class="form-control" id="model" name="model" (change)="setModelValue($event, idx);">
                                                 <option value="">-- Select Model --</option>
                                                 <option *ngFor="
                                                     let vModel of vehicleModels[idx]
@@ -317,7 +317,7 @@
                                     <div class="col">
                                         <div class="form-group mb-2">
                                             <label>Year</label>
-                                            <select class="form-control" id="year" name="year">
+                                            <select class="form-control" id="year" name="year" (change)="setYearValue($event, idx);">
                                                 <option value="">-- Select Year --</option>
                                                 <option *ngFor="
                                                     let year of autoYearList
@@ -339,29 +339,29 @@
                         <div class="tab-pane container p-0 fade d-none" id="become-tasker-step-9">
                             <p class="font-weight-bold">Confirm Details</p>
                             <p class="m-0 font-weight-bold">Bank Info</p>
-                            <p>{{ forms[0].get("accountNo")?.value }}</p>
-                            <p>{{ forms[0].get("bankName")?.value }}</p>
-                            <p>{{ forms[0].get("transitNo")?.value }}</p>
-                            <p>{{ forms[0].get("insitutionNo")?.value }}</p>
+                            <p>{{ forms[2].get("accountNo")?.value }}</p>
+                            <p>{{ forms[2].get("bankName")?.value }}</p>
+                            <p>{{ forms[2].get("transitNo")?.value }}</p>
+                            <p>{{ forms[2].get("insitutionNo")?.value }}</p>
                             <p class="m-0 font-weight-bold">Bank Address</p>
                             <p>
-                                {{ forms[1].get("bkstreet")?.value }},
-                                {{ forms[1].get("bkcity")?.value }},
-                                {{ forms[1].get("bkstate")?.value }},
-                                {{ forms[1].get("bkzipcode")?.value }},
-                                {{ forms[1].get("bkcountry")?.value }}
+                                {{ forms[3].get("bkstreet")?.value }},
+                                {{ forms[3].get("bkcity")?.value }},
+                                {{ forms[3].get("bkstate")?.value }},
+                                {{ forms[3].get("bkzipcode")?.value }},
+                                {{ forms[3].get("bkcountry")?.value }}
                             </p>
                             <p class="m-0 font-weight-bold">Card</p>
-                            <p>{{ forms[2].get("cardno")?.value }}</p>
-                            <p>{{ forms[2].get("nameoncard")?.value }}</p>
-                            <p>{{ forms[2].get("expiry")?.value }}</p>
+                            <p>{{ forms[4].get("cardno")?.value }}</p>
+                            <p>{{ forms[4].get("nameoncard")?.value }}</p>
+                            <p>{{ forms[4].get("expiry")?.value }}</p>
                             <p class="m-0 font-weight-bold">Billing Address</p>
                             <p>
-                                {{ forms[3].get("ccstreet")?.value }},
-                                {{ forms[3].get("cccity")?.value }},
-                                {{ forms[3].get("ccstate")?.value }},
-                                {{ forms[3].get("cczipcode")?.value }},
-                                {{ forms[3].get("cccountry")?.value }}
+                                {{ forms[5].get("ccstreet")?.value }},
+                                {{ forms[5].get("cccity")?.value }},
+                                {{ forms[5].get("ccstate")?.value }},
+                                {{ forms[5].get("cczipcode")?.value }},
+                                {{ forms[5].get("cccountry")?.value }}
                             </p>
                         </div>
                     </div>

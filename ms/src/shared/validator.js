@@ -72,15 +72,15 @@ module.exports = {
     },
     
     validateVendor: (user) => {
-        let validation = this.validateUser(user)
-        validation
-            .validate(user.roles).isNotNull().and.passes(value => Array.isArray(value) && value.length >= 1, 'roles not array!')
-            .validate(user.skill_summary).isNotNull()
-            .validate(user.work_cities).passes(value => Array.isArray(value), 'cities not array!')
-            .validate(user.email).isNotNull().and.isEmail()
-            .validate(user.social).isNull().or.passes(value => Array.isArray(value), 'social not array!')
-            .validate(user.vehicles).isNull().or.passes(value => Array.isArray(value), 'vehicles not array!')
-            .validate(user.jobdone_photos).isNull().or.passes(value => Array.isArray(value), 'jobphotos not array!')
+        let validation = validator() // validateUser(user)
+        // validation
+        //     .validate(user.roles).isNotNull().and.passes(value => Array.isArray(value) && value.length >= 1, 'roles not array!')
+        //     .validate(user.skill_summary).isNotNull()
+        //     .validate(user.work_cities).passes(value => Array.isArray(value), 'cities not array!')
+        //     .validate(user.email).isNotNull().and.isEmail()
+        //     .validate(user.social).isNull().or.passes(value => Array.isArray(value), 'social not array!')
+        //     .validate(user.vehicles).isNull().or.passes(value => Array.isArray(value), 'vehicles not array!')
+        //     .validate(user.jobdone_photos).isNull().or.passes(value => Array.isArray(value), 'jobphotos not array!')
     
         return validation
     },

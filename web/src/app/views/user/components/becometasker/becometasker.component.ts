@@ -6,6 +6,7 @@ import { toArray } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ImageFilType, IPhoto } from 'src/app/views/tasks/models/IPhoto';
+import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
 import { IProfile } from '../../models/profile';
 import { IUser } from '../../models/user';
 import { IVehicle } from '../../models/vehicle';
@@ -105,7 +106,7 @@ export class BecometaskerComponent implements OnInit {
                 this.formBuilder.group({
                     accountNo: this.formBuilder.control('', [
                         Validators.required,
-                        Validators.minLength(10),
+                        Validators.minLength(8),
                         Validators.maxLength(10),
                     ]),
                     bankName: this.formBuilder.control('', [
@@ -165,6 +166,10 @@ export class BecometaskerComponent implements OnInit {
                     cczipcode: this.formBuilder.control('', [
                         Validators.required,
                     ]),
+                }),
+                this.formBuilder.group({    // dummy - photos
+                }),
+                this.formBuilder.group({    // dummy - vehicles
                 }),
                 this.formBuilder.group({
                     summary: this.formBuilder.control('', [
@@ -234,26 +239,26 @@ export class BecometaskerComponent implements OnInit {
             jobDonePhotos: this.photos,
             vehicles: this.vehicleList
         };
+        if (!vendor.role.includes('vendor')) {
+            vendor.role.push('vendor'); // make vendor
+        }
 
-        vendor.role.push('vendor'); // make vendor
-        console.log(vendor);
+        const validator = new UserValidator();
+        const result = validator.validate(vendor);
 
-        // const validator = new UserValidator();
-        // const result = validator.validate(vendor);
-
-        // if (result.isValid) {
-        //     this.userService.upgradeClient(vendor).subscribe(_ => {
-        //         this.notificationService.showSuccess(
-        //             'User information saved successfully!'
-        //         );
-        //         this.dialogRef.close();
-        //     });
-        // } else {
-        //     const messages = result.getFailureMessages();
-        //     this.notificationService.showWarning(
-        //         `Input is invalid - ${messages}`
-        //     );
-        // }
+        if (result.isValid) {
+            this.userService.upgradeClient(vendor).subscribe(_ => {
+                this.notificationService.showSuccess(
+                    'User information saved successfully!'
+                );
+                this.dialogRef.close();
+            });
+        } else {
+            const messages = result.getFailureMessages();
+            this.notificationService.showWarning(
+                `Input is invalid - ${messages}`
+            );
+        }
     }
 
     cancel(): void {
@@ -391,6 +396,7 @@ export class BecometaskerComponent implements OnInit {
 
     getVehicleModel(event, index): void {
         this.vehicleModels[index] = this.vehicles[event.currentTarget.value];
+        this.vehicleList[index].brand = event.currentTarget.value;
     }
 
     addVehicle(): void {
@@ -399,5 +405,13 @@ export class BecometaskerComponent implements OnInit {
 
     deleteVehicle(index: number): void {
         this.vehicleList.splice(index, 1);
+    }
+
+    setModelValue(event, index: number): void {
+        this.vehicleList[index].model = event.currentTarget.value;
+    }
+
+    setYearValue(event, index: number): void {
+        this.vehicleList[index].year = event.currentTarget.value;
     }
 }

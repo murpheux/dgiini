@@ -68,9 +68,11 @@ export class AuthenticationController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            // enrich
+            const id = user._id
             user.becomeVendor = new Date()
-            const invoke_updateone = async() => await mgaccess.create(this.db, this.USER_COLL, user)
+            delete user['_id']
+
+            const invoke_updateone = async() => await mgaccess.updateone(this.db, this.USER_COLL, id, user)
     
             const result = await invoke_updateone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
