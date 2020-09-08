@@ -63,8 +63,8 @@ export class UserprofileComponent implements OnInit {
     }
 
     getAll(): number {
-        if (!this.stats) return 0;
-        
+        if (!this.stats) { return 0; }
+
         return this.stats.map(m => m.count).reduce((x, y) => x + y);
     }
 }
