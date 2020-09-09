@@ -1,4 +1,13 @@
-<div>
+<section class="page-wrapper">
+    <div class="page-heading text-white">
+        <div class="container">
+            <h3>Inite Friends</h3>
+            <p>Help dgiini get to your friends.</p>
+            <i class="fas fa-tasks shadow-icon"></i>
+        </div>
+    </div>
+
+    <div>
     <div *ngFor="let invite of invites" class="row">
         <div class="col-1">
             <button type="button" class="btn btn-sm btn-danger float-right" (click)="deleteVehicle(idx)">
@@ -20,3 +29,5 @@
         </div>
     </div>
 </div>
+
+</section>

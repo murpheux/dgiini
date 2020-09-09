@@ -27,6 +27,7 @@ import { VendorModule } from '../tasker/tasker.module';
 import { ImageStripComponent } from './components/image-strip/image-strip.component';
 import { BidComponent } from './components/bid/bid.component';
 import { BidListComponent } from './components/bid-list/bid-list.component';
+import { TaskEditComponent } from './components/task-edit/task-edit.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { BidListComponent } from './components/bid-list/bid-list.component';
         ImageStripComponent,
         BidComponent,
         BidListComponent,
+        TaskEditComponent,
     ],
     imports: [
         CommonModule,

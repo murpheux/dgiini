@@ -48,7 +48,7 @@
                                 }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a
                                 class="nav-link"
                                 id="drafted-tasks-tab"
@@ -61,7 +61,7 @@
                                 Draft
                                 <span class="badge badge-secondary">0</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a
                                 class="nav-link"
@@ -78,7 +78,7 @@
                                 }}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a
                                 class="nav-link"
                                 id="offer-pending-tab"
@@ -91,7 +91,7 @@
                                 Offer Pending
                                 <span class="badge badge-secondary">1</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a
                                 class="nav-link"
@@ -251,14 +251,14 @@
                                             >
                                         </td>
                                         <td>
-                                            <button class="btn btn-warning mr-1" (click)="handleEdit(task)">Edit</button>
+                                            <a class="btn btn-warning mr-1" [routerLink]="['/task/edit', task._id]">Edit</a>
                                             <button class="btn btn-warning mr-1" (click)="handleCancel(task)">Cancel</button>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div
+                        <!-- <div
                             class="tab-pane fade"
                             id="drafted-tasks"
                             role="tabpanel"
@@ -296,7 +296,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                         <div
                             class="tab-pane fade"
                             id="assigned-tasks"
@@ -365,7 +365,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div
+                        <!-- <div
                             class="tab-pane fade"
                             id="offer-pending"
                             role="tabpanel"
@@ -413,7 +413,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                         <div
                             class="tab-pane fade"
                             id="completed-tasks"

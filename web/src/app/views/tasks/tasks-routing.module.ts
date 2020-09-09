@@ -4,11 +4,13 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { TaskCreateComponent } from './components/task-create/task-create.component';
 import { TaskCategoriesComponent } from './components/task-categories/task-categories.component';
 import { TaskUserComponent } from './components/task-user/task-user.component';
+import { TaskEditComponent } from './components/task-edit/task-edit.component';
 
 const routes: Routes = [
     { path: '', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'new', component: TaskCreateComponent, canActivate: [] },
     { path: 'my', component: TaskUserComponent, canActivate: [ ] },
+    { path: 'edit/:id', component: TaskEditComponent, canActivate: [ ] },
     // { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
     {
         path: ':category',

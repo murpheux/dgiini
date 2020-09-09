@@ -18,11 +18,6 @@ const routes: Routes = [
         loadChildren: () =>
             import('./views/user/user.module').then((m) => m.UserModule),
     },
-    // {
-    //     path: 'new',
-    //     loadChildren: () =>
-    //         import('./views/tasks/tasks.module').then((m) => m.TasksModule),
-    // },
     {
         path: 'task',
         loadChildren: () =>
