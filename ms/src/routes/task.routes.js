@@ -48,6 +48,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     router.delete('/tasks/:id', asyncHandler(api.delete_task_by_id))
     router.put('/bids', asyncHandler(api.update_bid))
     router.post('/bids', asyncHandler(api.create_bid))
+    router.get('/bids/task/:id', asyncHandler(api.get_bids))
     router.get('/tasks/search/:searchstr', asyncHandler(api.search_task))
     router.get('/tasks/:id/search/:searchstr', asyncHandler(api.get_task_with_search))
     router.get('/tasks/city/:city/category/:category', asyncHandler(api.get_task_by_city_and_category))

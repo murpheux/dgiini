@@ -1,15 +1,14 @@
 import {
     Component,
-    OnInit,
-    Input,
-    Output,
-    EventEmitter,
-    OnChanges,
-    SimpleChanges,
-    SimpleChange,
+
+
+
+    EventEmitter, Input, OnInit,
+
+    Output
 } from '@angular/core';
-import { ITask } from '../../models/ITask';
 import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { ITask } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -29,7 +28,7 @@ export class TaskCardComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.task.lastbid) {
-            this.currentPrice = this.task.lastbid.amount;
+            this.currentPrice = this.task.lastbid.rate.amount;
         } else {
             this.currentPrice = this.task.rate.amount;
         }

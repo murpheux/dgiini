@@ -23,7 +23,7 @@ export class UserprofileComponent implements OnInit {
         private authService: AuthService,
         private reviewService: ReviewService,
         private taskService: TaskService,
-        private userServive: UserService,
+        private userService: UserService,
     ) { }
 
     ngOnInit(): void {
@@ -33,7 +33,7 @@ export class UserprofileComponent implements OnInit {
                 this.isVendor = user.role.includes('vendor');
 
                 if (this.isVendor) {
-                    this.userServive.getUserByEmail(this.currentUser.username).subscribe(res => {
+                    this.userService.getUserByEmail(this.currentUser.username).subscribe(res => {
                         this.vendor = res.payload.data;
                     });
                 }

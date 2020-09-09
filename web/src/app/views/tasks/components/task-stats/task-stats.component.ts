@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TaskService } from '../../services/task.service';
 import { UserService } from 'src/app/views/user/services/user.service';
-import { ITaskStats } from '../../models/ITaskStats';
-import { IMemberStats } from '../../models/IMemberStats';
+import { IMemberStats } from '../../models/memberStats';
+import { ITaskStats } from '../../models/taskstats';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-stats',

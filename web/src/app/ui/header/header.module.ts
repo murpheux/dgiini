@@ -1,13 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderTemplateComponent } from './header-template/header-template.component';
+import { NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CorpModule } from 'src/app/views/corp/corp.module';
 import { TasksModule } from 'src/app/views/tasks/tasks.module';
 import { UserModule } from 'src/app/views/user/user.module';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { HeaderTemplateComponent } from './header-template/header-template.component';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
         CoreModule,
         SharedModule,
         TasksModule,
+        CorpModule,
         UserModule,
         MatDialogModule,
         MatIconModule,

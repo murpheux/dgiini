@@ -1,14 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { IPhoto } from '../../models/IPhoto';
+import { Component, Input, OnInit } from '@angular/core';
 import {
     Gallery,
-    GalleryRef,
-    GalleryItem,
+
+    GalleryItem, GalleryRef,
+
     ImageItem,
-    ThumbnailsPosition,
-    ImageSize,
+
+    ImageSize, ThumbnailsPosition
 } from 'ng-gallery';
 import { Lightbox } from 'ng-gallery/lightbox';
+import { IPhoto } from '../../models/photo';
 
 @Component({
     selector: 'app-image-strip',

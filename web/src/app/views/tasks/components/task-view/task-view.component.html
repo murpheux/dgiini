@@ -12,7 +12,7 @@
             <i class="fas fa-tasks"></i> Task Details
         </a>
     </li>
-    <li *ngIf="isloggedIn && messages" class="nav-item">
+    <li *ngIf="isloggedIn && bids" class="nav-item">
         <a
             class="nav-link"
             id="profile-tab"
@@ -37,8 +37,8 @@
             <h3 class="heading">
                 <span class="font-weight-bold">Task Details</span>
                 <span class="float-right price">{{
-                    currentPrice | currency: "CAD"
-                }}</span>
+                    task.rate.amount | currency: "CAD"
+                }} {{ task.rate.unit === 'Hourly' ? '/Hr' : '' }}</span>
             </h3>
             <div class="border mb-3"></div>
             <h4 class="heading">
@@ -89,25 +89,24 @@
             <div>
                 <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-message-sender *ngIf="isVendor"></app-message-sender>
+            <app-bid [task]="task" [user]="currentUser" (bidSubmitted)="handleBidSubmitted($event)" *ngIf="isVendor"></app-bid>
         </div>
         <div></div>
         <div
-            *ngIf="isloggedIn && messages"
+            *ngIf="isloggedIn && bids"
             class="tab-pane fade"
             id="profile"
             role="tabpanel"
             aria-labelledby="profile-tab"
         >
             <h3 class="heading">
-                Proposals
-                <span class="float-right">{{ messages.length }} Bids</span>
+                Bids
+                <span class="float-right">{{ bids.length }} Bids</span>
             </h3>
             <hr />
-            <app-message-list
-                [messages]="messages"
-                (messageToReply)="handleMessagedToReply($event)"
-            ></app-message-list>
+            <app-bid-list
+                [bids]="bids"
+            ></app-bid-list>
         </div>
     </div>
 </div>

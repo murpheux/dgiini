@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
-import { IResponse } from '../../tasks/models/IResponse';
+import { IResponse } from '../../tasks/models/response';
 import { IClient } from '../models/client';
 import { IVendor } from '../models/vendor';
 
@@ -33,6 +33,14 @@ export class UserService {
     }
 
     getUserList(userids: Guid[]): Observable<IResponse> {
+        const url = `${this.serviceUrl}?filter={"_id":[${userids.map(
+            (u) => '"' + u + '"'
+        )}]}`;
+
+        return this.http.get<IResponse>(url);
+    }
+
+    getUserList2(userids: string[]): Observable<IResponse> {
         const url = `${this.serviceUrl}?filter={"_id":[${userids.map(
             (u) => '"' + u + '"'
         )}]}`;

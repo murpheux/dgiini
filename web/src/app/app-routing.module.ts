@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './views/corp/components/about/pageNotFound/pageNotFound.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     { path: 'home', redirectTo: '/', pathMatch: 'full' },
@@ -35,7 +34,6 @@ const routes: Routes = [
             import('./views/corp/corp.module').then((m) => m.CorpModule),
     },
     { path: '**', redirectTo: 'corp/404' },
-    // { path: '404', component: PageNotFoundComponent },
 ];
 
 @NgModule({

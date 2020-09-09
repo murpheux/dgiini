@@ -1,4 +1,4 @@
-import { IPhoto } from '../../tasks/models/IPhoto';
+import { IPhoto } from '../../tasks/models/photo';
 import { IBankInfo } from './bankinfo';
 import { IClient } from './client';
 import { ICreditCard } from './creditcard';

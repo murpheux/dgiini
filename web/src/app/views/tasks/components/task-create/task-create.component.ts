@@ -15,8 +15,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { LocationService } from 'src/app/views/user/services/location.service';
-import { ImageFilType, IPhoto } from '../../models/IPhoto';
-import { Currency, ITask, RateUnit, TaskType } from '../../models/ITask';
+import { ImageFilType, IPhoto } from '../../models/photo';
+import { Currency, ITask, RateUnit, TaskType } from '../../models/task';
 import { TaskValidator } from '../../models/Validators/TaskValidator';
 import { TaskService } from '../../services/task.service';
 

@@ -5,7 +5,7 @@ import { range } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { ImageFilType, IPhoto } from 'src/app/views/tasks/models/IPhoto';
+import { ImageFilType, IPhoto } from 'src/app/views/tasks/models/photo';
 import { UserValidator } from 'src/app/views/tasks/models/Validators/UserValidator';
 import { IProfile } from '../../models/profile';
 import { IUser } from '../../models/user';

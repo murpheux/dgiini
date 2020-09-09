@@ -1,8 +1,8 @@
 import { Guid } from 'guid-typescript';
 import { IUser } from '../../user/models/user';
-import { IAddress } from './IAddress';
-import { IPhoto } from './IPhoto';
-import { ITaskBid } from './ITaskBid';
+import { IAddress } from './address';
+import { IBid } from './bid';
+import { IPhoto } from './photo';
 
 
 export enum TaskType {
@@ -24,7 +24,7 @@ export interface ITask {
     rate: Quotation;
     selected?: boolean;
     status?: TaskStatus;
-    lastbid?: ITaskBid;
+    lastbid?: IBid;
     bidcount?: number;
     photos?: IPhoto[];
 }

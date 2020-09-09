@@ -1,0 +1,21 @@
+<div *ngIf="bids" class="container">
+    <div *ngFor="let bid of bids" class="row m-2 p-1">
+        <div class="col-2">
+            <img
+                [src]="
+                    bid.userAccount
+                        ? bid.userAccount?.picture
+                        : 'assets/images/user.jpg'
+                "
+                class="profile-img border rounded-circle"
+                alt=""
+            />
+        </div>
+        <div class="col-7">
+            {{ bid.message }}
+        </div>
+        <div class="col-3 text-primary bid-amt">
+            {{ bid.rate.amount | currency:'CAD' }} {{ bid.rate.unit === 'Hourly' ? '/Hr' : '' }}
+        </div>
+    </div>
+</div>

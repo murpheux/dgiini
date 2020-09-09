@@ -203,6 +203,25 @@ export class TaskController {
         }
     }
 
+    get_bids = async(req, res) => {
+        const id = req.params.id
+
+        const paging = build_paging(req)
+        paging.filter = { 'task': id }
+
+        var validation = validator().validate(id).isNotEmpty().isMongoObjectId()
+    
+        if (validation.hasErrors()) {
+            res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+        } else {
+    
+            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.BID_COLL, paging)
+    
+            const [count, data] = await invoke_getlist()
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, data))
+        }
+    }
+
     create_bid = async(req, res) => {
         const bid = req.body
         const validation = validateBid(bid)
@@ -212,9 +231,6 @@ export class TaskController {
         } else {
             // enrich
             bid.created = new Date()
-            bid.user = ObjectId(bid.user)
-            bid.task = ObjectId(bid.task)
-    
             const invoke_updateone = async() => await mgaccess.create(this.db, this.BID_COLL, bid)
     
             const task = await invoke_updateone()

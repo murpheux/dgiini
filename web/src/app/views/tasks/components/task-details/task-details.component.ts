@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { ITask } from '../../models/ITask';
+import { ITask } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { TaskDeleteDialogComponent } from './delete-dialog/task-delete-dialog.component';
 

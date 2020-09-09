@@ -1,5 +1,5 @@
-import { ITask, Currency } from '../ITask';
-import { AbstractValidator, Severity } from 'fluent-ts-validator';
+import { AbstractValidator } from 'fluent-ts-validator';
+import { ITask } from '../task';
 
 export class TaskValidator extends AbstractValidator<ITask> {
     constructor() {

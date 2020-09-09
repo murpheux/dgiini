@@ -29,7 +29,7 @@ module.exports = {
         const validation = validator()
             .validate(bid.user).isNotEmpty().and.isMongoObjectId()
             .validate(bid.task).isNotEmpty().and.isMongoObjectId()
-            .validate(bid.amount).isNumber().isPositive()
+            .validate(bid.rate.amount).isNumber().isPositive()
     
         return validation
     },

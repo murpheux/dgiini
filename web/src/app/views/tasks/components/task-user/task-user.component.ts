@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { IUser } from 'src/app/views/user/models/user';
-import { ITask, TaskStatus } from '../../models/ITask';
+import { ITask, TaskStatus } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { TaskCreateComponent } from '../task-create/task-create.component';
 

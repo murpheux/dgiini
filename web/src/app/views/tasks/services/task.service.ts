@@ -4,9 +4,9 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
 import { UserService } from '../../user/services/user.service';
-import { IResponse } from '../models/IResponse';
-import { ITask, TaskStatus } from '../models/ITask';
-import { ITaskBid } from '../models/ITaskBid';
+import { IBid } from '../models/bid';
+import { IResponse } from '../models/response';
+import { ITask, TaskStatus } from '../models/task';
 
 @Injectable({
     providedIn: 'root',
@@ -22,6 +22,11 @@ export class TaskService {
     ) {
         this.serviceUrl = `${env.apiUrl}/task/v1/tasks`;
         this.bidServiceUrl = `${env.apiUrl}/task/v1/bids`;
+    }
+
+    getTaskBids(taskid: Guid): Observable<IResponse> {
+        const url = `${this.bidServiceUrl}/task/${taskid}`;
+        return this.http.get<IResponse>(url);
     }
 
     getTaskCategories(): Observable<IResponse> {
@@ -103,7 +108,7 @@ export class TaskService {
         return this.http.post<IResponse>(url, task);
     }
 
-    saveBid(bid: ITaskBid): Observable<IResponse> {
+    saveBid(bid: IBid): Observable<IResponse> {
         const url = `${this.bidServiceUrl}`;
         return this.http.post<IResponse>(url, bid);
     }
@@ -136,6 +141,24 @@ export class TaskService {
     deleteTask(id: Guid): Observable<IResponse> {
         const url = `${this.serviceUrl}/${id}`;
         return this.http.delete<IResponse>(url);
+    }
+
+    enrichBids(bids: IBid[]): void {
+        if (!bids) {
+            return;
+        }
+
+        const userList = bids
+            .map((m) => m.user)
+            .filter((value, index, self) => self.indexOf(value) === index);
+
+        this.userService.getUserList2(userList).subscribe(res => {
+            bids.forEach(m => {
+                res.payload.data.filter(user => {
+                    m.userAccount = m.user === user._id ? user : m.user;
+                });
+            });
+        });
     }
 
     enrichTasks(tasks: ITask[]): void {

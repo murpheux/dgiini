@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { LocationService } from '../../user/services/location.service';
-import { IResponse } from '../../tasks/models/IResponse';
-import { environment } from 'src/environments/environment';
-import { ITask } from '../../tasks/models/ITask';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { IResponse } from '../../tasks/models/response';
+import { ITask } from '../../tasks/models/task';
+import { LocationService } from '../../user/services/location.service';
 
 @Injectable({
     providedIn: 'root',

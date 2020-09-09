@@ -12,7 +12,7 @@ import { ICityLocation } from 'src/app/views/user/models/city';
 import { IUser } from 'src/app/views/user/models/user';
 import { IVendor } from 'src/app/views/user/models/vendor';
 import { LocationService } from 'src/app/views/user/services/location.service';
-import { ITask } from '../../models/ITask';
+import { ITask } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 
 @Component({

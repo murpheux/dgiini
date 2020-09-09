@@ -1,0 +1,39 @@
+<div *ngIf="bid" class="post-bid mt-3">
+    <div class="border rounded-lg p-2">
+        <p class="font-weight-bold text-web m-0">
+            <i class="fas fa-info-circle"></i> Note
+        </p>
+        <p class="m-0 text-muted">
+            Please do not share persoanl info - insurance won't apply to task
+            not done throught dgiini
+        </p>
+    </div>
+
+    <h6 class="mt-2">Your Price</h6>
+    <div class="row">
+        <div class="col-8">
+            <input type="number" class="form-control" [(ngModel)]="bid.rate.amount" placeholder="Your Price" />
+        </div>
+        <div class="col-4">
+            <select class="form-control" id="brand" name="brand" [(ngModel)]="bid.rate.unit">
+                <option value="">-- Select Unit --</option>
+                <option *ngFor="
+                    let unit of units
+                " value="{{ unit }}">{{ unit }}</option>
+            </select>
+        </div>
+    </div>
+    
+    <h6 class="mt-2">Your Proposal</h6>
+    <textarea
+        class="form-control"
+        name=""
+        id=""
+        rows="4"
+        [(ngModel)]="bid.message"
+        placeholder="Describe your strategy here, how you're gonna achieve this task"
+    ></textarea>
+    
+    <button class="btn mt-2 btn-web float-right" (click)="handlePostBid()">Post Bid</button>
+    <div class="clearfix"></div>
+</div>

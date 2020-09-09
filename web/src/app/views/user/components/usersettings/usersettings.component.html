@@ -47,7 +47,7 @@
                                     role="tab"
                                     aria-controls="v-pills-city"
                                     aria-selected="false"
-                                    ><i class="far fa-building"></i> Job Cities</a
+                                    ><i class="far fa-building"></i> Job City</a
                                 >
                                 <a
                                     class="nav-link"
@@ -265,7 +265,7 @@
                                         <i class="far fa-user"></i> Social
                                     </h4>
                                     <hr />
-                                    <div class="row">
+                                    <div *ngIf="vendor" class="row">
                                         <div class="col-md-12">
                                             <div class="form-group mb-2">
                                                 <label for="website"
@@ -275,6 +275,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     id="website"
+                                                    [(ngModel)]="vendor?.social.website"
                                                     placeholder="www.website.com"
                                                 />
                                             </div>
@@ -288,6 +289,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     id="facebook"
+                                                    [(ngModel)]="vendor?.social.facebook"
                                                     placeholder=""
                                                 />
                                             </div>
@@ -301,6 +303,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     id="twitter"
+                                                    [(ngModel)]="vendor?.social.twitter"
                                                     placeholder=""
                                                 />
                                             </div>
@@ -314,6 +317,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     id="linkedin"
+                                                    [(ngModel)]="vendor?.social.linkedin"
                                                     placeholder=""
                                                 />
                                             </div>
@@ -337,7 +341,7 @@
                                         City
                                     </h4>
                                     <hr />
-                                    <div class="row">
+                                    <div *ngIf="vendor" class="row">
                                         <div class="col-md-6">
                                             <div class="form-group mb-2">
                                                 <label for="firstname"
@@ -347,7 +351,7 @@
                                                     type="text"
                                                     class="form-control"
                                                     id="city"
-                                                    [(ngModel)]="currentCity"
+                                                    [(ngModel)]="vendor.residentCity"
                                                     placeholder="City"
                                                 />
                                             </div>
@@ -372,10 +376,9 @@
                                         <i class="far fa-user"></i> Skills
                                     </h4>
                                     <hr />
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                        </div>
-                                        <div class="col-md-6">
+                                    <div *ngIf="vendor" class="row">
+                                        <div class="col-md-12">
+                                            <span *ngFor="let skill of vendor?.skills" class="badge badge-pill badge-primary big-badge mr-1">{{skill}}</span>
                                         </div>
                                     </div>
                                     <hr />    

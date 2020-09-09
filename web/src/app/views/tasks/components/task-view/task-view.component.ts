@@ -8,9 +8,8 @@ import { ILocation } from 'src/app/shared/models/ILocation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { IUser } from 'src/app/views/user/models/user';
-import { IMessage } from '../../../message/models/message';
-import { MessageService } from '../../../message/services/message.service';
-import { ITask, TaskStatus } from '../../models/ITask';
+import { IBid } from '../../models/bid';
+import { ITask, TaskStatus } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -21,11 +20,10 @@ import { TaskService } from '../../services/task.service';
 export class TaskViewComponent implements OnInit {
     // tslint:disable-next-line: variable-name
     private _task: ITask;
-    public messages: IMessage[];
+    public bids: IBid[];
     public currentPrice: number;
-    public owned: boolean;
+    // public owned: boolean;
     isloggedIn: boolean;
-    public messageToReply: IMessage;
     location: ILocation;
     isVendor = false;
 
@@ -46,23 +44,18 @@ export class TaskViewComponent implements OnInit {
         this._task = task;
 
         if (this.currentUser) {
-            this.getUserTaskMessages();
+            this.taskService.getTaskBids(this._task._id).subscribe(res => {
+                this.bids = res.payload.data;
+                this.taskService.enrichBids(this.bids);
+            });
 
-            if (task.client) {
-                this.owned = task.client === this.currentUser._id;
-            } else {
-                this.owned =
-                    ((task.client as unknown) as IUser)._id ===
-                    this.currentUser._id;
-            }
-        } else {
-            this.getTaskMessages();
-        }
-
-        if (this.task.lastbid) {
-            this.currentPrice = this.task.lastbid.amount;
-        } else {
-            this.currentPrice = this.task.rate.amount;
+            // if (task.client) {
+            //     this.owned = task.client === this.currentUser._id;
+            // } else {
+            //     this.owned =
+            //         ((task.client as unknown) as IUser)._id ===
+            //         this.currentUser._id;
+            // }
         }
     }
 
@@ -71,7 +64,6 @@ export class TaskViewComponent implements OnInit {
     }
 
     constructor(
-        private messageService: MessageService,
         private dialog: MatDialog,
         private notificationService: NotificationService,
         public taskService: TaskService,
@@ -79,15 +71,15 @@ export class TaskViewComponent implements OnInit {
     ) {}
 
     async ngOnInit(): Promise<void> {
-        if (this.task.lastbid) {
-            this.currentPrice = this.task.lastbid.amount;
-        } else {
-            this.currentPrice = this.task.rate.amount;
-        }
+        // if (this.task.lastbid) {
+        //     this.currentPrice = this.task.lastbid.amount;
+        // } else {
+        //     this.currentPrice = this.task.rate.amount;
+        // }
 
-        if (this.currentUser) {
-            this.owned = this._task.client === this.currentUser._id;
-        }
+        // if (this.currentUser) {
+        //     this.owned = this._task.client === this.currentUser._id;
+        // }
 
         this.location = {
             latitude: -28.68352,
@@ -107,34 +99,34 @@ export class TaskViewComponent implements OnInit {
         });
     }
 
-    getUserTaskMessages(): void {
-        this.messageService
-            .getUserTaskMessages(this.task._id, this.currentUser._id)
-            .subscribe((success) => {
-                this.messages = success.payload.data;
-                this.messageService.enrichMessages(this.messages);
-            });
-    }
+    // getUserTaskMessages(): void {
+    //     this.messageService
+    //         .getUserTaskMessages(this.task._id, this.currentUser._id)
+    //         .subscribe((success) => {
+    //             this.messages = success.payload.data;
+    //             this.messageService.enrichMessages(this.messages);
+    //         });
+    // }
 
-    getTaskMessages(): void {
-        this.messageService
-            .getTaskMessages(this.task._id)
-            .subscribe((success) => {
-                this.messages = success.payload.data;
-                // this.messageService.enrichMessages(this.messages);
-            });
-    }
+    // getTaskMessages(): void {
+    //     this.messageService
+    //         .getTaskMessages(this.task._id)
+    //         .subscribe((success) => {
+    //             this.messages = success.payload.data;
+    //             // this.messageService.enrichMessages(this.messages);
+    //         });
+    // }
 
-    handleMessageSent(message: IMessage): void {
-        message.sentdate = new Date();
-        message.from = this.currentUser;
+    // handleMessageSent(message: IMessage): void {
+    //     message.sentdate = new Date();
+    //     message.from = this.currentUser;
 
-        this.messages.unshift(message);
-    }
+    //     this.messages.unshift(message);
+    // }
 
-    handleMessagedToReply(message: IMessage): void {
-        this.messageToReply = message;
-    }
+    // handleMessagedToReply(message: IMessage): void {
+    //     this.messageToReply = message;
+    // }
 
     handleAcceptOffer(): void {
         this.taskService.acceptBid(this.task.lastbid.id).subscribe((resp) => {
@@ -151,5 +143,11 @@ export class TaskViewComponent implements OnInit {
     }
 
     handleEdit(): void {
+    }
+
+    handleBidSubmitted(bid: IBid): void {
+        this.taskService.saveBid(bid).subscribe(res => {
+            this.notificationService.showSuccess('Bid saved successfully!');
+        });
     }
 }
