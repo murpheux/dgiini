@@ -12,7 +12,7 @@
             <i class="fas fa-tasks"></i> Task Details
         </a>
     </li>
-    <li *ngIf="isloggedIn && bids" class="nav-item">
+    <li *ngIf="isloggedIn && bids && task.client === currentUser._id" class="nav-item">
         <a
             class="nav-link"
             id="profile-tab"
@@ -75,7 +75,7 @@
             <hr class="mt-0" />
             <div *ngIf="isloggedIn && task.status !== 'cancelled' && task.status !== 'completed'" class="float-right m-2">
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" [routerLink]="['/task/edit']" [state]="{data: task}">Edit</button>
-                <button *ngIf="task.client !== currentUser._id && isVendor" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Task</button>
+                <button *ngIf="task.client !== currentUser._id && isVendor" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Rate</button>
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
             </div>
             <div class="">
@@ -93,7 +93,7 @@
         </div>
         <div></div>
         <div
-            *ngIf="isloggedIn && bids"
+            *ngIf="isloggedIn && bids && task.client === currentUser._id"
             class="tab-pane fade"
             id="profile"
             role="tabpanel"

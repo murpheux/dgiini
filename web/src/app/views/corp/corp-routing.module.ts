@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
-import { PageNotFoundComponent } from './components/about/pageNotFound/pageNotFound.component';
-import { PrivacyComponent } from './components/about/privacy/privacy.component';
-import { TocComponent } from './components/about/toc/toc.component';
 import { InviteFriendsComponent } from './components/invite-friends/invite-friends.component';
+import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { TocComponent } from './components/toc/toc.component';
 
 const routes: Routes = [
     { path: '', component: AboutComponent },

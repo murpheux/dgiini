@@ -50,6 +50,7 @@
         "@fortawesome/free-brands-svg-icons": "^5.14.0",
         "@fortawesome/free-regular-svg-icons": "^5.14.0",
         "@fortawesome/free-solid-svg-icons": "^5.14.0",
+        "@ng-select/ng-select": "^5.0.1",
         "bootstrap": "^4.5.2",
         "fluent-ts-validator": "^3.0.2",
         "global": "^4.4.0",

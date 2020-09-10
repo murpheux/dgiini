@@ -349,13 +349,13 @@ module.exports = {
                 .aggregate([{
                     $facet: {
                         'client': [{ $match: {} }, { $count: 'client' }, ],
-                        'tasker': [{ $match: { roles: { $eq: 'tasker' } } }, { $count: 'tasker' }]
+                        'vendor': [{ $match: { role: { $elemMatch: { $eq: 'vendor' } } }}, { $count: 'vendor' }]
                     }
                 },
                 {
                     $project: {
                         'client': { $arrayElemAt: ['$client.client', 0] },
-                        'tasker': { $arrayElemAt: ['$tasker.tasker', 0] }
+                        'vendor': { $arrayElemAt: ['$vendor.vendor', 0] }
                     }
                 }
                 ]).toArray()

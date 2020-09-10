@@ -6,10 +6,10 @@ import { CoreModule } from 'src/app/core/core.module';
 import { MaterialDesignModule } from 'src/app/material-design/material-design.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AboutComponent } from './components/about/about.component';
-import { PageNotFoundComponent } from './components/about/pageNotFound/pageNotFound.component';
-import { PrivacyComponent } from './components/about/privacy/privacy.component';
-import { TocComponent } from './components/about/toc/toc.component';
 import { InviteFriendsComponent } from './components/invite-friends/invite-friends.component';
+import { PageNotFoundComponent } from './components/pageNotFound/pageNotFound.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
+import { TocComponent } from './components/toc/toc.component';
 import { CorpRoutingModule } from './corp-routing.module';
 
 

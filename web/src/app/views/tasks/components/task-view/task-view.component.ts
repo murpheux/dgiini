@@ -52,14 +52,6 @@ export class TaskViewComponent implements OnInit {
                 this.bids = res.payload.data;
                 this.taskService.enrichBids(this.bids);
             });
-
-            // if (task.client) {
-            //     this.owned = task.client === this.currentUser._id;
-            // } else {
-            //     this.owned =
-            //         ((task.client as unknown) as IUser)._id ===
-            //         this.currentUser._id;
-            // }
         }
     }
 
@@ -75,15 +67,6 @@ export class TaskViewComponent implements OnInit {
     ) {}
 
     async ngOnInit(): Promise<void> {
-        // if (this.task.lastbid) {
-        //     this.currentPrice = this.task.lastbid.amount;
-        // } else {
-        //     this.currentPrice = this.task.rate.amount;
-        // }
-
-        // if (this.currentUser) {
-        //     this.owned = this._task.client === this.currentUser._id;
-        // }
 
         this.location = {
             latitude: -28.68352,
@@ -103,38 +86,11 @@ export class TaskViewComponent implements OnInit {
         });
     }
 
-    // getUserTaskMessages(): void {
-    //     this.messageService
-    //         .getUserTaskMessages(this.task._id, this.currentUser._id)
-    //         .subscribe((success) => {
-    //             this.messages = success.payload.data;
-    //             this.messageService.enrichMessages(this.messages);
-    //         });
-    // }
-
-    // getTaskMessages(): void {
-    //     this.messageService
-    //         .getTaskMessages(this.task._id)
-    //         .subscribe((success) => {
-    //             this.messages = success.payload.data;
-    //             // this.messageService.enrichMessages(this.messages);
-    //         });
-    // }
-
-    // handleMessageSent(message: IMessage): void {
-    //     message.sentdate = new Date();
-    //     message.from = this.currentUser;
-
-    //     this.messages.unshift(message);
-    // }
-
-    // handleMessagedToReply(message: IMessage): void {
-    //     this.messageToReply = message;
-    // }
-
     handleAcceptOffer(): void {
-        this.taskService.acceptBid(this.task.lastbid.id).subscribe((resp) => {
-            this.notificationService.showSuccess('Offer accepted!');
+        // raise a bid
+        const bid: IBid = { task: this.task._id.toString(), user: this.currentUser._id.toString(),  message: 'Tasker has accepted task at current rate', rate: this.task.rate };
+        this.taskService.saveBid(bid).subscribe(res => {
+            this.notificationService.showSuccess('Rate accepted. Bid submitted successfully!');
         });
     }
 
@@ -151,7 +107,7 @@ export class TaskViewComponent implements OnInit {
 
     handleBidSubmitted(bid: IBid): void {
         this.taskService.saveBid(bid).subscribe(res => {
-            this.notificationService.showSuccess('Bid saved successfully!');
+            this.notificationService.showSuccess('Bid submitted successfully!');
         });
     }
 }

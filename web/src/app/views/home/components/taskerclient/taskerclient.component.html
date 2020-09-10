@@ -34,7 +34,7 @@
                     >
                         Get Started
                     </button>
-                    <button *ngIf="role?.includes('client')"
+                    <button *ngIf="!role?.includes('vendor')"
                         class="btn btn-outline-web"
                         (click)="upgradeToVendor()"
                     >

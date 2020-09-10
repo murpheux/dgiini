@@ -1,8 +1,0 @@
-<div *ngIf="messages">
-    <div *ngFor="let message of messages">
-        <app-message-view
-            [message]="message"
-            (messageToReply)="handleMessagedToReply($event)"
-        ></app-message-view>
-    </div>
-</div>

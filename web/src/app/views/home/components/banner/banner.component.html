@@ -25,12 +25,8 @@
                             ><i class="fas fa-map-marker-alt input-icon"></i
                         ></span>
                     </div>
-                    <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Location"
-                        [value]="currentCity.city" readonly
-                    />
+                    <ng-select class="form-control" [items]="cityList" [typeahead]="selectCityInput" [loading]="selectCityPreLoading" bindLabel="city" bindValue="city" [(ngModel)]="currentCity.city" [name]="city">
+                    </ng-select>
                 </div>
             </div>
             <div>

@@ -59,7 +59,7 @@ export class UserprofileComponent implements OnInit {
     }
 
     getStat(mode: string): number {
-        return this.stats.find(el => el._id === mode).count;
+        return this.stats.find(el => el._id === mode)?.count;
     }
 
     getAll(): number {

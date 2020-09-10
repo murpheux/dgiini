@@ -1,7 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { LocationService } from 'src/app/views/user/services/location.service';
+
 
 @Component({
     selector: 'app-banner',
@@ -11,6 +14,15 @@ import { LocationService } from 'src/app/views/user/services/location.service';
 export class BannerComponent implements OnInit {
     currentCity: ICityLocation;
     searchString: string;
+    public selectCityInput = new Subject<string>();
+
+    public selectCityPreLoading = false;
+    public cityList = [];
+
+    cities = ['Calgary', 'Edmonton', 'Grand Pairie', 'Red-Deer',
+        'Regina', 'Sasktoon', 'Vcitoria', 'Fort Mac', 'Vancouver',
+        'Leduc', 'Toronto', 'Hamilton', 'Winnipeg', 'Moose Jaw',
+        'Montreal', 'Quebec City'];
 
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent): void {
@@ -26,6 +38,18 @@ export class BannerComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.currentCity = await this.locationService.getCurrentCity();
+        this.cityList = this.cities;
+
+        this.selectCityInput.pipe(debounceTime(500), distinctUntilChanged()
+            ).subscribe(term => {
+                this.selectCityPreLoading = true;
+                this.lookupCity(term);
+            });
+    }
+
+    lookupCity(term: string): void {
+        this.selectCityPreLoading = false;
+        this.cityList = this.cities.filter(c => c.startsWith(term));
     }
 
     handleSearch(): void {
@@ -33,4 +57,5 @@ export class BannerComponent implements OnInit {
             this.router.navigate([`/search/${this.searchString}`]);
         }
     }
+
 }
