@@ -1,29 +1,26 @@
-import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoaderComponent } from './components/loader/loader.component';
-import { UtilService } from './services/util.service';
-import { CommingSoonComponent } from './components/comming-soon/comming-soon.component';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { MaterialDesignModule } from '../material-design/material-design.module';
-import { OverlayLoaderComponent } from './components/overlay-loader/overlay-loader.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GlobalErrorHandler } from './models/global-error-handler';
-import { LoadingService } from './services/loading.service';
-import { ServerErrorInterceptor } from './interceptors/server-error.interceptor';
-import { ContentLoaderComponent } from './components/content-loader/content-loader.component';
-import { LoadingInterceptor } from './interceptors/loading.interceptor';
-import { NoHttpCacheInterceptor } from './interceptors/no-http-cache-interceptor';
-import { AuthGuard } from './guards/auth.guard';
-import { JwtInterceptor } from './interceptors/jwt.interceptor';
-import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GoogleMapComponent } from './components/google-map/google-map.component';
-import { environment } from 'src/environments/environment';
+import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { MaterialDesignModule } from '../material-design/material-design.module';
+import { CommingSoonComponent } from './components/comming-soon/comming-soon.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { ContentLoaderComponent } from './components/content-loader/content-loader.component';
+import { GoogleMapComponent } from './components/google-map/google-map.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { OverlayLoaderComponent } from './components/overlay-loader/overlay-loader.component';
+import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 import { NgLetDirective } from './directives/ng-let/ng-let.directive';
+import { AuthGuard } from './guards/auth.guard';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { NoHttpCacheInterceptor } from './interceptors/no-http-cache-interceptor';
+import { LoadingService } from './services/loading.service';
+import { UtilService } from './services/util.service';
+
 
 @NgModule({
     declarations: [

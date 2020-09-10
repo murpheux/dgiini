@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { ILocation } from '../../models/ILocation';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({

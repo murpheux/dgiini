@@ -3,10 +3,9 @@ import {
     ElementRef, OnInit,
     ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { UtilService } from 'src/app/shared/services/util.service';
 import { TaskerService } from 'src/app/views/tasker/services/tasker.service';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { IUser } from 'src/app/views/user/models/user';
@@ -54,13 +53,11 @@ export class TaskCategoriesComponent
     constructor(
         private taskService: TaskService,
         private route: ActivatedRoute,
-        private router: Router,
         private locationService: LocationService,
         private authService: AuthService,
         private taskerService: TaskerService,
         // tslint:disable-next-line: variable-name
         private _element: ElementRef,
-        private utilService: UtilService
     ) {}
 
     async ngOnInit(): Promise<void> {

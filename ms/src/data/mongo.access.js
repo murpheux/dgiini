@@ -6,6 +6,23 @@ import mongodb from 'mongodb'
 const mongoClient = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
 
+const task_select_plain = {title: 1, description: 1, category: 1, location: 1, rate: 1, client: 1, scheduled_date: 1, estimated_hours: 1, status: 1, created: 1, posted_date: 1, cancelled_date: 1}
+
+const task_select = {
+    title: 1,
+    description: 1,
+    location: 1,
+    rate: 1,
+    client: 1,
+    created: 1,
+    category: 1,
+    estimated_hours: 1,
+    status: 1,
+    bidcount: { $size: '$bids' },
+    scheduled_date: 1,
+    lastbid: { $arrayElemAt: ['$bids', -1] }
+}
+
 const process_paging = (paging) => {
 
     if (paging.filter['_id']) {
@@ -274,6 +291,24 @@ module.exports = {
 
     },
 
+    getTasksPhotos: (db, collection, paging) => {
+        process_paging(paging)
+
+        return new Promise((resolve, _) => {
+            const doc = db.collection(collection).aggregate([
+                { $match: paging.filter },
+                {
+                    $project: {
+                        photos: 1
+                    }
+                }
+            ]).toArray()
+
+            resolve(doc)
+        })
+
+    },
+
     getTaskStatistics: (db, collection, filter) => {
 
         return new Promise((resolve, _) => {
@@ -399,21 +434,7 @@ module.exports = {
                     .aggregate([{ $match: { '_id': { '$gt': ObjectId(paging.lastid) } } },
                         { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
                         {
-                            $project: {
-                                title: 1,
-                                description: 1,
-                                location: 1,
-                                rate: 1,
-                                client: 1,
-                                created: 1,
-                                category: 1,
-                                estimated_hours: 1,
-                                status: 1,
-                                bidcount: { $size: '$bids' },
-                                scheduled_date: 1,
-                                lastbid: { $arrayElemAt: ['$bids', -1] },
-                                photos: 1
-                            }
+                            $project: task_select
                         }
                     ]).limit(paging.page_limit)
                     .toArray()
@@ -438,21 +459,7 @@ module.exports = {
                     .aggregate([{ $match: paging.filter },
                         { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
                         {
-                            $project: {
-                                title: 1,
-                                description: 1,
-                                location: 1,
-                                rate: 1,
-                                client: 1,
-                                created: 1,
-                                category: 1,
-                                estimated_hours: 1,
-                                status: 1,
-                                bidcount: { $size: '$bids' },
-                                scheduled_date: 1,
-                                lastbid: { $arrayElemAt: ['$bids', -1] },
-                                photos: 1
-                            }
+                            $project: task_select
                         },
                         { $skip: paging.page_limit * (paging.page - 1) },
                         { $limit: paging.page_limit },

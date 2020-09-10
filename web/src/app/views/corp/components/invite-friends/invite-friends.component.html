@@ -7,24 +7,28 @@
         </div>
     </div>
 
-    <div>
-    <div *ngFor="let invite of invites" class="row">
+    <div class="mt-2">
+    <div *ngFor="let invite of invites; let idx = index" class="row mt-2">
         <div class="col-1">
-            <button type="button" class="btn btn-sm btn-danger float-right" (click)="deleteVehicle(idx)">
+            <button type="button" class="btn btn-sm btn-danger float-right" (click)="deleteInvite(idx)">
                 <i class="fas fa-minus"></i>
             </button>
         </div>
-        <div class="col">
-            <input [(ngModel)]="invite.name">
+        <div class="col-4">
+            <input type="text" class="form-control" id="name" name="mame" [(ngModel)]="invite.name" placeholder="Name"/>
         </div>
-        <div class="col">
-            <input [(ngModel)]="invite.email">
+        <div class="col-4">
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="invite.email" placeholder="Email"/>
         </div>
     </div>
-    <div>
-        <div class="col-2">
-            <button type="button" class="btn btn-sm btn-success float-right" (click)="addInvite()">
-                <i class="fas fa-plus"></i>
+    <div class="mt-2">
+        <div class="col-9">
+            <button type="button" class="btn btn-sm btn-success float-right mr-1" (click)="handleContactInvites()">
+                <i class="fas fa-save"></i> Save
+            </button>
+
+            <button type="button" class="btn btn-sm btn-success float-right mr-1" (click)="addInvite()">
+                <i class="fas fa-plus"></i> Add New Friend
             </button>
         </div>
     </div>

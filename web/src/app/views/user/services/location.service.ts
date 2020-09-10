@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Constants } from 'src/app/shared/models/constants';
 import { EnvService } from 'src/app/shared/services/env.service';
 import { environment } from 'src/environments/environment';
-import { IResponse } from '../../tasks/models/response';
+import { IResponse } from '../../../shared/models/response';
 import { ICityLocation } from '../models/city';
 
 @Injectable()

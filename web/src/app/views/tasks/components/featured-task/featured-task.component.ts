@@ -21,6 +21,8 @@ export class FeaturedTaskComponent implements OnInit {
         this.taskService.getFeaturedTasks().subscribe((response) => {
             const tasks = response.payload.data;
             this.featuredTasks = tasks.slice(0, 7);
+
+            this.taskService.enrichTasksWithPhotos(this.featuredTasks);
         });
     }
 
@@ -28,6 +30,8 @@ export class FeaturedTaskComponent implements OnInit {
         this.taskService.getRecentTasks().subscribe((response) => {
             const tasks = response.payload.data;
             this.recentTasks = tasks.slice(0, 3);
+
+            this.taskService.enrichTasksWithPhotos(this.recentTasks);
         });
     }
 }

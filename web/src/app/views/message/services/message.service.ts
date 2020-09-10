@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
-import { IResponse } from '../../tasks/models/response';
+import { IResponse } from '../../../shared/models/response';
 import { UserService } from '../../user/services/user.service';
 import { IMessage } from '../models/message';
 

@@ -4,7 +4,7 @@ import {
     faCalendar, faCheck, faDollarSign, faFileAlt,
     faInfoCircle, faMapMarkedAlt, faTimes, faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { ILocation } from 'src/app/shared/models/ILocation';
+import { ILocation } from 'src/app/shared/models/location';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { IUser } from 'src/app/views/user/models/user';
@@ -42,6 +42,10 @@ export class TaskViewComponent implements OnInit {
     @Input()
     set task(task: ITask) {
         this._task = task;
+
+        if (!task.photos) {
+            this.taskService.enrichTasksWithPhotos([task]);
+        }
 
         if (this.currentUser) {
             this.taskService.getTaskBids(this._task._id).subscribe(res => {

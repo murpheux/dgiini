@@ -7,46 +7,370 @@
         </div>
     </div>
 
-    <div>
+    <div *ngIf="taskForm" class="mt-2 w-75 col-centered post-task-form">
+        <form [formGroup]="taskForm" autocomplete="off" (ngSubmit)="handleUpdate(taskForm.value)">
+            <div class="tab-content">
+                <div class="form-group mb-2">
+                            <label for="title"
+                                >What do you need done?</label
+                            >
+                            <em
+                                *ngIf="
+                                    taskForm.controls.title?.invalid &&
+                                    (taskForm.controls.title?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="title"
+                                id="title"
+                                name="title"
+                                placeholder="Task Title"
+                            />
+                </div>
+                <div class="form-group mb-2">
+                            <label for="description"
+                                >What are the details?</label
+                            >
+                            <em
+                                *ngIf="
+                                    taskForm.controls.description
+                                        ?.invalid &&
+                                    (taskForm.controls.description
+                                        ?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <textarea
+                                class="form-control"
+                                rows="5"
+                                formControlName="description"
+                                id="description"
+                                placeholder="Task Details"
+                            ></textarea>
+                </div>
+                <div class="form-group">
+                            <label for="category"
+                                >Select Category</label
+                            >
+                            <select
+                                class="form-control"
+                                id="category"
+                                name="category"
+                                formControlName="category"
+                            >
+                                <option value=""
+                                    >-- Select Category --</option
+                                >
+                                <option
+                                    *ngFor="
+                                        let category of categoryList
+                                    "
+                                    value="{{ category }}"
+                                    >{{ category }}</option
+                                >
+                            </select>
+                </div>
+                <p class="font-weight-bold">
+                            Attachments (Optional)
+                </p>
+                <div class="mb-2">
+                            <label for="">Uploaded Images</label>
+                            <div class="clearfix"></div>
+                            <div
+                                *ngFor="
+                                    let photo of photos;
+                                    let i = index
+                                "
+                                class="d-inline-block"
+                                tabindex="0"
+                                data-toggle="tooltip"
+                                title="{{ photo.filename }}"
+                            >
+                                <div class="img d-inline">
+                                    <i
+                                        class="fas fa-times"
+                                        (click)="removeUpload(i)"
+                                    ></i>
+                                    <img
+                                        src="/assets/images/file.png"
+                                        class="border"
+                                        alt="Task Img"
+                                    />
+                                </div>
+                            </div>
+                </div>
+                <div class="form-group mb-2 files">
+                            <label for="task-drag-image"
+                                >Upload Image</label
+                            >
+                            <input
+                                type="file"
+                                accept="image/*"
+                                class="form-control"
+                                id="task-drag-image"
+                                (change)="
+                                    handleFileInput($event.target.files)
+                                "
+                                multiple
+                            />
+                </div>
+                <div
+                            class="border p-2 pt-1 pb-1 rounded-lg mb-2"
+                        >
+                            <p class="m-0 text-web font-weight-bold">
+                                <i class="fas fa-info-circle"></i> Note
+                            </p>
+                            <p class="m-0 text-muted">
+                                Address will be kept confidential until
+                                task is assigned to tasker
+                            </p>
+                </div>
 
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in sodales nunc. Etiam non porta elit. In hac
-            habitasse platea dictumst. Curabitur erat lectus, mollis quis lorem quis, iaculis mollis arcu. Donec blandit,
-            tortor non luctus placerat, sem sapien mollis orci, ut eleifend augue orci et purus. Praesent sit amet
-            pellentesque sem. Nunc euismod vulputate bibendum. Vestibulum pellentesque leo et risus imperdiet mollis.
-            Integer congue enim nisl, vitae sodales nunc tempus id.
-        </p>
-        <p>
-            Vestibulum non suscipit lacus. Aliquam nec turpis nec mauris venenatis laoreet. Nunc nibh sem, porta ut viverra
-            non, volutpat ac purus. Aenean ultrices turpis nibh, vitae lobortis mi eleifend condimentum. Cras auctor
-            ultrices leo, vel hendrerit erat scelerisque sit amet. Suspendisse eu tincidunt metus, nec tempor dui. Donec
-            iaculis a augue sit amet porttitor. Sed ipsum leo, ultricies vitae porttitor a, hendrerit vel tellus. Praesent
-            quis tristique enim, vel ultricies justo. Aliquam erat volutpat. Sed ullamcorper tempor lacinia. Ut id eros
-            mauris.
-        </p>
-        <p>
-            Integer dapibus sit amet nunc at dignissim. Duis tempus lectus sit amet ligula facilisis placerat. Integer
-            mattis efficitur ipsum sed varius. Sed hendrerit augue at risus malesuada, ac convallis quam fermentum. Interdum
-            et malesuada fames ac ante ipsum primis in faucibus. Integer id nibh lacinia, tempus ante quis, imperdiet urna.
-            Maecenas eget nunc in ligula ultrices suscipit id id justo. Nunc tristique, ligula in hendrerit lobortis, lacus
-            velit pellentesque mauris, eu ultrices elit ex sit amet tortor. Phasellus interdum dapibus rhoncus. Etiam eget
-            tellus ut ipsum accumsan eleifend cursus a tortor. Maecenas ante odio, porta id lorem eu, luctus luctus leo.
-            Phasellus sollicitudin gravida augue, vitae fermentum orci maximus nec.
-        </p>
-        <p>
-            Nam eget diam pretium, pharetra ex vitae, pellentesque purus. Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit. Suspendisse sed pretium dolor, a cursus metus. Curabitur pellentesque accumsan felis. Suspendisse
-            convallis rhoncus pulvinar. Nulla vel pulvinar diam. Nulla imperdiet, nisl sed lobortis luctus, augue eros
-            viverra nulla, in finibus dui odio sed ante. Vivamus posuere magna vel ipsum fermentum, at tincidunt tellus
-            facilisis. Nunc eu odio imperdiet, hendrerit turpis ac, venenatis risus. In euismod turpis risus, sed bibendum
-            nisi faucibus eu. Donec vitae est quis risus iaculis viverra vel eget diam. Sed nec purus vel risus euismod
-            cursus. Donec et elementum mauris. Mauris non elementum urna, et consectetur purus. Phasellus ac dolor eu ligula
-            lobortis dapibus. Duis finibus urna id volutpat porttitor.
-        </p>
+                <div class="form-group mb-2">
+                            <label for="street">Street</label>
+                            <em
+                                *ngIf="
+                                    taskForm.controls.street?.invalid &&
+                                    (taskForm.controls.street
+                                        ?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="street"
+                                name="street"
+                                formControlName="street"
+                                placeholder="Street"
+                            />
+                </div>
+
+                <div class="form-row">
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    <label for="city">City</label>
+                                    <input
+                                        type="text"
+                                        [readonly]="true"
+                                        class="form-control"
+                                        id="city"
+                                        name="city"
+                                        formControlName="city"
+                                        placeholder="City"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    <label for="state">State</label>
+                                    <input
+                                        type="text"
+                                        [readonly]="true"
+                                        class="form-control"
+                                        id="state"
+                                        name="state"
+                                        formControlName="state"
+                                        placeholder="State"
+                                    />
+                                </div>
+                            </div>
+                </div>
+
+                <div class="form-row">
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    <label for="zipcode"
+                                        >Zip Code</label
+                                    >
+                                    <em
+                                        *ngIf="
+                                            taskForm.controls.zipcode
+                                                ?.invalid &&
+                                            (taskForm.controls.zipcode
+                                                ?.touched ||
+                                                mouseoverSave)
+                                        "
+                                        >Required</em
+                                    >
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="zipcode"
+                                        name="zipcode"
+                                        formControlName="zipcode"
+                                        placeholder="Zip Code"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group mb-2">
+                                    <label for="country">Country</label>
+                                    <input
+                                        type="text"
+                                        [readonly]="true"
+                                        class="form-control"
+                                        id="country"
+                                        name="country"
+                                        formControlName="country"
+                                        placeholder="Country"
+                                    />
+                                </div>
+                            </div>
+                </div>
+                <p class="font-weight-bold">
+                            When you want it done?
+                </p>
+                <div class="form-group mb-2">
+                            <label for="date"
+                                >Expected Task Completion Date</label
+                            >
+                            <em
+                                *ngIf="
+                                    taskForm.controls.date?.invalid &&
+                                    (taskForm.controls.date?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <input
+                                type="date"
+                                class="form-control"
+                                id="date"
+                                name="date"
+                                formControlName="date"
+                                placeholder="Enter Here"
+                            />
+                </div>
+                <div class="form-group mb-2">
+                            <label for="time"
+                                >Expected Task Completion Time</label
+                            >
+                            <em
+                                *ngIf="
+                                    taskForm.controls.time?.invalid &&
+                                    (taskForm.controls.time?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <input
+                                type="time"
+                                class="form-control"
+                                id="time"
+                                name="time"
+                                formControlName="time"
+                                placeholder="Enter Here"
+                            />
+                </div>
+                <p class="font-weight-bold">Offer</p>
+                <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input
+                                    type="radio"
+                                    class="form-check-input"
+                                    value="Total"
+                                    formControlName="unit"
+                                />
+                                Total
+                            </label>
+                </div>
+                <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input
+                                    type="radio"
+                                    class="form-check-input"
+                                    value="Hourly"
+                                    formControlName="unit"
+                                />
+                                Hourly
+                            </label>
+                </div>
+                <div>
+                    <div class="float-right big-text text-success font-weight-bold text-xl-right"> {{ calculateAmount(taskForm.get("unit")?.value, taskForm.get("amount")?.value, taskForm.get("duration")?.value) | currency: "CAD" }}</div>
+                </div>
+                <div class="form-group mb-2 mt-2">
+                            <label for="amount">Amount</label>
+                            <em
+                                *ngIf="
+                                    taskForm.controls.amount?.invalid &&
+                                    (taskForm.controls.amount
+                                        ?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                        ><i
+                                            class="fas fa-dollar-sign text-web"
+                                        ></i
+                                    ></span>
+                                </div>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Amount"
+                                    id="amount"
+                                    name="amount"
+                                    formControlName="amount"
+                                />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"
+                                        ></span
+                                    >
+                                </div>
+                            </div>
+                </div>
+                <div class="form-group mb-2">
+                            <label for="task-hours"
+                                >How long it will take?</label
+                            >
+                            <em
+                                *ngIf="
+                                    taskForm.controls.duration
+                                        ?.invalid &&
+                                    (taskForm.controls.duration
+                                        ?.touched ||
+                                        mouseoverSave)
+                                "
+                                >Required</em
+                            >
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                        ><i
+                                            class="fas fa-clock text-web"
+                                        ></i
+                                    ></span>
+                                </div>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="Hours"
+                                    id="duration"
+                                    name="duration"
+                                    formControlName="duration"
+                                />
+                                <div class="input-group-append">
+                                    <span class="input-group-text"
+                                        >hours</span
+                                    >
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </form>
+        <div class="float-right mt-4">
+            <button type="button" class="btn btn-primary m-1" [routerLink]="['/']">Cancel</button>
+            <button type="submit" class="btn btn-primary m-1">Update</button>
+        </div>
     </div>
-
 </section>
-
-
-
-

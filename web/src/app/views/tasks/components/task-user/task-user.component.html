@@ -251,7 +251,7 @@
                                             >
                                         </td>
                                         <td>
-                                            <a class="btn btn-warning mr-1" [routerLink]="['/task/edit', task._id]">Edit</a>
+                                            <a class="btn btn-warning mr-1" [routerLink]="['/task/edit']" [state]="{data: task}">Edit</a>
                                             <button class="btn btn-warning mr-1" (click)="handleCancel(task)">Cancel</button>
                                         </td>
                                     </tr>

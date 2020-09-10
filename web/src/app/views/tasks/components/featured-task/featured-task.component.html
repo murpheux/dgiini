@@ -5,14 +5,14 @@
                 <h3 class="font-weight-bold text-web">Featured Tasks</h3>
                 <div class="border web-border"></div>
 
-                <div class="feature-box">
+                <div class="feature-box" *ngIf="featuredTasks">
                     <div
                         *ngFor="let task of featuredTasks"
                         class="row p-3 bg-white border-bottom"
                     >
                         <div class="col-md col-img">
                             <img
-                                src="{{ task.photos[0] ? task.photos[0].photo : '/assets/images/preview.png' }}"
+                                src="{{ task.photos && task.photos[0] ? task.photos[0].photo : '/assets/images/preview.png' }}"
                                 class="border rounded-lg w-100"
                                 alt="Task Image"
                             />
@@ -65,7 +65,7 @@
                 <div class="border web-border"></div>
                 <div *ngFor="let rtask of recentTasks" class="recent-box p-3">
                     <img
-                        src="{{ rtask.photos[0] ? rtask.photos[0].photo : '/assets/images/preview.png' }}"
+                        src="{{ rtask.photos && rtask.photos[0] ? rtask.photos[0].photo : '/assets/images/preview.png' }}"
                         class="border rounded-lg w-100"
                         alt="Task Image"
                     />

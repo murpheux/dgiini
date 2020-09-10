@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { EnvService } from 'src/app/shared/services/env.service';
+import { IResponse } from '../../../shared/models/response';
 import { UserService } from '../../user/services/user.service';
 import { IBid } from '../models/bid';
-import { IResponse } from '../models/response';
 import { ITask, TaskStatus } from '../models/task';
 
 @Injectable({
@@ -103,6 +103,14 @@ export class TaskService {
         return this.http.get<IResponse>(url);
     }
 
+    getTaskPhotos(taskids: Guid[]): Observable<IResponse> {
+        const url = `${this.serviceUrl}/photos?filter={"_id":[${taskids.map(
+            (u) => '"' + u + '"'
+        )}]}`;
+
+        return this.http.get<IResponse>(url);
+    }
+
     saveTask(task: ITask): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
         return this.http.post<IResponse>(url, task);
@@ -156,6 +164,24 @@ export class TaskService {
             bids.forEach(m => {
                 res.payload.data.filter(user => {
                     m.userAccount = m.user === user._id ? user : m.user;
+                });
+            });
+        });
+    }
+
+    enrichTasksWithPhotos(tasks: ITask[]): void {
+        if (!tasks) {
+            return;
+        }
+
+        const taskList = tasks
+            .map((m) => m._id)
+            .filter((value, index, self) => self.indexOf(value) === index);
+
+        this.getTaskPhotos(taskList).subscribe(res => {
+            tasks.forEach(t => {
+                res.payload.data.filter(task => {
+                    t.photos = t._id === task._id ? task.photos : t.photos;
                 });
             });
         });

@@ -96,6 +96,15 @@ export class TaskController {
         }
     }
 
+    get_task_photo = async(req, res) => {
+        const paging = build_paging(req)
+    
+        const invoke_getlist = async() => await mgaccess.getTasksPhotos(this.db, this.TASK_COLL, paging)
+    
+        const photos = await invoke_getlist()
+        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, photos))
+    }
+
     get_task_stats_full = async(_req, res) => {
         const invoke_getstats = async() => await mgaccess.getTaskStatistics(this.db, this.TASK_COLL, undefined)
     

@@ -215,7 +215,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
                 `${formValues.subTaskForms[3].date} ${formValues.subTaskForms[3].time}`
             ),
             created: currentDate,
-            estimated_hours: formValues.subTaskForms[4].esthrs,
+            estimated_hours: formValues.subTaskForms[4].duration,
 
             photos: this.photos,
         };
