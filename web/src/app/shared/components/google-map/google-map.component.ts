@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MapInfoWindow, MapMarker } from '@angular/google-maps';
+import { ILocation } from '../../models/location';
 
 @Component({
     selector: 'app-google-map',
@@ -9,24 +10,34 @@ import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 export class GoogleMapComponent implements OnInit {
     @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow;
 
-    @Input() latitude: number;
-    @Input() longitude: number;
-    @Input() mapTypeId: string;
+    @Input()
+    set location(location: ILocation) {
+        this.center = { lat: location.latitude, lng: location.longitude };
+
+        this.addMarker({
+            lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
+            lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
+          });
+    }
 
     center = { lat: 51.049999, lng: -114.066666 }; // calgary
     markerOptions = { draggable: false };
-    markerPositions: google.maps.LatLngLiteral[] = [];
-    zoom = 4;
+    options = { minZoom: 3,  maxZoom: 10};
+    markerPosition: google.maps.LatLngLiteral;
+    zoom = 12;
     display?: google.maps.LatLngLiteral;
 
     constructor() {}
 
     ngOnInit(): void {
-        this.center = { lat: this.latitude, lng: this.longitude };
+        this.addMarker({
+              lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
+              lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
+            });
     }
 
-    addMarker(event: google.maps.MouseEvent): void {
-        this.markerPositions.push(event.latLng.toJSON());
+    addMarker(marker): void {
+        this.markerPosition = marker;
     }
 
     move(event: google.maps.MouseEvent): void {
@@ -37,7 +48,12 @@ export class GoogleMapComponent implements OnInit {
         this.infoWindow.open(marker);
     }
 
-    removeLastMarker(): void {
-        this.markerPositions.pop();
+    zoomIn(): void {
+        if (this.zoom < this.options.maxZoom) { this.zoom++; }
     }
+
+    zoomOut(): void {
+        if (this.zoom > this.options.minZoom) { this.zoom--; }
+    }
+
 }

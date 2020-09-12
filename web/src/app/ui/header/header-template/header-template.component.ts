@@ -11,6 +11,7 @@ import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.
 import { TaskCreateComponent } from 'src/app/views/tasks/components/task-create/task-create.component';
 import { TaskService } from 'src/app/views/tasks/services/task.service';
 import { BecometaskerComponent } from 'src/app/views/user/components/becometasker/becometasker.component';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { UserService } from 'src/app/views/user/services/user.service';
 
 @Component({
@@ -44,6 +45,7 @@ export class HeaderTemplateComponent
         private router: Router,
         private ref: ChangeDetectorRef,
         private toastr: NotificationService,
+        private locationService: LocationService,
     ) {
         ref.detach();
         setInterval(() => {

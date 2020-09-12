@@ -4,3 +4,11 @@ export interface ILocation {
     mapType?: string;
     zoom?: number;
 }
+
+
+export enum MapType {
+    roadmap = 'roadmap',
+    satellite = 'satellite',
+    hybrid = 'hybrid',
+    terrain = 'terrain'
+}

@@ -16,3 +16,6 @@ exports.smtp_port = process.env.SMTP_PORT
 exports.smtp_ssl = process.env.SMTP_SSL
 exports.smtp_user = process.env.SMTP_USER
 exports.smtp_password = process.env.SMTP_PW
+
+exports.google_api = process.env.GOOGLE_API
+exports.api_key = process.env.API_KEY

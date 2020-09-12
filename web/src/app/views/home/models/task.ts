@@ -1,5 +1,5 @@
 import { Guid } from 'guid-typescript';
-import { IAddress } from '../../tasks/models/IAddress';
+import { IAddress } from './address';
 
 export interface ITask {
     id: Guid;

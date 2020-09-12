@@ -2,8 +2,10 @@
 'use strict'
 
 import fetch from 'node-fetch'
+import common from '../shared/common'
 import validator from 'fluent-validator'
 import HttpStatus from 'http-status-codes'
+import NodeCache from 'node-cache'
 import { validateClient, validateCredential, validateVendor } from '../shared/validator'
 
 import mgaccess from '../data/mongo.access'
@@ -17,6 +19,7 @@ export class AuthenticationController {
 
     constructor(dbContext) {
         this.db = dbContext
+        this.cache = new NodeCache()
     }
 
     login = async(req, res) => {
@@ -145,7 +148,6 @@ export class AuthenticationController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
             const invoke_getone = async() => await mgaccess.getusers(this.db, this.USER_COLL, paging)
-    
             const user = await invoke_getone()
     
             if (user) {
@@ -211,14 +213,47 @@ export class AuthenticationController {
         } else {
             (async() => {
                 try {
-                    const response = await fetch(service_url) //, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
-                    const json = await response.json()
-                    res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, json))
+                    const result = this.cache.get(ip)
+                    if (result !== undefined) {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
+                    } else {
+                        const response = await fetch(service_url) //, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
+                        const json = await response.json()
+                        this.cache.set(ip, json)
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, json))
+                    }
                 } catch (err) {
                     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
                 }
             })()
     
+        }
+    }
+
+    find_location_by_address = async(req, res) => {
+        const address = req.params.addr
+
+        const validation = validator().validate(address).isNotEmpty()
+        const service_url = `${common.google_api}/geocode/json?address=${address}&key=${common.api_key}`
+
+        if (validation.hasErrors()) {
+            res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+        } else {
+            (async() => {
+                try {
+                    const result = this.cache.get(address)
+                    if (result !== undefined) {
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
+                    } else {
+                        const response = await fetch(service_url)
+                        const json = await response.json()
+                        this.cache.set(address, json)
+                        res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, json))
+                    }
+                } catch (err) {
+                    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(build_response(HttpStatus.INTERNAL_SERVER_ERROR, PROVIDER_MSG, err))
+                }
+            })()
         }
     }
 }

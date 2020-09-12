@@ -13,7 +13,7 @@ apiEndpoints:
     methods: OPTIONS
   authApiDefault:
     paths: ['/api/auth/v1/', '/api/auth/v1/users', '/api/auth/v1/users/:username', '/api/auth/v1/users/stats/full',
-        '/api/auth/v1/findcity/:ip', '/api/auth/v1/taskers/:category']
+        '/api/auth/v1/findcity/:ip', '/api/auth/v1/findloc/:addr', '/api/auth/v1/taskers/:category']
     methods: GET
   authApi:
     paths: '/api/auth/v1/*'

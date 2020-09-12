@@ -40,6 +40,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     router.delete('/users/:id', asyncHandler(api.delete_user))
     router.post('/users/client', asyncHandler(api.create_user))
     router.get('/findcity/:ip', asyncHandler(api.find_city_by_ip))
+    router.get('/findloc/:addr', asyncHandler(api.find_location_by_address))
 })
 
 module.exports = router

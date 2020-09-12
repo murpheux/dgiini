@@ -7,7 +7,9 @@ import {
 import { ILocation } from 'src/app/shared/models/location';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { IAddress } from 'src/app/views/user/models/address';
 import { IUser } from 'src/app/views/user/models/user';
+import { LocationService } from 'src/app/views/user/services/location.service';
 import { IBid } from '../../models/bid';
 import { ITask, TaskStatus } from '../../models/task';
 import { TaskService } from '../../services/task.service';
@@ -43,6 +45,8 @@ export class TaskViewComponent implements OnInit {
     set task(task: ITask) {
         this._task = task;
 
+        this.getGeoLocation(this.task.location);
+
         if (!task.photos) {
             this.taskService.enrichTasksWithPhotos([task]);
         }
@@ -61,6 +65,7 @@ export class TaskViewComponent implements OnInit {
 
     constructor(
         private dialog: MatDialog,
+        private locationService: LocationService,
         private notificationService: NotificationService,
         public taskService: TaskService,
         public authService: AuthService
@@ -83,6 +88,21 @@ export class TaskViewComponent implements OnInit {
             if (user) {
                 this.isVendor = user.role.includes('vendor');
             }
+        });
+    }
+
+    getGeoLocation(address: IAddress): void {
+        const addressString = `${address.street}, ${address.city} ${address.state}, ${address.zipcode} ${address.country}`;
+
+        this.locationService.getLocByAddress(addressString).subscribe(res => {
+            const result = res.payload.data;
+
+            this.location = {
+                latitude: result.results[0].geometry.location.lat,
+                longitude: result.results[0].geometry.location.lng,
+                mapType: 'normal',
+                zoom: 5,
+            };
         });
     }
 

@@ -12,7 +12,10 @@ export class LocationService {
     private serviceUrl = undefined;
     private provider = environment.provider;
 
-    constructor(private env: EnvService, private http: HttpClient) {
+    constructor(
+        private env: EnvService,
+        private http: HttpClient
+        ) {
         this.serviceUrl = `${env.apiUrl}/auth/v1`;
     }
 
@@ -81,5 +84,11 @@ export class LocationService {
 
     setCurrentCity(city: string): void {
         localStorage.setItem(Constants.LOC_CURRENT_CITY, city);
+    }
+
+
+    getLocByAddress(addr: string): Observable<any> {
+        const url = `${this.serviceUrl}/findloc/${addr}`;
+        return this.http.get(url);
     }
 }
