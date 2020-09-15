@@ -75,7 +75,7 @@
             <hr class="mt-0" />
             <div *ngIf="isloggedIn && task.status !== 'cancelled' && task.status !== 'completed'" class="float-right m-2">
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" [routerLink]="['/task/edit']" [state]="{data: task}">Edit</button>
-                <button *ngIf="task.client !== currentUser._id && isVendor" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Rate</button>
+                <button *ngIf="task.client !== currentUser._id && isVendor && !isRateAccepted" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Rate</button>
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
             </div>
             <div class="">
@@ -87,7 +87,7 @@
             <div>
                 <app-image-strip [photos]="task.photos"></app-image-strip>
             </div>
-            <app-bid [task]="task" [user]="currentUser" (bidSubmitted)="handleBidSubmitted($event)" *ngIf="isVendor"></app-bid>
+            <app-bid [task]="task" [user]="currentUser" (bidSubmitted)="handleBidSubmitted($event)" *ngIf="isVendor && task.client !== currentUser._id"></app-bid>
         </div>
         <div></div>
         <div
@@ -102,7 +102,7 @@
                 <span class="float-right">{{ bids.length }} Bids</span>
             </h3>
             <hr />
-            <app-bid-list
+            <app-bid-list  (bidAccepted)="handleBidAccepted($event)" (viewProfile)="handleViewProfile($event)"
                 [bids]="bids"
             ></app-bid-list>
         </div>

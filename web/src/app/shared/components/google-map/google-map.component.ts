@@ -15,9 +15,9 @@ export class GoogleMapComponent implements OnInit {
         this.center = { lat: location.latitude, lng: location.longitude };
 
         this.addMarker({
-            lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-            lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-          });
+            lat: this.center.lat,
+            lng: this.center.lng,
+        });
     }
 
     center = { lat: 51.049999, lng: -114.066666 }; // calgary
@@ -31,9 +31,9 @@ export class GoogleMapComponent implements OnInit {
 
     ngOnInit(): void {
         this.addMarker({
-              lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-              lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-            });
+            lat: this.center.lat,
+            lng: this.center.lng,
+        });
     }
 
     addMarker(marker): void {

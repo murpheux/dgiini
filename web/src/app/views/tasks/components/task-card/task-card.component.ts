@@ -1,10 +1,6 @@
 import {
     Component,
-
-
-
     EventEmitter, Input, OnInit,
-
     Output
 } from '@angular/core';
 import { faCalendar, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';

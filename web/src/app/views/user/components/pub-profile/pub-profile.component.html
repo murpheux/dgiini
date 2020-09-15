@@ -1,0 +1,218 @@
+<div class="user-profile">
+    <div class="row">
+        <div class="col-md-9">
+            <!-- User Box -->
+            <div class="user-box">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="user-bx text-center">
+                            <div
+                                class="d-block mx-auto user-picture"
+                            >
+                                <img
+                                    [src]="user.picture"
+                                    alt="User Image"
+                                />
+                            </div>
+                            <p class="m-0 mt-2 text-muted">
+                                <i class="fas fa-user"></i>
+                                Member Since : {{ user?.created | date }}
+                            </p>
+                            <p class="m-0 mb-2 text-muted">
+                                <i class="fas fa-clock"></i>
+                                Last Login : {{ user?.lastLogin | date }}
+                            </p>
+                            <div *ngIf="vendor">
+                                <div *ngIf="vendor?.social.website" class="badge p-1">
+                                    <img class="im-size" alt="url" src="/assets/images/web.png">
+                                </div>
+                                <div *ngIf="vendor?.social.facebook" class="badge p-1">
+                                    <img class="im-size" alt="fb" src="/assets/images/fb.png">
+                                </div>
+                                <div *ngIf="vendor?.social.twitter" class="badge p-1">
+                                    <img class="im-size" alt="tw" src="/assets/images/tw.png">
+                                </div>
+                                <div *ngIf="vendor?.social.linkedin" class="badge p-1">
+                                    <img class="im-size" alt="ln" src="/assets/images/ln.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="">
+                            <h3 class="font-weight-bold">
+                                {{ user?.name }}
+                            </h3>
+                            <h4>
+                                {{ user?.username }}
+                            </h4>
+                            <p class="m-0 text-justify">
+                                {{ vendor?.summary }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- End User Box -->
+
+            <div class="clearfix"></div>
+
+            <!-- Portfolio Box -->
+            <div *ngIf="isVendor"
+                class="border portfolio-section p-2 pl-4 mb-2 mt-3 bg-white"
+            >
+                <h3 class="text-web">
+                    <i class="far fa-images"></i> Job Photos
+                </h3>
+                <hr />
+                <div *ngIf="vendor" class="row">
+                    <div *ngFor="let photo of vendor.jobDonePhotos" class="col-md-3">
+                        <div
+                            class="border portfolio text-center"
+                        >
+                            <img
+                                [src]="photo.photo"
+                                alt="Portfolio Image"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- End Portfolio Box -->
+
+            <!-- Review Box -->
+            <div
+                class="border reviews-section p-2 pl-4 mb-2 mt-3 bg-white"
+            >
+                <h3 class="text-web">
+                    <i class="far fa-comment"></i> Reviews
+                </h3>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngFor="let review of reviews">
+                            <div *ngIf="review.fromUser" class="review">
+                                <img
+                                    [src]="review.fromUser.picture"
+                                    alt="User Image"
+                                />
+                                <div class="review-details">
+                                    <p class="font-weight-bold m-0">
+                                        {{ review.fromUser.name }}
+                                    </p>
+                                    <app-rating-star [rating]="review.rating" ></app-rating-star>
+                                    <p class="m-0">
+                                        <i
+                                            class="fas fa-map-marker-alt text-web"
+                                        ></i>
+                                        {{ review.fromUser.address.city }}
+                                    </p>
+                                    <p class="mt-2">
+                                        {{ review.comment }}
+                                    </p>
+                                    <p class="text-muted">
+                                        {{ review.date | date }}
+                                    </p>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                        <button
+                            class="btn btn-outline-web d-block mx-auto btn-sm mb-1"
+                        >
+                            View More
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Review Box -->
+        </div>
+        <!-- End Col-md-9 -->
+
+        <div class="col-md-3">
+            <div class="border d-none p-2 mb-3">
+                <h4 class="text-web font-weight-bold">
+                    Achievements
+                </h4>
+                <hr />
+                <h5>
+                    <span class="text-success">100%</span> Tasks
+                    Completed
+                </h5>
+                <h5>
+                    <span class="text-success">100%</span> On
+                    Budget
+                </h5>
+                <h5>
+                    <span class="text-success">100%</span> On
+                    Time
+                </h5>
+                <hr />
+                <div *ngIf="reviews" class="rating">
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <span class="font-weight-bold">({{average()}})</span>
+                    <br />
+                    <span class="text-muted"> {{ reviews.length }} Reviews</span>
+                </div>
+            </div>
+
+            <div
+                class="sidebar-box achievements border mb-3 p-2"
+            >
+                <div class="heading">
+                    <h4 class="font-weight-bold m-0">
+                        Achievements
+                    </h4>
+                </div>
+                <div class="border mt-3 mb-2"></div>
+                <div *ngIf="stats" class="content p-2">
+                    <h5>
+                        <span class="text-success">{{ getAll() }}</span>
+                        Tasks Submitted
+                    </h5>
+                    <h5>
+                        <span class="text-success">{{ getStat('open') }}</span>
+                        Task in-process
+                    </h5>
+                    <h5>
+                        <span class="text-success">{{ getStat('cancelled') }}</span>
+                        Task Cancelled
+                    </h5>
+                    <h5>
+                        <span class="text-success">0</span>
+                        Task Completed
+                    </h5>
+                    <hr />
+                    <div *ngIf="reviews">
+                        <app-rating-star [rating]="average()" ></app-rating-star>
+                        <br />
+                        <span class="text-muted"
+                            >{{ reviews.length }} Reviews</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-box skills border mb-3 p-2">
+                <div class="heading">
+                    <h4 class="font-weight-bold m-0">Skills</h4>
+                </div>
+                <div class="border mt-3 mb-2"></div>
+                <div *ngIf="vendor" class="content p-2">
+                    <span *ngFor="let skill of vendor.skills" class="badge badge-default"
+                        >{{skill}}</span
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Row -->
+</div>

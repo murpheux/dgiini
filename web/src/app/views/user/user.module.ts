@@ -15,6 +15,7 @@ import { UserstatsComponent } from './components/userstats/userstats.component';
 import { LocationService } from './services/location.service';
 import { UserService } from './services/user.service';
 import { UserRoutingModule } from './user-routing.module';
+import { PubProfileComponent } from './components/pub-profile/pub-profile.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { UserRoutingModule } from './user-routing.module';
         UserstatsComponent,
         TransactionsComponent,
         RegisterComponent,
+        PubProfileComponent,
     ],
     imports: [
         CommonModule,

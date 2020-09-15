@@ -3,7 +3,7 @@ import { IUser } from '../../user/models/user';
 import { Quotation } from './task';
 
 export interface IBid {
-    id?: Guid;
+    _id?: Guid;
     user: string;
     userAccount?: IUser;
     task: string;

@@ -61,6 +61,8 @@ services:
             - APP_VERSION=v0.1
             - APP_BUILD=0.0.1.00237
             - COR_CLIENT_URL=https://sdpro.dynu.com:8443
+            - GOOGLE_API=https://maps.googleapis.com/maps/api
+            - API_KEY=AIzaSyB4rkOg7uSupskMTi-2kiteuvn2KaBswZU
         container_name: auth_api
         networks:
             - dgiininet

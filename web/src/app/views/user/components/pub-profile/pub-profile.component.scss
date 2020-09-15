@@ -1,0 +1,110 @@
+@import "../../../../../colors.css";
+
+/***********************************************************************
+*****************************  User Profile  ***************************
+************************************************************************/
+
+.profile {
+    background-color: #F7F7F7;
+    padding-top: 40px;
+}
+
+.badge {
+    margin-right: 2px
+}
+
+.profile .border {
+    border-radius: 2px;
+    border-color: #d4d4d4 !important;
+}
+
+.profile .text-success {
+    color: var(--success-color) !important
+}
+
+.profile .badge-default {
+    border: 1px solid #999999;
+    font-size: 14px;
+    border-radius: 999px;
+    padding: 5px 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.profile .badge-default:hover {
+    border: 1px solid var(--golden-color);
+    background-color: var(--golden-color);
+    color: white;
+}
+
+.user-profile .user-box {
+    border: 1px solid #d4d4d4;
+    background-color: white;
+    padding: 25px 25px
+}
+
+.user-profile .user-box .col-md-4 {
+    border-right: 1px solid #d4d4d4;
+}
+
+.user-profile .user-picture img {
+    width: 150px;
+    height: 150px;
+    border-radius: 1000px;
+    border: 1px solid var(--border-color);
+}
+
+.user-profile .portfolio-section .portfolio {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    ;
+}
+
+.user-profile .portfolio-section .portfolio img {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.user-profile .reviews-section .review img {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+}
+
+.user-profile .reviews-section .review .review-details {
+    position: relative;
+    margin-left: 60px
+}
+
+.profile .sidebar-box {
+    border-color: var(--border-color) !important;
+    background-color: white;
+}
+
+.profile .sidebar-box .heading {
+    background-color: white;
+    color: var(--theme-color);
+    padding: 6px 10px;
+    padding-bottom: 0px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.profile .sidebar-box .heading h4 {
+    font-size: 20px
+}
+
+.page-wrapper .page-headings {
+    position: absolute;
+    background-image: linear-gradient(-90deg, var(--golden-color), var(--theme-color));
+    height: 150px;
+    width: 100%;
+    top: 75px;
+}
+
+.im-size {
+    width: 20px;
+}

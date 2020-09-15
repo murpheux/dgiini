@@ -5,8 +5,11 @@ import {
     faInfoCircle, faMapMarkedAlt, faTimes, faUserCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { ILocation } from 'src/app/shared/models/location';
+import { IMail } from 'src/app/shared/models/mail';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { CommunicationService } from 'src/app/shared/services/communication.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { PubProfileComponent } from 'src/app/views/user/components/pub-profile/pub-profile.component';
 import { IAddress } from 'src/app/views/user/models/address';
 import { IUser } from 'src/app/views/user/models/user';
 import { LocationService } from 'src/app/views/user/services/location.service';
@@ -28,6 +31,7 @@ export class TaskViewComponent implements OnInit {
     isloggedIn: boolean;
     location: ILocation;
     isVendor = false;
+    isRateAccepted = false;
 
     faDollarSign = faDollarSign;
     faCheck = faCheck;
@@ -55,6 +59,18 @@ export class TaskViewComponent implements OnInit {
             this.taskService.getTaskBids(this._task._id).subscribe(res => {
                 this.bids = res.payload.data;
                 this.taskService.enrichBids(this.bids);
+
+                const myBids: IBid[] = [];
+
+                this.bids.filter(f => {
+                    if (f.user === this.currentUser._id.toString()) {
+                        myBids.push(f);
+                    }
+                });
+
+                myBids.filter(b => {
+                    this.isRateAccepted = this.task.rate.amount === b.rate.amount;
+                });
             });
         }
     }
@@ -68,6 +84,7 @@ export class TaskViewComponent implements OnInit {
         private locationService: LocationService,
         private notificationService: NotificationService,
         public taskService: TaskService,
+        private commService: CommunicationService,
         public authService: AuthService
     ) {}
 
@@ -129,5 +146,40 @@ export class TaskViewComponent implements OnInit {
         this.taskService.saveBid(bid).subscribe(res => {
             this.notificationService.showSuccess('Bid submitted successfully!');
         });
+    }
+
+    handleBidAccepted(bid: IBid): void {
+        this.taskService.acceptBid2(bid._id.toString()).subscribe(_ => {
+            const mail: IMail = {
+                from: 'dapo.onawole@mgail.com',
+                to: bid.userAccount.username,
+                subject: 'dgiini invite',
+                body: 'you have been invited!'
+            };
+
+            this.notificationService.showSuccess('Bid has been accepted and confirmed!');
+
+            this.commService.sendMail(mail).subscribe(__ => {
+                this.notificationService.showSuccess('Bidding tasker has been contacted!');
+            });
+        });
+    }
+
+    handleViewProfile(user: IUser): void {
+        let dialogRef;
+
+        this.authService.isLoggedIn$.subscribe(state => {
+            if (state) {
+                dialogRef = this.dialog.open(PubProfileComponent, {
+                    height: '700px',
+                    width: '1000px',
+                    data: {
+                        user
+                    }
+                });
+            }
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 }

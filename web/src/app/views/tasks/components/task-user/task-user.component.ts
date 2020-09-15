@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { IUser } from 'src/app/views/user/models/user';
 import { ITask, TaskStatus } from '../../models/task';
 import { TaskService } from '../../services/task.service';
@@ -25,6 +26,7 @@ export class TaskUserComponent implements OnInit {
         private taskService: TaskService,
         public dialog: MatDialog,
         private authService: AuthService,
+        private notificationService: NotificationService,
     ) {}
 
     ngOnInit(): void {
@@ -99,4 +101,16 @@ export class TaskUserComponent implements OnInit {
     }
 
     getStatusColor = (status) => this.taskService.getStatusColor(status);
+
+    handleCancel(task: ITask): void {
+        this.taskService.cancelTask(task._id).subscribe(resp => {
+            task.status = TaskStatus.cancelled;
+
+            const idx = this.postedTaskList.indexOf(task);
+            this.postedTaskList.splice(idx, 1);
+            this.cancelledTaskList.push(task);
+
+            this.notificationService.showSuccess('Task Cancelled!');
+        });
+    }
 }

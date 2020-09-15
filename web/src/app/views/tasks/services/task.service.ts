@@ -133,7 +133,12 @@ export class TaskService {
 
     acceptBid(id: Guid): Observable<IResponse> {
         const url = `${this.bidServiceUrl}`;
-        return this.http.put<IResponse>(url, { _id: id, accepted: true });
+        return this.http.put<IResponse>(url, { id, accepted: true });
+    }
+
+    acceptBid2(id: string): Observable<IResponse> {
+        const url = `${this.bidServiceUrl}`;
+        return this.http.put<IResponse>(url, { id, accepted: true });
     }
 
     cancelTask(id: Guid): Observable<IResponse> {

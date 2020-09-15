@@ -6,7 +6,7 @@ import mongodb from 'mongodb'
 const mongoClient = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
 
-const task_select_plain = {title: 1, description: 1, category: 1, location: 1, rate: 1, client: 1, scheduled_date: 1, estimated_hours: 1, status: 1, created: 1, posted_date: 1, cancelled_date: 1}
+const task_select_plain = {title: 1, description: 1, category: 1, location: 1, rate: 1, client: 1, scheduled_date: 1, estimated_hours: 1, status: 1, created: 1, role: 1, posted_date: 1, cancelled_date: 1}
 
 const task_select = {
     title: 1,
@@ -16,11 +16,28 @@ const task_select = {
     client: 1,
     created: 1,
     category: 1,
+    role: 1,
     estimated_hours: 1,
     status: 1,
     bidcount: { $size: '$bids' },
     scheduled_date: 1,
     lastbid: { $arrayElemAt: ['$bids', -1] }
+}
+
+
+const user_select = {
+    name: 1,
+    username: 1,
+    email: 1,
+    address: 1,
+    isActive: 1,
+    isBanned: 1,
+    lastLogin: { $arrayElemAt: ['$logins.date', -1] },
+    created: 1,
+    role: 1,
+    rating: { $avg: '$ratings.rating' },
+    ratingcount: { $size: '$ratings' },
+    picture: 1
 }
 
 const process_paging = (paging) => {
@@ -238,22 +255,7 @@ module.exports = {
                 { $match: paging.filter },
                 { $lookup: { from: 'ratings', localField: '_id', foreignField: 'user', as: 'ratings' } },
                 { $lookup: { from: 'logins', localField: 'username', foreignField: 'email', as: 'logins' } },
-                {
-                    $project: {
-                        name: 1,
-                        username: 1,
-                        email: 1,
-                        address: 1,
-                        isActive: 1,
-                        isBanned: 1,
-                        lastLogin: { $arrayElemAt: ['$logins.date', -1] },
-                        created: 1,
-                        roles: -1,
-                        rating: { $avg: '$ratings.rating' },
-                        ratingcount: { $size: '$ratings' },
-                        picture: 1
-                    }
-                }
+                { $project: user_select }
             ]).toArray()
 
             resolve(doc)
@@ -268,22 +270,7 @@ module.exports = {
             const doc = db.collection(collection).aggregate([
                 { $match: filter },
                 { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
-                {
-                    $project: {
-                        title: 1,
-                        description: 1,
-                        location: 1,
-                        rate: 1,
-                        client: 1,
-                        created: 1,
-                        category: 1,
-                        estimated_hours: 1,
-                        status: 1,
-                        bidcount: { $size: '$bids' },
-                        scheduled_date: 1,
-                        lastbid: { $arrayElemAt: ['$bids', -1] }
-                    }
-                }
+                { $project: task_select }
             ]).toArray()
 
             resolve(doc)

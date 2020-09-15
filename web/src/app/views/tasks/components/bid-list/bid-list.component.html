@@ -1,6 +1,6 @@
-<div *ngIf="bids" class="container">
-    <div *ngFor="let bid of bids" class="row m-2 p-1">
-        <div class="col-2">
+<div *ngIf="_bids" class="container">
+    <div *ngFor="let bid of _bids" class="row m-2 p-1">
+        <div (click)="handleViewProfile(bid.userAccount)" class="col-2">
             <img
                 [src]="
                     bid.userAccount
@@ -11,11 +11,16 @@
                 alt=""
             />
         </div>
-        <div class="col-7">
+        <div class="col-6">
             {{ bid.message }}
         </div>
         <div class="col-3 text-primary bid-amt">
             {{ bid.rate.amount | currency:'CAD' }} {{ bid.rate.unit === 'Hourly' ? '/Hr' : '' }}
         </div>
+        <div class="col-1">
+            <span *ngIf="bid.accepted">Accepted!</span>
+            <button *ngIf="!isAccepted" class="btn btn-warning" (click)="handleAcceptBid(bid)">Accept</button>
+        </div>
+        <hr/>
     </div>
 </div>
