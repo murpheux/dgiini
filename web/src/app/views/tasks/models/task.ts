@@ -24,6 +24,7 @@ export interface ITask {
     rate: Quotation;
     selected?: boolean;
     status?: TaskStatus;
+    acceptedbid?: IBid[];
     lastbid?: IBid;
     bidcount?: number;
     photos?: IPhoto[];

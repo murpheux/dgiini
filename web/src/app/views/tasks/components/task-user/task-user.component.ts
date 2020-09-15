@@ -60,7 +60,7 @@ export class TaskUserComponent implements OnInit {
                 (task) => task.status === TaskStatus.cancelled
             );
             this.assignedTaskList = this.taskList.filter(
-                (task) => task.status === TaskStatus.assigned
+                (task) => task.acceptedbid?.length > 0
             );
         });
     }

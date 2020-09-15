@@ -74,7 +74,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
     
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.TASK_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))

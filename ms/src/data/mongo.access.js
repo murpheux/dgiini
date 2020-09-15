@@ -21,6 +21,13 @@ const task_select = {
     status: 1,
     bidcount: { $size: '$bids' },
     scheduled_date: 1,
+    acceptedbid: { $filter : {
+        input: '$bids',
+        as : 'accbids',
+        cond : {
+            $eq: ['$$accbids.accepted', true]
+        }
+    } },
     lastbid: { $arrayElemAt: ['$bids', -1] }
 }
 
@@ -444,10 +451,9 @@ module.exports = {
             const data = new Promise((resolve, reject) => {
                 const data = db.collection(collection)
                     .aggregate([{ $match: paging.filter },
-                        { $lookup: { from: 'bids', localField: '_id', foreignField: 'task', as: 'bids' } },
-                        {
-                            $project: task_select
-                        },
+                        { $project: {'sid': {$toString: '$_id'}, title: 1, description: 1, category: 1, location: 1, rate: 1, client: 1, scheduled_date: 1, estimated_hours: 1, status: 1, created: 1, role: 1, posted_date: 1, cancelled_date: 1 }},
+                        { $lookup: { from: 'bids', localField: 'sid', foreignField: 'task', as: 'bids' } },
+                        { $project: task_select },
                         { $skip: paging.page_limit * (paging.page - 1) },
                         { $limit: paging.page_limit },
                         { $sort: { '_id': 1 } }
