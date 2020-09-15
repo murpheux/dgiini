@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee, faStar } from '@fortawesome/free-solid-svg-icons';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { CoreModule } from 'src/app/core/core.module';
@@ -51,6 +52,7 @@ import { TasksRoutingModule } from './tasks-routing.module';
         TasksRoutingModule,
         SharedModule,
         CoreModule,
+        NgSelectModule,
         MaterialDesignModule,
         NgxUiLoaderModule,
         FontAwesomeModule,

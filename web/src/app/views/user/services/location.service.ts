@@ -82,6 +82,18 @@ export class LocationService {
         });
     }
 
+    changeCurrentCity(city: string): void {
+        const currentCity: ICityLocation = {
+            city,
+            state: 'Alberta',
+            stateCode: 'AB',
+            country: 'Canada',
+            countryCode: 'CA',
+        };
+
+        localStorage.setItem(Constants.LOC_CURRENT_CITY, JSON.stringify(currentCity));
+    }
+
     setCurrentCity(city: string): void {
         localStorage.setItem(Constants.LOC_CURRENT_CITY, city);
     }

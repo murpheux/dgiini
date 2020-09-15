@@ -1,16 +1,18 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TaskService } from '../../services/task.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Subject } from 'rxjs/internal/Subject';
 import {
     debounceTime,
     distinctUntilChanged,
     map,
-    switchMap,
-    startWith,
+    startWith
 } from 'rxjs/operators';
+import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
+import { LocationService } from 'src/app/views/user/services/location.service';
+import { TaskService } from '../../services/task.service';
 
 @Component({
     selector: 'app-task-filter',
@@ -20,12 +22,15 @@ import { ICityLocation } from 'src/app/views/user/models/city';
 export class TaskFilterComponent implements OnInit {
     categoryCol1: string[];
     categoryCol2: string[];
-    cities: string[];
+    cities: string[] = Constants.CANADA_CITIES;
     searchPreloading = false;
+    public selectCityPreLoading = false;
+    public cityList = [];
 
     searchControl: FormControl = new FormControl();
     cityControl: FormControl = new FormControl();
     filteredOptions: Observable<string[]>;
+    public selectCityInput = new Subject<string>();
     formCtrlSub: Subscription;
 
     @Input() currentCity: ICityLocation;
@@ -39,20 +44,15 @@ export class TaskFilterComponent implements OnInit {
     @Output() categoriesChanged = new EventEmitter();
     @Output() searchClicked = new EventEmitter();
 
-    constructor(private taskService: TaskService) {}
+    constructor(
+        private locationService: LocationService,
+        private taskService: TaskService
+        ) {}
 
     ngOnInit(): void {
         this.getTaskCategories();
-        this.cities = [
-            'Calgary',
-            'Edmonton',
-            'Red Deer',
-            'Montreal',
-            'Toronto',
-            'Vancouver',
-        ];
-
         this.distanceToHome = 50; // default 50kms
+        this.cityList = this.cities;
 
         this.searchControl.valueChanges
             .pipe(
@@ -63,6 +63,12 @@ export class TaskFilterComponent implements OnInit {
                 })
             )
             .subscribe();
+
+        this.selectCityInput.pipe(debounceTime(500), distinctUntilChanged()
+            ).subscribe(term => {
+                this.selectCityPreLoading = true;
+                this.lookupCity(term);
+            });
 
         this.filteredOptions = this.cityControl.valueChanges.pipe(
             startWith(''),
@@ -76,6 +82,11 @@ export class TaskFilterComponent implements OnInit {
         } else {
             return false;
         }
+    }
+
+    lookupCity(term: string): void {
+        this.selectCityPreLoading = false;
+        this.cityList = this.cities.filter(c => c.startsWith(term));
     }
 
     private _filter(value: string): string[] {
@@ -153,5 +164,10 @@ export class TaskFilterComponent implements OnInit {
     // tslint:disable-next-line: no-any
     onValueChange(event: any): void {
         this.distanceToHome = event.target.value;
+    }
+
+    handleCityChange(): void {
+        this.searchClicked.emit(this.searchString);
+        this.locationService.changeCurrentCity(this.currentCity.city);
     }
 }

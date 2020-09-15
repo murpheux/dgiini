@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Constants } from 'src/app/shared/models/constants';
 import { ICityLocation } from 'src/app/views/user/models/city';
 import { LocationService } from 'src/app/views/user/services/location.service';
 
@@ -17,12 +18,9 @@ export class BannerComponent implements OnInit {
     public selectCityInput = new Subject<string>();
 
     public selectCityPreLoading = false;
-    public cityList = [];
+    public cityList: string[] = [];
 
-    cities = ['Calgary', 'Edmonton', 'Grand Pairie', 'Red-Deer',
-        'Regina', 'Sasktoon', 'Vcitoria', 'Fort Mac', 'Vancouver',
-        'Leduc', 'Toronto', 'Hamilton', 'Winnipeg', 'Moose Jaw',
-        'Montreal', 'Quebec City'];
+    cities = Constants.CANADA_CITIES;
 
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent): void {
@@ -58,4 +56,7 @@ export class BannerComponent implements OnInit {
         }
     }
 
+    handleCityChange(): void {
+        this.locationService.changeCurrentCity(this.currentCity.city);
+    }
 }
