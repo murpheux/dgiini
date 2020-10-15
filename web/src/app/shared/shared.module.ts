@@ -12,6 +12,7 @@ import { ContentLoaderComponent } from './components/content-loader/content-load
 import { GoogleMapComponent } from './components/google-map/google-map.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { OverlayLoaderComponent } from './components/overlay-loader/overlay-loader.component';
+import { PaymentComponent } from './components/payment/payment.component';
 import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 import { NgLetDirective } from './directives/ng-let/ng-let.directive';
 import { AuthGuard } from './guards/auth.guard';
@@ -32,6 +33,7 @@ import { UtilService } from './services/util.service';
         DigitOnlyDirective,
         GoogleMapComponent,
         NgLetDirective,
+        PaymentComponent,
     ],
     exports: [
         LoaderComponent,

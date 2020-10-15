@@ -70,7 +70,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         private taskService: TaskService,
         private router: Router,
         private cd: ChangeDetectorRef,
-        private notificationService: NotificationService,
+        private notifier: NotificationService,
         private authService: AuthService,
         private locationService: LocationService,
         public dialogRef: MatDialogRef<TaskCreateComponent>
@@ -225,14 +225,14 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
 
         if (result.isValid) {
             this.taskService.saveTask(task).subscribe((success) => {
-                this.notificationService.showSuccess(
+                this.notifier.showSuccess(
                     'Task saved successfully!'
                 );
                 this.dialogRef.close();
             });
         } else {
             const messages = result.getFailureMessages();
-            this.notificationService.showWarning(
+            this.notifier.showWarning(
                 `Input is invalid - ${messages}`
             );
         }

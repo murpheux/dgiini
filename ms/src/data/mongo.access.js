@@ -31,7 +31,6 @@ const task_select = {
     lastbid: { $arrayElemAt: ['$bids', -1] }
 }
 
-
 const user_select = {
     name: 1,
     username: 1,
@@ -97,7 +96,7 @@ module.exports = {
     },
 
     // get list
-    getlist: (db, collection, paging) => {
+    get_list: (db, collection, paging) => {
 
         if (paging.filter['_id']) {
 
@@ -146,7 +145,7 @@ module.exports = {
     },
 
     // get one
-    getone: (db, collection, filter) => {
+    get_one: (db, collection, filter) => {
         if (filter['_id']) {
             filter['_id'] = ObjectId(filter['_id'])
         }
@@ -160,7 +159,7 @@ module.exports = {
     },
 
     // update
-    updateone: (db, collection, id, item) => {
+    update_one: (db, collection, id, item) => {
         return new Promise((resolve, reject) => {
             db.collection(collection).updateOne({
                 _id: ObjectId(id)
@@ -204,7 +203,7 @@ module.exports = {
     },
 
     // get user by role
-    getusersbyrole: (db, collection, paging, role) => {
+    get_users_by_role: (db, collection, paging, role) => {
         process_paging(paging)
 
         return new Promise((resolve, _) => {
@@ -216,7 +215,7 @@ module.exports = {
         })
     },
 
-    gettaskersbyskill: (db, collection, paging, skill) => {
+    get_vendors_by_skill: (db, collection, paging, skill) => {
         process_paging(paging)
 
         return new Promise((resolve, _) => {
@@ -254,7 +253,7 @@ module.exports = {
     },
 
     // get users
-    getusers: (db, collection, paging) => {
+    get_users: (db, collection, paging) => {
         process_paging(paging)
 
         return new Promise((resolve, _) => {
@@ -270,7 +269,7 @@ module.exports = {
 
     },
 
-    getonetask: (db, collection, filter) => {
+    get_one_task: (db, collection, filter) => {
         if (filter['_id']) { filter['_id'] = ObjectId(filter['_id']) }
 
         return new Promise((resolve, _) => {
@@ -285,7 +284,7 @@ module.exports = {
 
     },
 
-    getTasksPhotos: (db, collection, paging) => {
+    get_tasks_photos: (db, collection, paging) => {
         process_paging(paging)
 
         return new Promise((resolve, _) => {
@@ -303,7 +302,7 @@ module.exports = {
 
     },
 
-    getTaskStatistics: (db, collection, filter) => {
+    get_task_statistics: (db, collection, filter) => {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection).aggregate([{
@@ -336,7 +335,7 @@ module.exports = {
 
     },
 
-    getUserStatistics: (db, collection, filter) => {
+    get_user_statistics: (db, collection, filter) => {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
@@ -359,7 +358,7 @@ module.exports = {
 
     },
 
-    getCategoryStatistics: (db, collection, filter) => {
+    get_category_statistics: (db, collection, filter) => {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
@@ -371,7 +370,7 @@ module.exports = {
         })
     },
 
-    getUserStatusStatistics: (db, collection, id) => {
+    get_user_status_statistics: (db, collection, id) => {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
@@ -384,7 +383,7 @@ module.exports = {
         })
     },
 
-    getCategoryStatisticsByCity: (db, collection, paging) => {
+    get_category_statistics_by_city: (db, collection, paging) => {
 
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
@@ -397,7 +396,7 @@ module.exports = {
         })
     },
 
-    searchTask: (db, collection, paging) => {
+    search_task: (db, collection, paging) => {
 
         return new Promise((resolve, reject) => {
             db.collection(collection).find(paging.filter)
@@ -408,7 +407,7 @@ module.exports = {
 
     },
 
-    getlisttask: (db, collection, paging) => {
+    get_list_task: (db, collection, paging) => {
 
         paging = process_paging(paging)
 

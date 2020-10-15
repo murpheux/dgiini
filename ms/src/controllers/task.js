@@ -24,7 +24,7 @@ export class TaskController {
         let paging = build_paging(req)
         paging = enrich_paging(paging)
     
-        const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_list_task(this.db, this.TASK_COLL, paging)
     
         const [count, data] = await invoke_getlist()
         const cnt = count.length > 0 ? count[0].count : 0
@@ -56,7 +56,7 @@ export class TaskController {
         paging = enrich_paging(paging)
         paging.filter = { 'location.city': city }
     
-        const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_list_task(this.db, this.TASK_COLL, paging)
     
         const [count, data] = await invoke_getlist()
         const cnt = count.length > 0 ? count[0].count : 0
@@ -74,7 +74,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
     
-            const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list_task(this.db, this.TASK_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
@@ -89,7 +89,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
     
-            const invoke_getone = async() => await mgaccess.getonetask(this.db, this.TASK_COLL, { _id: id })
+            const invoke_getone = async() => await mgaccess.get_one_task(this.db, this.TASK_COLL, { _id: id })
     
             const tasks = await invoke_getone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
@@ -99,21 +99,21 @@ export class TaskController {
     get_task_photo = async(req, res) => {
         const paging = build_paging(req)
     
-        const invoke_getlist = async() => await mgaccess.getTasksPhotos(this.db, this.TASK_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_tasks_photos(this.db, this.TASK_COLL, paging)
     
         const photos = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, photos))
     }
 
     get_task_stats_full = async(_req, res) => {
-        const invoke_getstats = async() => await mgaccess.getTaskStatistics(this.db, this.TASK_COLL, undefined)
+        const invoke_getstats = async() => await mgaccess.get_task_statistics(this.db, this.TASK_COLL, undefined)
     
         const tasks = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks[0]))
     }
 
     get_task_stats_by_category = async(_req, res) => {
-        const invoke_getstats = async() => await mgaccess.getCategoryStatistics(this.db, this.TASK_COLL, undefined)
+        const invoke_getstats = async() => await mgaccess.get_category_statistics(this.db, this.TASK_COLL, undefined)
     
         const tasks = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
@@ -121,7 +121,7 @@ export class TaskController {
 
     get_user_task_stats_by_status = async(req, res) => {
         const id = req.params.id
-        const invoke_getstats = async() => await mgaccess.getUserStatusStatistics(this.db, this.TASK_COLL, id)
+        const invoke_getstats = async() => await mgaccess.get_user_status_statistics(this.db, this.TASK_COLL, id)
     
         const tasks = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
@@ -134,7 +134,7 @@ export class TaskController {
         paging = enrich_paging(paging)
         paging.filter = { 'location.city': city }
 
-        const invoke_getstats = async() => await mgaccess.getCategoryStatisticsByCity(this.db, this.TASK_COLL, paging)
+        const invoke_getstats = async() => await mgaccess.get_category_statistics_by_city(this.db, this.TASK_COLL, paging)
     
         const tasks = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
@@ -151,7 +151,7 @@ export class TaskController {
             task.cancalled_date = new Date()
             delete task['id']
     
-            const invoke_updateone = async() => await mgaccess.updateone(this.db, this.TASK_COLL, id, task)
+            const invoke_updateone = async() => await mgaccess.update_one(this.db, this.TASK_COLL, id, task)
     
             const tasks = await invoke_updateone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
@@ -174,7 +174,7 @@ export class TaskController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.TASK_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.TASK_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
@@ -205,7 +205,7 @@ export class TaskController {
             const id = bid.id
             delete bid['id']
     
-            const invoke_updateone = async() => await mgaccess.updateone(this.db, this.BID_COLL, id, bid)
+            const invoke_updateone = async() => await mgaccess.update_one(this.db, this.BID_COLL, id, bid)
     
             const tasks = await invoke_updateone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
@@ -224,7 +224,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
     
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.BID_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.BID_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, data))
@@ -253,7 +253,7 @@ export class TaskController {
         const paging = build_paging(req)
         paging.filter = { $text: { $search: '"' + searchstr + '"' }, status: { '$nin': ['completed', 'cancelled']} }
     
-        const invoke_getlist = async() => await mgaccess.searchTask(this.db, this.TASK_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.search_task(this.db, this.TASK_COLL, paging)
     
         const tasks = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, tasks))
@@ -272,7 +272,7 @@ export class TaskController {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
     
-            const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list_task(this.db, this.TASK_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, data))
@@ -296,7 +296,7 @@ export class TaskController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, 0, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlisttask(this.db, this.TASK_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list_task(this.db, this.TASK_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             const cnt = count.length > 0 ? count[0].count : 0

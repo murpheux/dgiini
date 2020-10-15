@@ -44,6 +44,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="m-2 font-weight-bold d-flex justify-content-center" *ngIf="!currentTask">No task exist for the current filter!!</div>
                     <app-task-view
                         *ngIf="currentTask"
                         [currentUser]="currentUser"

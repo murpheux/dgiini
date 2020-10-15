@@ -24,7 +24,7 @@ export class MessageController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getone = async() => await mgaccess.getone(this.db, this.MESSAGE_COLL, { _id: id })
+            const invoke_getone = async() => await mgaccess.get_one(this.db, this.MESSAGE_COLL, { _id: id })
     
             const message = await invoke_getone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, message))
@@ -41,7 +41,7 @@ export class MessageController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.MESSAGE_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.MESSAGE_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
@@ -59,7 +59,7 @@ export class MessageController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.MESSAGE_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.MESSAGE_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
@@ -80,7 +80,7 @@ export class MessageController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.MESSAGE_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.MESSAGE_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
@@ -98,7 +98,7 @@ export class MessageController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getlist = async() => await mgaccess.getlist(this.db, this.MESSAGE_COLL, paging)
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.MESSAGE_COLL, paging)
     
             const [count, data] = await invoke_getlist()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))

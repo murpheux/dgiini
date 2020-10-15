@@ -82,7 +82,7 @@ export class TaskViewComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private locationService: LocationService,
-        private notificationService: NotificationService,
+        private notifier: NotificationService,
         public taskService: TaskService,
         private commService: CommunicationService,
         public authService: AuthService
@@ -127,7 +127,7 @@ export class TaskViewComponent implements OnInit {
         // raise a bid
         const bid: IBid = { task: this.task._id.toString(), user: this.currentUser._id.toString(),  message: 'Tasker has accepted task at current rate', rate: this.task.rate };
         this.taskService.saveBid(bid).subscribe(res => {
-            this.notificationService.showSuccess('Rate accepted. Bid submitted successfully!');
+            this.notifier.showSuccess('Rate accepted. Bid submitted successfully!');
         });
     }
 
@@ -135,7 +135,7 @@ export class TaskViewComponent implements OnInit {
         this.taskService.cancelTask(this.task._id).subscribe((resp) => {
             this.task.status = TaskStatus.cancelled;
             this.taskStatusChanged.emit(this.task);
-            this.notificationService.showSuccess('Task Cancelled!');
+            this.notifier.showSuccess('Task Cancelled!');
         });
     }
 
@@ -144,7 +144,7 @@ export class TaskViewComponent implements OnInit {
 
     handleBidSubmitted(bid: IBid): void {
         this.taskService.saveBid(bid).subscribe(res => {
-            this.notificationService.showSuccess('Bid submitted successfully!');
+            this.notifier.showSuccess('Bid submitted successfully!');
         });
     }
 
@@ -157,10 +157,10 @@ export class TaskViewComponent implements OnInit {
                 body: 'you have been invited!'
             };
 
-            this.notificationService.showSuccess('Bid has been accepted and confirmed!');
+            this.notifier.showSuccess('Bid has been accepted and confirmed!');
 
             this.commService.sendMail(mail).subscribe(__ => {
-                this.notificationService.showSuccess('Bidding tasker has been contacted!');
+                this.notifier.showSuccess('Bidding tasker has been contacted!');
             });
         });
     }

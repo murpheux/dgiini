@@ -55,7 +55,7 @@ export class BecometaskerComponent implements OnInit {
         private formBuilder: FormBuilder,
         private userService: UserService,
         private authService: AuthService,
-        private notificationService: NotificationService,
+        private notifier: NotificationService,
         public dialogRef: MatDialogRef<BecometaskerComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IProfile
     ) {}
@@ -248,14 +248,14 @@ export class BecometaskerComponent implements OnInit {
 
         if (result.isValid) {
             this.userService.upgradeClient(vendor).subscribe(_ => {
-                this.notificationService.showSuccess(
+                this.notifier.showSuccess(
                     'User information saved successfully!'
                 );
                 this.dialogRef.close();
             });
         } else {
             const messages = result.getFailureMessages();
-            this.notificationService.showWarning(
+            this.notifier.showWarning(
                 `Input is invalid - ${messages}`
             );
         }

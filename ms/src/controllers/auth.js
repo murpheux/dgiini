@@ -30,12 +30,12 @@ export class AuthenticationController {
             filter: { username: credential.username }
         }
     
-        const invoke_getone = async() => await mgaccess.getusers(this.db, this.USER_COLL, paging)
+        const invoke_getone = async() => await mgaccess.get_users(this.db, this.USER_COLL, paging)
     
         const user = await invoke_getone()
         if (user) {
             user.lastLogin = new Date()
-            // const user_up = await mgaccess.updateone(this.db, this.USER_COLL, user._id, { lastLogin: user.lastLogin })
+            // const user_up = await mgaccess.update_one(this.db, this.USER_COLL, user._id, { lastLogin: user.lastLogin })
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', user[0]))
         } else {
             res.status(HttpStatus.NOT_FOUND).json(build_response(HttpStatus.NOT_FOUND, 'User not registered', user))
@@ -75,7 +75,7 @@ export class AuthenticationController {
             user.becomeVendor = new Date()
             delete user['_id']
 
-            const invoke_updateone = async() => await mgaccess.updateone(this.db, this.USER_COLL, id, user)
+            const invoke_updateone = async() => await mgaccess.update_one(this.db, this.USER_COLL, id, user)
     
             const result = await invoke_updateone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
@@ -85,14 +85,14 @@ export class AuthenticationController {
     user_list = async(req, res) => {
         const paging = build_paging(req)
     
-        const invoke_getlist = async() => await mgaccess.getusers(this.db, this.USER_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_users(this.db, this.USER_COLL, paging)
     
         const users = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
     }
 
     user_stats = async(_req, res) => {
-        const invoke_getstats = async() => await mgaccess.getUserStatistics(this.db, this.USER_COLL, undefined)
+        const invoke_getstats = async() => await mgaccess.get_user_statistics(this.db, this.USER_COLL, undefined)
     
         const stats = await invoke_getstats()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, stats[0]))
@@ -102,7 +102,7 @@ export class AuthenticationController {
         const role = req.params.role
         const paging = build_paging(req)
     
-        const invoke_getlist = async() => await mgaccess.getusersbyrole(this.db, this.USER_COLL, paging, role)
+        const invoke_getlist = async() => await mgaccess.get_users_by_role(this.db, this.USER_COLL, paging, role)
     
         const users = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
@@ -112,7 +112,7 @@ export class AuthenticationController {
         const skill = req.params.skill
         const paging = build_paging(req)
     
-        const invoke_getlist = async() => await mgaccess.gettaskersbyskill(this.db, this.USER_COLL, paging, skill)
+        const invoke_getlist = async() => await mgaccess.get_vendors_by_skill(this.db, this.USER_COLL, paging, skill)
     
         const users = await invoke_getlist()
         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, users))
@@ -125,7 +125,7 @@ export class AuthenticationController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getone = async() => await mgaccess.getone(this.db, this.USER_COLL, { username: username })
+            const invoke_getone = async() => await mgaccess.get_one(this.db, this.USER_COLL, { username: username })
     
             const user = await invoke_getone()
     
@@ -147,7 +147,7 @@ export class AuthenticationController {
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {
-            const invoke_getone = async() => await mgaccess.getusers(this.db, this.USER_COLL, paging)
+            const invoke_getone = async() => await mgaccess.get_users(this.db, this.USER_COLL, paging)
             const user = await invoke_getone()
     
             if (user) {
@@ -168,7 +168,7 @@ export class AuthenticationController {
             const id = user.id
             delete user['id']
     
-            const invoke_updateone = async() => await mgaccess.updateone(this.db, this.USER_COLL, id, user)
+            const invoke_updateone = async() => await mgaccess.update_one(this.db, this.USER_COLL, id, user)
     
             const users = await invoke_updateone()
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', users))

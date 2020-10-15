@@ -22,7 +22,7 @@ export class ReviewController {
         let paging = build_paging(req)
         paging = enrich_paging(paging)
     
-        const invoke_getlist = async() => await mgaccess.getlist(this.db, this.REVIEW_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_list(this.db, this.REVIEW_COLL, paging)
     
         const [count, data] = await invoke_getlist()
         const cnt = count.length > 0 ? count[0].count : 0
@@ -35,7 +35,7 @@ export class ReviewController {
         let paging = build_paging(req)
         paging.filter = { 'to': ObjectId(id) }
     
-        const invoke_getlist = async() => await mgaccess.getlist(this.db, this.REVIEW_COLL, paging)
+        const invoke_getlist = async() => await mgaccess.get_list(this.db, this.REVIEW_COLL, paging)
     
         const [count, data] = await invoke_getlist()
         const cnt = count.length > 0 ? count[0].count : 0

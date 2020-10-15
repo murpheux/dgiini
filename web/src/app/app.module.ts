@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ToastrModule } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EnvServiceProvider } from './shared/services/env.service.provider';
 import { UiModule } from './ui';
-import { environment } from 'src/environments/environment';
 
 
 @NgModule({

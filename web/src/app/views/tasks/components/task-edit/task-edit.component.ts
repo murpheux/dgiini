@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 import { IPhoto } from '../../models/photo';
 import { ITask, RateUnit, TaskType } from '../../models/task';
 import { TaskService } from '../../services/task.service';
@@ -34,6 +35,8 @@ export class TaskEditComponent implements OnInit {
         private route: ActivatedRoute,
         private taskService: TaskService,
         private formBuilder: FormBuilder,
+        private notifier: NotificationService,
+        private router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -145,6 +148,9 @@ export class TaskEditComponent implements OnInit {
 
     handleUpdate(formValues: any): void {
         console.log(formValues);
+
+        this.notifier.showSuccess(`Task updated successfully!`);
+        this.router.navigate([`/task/id/${this.task._id}`]);
     }
 
     removeUpload(index: number): void {

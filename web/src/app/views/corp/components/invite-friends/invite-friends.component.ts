@@ -14,7 +14,7 @@ export class InviteFriendsComponent implements OnInit {
 
     constructor(
         private commService: CommunicationService,
-        private notificationService: NotificationService
+        private notifier: NotificationService
     ) { }
 
     ngOnInit(): void {
@@ -39,7 +39,7 @@ export class InviteFriendsComponent implements OnInit {
             };
 
             this.commService.sendMail(mail).subscribe(res => {
-                this.notificationService.showSuccess(`${invite.name} has been contacted!`);
+                this.notifier.showSuccess(`${invite.name} has been contacted!`);
 
                 this.invites = [{name: '', email: ''}];
             });

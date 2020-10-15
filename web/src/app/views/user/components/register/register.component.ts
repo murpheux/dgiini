@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private userService: UserService,
-        private notificationService: NotificationService,
+        private notifier: NotificationService,
         private locationService: LocationService,
         public dialogRef: MatDialogRef<RegisterComponent>,
         @Inject(MAT_DIALOG_DATA) public data: IProfile
@@ -161,14 +161,14 @@ export class RegisterComponent implements OnInit {
 
         if (result.isValid) {
             this.userService.saveClient(client).subscribe(success => {
-                this.notificationService.showSuccess(
+                this.notifier.showSuccess(
                     'User information saved successfully!'
                 );
                 this.dialogRef.close();
             });
         } else {
             const messages = result.getFailureMessages();
-            this.notificationService.showWarning(
+            this.notifier.showWarning(
                 `Input is invalid - ${messages}`
             );
         }

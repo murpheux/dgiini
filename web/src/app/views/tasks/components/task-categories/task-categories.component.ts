@@ -212,6 +212,9 @@ export class TaskCategoriesComponent
                 if (this.taskList && this.taskList.length > 0) {
                     this.getRecommendedVendor(this.taskList[0]);
                 }
+                else {
+                    this.currentTask = undefined;
+                }
             });
     }
 

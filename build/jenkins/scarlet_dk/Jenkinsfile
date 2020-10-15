@@ -31,9 +31,9 @@ pipeline {
                     mkdir ${WORKSPACE}/deploy/docker/deploy/gw/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/task/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/auth/app
-                    mkdir ${WORKSPACE}/deploy/docker/deploy/msg/app
+                    # mkdir ${WORKSPACE}/deploy/docker/deploy/msg/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/notify/app
-                    mkdir ${WORKSPACE}/deploy/docker/deploy/bill/app
+                    # mkdir ${WORKSPACE}/deploy/docker/deploy/bill/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/review/app
                 '''
             }
@@ -174,19 +174,19 @@ pipeline {
                         '''
                     }
                 }
-                stage('Build msg_api') {
-                    steps {
-                        dir("${WORKSPACE}/ms"){
-                            sh '''
-                                OUT_DIR=dist/msmsg npm run build src/msg.api.js
-                            '''
-                        }
-                        sh '''
-                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/
-                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/
-                        '''
-                    }
-                }
+                // stage('Build msg_api') {
+                //     steps {
+                //         dir("${WORKSPACE}/ms"){
+                //             sh '''
+                //                 OUT_DIR=dist/msmsg npm run build src/msg.api.js
+                //             '''
+                //         }
+                //         sh '''
+                //             cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/
+                //             cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/
+                //         '''
+                //     }
+                // }
                 stage('Build notify_api') {
                     steps {
                         dir("${WORKSPACE}/ms"){
@@ -200,19 +200,19 @@ pipeline {
                         '''
                     }
                 }
-                stage('Build bill_api') {
-                    steps {
-                        dir("${WORKSPACE}/ms"){
-                            sh '''
-                                OUT_DIR=dist/msbill npm run build src/bill.api.js
-                            '''
-                        }
-                        sh '''
-                            cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/
-                            cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/
-                        '''
-                    }
-                }
+                // stage('Build bill_api') {
+                //     steps {
+                //         dir("${WORKSPACE}/ms"){
+                //             sh '''
+                //                 OUT_DIR=dist/msbill npm run build src/bill.api.js
+                //             '''
+                //         }
+                //         sh '''
+                //             cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/
+                //             cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/
+                //         '''
+                //     }
+                // }
                 stage('Build review_api') {
                     steps {
                         dir("${WORKSPACE}/ms"){
@@ -245,14 +245,14 @@ pipeline {
                 zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
                 archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
 
-                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
-                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
+                // zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
+                // archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
 
                 zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
                 archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
 
-                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
-                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
+                // zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
+                // archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
 
                 zip zipFile: 'msreview.zip', archive: false, dir: 'ms/dist/msreview'
                 archiveArtifacts artifacts: 'msreview.zip', fingerprint: true
@@ -289,13 +289,13 @@ pipeline {
                         '''        
                     }
                 }
-                stage('for msg'){
-                    steps {
-                        sh '''
-                            cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/deploy/docker/deploy/msg/app
-                        '''        
-                    }
-                }
+                // stage('for msg'){
+                //     steps {
+                //         sh '''
+                //             cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/deploy/docker/deploy/msg/app
+                //         '''        
+                //     }
+                // }
                 stage('for notify'){
                     steps {
                         sh '''
@@ -303,13 +303,13 @@ pipeline {
                         '''        
                     }
                 }
-                stage('for bill'){
-                    steps {
-                        sh '''
-                            cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
-                        '''        
-                    }
-                }
+                // stage('for bill'){
+                //     steps {
+                //         sh '''
+                //             cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/deploy/docker/deploy/bill/app
+                //         '''        
+                //     }
+                // }
                 stage('for review'){
                     steps {
                         sh '''
@@ -373,19 +373,19 @@ pipeline {
                         }
                     }
                 }
-                stage('build and publish msg') {
-                    steps {
-                        dir("${WORKSPACE}/deploy/docker/deploy/msg"){
-                            script {
-                                msgImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
+                // stage('build and publish msg') {
+                //     steps {
+                //         dir("${WORKSPACE}/deploy/docker/deploy/msg"){
+                //             script {
+                //                 msgImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    msgImage.push()
-                                }
-                            }
-                        }
-                    }
-                }
+                //                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                //                     msgImage.push()
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
                 stage('build and publish notify') {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/notify"){
@@ -399,19 +399,19 @@ pipeline {
                         }
                     }
                 }
-                stage('build and publish bill') {
-                    steps {
-                        dir("${WORKSPACE}/deploy/docker/deploy/bill"){
-                            script {
-                                billImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
+                // stage('build and publish bill') {
+                //     steps {
+                //         dir("${WORKSPACE}/deploy/docker/deploy/bill"){
+                //             script {
+                //                 billImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                                    billImage.push()
-                                }
-                            }
-                        }
-                    }
-                }
+                //                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                //                     billImage.push()
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
                 stage('build and publish review') {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/review"){

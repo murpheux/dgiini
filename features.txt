@@ -10,20 +10,18 @@ Implemented Features
 - Make Offer
 - Accept Offer
 - Send Message
-
-
-Pending
---------
 - login with password
 - search
 - determine if client or tasker
 - upgrade to tasker
 - filter my task
 - Notify on accept bid
-- Reply message
-- Order message against replies
-- Apply distance filter to task
 - Register new user
+
+
+Pending
+--------
+- Apply distance filter to task
 
 Payment Items
 - Branding
@@ -37,8 +35,9 @@ Payment Items
 - Cloud Host Service
 - Fontawesome/Bootstrap template
 
-
 Rules
 ------
-1. only a min of 18 years can be a member
-2. 
+1. only a min of 18 years can be a member (oidc members helps with this)
+2. all taskers are taskees
+3. taskers need provide a bank account
+4. 

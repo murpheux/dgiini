@@ -9,7 +9,9 @@ import { AuthService } from './shared/services/auth.service';
 export class AppComponent implements OnInit {
     title = 'dgiini app';
 
-    constructor(private authService: AuthService) {}
+    constructor(
+        private authService: AuthService
+    ) {}
 
     ngOnInit(): void {}
 }

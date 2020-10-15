@@ -44,7 +44,7 @@ export class HeaderTemplateComponent
         private dialog: MatDialog,
         private router: Router,
         private ref: ChangeDetectorRef,
-        private toastr: NotificationService,
+        private notifier: NotificationService,
         private locationService: LocationService,
     ) {
         ref.detach();

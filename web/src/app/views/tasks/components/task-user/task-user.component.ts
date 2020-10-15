@@ -26,7 +26,7 @@ export class TaskUserComponent implements OnInit {
         private taskService: TaskService,
         public dialog: MatDialog,
         private authService: AuthService,
-        private notificationService: NotificationService,
+        private notifier: NotificationService,
     ) {}
 
     ngOnInit(): void {
@@ -110,7 +110,7 @@ export class TaskUserComponent implements OnInit {
             this.postedTaskList.splice(idx, 1);
             this.cancelledTaskList.push(task);
 
-            this.notificationService.showSuccess('Task Cancelled!');
+            this.notifier.showSuccess('Task Cancelled!');
         });
     }
 }
