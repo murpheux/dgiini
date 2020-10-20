@@ -27,12 +27,12 @@ pipeline {
                 git branch: "${branch}", url: "${GIT_URL}"
 
                 sh '''
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/web/app
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/task/app
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
-                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/review/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/web/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/task/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
+                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/review/app
                 '''
             }
         }
