@@ -9,7 +9,6 @@ pipeline {
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'git@github.com:murpheux/dgiini.git'
         REGISTRY = 'registry.digitalocean.com/dgiini-k8s'
-        REGISTRY_CREDENTIAL = ''
     }
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
@@ -250,7 +249,7 @@ pipeline {
         stage('initiate digital ocean repo') {
             steps {
                 sh '''
-                    doctl 
+                    doctl registry login
                 '''        
             }
         }
@@ -262,7 +261,7 @@ pipeline {
                             script {
                                 webImage = docker.build "${REGISTRY}/web:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     webImage.push()
                                 }
                             }
@@ -275,7 +274,7 @@ pipeline {
                             script {
                                 gwImage = docker.build "${REGISTRY}/apigw:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     gwImage.push()
                                 }
                             }
@@ -288,7 +287,7 @@ pipeline {
                             script {
                                 authImage = docker.build "${REGISTRY}/auth:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     authImage.push()
                                 }
                             }
@@ -301,7 +300,7 @@ pipeline {
                             script {
                                 taskImage = docker.build "${REGISTRY}/task:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     taskImage.push()
                                 }
                             }
@@ -314,7 +313,7 @@ pipeline {
                             script {
                                 notifyImage = docker.build "${REGISTRY}/notify:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     notifyImage.push()
                                 }
                             }
@@ -327,7 +326,7 @@ pipeline {
                             script {
                                 reviewImage = docker.build "${REGISTRY}/review:${BUILD_NUMBER}"
 
-                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                docker.withRegistry( '', '' ) {
                                     reviewImage.push()
                                 }
                             }
