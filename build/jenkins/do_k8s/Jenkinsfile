@@ -248,13 +248,11 @@ pipeline {
             }
         }
         stage('initiate digital ocean repo') {
-            stage('login'){
-                    steps {
-                        sh '''
-                            doctl registry login
-                        '''        
-                    }
-                }
+            steps {
+                sh '''
+                    doctl 
+                '''        
+            }
         }
         stage('build images') {
             parallel {
