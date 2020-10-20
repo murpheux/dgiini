@@ -5,11 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: murpheux
+  repository: registry.digitalocean.com/dgiini-k8s
   pullPolicy: IfNotPresent
-#   imageCredentials:
-#     username: murpheux
-#     password: pw4mEnv
 
 imagePullSecrets: []
 nameOverride: ""
@@ -103,24 +100,24 @@ sendgrid:
 web:
   appName: web
   appVersion: 0.0.1
-  appBuild: 246
+  appBuild: 0
   domain: dgiini.ca
-  image: dgiini_dk_web
+  image: web
 
 apigw:
   appName: apigw
   appServiceName: apigw/apigw
   appVersion: 0.0.1
-  appBuild: 246
-  image: dgiini_dk_apigw
+  appBuild: 0
+  image: apigw
 
 auth:
   appName: auth
   appServiceName: auth-api/microservices
   appVersion: 0.0.1
-  appBuild: 246
+  appBuild: 0
   corClientURL: https://dgiini-web-service
-  image: dgiini_dk_auth
+  image: auth
   db:
     host: dgiini-db
     port: 27017
@@ -132,9 +129,9 @@ task:
   appName: task
   appServiceName: task-api/microservices
   appVersion: 0.0.1
-  appBuild: 246
+  appBuild: 0
   corClientURL: https://dgiini-web-service
-  image: dgiini_dk_task
+  image: task
   db:
     host: dgiini-db
     port: 27017
@@ -142,27 +139,13 @@ task:
     user: dbUser
     password: password
 
-msg:
-  appName: msg
-  appServiceName: msg-api/microservices
-  appVersion: 0.0.1
-  appBuild: 246
-  corClientURL: https://dgiini-web-service
-  image: dgiini_dk_msg
-  db:
-    host: dgiini-db
-    port: 27017
-    name: dg_msgdb
-    user: dbUser
-    password: password
-
 notify:
   appName: notify
   appServiceName: notify-api/microservices
   appVersion: 0.0.1
-  appBuild: 246
+  appBuild: 0
   corClientURL: https://dgiini-web-service
-  image: dgiini_dk_notify
+  image: notify
   db:
     host: dgiini-db
     port: 27017
@@ -170,27 +153,13 @@ notify:
     user: dbUser
     password: password
 
-bill:
-  appName: bill
-  appServiceName: bill-api/microservices
-  appVersion: 0.0.1
-  appBuild: 246
-  corClientURL: https://dgiini-web-service
-  image: dgiini_dk_bill
-  db:
-    host: dgiini-db
-    port: 27017
-    name: dg_billdb
-    user: dbUser
-    password: password
-
 review:
   appName: review
   appServiceName: review-api/microservices
   appVersion: 0.0.1
-  appBuild: 246
+  appBuild: 0
   corClientURL: https://dgiini-web-service
-  image: dgiini_dk_review
+  image: review
   db:
     host: dgiini-db
     port: 27017
