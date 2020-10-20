@@ -27,12 +27,12 @@ pipeline {
                 git branch: "${branch}", url: "${GIT_URL}"
 
                 sh '''
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/web/app
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/gw/app
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/task/app
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/auth/app
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/notify/app
-                    mkdir ${WORKSPACE}/deploy/k8s/deploy/review/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/web/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/task/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
+                    mkdir ${WORKSPACE}/deploy/kubernetes/deploy/review/app
                 '''
             }
         }
@@ -178,131 +178,129 @@ pipeline {
                 archiveArtifacts artifacts: 'msreview.zip', fingerprint: true
             }
         }
+        stage('setup kubernetes build') {
+            parallel {
+                stage('for web'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/kubernetes/deploy/web/app/web
+                            cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/kubernetes/deploy/web/app/nginx
+                        '''        
+                    }
+                }
+                stage('for apigw'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
+                        '''        
+                    }
+                }
+                stage('for auth'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
+                        '''        
+                    }
+                }
+                stage('for task'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/kubernetes/deploy/task/app
+                        '''        
+                    }
+                }
+                stage('for notify'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
+                        '''        
+                    }
+                }
+                stage('for review'){
+                    steps {
+                        sh '''
+                            cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/deploy/kubernetes/deploy/review/app
+                        '''        
+                    }
+                }
+            }
+        }
         stage('build images') {
             parallel {
                 stage('build and publish web') {
                     steps {
-                        withCredentials([
-                            usernamePassword(credentialsId: 'docker-def-user',
-                            usernameVariable: 'username', passwordVariable: 'password')
-                        ]) {
-                            sh '''
-                                cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/app/web
-                                cp ${WORKSPACE}/deploy/docker/web_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/web"){
+                            script {
+                                webImage = docker.build "${REGISTRY}/web:${BUILD_NUMBER}"
 
-                                cd ${WORKSPACE}
-
-                                docker build --no-cache -f web_dockerfile -t ${REGISTRY}/web:${BUILD_NUMBER} .
-
-                                docker login -u=${username} -p=${password}
-                                docker push ${REGISTRY}/web:${BUILD_NUMBER}
-                            '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    webImage.push()
+                                }
+                            }
                         }
                     }
                 }
                 stage('build and publish apigw') {
                     steps {
-                        withCredentials([
-                            usernamePassword(credentialsId: 'docker-def-user',
-                            usernameVariable: 'username', passwordVariable: 'password')
-                        ]) {
-                            sh '''
-                                cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/app
-                                cp ${WORKSPACE}/deploy/docker/gw_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/gw"){
+                            script {
+                                gwImage = docker.build "${REGISTRY}/apigw:${BUILD_NUMBER}"
 
-                                cd ${WORKSPACE}
-
-                                docker build --no-cache -f gw_dockerfile -t ${REGISTRY}/apigw:${BUILD_NUMBER} .
-
-                                docker login -u="${username}" -p="${password}"
-                                docker push ${REGISTRY}/apigw:${BUILD_NUMBER}
-                            '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    gwImage.push()
+                                }
+                            }
                         }
                     }
                 }
                 stage('build and publish auth') {
                     steps {
-                        withCredentials([
-                            usernamePassword(credentialsId: 'docker-def-user',
-                            usernameVariable: 'username', passwordVariable: 'password')
-                        ]) {
-                            sh '''
-                                cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/app
-                                cp ${WORKSPACE}/deploy/docker/auth_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/auth"){
+                            script {
+                                authImage = docker.build "${REGISTRY}/auth:${BUILD_NUMBER}"
 
-                                cd ${WORKSPACE}
-
-                                docker build --no-cache -f auth_dockerfile -t ${REGISTRY}/auth:${BUILD_NUMBER} .
-                                
-                                docker login -u="${username}" -p="${password}"
-                                docker push ${REGISTRY}/auth:${BUILD_NUMBER}
-                            '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    authImage.push()
+                                }
+                            }
                         }
                     }
                 }
                 stage('build and publish task') {
                     steps {
-                        withCredentials([
-                            usernamePassword(credentialsId: 'docker-def-user',
-                            usernameVariable: 'username',
-                            passwordVariable: 'password')
-                        ]) {
-                            sh '''
-                                cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/app
-                                cp ${WORKSPACE}/deploy/docker/task_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/task"){
+                            script {
+                                taskImage = docker.build "${REGISTRY}/task:${BUILD_NUMBER}"
 
-                                cd ${WORKSPACE}
-
-                                docker build --no-cache -f task_dockerfile -t ${REGISTRY}/task:${BUILD_NUMBER} .
-                                
-                                docker login -u="${username}" -p="${password}"
-                                docker push ${REGISTRY}/task:${BUILD_NUMBER}
-                            '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    taskImage.push()
+                                }
+                            }
                         }
                     }
                 }
                 stage('build and publish notify') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/notify_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/notify"){
+                            script {
+                                notifyImage = docker.build "${REGISTRY}/notify:${BUILD_NUMBER}"
 
-                                    cd ${WORKSPACE}
-
-                                    docker build --no-cache -f notify_dockerfile -t ${REGISTRY}/notify:${BUILD_NUMBER} .
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push ${REGISTRY}/notify:${BUILD_NUMBER}
-                                '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    notifyImage.push()
+                                }
                             }
                         }
                     }
                 }
                 stage('build and publish review') {
                     steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/review_dockerfile ${WORKSPACE}
+                        dir("${WORKSPACE}/deploy/kubernetes/deploy/review"){
+                            script {
+                                reviewImage = docker.build "${REGISTRY}/review:${BUILD_NUMBER}"
 
-                                    cd ${WORKSPACE}
-
-                                    docker build --no-cache -f review_dockerfile -t ${REGISTRY}/review:${BUILD_NUMBER} .
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push ${REGISTRY}/review:${BUILD_NUMBER}
-                                '''
+                                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                                    reviewImage.push()
+                                }
                             }
                         }
                     }
