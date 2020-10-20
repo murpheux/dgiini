@@ -132,16 +132,6 @@ pipeline {
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msauth/'
                     }
                 }
-                stage('Build msg_api') {
-                    steps {
-                        sh '''
-                            cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msmsg npm run build src/msg.api.js
-                        '''
-                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msmsg/'
-                    }
-                }
                 stage('Build notify_api') {
                     steps {
                         sh '''
@@ -150,16 +140,6 @@ pipeline {
                         '''
                         sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/'
                         sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msnotify/'
-                    }
-                }
-                stage('Build bill_api') {
-                    steps {
-                        sh '''
-                            cd ${WORKSPACE}/ms
-                            OUT_DIR=dist/msbill npm run build src/bill.api.js
-                        '''
-                        sh 'cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/'
-                        sh 'cp ${WORKSPACE}/build_version ${WORKSPACE}/ms/dist/msbill/'
                     }
                 }
                 stage('Build review_api') {
@@ -191,14 +171,8 @@ pipeline {
                 zip zipFile: 'msauth.zip', archive: false, dir: 'ms/dist/msauth'
                 archiveArtifacts artifacts: 'msauth.zip', fingerprint: true
 
-                zip zipFile: 'msmsg.zip', archive: false, dir: 'ms/dist/msmsg'
-                archiveArtifacts artifacts: 'msmsg.zip', fingerprint: true
-
                 zip zipFile: 'msnotify.zip', archive: false, dir: 'ms/dist/msnotify'
                 archiveArtifacts artifacts: 'msnotify.zip', fingerprint: true
-
-                zip zipFile: 'msbill.zip', archive: false, dir: 'ms/dist/msbill'
-                archiveArtifacts artifacts: 'msbill.zip', fingerprint: true
 
                 zip zipFile: 'msreview.zip', archive: false, dir: 'ms/dist/msreview'
                 archiveArtifacts artifacts: 'msreview.zip', fingerprint: true
