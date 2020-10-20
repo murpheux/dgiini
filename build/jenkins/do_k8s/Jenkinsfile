@@ -9,7 +9,7 @@ pipeline {
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'git@github.com:murpheux/dgiini.git'
         REGISTRY = 'registry.digitalocean.com/dgiini-k8s'
-        REGISTRY_CREDENTIAL = 'do_registry_hub'
+        REGISTRY_CREDENTIAL = ''
     }
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
@@ -27,12 +27,12 @@ pipeline {
                 git branch: "${branch}", url: "${GIT_URL}"
 
                 sh '''
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/web/app
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/task/app
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
-                    mkdir -p ${WORKSPACE}/deploy/kubernetes/deploy/review/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/web/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/gw/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/task/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/auth/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/notify/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/review/app
                 '''
             }
         }
@@ -205,53 +205,62 @@ pipeline {
                 stage('for web'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/kubernetes/deploy/web/app/web
-                            cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/kubernetes/deploy/web/app/nginx
+                            cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
+                            cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
                         '''        
                     }
                 }
                 stage('for apigw'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/deploy/kubernetes/deploy/gw/app
+                            cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/deploy/docker/deploy/gw/app
                         '''        
                     }
                 }
                 stage('for auth'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/deploy/kubernetes/deploy/auth/app
+                            cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/deploy/docker/deploy/auth/app
                         '''        
                     }
                 }
                 stage('for task'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/kubernetes/deploy/task/app
+                            cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
                         '''        
                     }
                 }
                 stage('for notify'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/deploy/kubernetes/deploy/notify/app
+                            cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/deploy/docker/deploy/notify/app
                         '''        
                     }
                 }
                 stage('for review'){
                     steps {
                         sh '''
-                            cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/deploy/kubernetes/deploy/review/app
+                            cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/deploy/docker/deploy/review/app
                         '''        
                     }
                 }
             }
         }
+        stage('initiate digital ocean repo') {
+            stage('login'){
+                    steps {
+                        sh '''
+                            doctl registry login
+                        '''        
+                    }
+                }
+        }
         stage('build images') {
             parallel {
                 stage('build and publish web') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/web"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/web"){
                             script {
                                 webImage = docker.build "${REGISTRY}/web:${BUILD_NUMBER}"
 
@@ -264,7 +273,7 @@ pipeline {
                 }
                 stage('build and publish apigw') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/gw"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/gw"){
                             script {
                                 gwImage = docker.build "${REGISTRY}/apigw:${BUILD_NUMBER}"
 
@@ -277,7 +286,7 @@ pipeline {
                 }
                 stage('build and publish auth') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/auth"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/auth"){
                             script {
                                 authImage = docker.build "${REGISTRY}/auth:${BUILD_NUMBER}"
 
@@ -290,7 +299,7 @@ pipeline {
                 }
                 stage('build and publish task') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/task"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/task"){
                             script {
                                 taskImage = docker.build "${REGISTRY}/task:${BUILD_NUMBER}"
 
@@ -303,7 +312,7 @@ pipeline {
                 }
                 stage('build and publish notify') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/notify"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/notify"){
                             script {
                                 notifyImage = docker.build "${REGISTRY}/notify:${BUILD_NUMBER}"
 
@@ -316,7 +325,7 @@ pipeline {
                 }
                 stage('build and publish review') {
                     steps {
-                        dir("${WORKSPACE}/deploy/kubernetes/deploy/review"){
+                        dir("${WORKSPACE}/deploy/docker/deploy/review"){
                             script {
                                 reviewImage = docker.build "${REGISTRY}/review:${BUILD_NUMBER}"
 
