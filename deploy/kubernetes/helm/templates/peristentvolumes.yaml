@@ -1,35 +1,35 @@
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: {{ .Values.appName }}-volume
-  namespace: {{ .Values.appName }}
-  labels:
-    app: {{ .Values.appName }}
-    environment: {{ .Values.environment }}
-spec:
-  capacity:
-    storage: 5Gi
-  volumeMode: Block
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: do-block-storage
-  hostPath:
-    path: "/data/db"
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name:  {{ .Values.appName }}-volume-claim
-  namespace: {{ .Values.appName }}
-  labels:
-    app: {{ .Values.appName }}
-    environment: {{ .Values.environment }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: do-block-storage
-  resources:
-    requests:
-      storage: 1Gi
+# ---
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: {{ .Values.appName }}-volume
+#   namespace: {{ .Values.appName }}
+#   labels:
+#     app: {{ .Values.appName }}
+#     environment: {{ .Values.environment }}
+# spec:
+#   capacity:
+#     storage: 2Gi
+#   volumeMode: Block
+#   accessModes:
+#     - ReadWriteOnce
+#   persistentVolumeReclaimPolicy: Retain
+#   storageClassName: do-block-storage
+#   hostPath:
+#     path: "/data/db"
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name:  {{ .Values.appName }}-volume-claim
+#   namespace: {{ .Values.appName }}
+#   labels:
+#     app: {{ .Values.appName }}
+#     environment: {{ .Values.environment }}
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   storageClassName: do-block-storage
+#   resources:
+#     requests:
+#       storage: 1Gi

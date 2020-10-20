@@ -8,8 +8,8 @@ pipeline {
         IMAGE_VERSION="v_${BUILD_NUMBER}"
         NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
         GIT_URL = 'git@github.com:murpheux/dgiini.git'
-        REGISTRY = 'murpheux/dgiini_k8s'
-        REGISTRY_CREDENTIAL = 'docker_hub'
+        REGISTRY = 'registry.digitalocean.com/dgiini-k8s'
+        REGISTRY_CREDENTIAL = 'do_registry_hub'
     }
     parameters {
         string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
@@ -218,10 +218,10 @@ pipeline {
 
                                 cd ${WORKSPACE}
 
-                                docker build --no-cache -f web_dockerfile -t murpheux/dgiini_web:${BUILD_NUMBER} .
+                                docker build --no-cache -f web_dockerfile -t ${REGISTRY}/web:${BUILD_NUMBER} .
 
                                 docker login -u=${username} -p=${password}
-                                docker push murpheux/dgiini_web:${BUILD_NUMBER}
+                                docker push ${REGISTRY}/web:${BUILD_NUMBER}
                             '''
                         }
                     }
@@ -238,10 +238,10 @@ pipeline {
 
                                 cd ${WORKSPACE}
 
-                                docker build --no-cache -f gw_dockerfile -t murpheux/dgiini_apigw:${BUILD_NUMBER} .
+                                docker build --no-cache -f gw_dockerfile -t ${REGISTRY}/apigw:${BUILD_NUMBER} .
 
                                 docker login -u="${username}" -p="${password}"
-                                docker push murpheux/dgiini_apigw:${BUILD_NUMBER}
+                                docker push ${REGISTRY}/apigw:${BUILD_NUMBER}
                             '''
                         }
                     }
@@ -258,10 +258,10 @@ pipeline {
 
                                 cd ${WORKSPACE}
 
-                                docker build --no-cache -f auth_dockerfile -t murpheux/dgiini_auth:${BUILD_NUMBER} .
+                                docker build --no-cache -f auth_dockerfile -t ${REGISTRY}/auth:${BUILD_NUMBER} .
                                 
                                 docker login -u="${username}" -p="${password}"
-                                docker push murpheux/dgiini_auth:${BUILD_NUMBER}
+                                docker push ${REGISTRY}/auth:${BUILD_NUMBER}
                             '''
                         }
                     }
@@ -279,34 +279,11 @@ pipeline {
 
                                 cd ${WORKSPACE}
 
-                                docker build --no-cache -f task_dockerfile -t murpheux/dgiini_task:${BUILD_NUMBER} .
+                                docker build --no-cache -f task_dockerfile -t ${REGISTRY}/task:${BUILD_NUMBER} .
                                 
                                 docker login -u="${username}" -p="${password}"
-                                docker push murpheux/dgiini_task:${BUILD_NUMBER}
+                                docker push ${REGISTRY}/task:${BUILD_NUMBER}
                             '''
-                        }
-                    }
-                }
-                stage('build and publish msg') {
-                    steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/msmsg ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/msg_dockerfile ${WORKSPACE}
-
-                                    cd ${WORKSPACE}
-
-                                    docker build --no-cache -f msg_dockerfile -t murpheux/dgiini_msg:${BUILD_NUMBER} .
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_msg:${BUILD_NUMBER}
-                                '''
-                            }
                         }
                     }
                 }
@@ -324,33 +301,10 @@ pipeline {
 
                                     cd ${WORKSPACE}
 
-                                    docker build --no-cache -f notify_dockerfile -t murpheux/dgiini_notify:${BUILD_NUMBER} .
+                                    docker build --no-cache -f notify_dockerfile -t ${REGISTRY}/notify:${BUILD_NUMBER} .
                                     
                                     docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_notify:${BUILD_NUMBER}
-                                '''
-                            }
-                        }
-                    }
-                }
-                stage('build and publish bill') {
-                    steps {
-                        script {
-                            withCredentials([
-                                usernamePassword(credentialsId: 'docker-def-user',
-                                usernameVariable: 'username',
-                                passwordVariable: 'password')
-                            ]) {
-                                sh '''
-                                    cp -r ${WORKSPACE}/ms/dist/msbill ${WORKSPACE}/app
-                                    cp ${WORKSPACE}/deploy/docker/bill_dockerfile ${WORKSPACE}
-
-                                    cd ${WORKSPACE}
-
-                                    docker build --no-cache -f bill_dockerfile -t murpheux/dgiini_bill:${BUILD_NUMBER} .
-                                    
-                                    docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_bill:${BUILD_NUMBER}
+                                    docker push ${REGISTRY}/notify:${BUILD_NUMBER}
                                 '''
                             }
                         }
@@ -370,10 +324,10 @@ pipeline {
 
                                     cd ${WORKSPACE}
 
-                                    docker build --no-cache -f review_dockerfile -t murpheux/dgiini_review:${BUILD_NUMBER} .
+                                    docker build --no-cache -f review_dockerfile -t ${REGISTRY}/review:${BUILD_NUMBER} .
                                     
                                     docker login -u="${username}" -p="${password}"
-                                    docker push murpheux/dgiini_review:${BUILD_NUMBER}
+                                    docker push ${REGISTRY}/review:${BUILD_NUMBER}
                                 '''
                             }
                         }

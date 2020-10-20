@@ -56,33 +56,6 @@ spec:
               mountPath: "/etc/nginx/conf.d"
             - name: https-redirect
               mountPath: "/etc/nginx/default.d"
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -177,33 +150,6 @@ spec:
             - name: https
               containerPort: {{ .Values.apigwPort }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -288,33 +234,6 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.authApiPort }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -389,144 +308,6 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.taskApiPort }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: {{ .Values.appName }}-{{ .Values.msg.appName }}-api
-  namespace: {{ .Values.appName }}
-  labels:
-    app: {{ .Values.appName }}
-    environment: {{ .Values.environment }}
-    {{- include "helm.labels" . | nindent 4 }}
-spec:
-  selector:
-    matchLabels:
-      app: {{ .Values.appName }}-{{ .Values.msg.appName }}
-      {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Values.appName }}-{{ .Values.msg.appName }}
-        {{- include "helm.selectorLabels" . | nindent 8 }}
-    spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-      serviceAccountName: {{ include "helm.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      containers:
-        - name: {{ .Values.msg.appName }}-api
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env:
-            - name: NODE_ENV
-              value: {{ .Values.environment }}
-              {{- range $key, $val := .Values.msPorts }}
-            - name: {{ $key | snakecase | upper }}
-              value: {{ $val | squote }}
-              {{- end}}
-            - name: DB_HOST
-              value: {{ .Values.msg.db.host }}
-            - name: DB_PORT
-              value: {{ .Values.msg.db.port | squote }}
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-credential
-                  key: username
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mongo-credential
-                  key: password
-            - name: AUTH_DATABASE
-              value: {{ .Values.msg.db.name }}
-            - name: APP_NAME
-              value: {{ .Values.msg.appName }}
-            - name: APP_VERSION
-              value: {{ .Values.msg.appVersion | squote }}
-            - name: APP_BUILD
-              value: {{ .Values.msg.appBuild | squote }}
-            - name: COR_CLIENT_URL
-              value: {{ .Values.msg.corClientURL }}
-          image: "{{ .Values.image.repository }}/{{ .Values.msg.image }}:{{ .Values.version }}"
-          ports:
-            - name: http
-              containerPort: {{ .Values.msPorts.msgApiPort }}
-              protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -611,33 +392,6 @@ spec:
             - name: http
               containerPort: {{ .Values.msPorts.notifyApiPort }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -656,7 +410,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.appName }}-{{ .Values.bill.appName }}-api
+  name: {{ .Values.appName }}-{{ .Values.review.appName }}-api
   namespace: {{ .Values.appName }}
   labels:
     app: {{ .Values.appName }}
@@ -665,13 +419,13 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+      app: {{ .Values.appName }}-{{ .Values.review.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
   replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+        app: {{ .Values.appName }}-{{ .Values.review.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -682,7 +436,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Values.bill.appName }}-api
+        - name: {{ .Values.review.appName }}-api
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -694,9 +448,9 @@ spec:
               value: {{ $val | squote }}
               {{- end}}
             - name: DB_HOST
-              value: {{ .Values.bill.db.host }}
+              value: {{ .Values.review.db.host }}
             - name: DB_PORT
-              value: {{ .Values.bill.db.port | squote }}
+              value: {{ .Values.review.db.port | squote }}
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
@@ -708,47 +462,20 @@ spec:
                   name: mongo-credential
                   key: password
             - name: AUTH_DATABASE
-              value: {{ .Values.bill.db.name }}
+              value: {{ .Values.review.db.name }}
             - name: APP_NAME
-              value: {{ .Values.bill.appName }}
+              value: {{ .Values.review.appName }}
             - name: APP_VERSION
-              value: {{ .Values.bill.appVersion | squote }}
+              value: {{ .Values.review.appVersion | squote }}
             - name: APP_BUILD
-              value: {{ .Values.bill.appBuild | squote }}
+              value: {{ .Values.review.appBuild | squote }}
             - name: COR_CLIENT_URL
-              value: {{ .Values.bill.corClientURL }}
-          image: "{{ .Values.image.repository }}/{{ .Values.bill.image }}:{{ .Values.version }}"
+              value: {{ .Values.review.corClientURL }}
+          image: "{{ .Values.image.repository }}/{{ .Values.review.image }}:{{ .Values.version }}"
           ports:
             - name: http
-              containerPort: {{ .Values.msPorts.billApiPort }}
+              containerPort: {{ .Values.msPorts.reviewApiPort }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: /ready
-          #     port: http
-          #   failureThreshold: 1
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 5
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
-          # startupProbe:
-          #   httpGet:
-          #     path: /live
-          #     port: http
-          #   failureThreshold: 3
-          #   initialDelaySeconds: 10
-          #   periodSeconds: 30
-          #   successThreshold: 1
-          #   timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

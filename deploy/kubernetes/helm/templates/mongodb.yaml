@@ -1,118 +1,94 @@
-# kubectl exec -ti mongo-0 mongo     
-# rs.initiate()
-# rs.conf()
-# mongo mongodb://mongo-0.mongo,mongo-1.mongo,mongo-2.mongo:27017/development
-#
-## Generate a key
-# openssl rand -base64 741 > mongodb-keyfile
-## Create k8s secrets
-# kubectl create secret generic mongo-key --from-file=mongodb-keyfile
-#
-# mongo --username admin --password password --authenticationDatabase admin
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ .Values.appName }}-db
-  namespace: {{ .Values.appName }}
-  labels:
-    name: {{ .Values.appName }}-db
-spec:
-  ports:
-  - port: {{ .Values.auth.db.port }}
-    targetPort: {{ .Values.auth.db.port }}
-  clusterIP: None
-  selector:
-    role: {{ .Values.appName }}-db
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.appName }}-db
+  name: mongo
   namespace: {{ .Values.appName }}
 spec:
-  serviceName: "{{ .Values.appName }}-db"
+  serviceName: mongo
   replicas: 3
+  updateStrategy:
+    type: RollingUpdate
   selector:
-    matchLabels:
-      role: {{ .Values.appName }}-db
+    matchLabels: # These labels are used by services to match with your STS make sure these selectors are unique
+      app: mongo 
+      component: database
   template:
     metadata:
-      labels:
-        role: {{ .Values.appName }}-db
-        environment: {{ .Values.environment }}
+      labels: # These labels are used by services to match with your STS make sure these selectors are unique
+        app: mongo
+        component: database
     spec:
       terminationGracePeriodSeconds: 10
       containers:
-        - name: mongodb
-          image: mongo:3.4
-          env:
-            - name: REPLICA_CONFIG
-              valueFrom:
-                configMapKeyRef:
-                  name: mongo-replica-config
-                  key: replica.json
-          command:
-          - /bin/sh
-          - -c
-          - >
-            if [ -f /data/db/admin-user.lock ]; then
-              mongod --replSet dbrepl --clusterAuthMode keyFile --keyFile /etc/secrets-volume/mongodb-keyfile --setParameter authenticationMechanisms=SCRAM-SHA-1;
-            else
-              mongod --auth;
-            fi;
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                - /bin/sh
-                - -c
-                - >
-                  if [ ! -f /data/db/admin-user.lock ]; then
-                    sleep 5;
-                    touch /data/db/admin-user.lock
-                    if [ "$HOSTNAME" = "dgiini-db-0" ]; then
-                      mongo --eval 'db = db.getSiblingDB("admin"); db.createUser({ user: "admin", pwd: "password", roles: [{ role: "root", db: "admin" }]});';
-                    fi;
-                    mongod --shutdown;
-                  fi;
-          ports:
-            - containerPort: 27017
-          volumeMounts:
-            - name: mongo-key
-              mountPath: "/etc/secrets-volume"
-              readOnly: true
-            - name: {{ .Values.appName }}-volume
-              mountPath: /data/db
-            - name: config
-              mountPath: /etc/mongod.conf
-              subPath: mongod.conf
-        - name: mongo-sidecar
-          image: cvallance/mongo-k8s-sidecar
-          env:
-            - name: MONGO_SIDECAR_POD_LABELS
-              value: "role=dgiini-db,environment=development"
-            - name: MONGODB_USERNAME
-              value: admin
-            - name: MONGODB_PASSWORD
-              value: password
-            - name: MONGODB_DATABASE
-              value: admin
-      volumes:
-      - name: mongo-key
-        secret:
-          defaultMode: 0400
-          secretName: mongo-key
-      - name: config
-        configMap:
-          name: mongo-config
-  volumeClaimTemplates:
+      - name: mongo
+        image: mongo:4
+        args: # Feel free to add additional options there but always use the "args" do not override the entry point with "command"
+          - "--replSet"
+          - "rsSwitchIT" # Change This this is the name of your replica set and it will be used in the connection string
+          - "--bind_ip_all"
+        ports:
+        - name: mongo # Open POD port
+          containerPort: 27017
+          protocol: TCP
+        volumeMounts:
+        - name: mongo-pvc # Mount the PVC so that we can have the data outside the POD
+          mountPath: /data/db
+        env:
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credential
+              key: mongo-password
+        envFrom:
+        - configMapRef: # Import our config map
+            name: mongo-config
+      - name: mongo-sidecar
+        image: cvallance/mongo-k8s-sidecar
+        env:
+        - name: MONGO_SIDECAR_POD_LABELS # CAUTION: Change this if you change your labels !!!!
+          value: "app=mongo,component=database"
+        - name: KUBERNETES_MONGO_SERVICE_NAME # This tells the sidecar which service you will use to expose pods
+          value: "mongo"
+        - name: KUBE_NAMESPACE # CAUTION: Change this or remove this if you change the namespace
+          value: "dgiini"
+        - name: MONGODB_USERNAME # Import our user from the config map
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-config
+              key: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGODB_PASSWORD # Import our password
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credential
+              key: mongo-password
+        - name: MONGODB_DATABASE # The mongdb admin database
+          value: admin
+  volumeClaimTemplates: # You can customize the PVC if you need to rely on a faster storage... 
   - metadata:
-      name: {{ .Values.appName }}-volume
-      annotations:
-        volume.beta.kubernetes.io/storage-class: do-block-storage
+      name: mongo-pvc
+      labels:
+        app: mongo
+        component: mongo-pvc
     spec:
       accessModes: [ "ReadWriteOnce" ]
+      storageClassName: do-block-storage
       resources:
         requests:
           storage: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}-db # The name is important as it will be part of the URL to access your mongo instance
+  namespace: {{ .Values.appName }} # Change or remove me
+  labels:
+    name: {{ .Values.appName }}-db
+    component: database-service
+spec:
+  ports:
+    - port: {{ .Values.auth.db.port }}
+      targetPort: {{ .Values.auth.db.port }}
+  clusterIP: None
+  selector: # If you've changed your selectors make sure to change them also here !
+    role: {{ .Values.appName }}-db

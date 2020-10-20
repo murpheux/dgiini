@@ -31,9 +31,7 @@ pipeline {
                     mkdir ${WORKSPACE}/deploy/docker/deploy/gw/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/task/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/auth/app
-                    # mkdir ${WORKSPACE}/deploy/docker/deploy/msg/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/notify/app
-                    # mkdir ${WORKSPACE}/deploy/docker/deploy/bill/app
                     mkdir ${WORKSPACE}/deploy/docker/deploy/review/app
                 '''
             }
@@ -174,19 +172,6 @@ pipeline {
                         '''
                     }
                 }
-                // stage('Build msg_api') {
-                //     steps {
-                //         dir("${WORKSPACE}/ms"){
-                //             sh '''
-                //                 OUT_DIR=dist/msmsg npm run build src/msg.api.js
-                //             '''
-                //         }
-                //         sh '''
-                //             cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msmsg/
-                //             cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msmsg/
-                //         '''
-                //     }
-                // }
                 stage('Build notify_api') {
                     steps {
                         dir("${WORKSPACE}/ms"){
@@ -200,19 +185,6 @@ pipeline {
                         '''
                     }
                 }
-                // stage('Build bill_api') {
-                //     steps {
-                //         dir("${WORKSPACE}/ms"){
-                //             sh '''
-                //                 OUT_DIR=dist/msbill npm run build src/bill.api.js
-                //             '''
-                //         }
-                //         sh '''
-                //             cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msbill/
-                //             cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msbill/
-                //         '''
-                //     }
-                // }
                 stage('Build review_api') {
                     steps {
                         dir("${WORKSPACE}/ms"){
@@ -373,19 +345,6 @@ pipeline {
                         }
                     }
                 }
-                // stage('build and publish msg') {
-                //     steps {
-                //         dir("${WORKSPACE}/deploy/docker/deploy/msg"){
-                //             script {
-                //                 msgImage = docker.build "${REGISTRY}_msg:${BUILD_NUMBER}"
-
-                //                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                //                     msgImage.push()
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
                 stage('build and publish notify') {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/notify"){
@@ -399,19 +358,6 @@ pipeline {
                         }
                     }
                 }
-                // stage('build and publish bill') {
-                //     steps {
-                //         dir("${WORKSPACE}/deploy/docker/deploy/bill"){
-                //             script {
-                //                 billImage = docker.build "${REGISTRY}_bill:${BUILD_NUMBER}"
-
-                //                 docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
-                //                     billImage.push()
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
                 stage('build and publish review') {
                     steps {
                         dir("${WORKSPACE}/deploy/docker/deploy/review"){

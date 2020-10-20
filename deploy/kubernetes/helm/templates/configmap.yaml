@@ -22,61 +22,70 @@ kind: ConfigMap
 metadata:
   name: mongo-config
   namespace: {{ .Values.appName }}
-  labels:
-    app: {{ .Values.appName }}
-    environment: {{ .Values.environment }}
 data:
-  mongod.conf: |
-    # mongod.conf
-
-    # for documentation of all options, see:
-    #   http://docs.mongodb.org/manual/reference/configuration-options/
-
-    # Where and how to store data.
-    storage:
-      dbPath: /var/lib/mongodb
-      journal:
-        enabled: true
-    #  engine:
-    #  mmapv1:
-    #  wiredTiger:
-
-    # where to write logging data.
-    systemLog:
-      destination: file
-      logAppend: true
-      path: /var/log/mongodb/mongod.log
-
-    # network interfaces
-    net:
-      port: 27017
-      bindIp: 127.0.0.1
-
-
-    # how the process runs
-    processManagement:
-      timeZoneInfo: /usr/share/zoneinfo
-
-    #security:
-    setParameter:
-        enableLocalhostAuthBypass: false
-    security:
-        keyFile: /opt/mongo/keyfile.key
-        authorization: enabled
-
-    #operationProfiling:
-
-    replication:
-      replSetName: dbrepl
-
-    #sharding:
-
-    ## Enterprise-Only Options:
-
-    #auditLog:
-
-    #snmp:
+  MONGO_INITDB_ROOT_USERNAME: johndoe # Change this
+  MONGO_INITDB_DATABASE: mydb # Change this
 ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: mongo-config
+#   namespace: {{ .Values.appName }}
+#   labels:
+#     app: {{ .Values.appName }}
+#     environment: {{ .Values.environment }}
+# data:
+#   mongod.conf: |
+#     # mongod.conf
+
+#     # for documentation of all options, see:
+#     #   http://docs.mongodb.org/manual/reference/configuration-options/
+
+#     # Where and how to store data.
+#     storage:
+#       dbPath: /var/lib/mongodb
+#       journal:
+#         enabled: true
+#     #  engine:
+#     #  mmapv1:
+#     #  wiredTiger:
+
+#     # where to write logging data.
+#     systemLog:
+#       destination: file
+#       logAppend: true
+#       path: /var/log/mongodb/mongod.log
+
+#     # network interfaces
+#     net:
+#       port: 27017
+#       bindIp: 127.0.0.1
+
+
+#     # how the process runs
+#     processManagement:
+#       timeZoneInfo: /usr/share/zoneinfo
+
+#     #security:
+#     setParameter:
+#         enableLocalhostAuthBypass: false
+#     security:
+#         keyFile: /opt/mongo/keyfile.key
+#         authorization: enabled
+
+#     #operationProfiling:
+
+#     replication:
+#       replSetName: dbrepl
+
+#     #sharding:
+
+#     ## Enterprise-Only Options:
+
+#     #auditLog:
+
+#     #snmp:
+# ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -120,17 +129,23 @@ metadata:
 data:
   default.conf: |
     server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+        listen 80;
+        listen [::]:80;
 
-        listen 443 ssl http2 default_server;
-        listen [::]:443 ssl http2 default_server;
+        server_name _;
+        return 301 https://$host$request_uri;
+    }
+
+
+    server {
+        listen 443 ssl default_server;
+        listen [::]:443 ssl default_server;
 
         ssl_certificate /etc/ssl/certs/dgiini.com.crt;
         ssl_certificate_key /etc/ssl/private/dgiini.com.key;
         ssl_dhparam /etc/ssl/dh/dhparam.pem;
 
-        server_name dgiini.com www.dgiini.com;
+        server_name dgiini.ca www.dgiini.ca;
         root /usr/share/nginx/html;
 
         index index.html index.htm index.nginx-debian.html;

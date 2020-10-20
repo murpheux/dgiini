@@ -7,6 +7,9 @@ replicaCount: 1
 image:
   repository: murpheux
   pullPolicy: IfNotPresent
+#   imageCredentials:
+#     username: murpheux
+#     password: pw4mEnv
 
 imagePullSecrets: []
 nameOverride: ""
@@ -88,6 +91,7 @@ msPorts:
   notifyApiPort: 80
   msgApiPort: 80
   billApiPort: 80
+  reviewApiPort: 80
 
 smtp:
   host: smtp.google.com
@@ -100,15 +104,15 @@ web:
   appName: web
   appVersion: 0.0.1
   appBuild: 246
-  domain: dgiini.com
-  image: dgiini_web
+  domain: dgiini.ca
+  image: dgiini_dk_web
 
 apigw:
   appName: apigw
   appServiceName: apigw/apigw
   appVersion: 0.0.1
   appBuild: 246
-  image: dgiini_apigw
+  image: dgiini_dk_apigw
 
 auth:
   appName: auth
@@ -116,7 +120,7 @@ auth:
   appVersion: 0.0.1
   appBuild: 246
   corClientURL: https://dgiini-web-service
-  image: dgiini_auth
+  image: dgiini_dk_auth
   db:
     host: dgiini-db
     port: 27017
@@ -130,7 +134,7 @@ task:
   appVersion: 0.0.1
   appBuild: 246
   corClientURL: https://dgiini-web-service
-  image: dgiini_task
+  image: dgiini_dk_task
   db:
     host: dgiini-db
     port: 27017
@@ -144,7 +148,7 @@ msg:
   appVersion: 0.0.1
   appBuild: 246
   corClientURL: https://dgiini-web-service
-  image: dgiini_msg
+  image: dgiini_dk_msg
   db:
     host: dgiini-db
     port: 27017
@@ -158,7 +162,7 @@ notify:
   appVersion: 0.0.1
   appBuild: 246
   corClientURL: https://dgiini-web-service
-  image: dgiini_notify
+  image: dgiini_dk_notify
   db:
     host: dgiini-db
     port: 27017
@@ -172,10 +176,24 @@ bill:
   appVersion: 0.0.1
   appBuild: 246
   corClientURL: https://dgiini-web-service
-  image: dgiini_bill
+  image: dgiini_dk_bill
   db:
     host: dgiini-db
     port: 27017
     name: dg_billdb
+    user: dbUser
+    password: password
+
+review:
+  appName: review
+  appServiceName: review-api/microservices
+  appVersion: 0.0.1
+  appBuild: 246
+  corClientURL: https://dgiini-web-service
+  image: dgiini_dk_review
+  db:
+    host: dgiini-db
+    port: 27017
+    name: dg_reviewdb
     user: dbUser
     password: password

@@ -66,21 +66,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appName }}-{{ .Values.msg.appName }}-service
-  namespace: {{ .Values.appName }}
-  labels:
-    app: {{ .Values.appName }}
-    environment: {{ .Values.environment }}
-spec:
-  selector:
-    app: {{ .Values.appName }}-{{ .Values.msg.appName }}
-  ports:
-    - protocol: TCP
-      port: {{ .Values.msPorts.msgApiPort }}
----
-apiVersion: v1
-kind: Service
-metadata:
   name: {{ .Values.appName }}-{{ .Values.notify.appName }}-service
   namespace: {{ .Values.appName }}
   labels:
@@ -96,14 +81,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appName }}-{{ .Values.bill.appName }}-service
+  name: {{ .Values.appName }}-{{ .Values.review.appName }}-service
   namespace: {{ .Values.appName }}
   labels:
     app: {{ .Values.appName }}
     environment: {{ .Values.environment }}
 spec:
   selector:
-    app: {{ .Values.appName }}-{{ .Values.bill.appName }}
+    app: {{ .Values.appName }}-{{ .Values.review.appName }}
   ports:
     - protocol: TCP
-      port: {{ .Values.msPorts.billApiPort }}
+      port: {{ .Values.msPorts.reviewApiPort }}
