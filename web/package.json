@@ -19,6 +19,7 @@
         "build-prod": "ng build --prod --base-href",
         "build-docker": "ng build --base-href --configuration=docker",
         "build-k8s": "ng build --base-href --configuration=k8s",
+        "build-do-k8s": "ng build --base-href --configuration=do.k8s",
         "startx": "npm run config -- --environment=dev && ng serve --environment=dev",
         "test": "ng test --watch=false --browsers ChromeHeadless",
         "lint": "ng lint",

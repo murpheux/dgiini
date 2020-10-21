@@ -21,10 +21,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.web.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -39,8 +37,6 @@ spec:
             - name: NGINX_PORT
               value: {{ .Values.webPort | squote }}
           image: "{{ .Values.image.repository }}/{{ .Values.web.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: http
               containerPort: {{ .Values.webPort }}
@@ -122,10 +118,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.apigw.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -148,8 +142,6 @@ spec:
             - name: APP_BUILD
               value: {{ .Values.apigw.appBuild | squote }}
           image: "{{ .Values.image.repository }}/{{ .Values.apigw.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: https
               containerPort: {{ .Values.apigwPort }}
@@ -190,10 +182,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.auth.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -234,8 +224,6 @@ spec:
             - name: COR_CLIENT_URL
               value: {{ .Values.auth.corClientURL }}
           image: "{{ .Values.image.repository }}/{{ .Values.auth.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: http
               containerPort: {{ .Values.msPorts.authApiPort }}
@@ -276,10 +264,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.task.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -310,8 +296,6 @@ spec:
             - name: COR_CLIENT_URL
               value: {{ .Values.task.corClientURL }}
           image: "{{ .Values.image.repository }}/{{ .Values.task.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: http
               containerPort: {{ .Values.msPorts.taskApiPort }}
@@ -352,10 +336,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.notify.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -396,8 +378,6 @@ spec:
             - name: COR_CLIENT_URL
               value: {{ .Values.notify.corClientURL }}
           image: "{{ .Values.image.repository }}/{{ .Values.notify.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: http
               containerPort: {{ .Values.msPorts.notifyApiPort }}
@@ -438,10 +418,8 @@ spec:
         app: {{ .Values.appName }}-{{ .Values.review.appName }}
         {{- include "helm.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
+      - name: do-registry
       serviceAccountName: {{ include "helm.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
@@ -482,8 +460,6 @@ spec:
             - name: COR_CLIENT_URL
               value: {{ .Values.review.corClientURL }}
           image: "{{ .Values.image.repository }}/{{ .Values.review.image }}:{{ .Values.version }}"
-          imagePullSecrets:
-          - name: do-registry
           ports:
             - name: http
               containerPort: {{ .Values.msPorts.reviewApiPort }}

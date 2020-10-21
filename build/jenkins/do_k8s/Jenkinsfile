@@ -124,7 +124,7 @@ pipeline {
                     steps {
                         dir("${WORKSPACE}/web"){
                             sh '''
-                                npm run build-k8s
+                                npm run build-do-k8s
                             '''
                         }
                     }
@@ -140,7 +140,7 @@ pipeline {
                         sh '''
                             cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/
                             cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/
-                            cp ${WORKSPACE}/gw/config/gateway.config.k8s.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml
+                            cp ${WORKSPACE}/gw/config/gateway.config.do.k8s.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml
                             cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/
                         '''
                     }
@@ -341,12 +341,4 @@ pipeline {
             }
         }
     }
-    // post {
-    //     success {
-    //         slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'green', iconEmoji: 'ghost', message: 'Build successfully completed - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
-    //     }
-    //     failure {
-    //         slackSend baseUrl: 'https://hooks.slack.com/services/', channel: '#build', color: 'red', iconEmoji: 'ghost', message: 'Build failed! - ${JOB_NAME} ${BUILD_NUMBER} (<${BUILD_URL}|Open>) - dgiini!!', tokenCredentialId: 'build-admin'
-    //     }
-    // }
 }
