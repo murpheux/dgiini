@@ -4,11 +4,11 @@ services:
   dgiinidb0:
     hostname: dgiinidb0
     container_name: dgiinidb0
-    image: mongo:4.2.6-bionic
+    image: mongo:4.4.1-bionic
     volumes:
-      - ${HOME}/data/dgiini/mongodb0:/var/lib/mongodb
-      - ${PWD}/keyfile.key:/opt/mongo
-      - ${PWD}/mongod.conf:/etc
+      - /mongo/data/dgiini0:/var/lib/mongodb
+      - /mongo/keyfile:/opt/mongo
+      - /mongo/mongod:/etc
     environment:
       REPLICA_CONFIG: '{"_id":"dbrepl","members":[{"_id":0,"host":"dgiinidb0:27017"},{"_id":1,"host":"dgiinidb1:27017"},{"_id":2,"host":"dgiinidb2:27017"}]}'
       MONGO_INITDB_ROOT_USERNAME: root
@@ -16,30 +16,30 @@ services:
     ports:
       - 27017:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']
+    entrypoint: ['/usr/bin/mongod', '--keyFile', '/opt/mongo/keyfile.key', '--bind_ip_all', '--replSet', 'dbrepl']
 
   dgiinidb1:
     hostname: dgiinidb1
     container_name: dgiinidb1
-    image: mongo:4.2.6-bionic
+    image: mongo:4.4.1-bionic
     volumes:
-      - ${HOME}/data/dgiini/mongodb1:/var/lib/mongodb
-      - ${PWD}/keyfile.key:/opt/mongo
-      - ${PWD}/mongod.conf:/etc
+      - /mongo/data/dgiini1:/var/lib/mongodb
+      - /mongo/keyfile:/opt/mongo
+      - /mongo/mongod:/etc
     ports:
       - 27018:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']
+    entrypoint: ['/usr/bin/mongod', '--keyFile', '/opt/mongo/keyfile.key', '--bind_ip_all', '--replSet', 'dbrepl']
 
   dgiinidb2:
     hostname: dgiinidb2
     container_name: dgiinidb2
-    image: mongo:4.2.6-bionic
+    image: mongo:4.4.1-bionic
     volumes:
-      - ${HOME}/data/dgiini/mongodb2:/var/lib/mongodb
-      - ${PWD}/keyfile.key:/opt/mongo
-      - ${PWD}/mongod.conf:/etc
+      - /mongo/data/dgiini2:/var/lib/mongodb
+      - /mongo/keyfile:/opt/mongo
+      - /mongo/mongod:/etc
     ports:
       - 27019:27017
     restart: always
-    entrypoint: ['/usr/bin/mongod', '--bind_ip_all', '--replSet', 'dbrepl']
+    entrypoint: ['/usr/bin/mongod', '--keyFile', '/opt/mongo/keyfile.key', '--bind_ip_all', '--replSet', 'dbrepl']

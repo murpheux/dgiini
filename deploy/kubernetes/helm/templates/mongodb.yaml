@@ -22,40 +22,45 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: mongo
-        image: mongo:4
+        image: mongo:4.4
         args: # Feel free to add additional options there but always use the "args" do not override the entry point with "command"
           - "--replSet"
-          - "dbrepl" 
+          - "dbrepl"
           - "--bind_ip_all"
         ports:
         - name: mongo # Open POD port
-          containerPort: 27017
+          containerPort: {{ .Values.auth.db.port }}
           protocol: TCP
         volumeMounts:
-        - name: mongo-pvc # Mount the PVC so that we can have the data outside the POD
+        - name: {{ .Values.appName }}-volume # Mount the PVC so that we can have the data outside the POD
           mountPath: /data/db
         env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credential
+              key: username
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mongo-credential
-              key: mongo-password
+              key: password
         envFrom:
         - configMapRef: # Import our config map
-            name: mongo-config
+            name: mongo-auth
       - name: mongo-sidecar
         image: cvallance/mongo-k8s-sidecar
         env:
         - name: MONGO_SIDECAR_POD_LABELS # CAUTION: Change this if you change your labels !!!!
-          value: "app=mongo,component=database"
+          value: "app=mongo,component=database,role=dgiini-db,environment=development"
         - name: KUBERNETES_MONGO_SERVICE_NAME # This tells the sidecar which service you will use to expose pods
           value: "mongo"
         - name: KUBE_NAMESPACE # CAUTION: Change this or remove this if you change the namespace
-          value: "dgiini"
+          value: "{{ .Values.appName }}"
         - name: MONGODB_USERNAME # Import our user from the config map
           valueFrom:
             configMapKeyRef:
-              name: mongo-config
+              name: mongo-auth
               key: MONGO_INITDB_ROOT_USERNAME
         - name: MONGODB_PASSWORD # Import our password
           valueFrom:
@@ -66,10 +71,10 @@ spec:
           value: admin
   volumeClaimTemplates: # You can customize the PVC if you need to rely on a faster storage... 
   - metadata:
-      name: mongo-pvc
+      name: {{ .Values.appName }}-volume
       labels:
         app: mongo
-        component: mongo-pvc
+        component: {{ .Values.appName }}-volume
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: do-block-storage
@@ -80,10 +85,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.appName }}-db # The name is important as it will be part of the URL to access your mongo instance
-  namespace: {{ .Values.appName }} # Change or remove me
+  name: mongo # The name is important as it will be part of the URL to access your mongo instance
+  namespace: {{ .Values.appName }}
   labels:
-    name: {{ .Values.appName }}-db
+    app: mongo
     component: database-service
 spec:
   ports:
@@ -91,4 +96,5 @@ spec:
       targetPort: {{ .Values.auth.db.port }}
   clusterIP: None
   selector: # If you've changed your selectors make sure to change them also here !
-    role: {{ .Values.appName }}-db
+    app: mongo 
+    component: database
