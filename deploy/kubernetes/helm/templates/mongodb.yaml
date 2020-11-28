@@ -23,17 +23,24 @@ spec:
       containers:
       - name: mongo
         image: mongo:4.4
+        #command: ["mongod"]
         args: # Feel free to add additional options there but always use the "args" do not override the entry point with "command"
           - "--replSet"
           - "dbrepl"
           - "--bind_ip_all"
         ports:
-        - name: mongo # Open POD port
+        - namels: mongo # Open POD port
           containerPort: {{ .Values.auth.db.port }}
           protocol: TCP
         volumeMounts:
         - name: {{ .Values.appName }}-volume # Mount the PVC so that we can have the data outside the POD
           mountPath: /data/db
+        - name: mongo-key
+          mountPath: "/opt/mongo"
+          readOnly: true
+        - name: config
+          mountPath: /etc/mongod.conf
+          subPath: mongod.conf
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
           valueFrom:
@@ -45,6 +52,11 @@ spec:
             secretKeyRef:
               name: mongo-credential
               key: password
+        - name: REPLICA_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: mongo-replica-config
+              key: replica.json
         envFrom:
         - configMapRef: # Import our config map
             name: mongo-auth
@@ -69,6 +81,14 @@ spec:
               key: password
         - name: MONGODB_DATABASE # The mongdb admin database
           value: admin
+      volumes:
+      - name: mongo-key
+        secret:
+          defaultMode: 0400
+          secretName: mongo-key
+      - name: config
+        configMap:
+          name: mongo-config
   volumeClaimTemplates: # You can customize the PVC if you need to rely on a faster storage... 
   - metadata:
       name: {{ .Values.appName }}-volume
