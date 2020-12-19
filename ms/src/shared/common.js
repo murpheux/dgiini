@@ -5,10 +5,16 @@ exports.version = process.env.APP_VERSION
 
 const database_host = process.env.DB_HOST || 'localhost'
 const database = process.env.TASK_DATABASE || 'nodata'
+const user = process.env.DB_USER || ''
+const password = process.env.DB_PASS || ''
 
 exports.database_host = database_host
 exports.database = database
-exports.database_uri = `mongodb://${database_host}/${database}`
+
+const post_uri = `${database_host}/${database}`
+const db_uri = user !== '' ? `mongodb://${user}:${password}@${post_uri}` : `mongodb://${post_uri}`
+
+exports.database_uri = db_uri
 
 exports.smtp_service = process.env.SMTP_SERVICE || 'gmail'
 exports.smtp_host = process.env.SMTP_HOST

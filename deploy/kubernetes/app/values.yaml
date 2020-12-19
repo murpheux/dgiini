@@ -119,11 +119,11 @@ auth:
   corClientURL: https://dgiini-web-service
   image: auth
   db:
-    host: dgiini-db
+    host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
     port: 27017
     name: dg_authdb
     user: dbUser
-    password: password
+    password: dgiiniUser
 
 task:
   appName: task
@@ -133,11 +133,11 @@ task:
   corClientURL: https://dgiini-web-service
   image: task
   db:
-    host: dgiini-db
+    host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
     port: 27017
     name: dg_taskdb
     user: dbUser
-    password: password
+    password: dgiiniUser
 
 notify:
   appName: notify
@@ -147,11 +147,11 @@ notify:
   corClientURL: https://dgiini-web-service
   image: notify
   db:
-    host: dgiini-db
+    host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
     port: 27017
     name: dg_notifydb
     user: dbUser
-    password: password
+    password: dgiiniUser
 
 review:
   appName: review
@@ -161,8 +161,8 @@ review:
   corClientURL: https://dgiini-web-service
   image: review
   db:
-    host: dgiini-db
+    host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
     port: 27017
     name: dg_reviewdb
     user: dbUser
-    password: password
+    password: dgiiniUser

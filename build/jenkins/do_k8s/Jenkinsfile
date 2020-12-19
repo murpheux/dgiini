@@ -45,7 +45,7 @@ pipeline {
         }
         stage('install dependencies') {
             parallel {
-                stage('install web dependency') {
+                stage('install ms dependency') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/ms
@@ -53,7 +53,7 @@ pipeline {
                         '''
                     }
                 }
-                stage('install ms dependency') {
+                stage('install web dependency') {
                     steps {
                         sh '''
                             cd ${WORKSPACE}/web
