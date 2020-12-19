@@ -232,3 +232,44 @@ Refer to .env file for details of environment variables.
 ## Common Errors
 
 ## MongoError: text index required for $text query
+
+## Deploy to K8s using helm
+
+### Database install (from repo)
+
+```bash
+#!/bin/bash
+helm install dgiinidb -f mongo/values.yaml -n dgiini bitnami/mongodb
+```
+
+## Create db user password from file -mongo-credential
+
+```bash
+#!/bin/bash
+$ kubectl create secret generic mongo-credential -n dgiini --from-file=./username --from-file=./password
+```
+
+## Deploy apps
+
+```bash
+#!/bin/bash
+$ cd <project path>/deploy/kubernetes
+
+$ export DGIINI_VERSION=12
+
+$ helm install app --generate-name --namespace dgiini --set version=$DGIINI_VERSION
+```
+
+## remove secret
+
+```bash
+#!/bin/bash
+$ kubectl delete secret mongo-credential -n dgiini
+```
+
+## uninstall app
+
+```bash
+#!/bin/bash
+helm uninstall -n dgiini app-nnnnnnn
+```

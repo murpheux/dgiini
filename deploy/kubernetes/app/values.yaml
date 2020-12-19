@@ -116,53 +116,45 @@ auth:
   appServiceName: auth-api/microservices
   appVersion: 0.0.1
   appBuild: 0
-  corClientURL: https://dgiini-web-service
+  corClientURL: https://www.dgiini.ca
   image: auth
   db:
     host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
-    port: 27017
     name: dg_authdb
-    user: dbUser
-    password: dgiiniUser
+    replicaset: dbrepl
 
 task:
   appName: task
   appServiceName: task-api/microservices
   appVersion: 0.0.1
   appBuild: 0
-  corClientURL: https://dgiini-web-service
+  corClientURL: https://www.dgiini.ca
   image: task
   db:
     host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
-    port: 27017
     name: dg_taskdb
-    user: dbUser
-    password: dgiiniUser
+    replicaset: dbrepl
 
 notify:
   appName: notify
   appServiceName: notify-api/microservices
   appVersion: 0.0.1
   appBuild: 0
-  corClientURL: https://dgiini-web-service
+  corClientURL: https://www.dgiini.ca
   image: notify
   db:
     host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
-    port: 27017
     name: dg_notifydb
-    user: dbUser
-    password: dgiiniUser
+    replicaset: dbrepl
 
 review:
   appName: review
   appServiceName: review-api/microservices
   appVersion: 0.0.1
   appBuild: 0
-  corClientURL: https://dgiini-web-service
+  corClientURL: https://www.dgiini.ca
   image: review
   db:
     host: dgiinidb-mongodb-0.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-1.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017,dgiinidb-mongodb-2.dgiinidb-mongodb-headless.dgiini.svc.cluster.local:27017
-    port: 27017
     name: dg_reviewdb
-    user: dbUser
-    password: dgiiniUser
+    replicaset: dbrepl

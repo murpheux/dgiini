@@ -208,11 +208,13 @@ spec:
                 secretKeyRef:
                   name: mongo-credential
                   key: username
-            - name: DB_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: mongo-credential
                   key: password
+            - name: DB_REPL
+              value: {{ .Values.auth.db.replicaset }}
             - name: AUTH_DATABASE
               value: {{ .Values.auth.db.name }}
             - name: APP_NAME
@@ -285,6 +287,18 @@ spec:
               value: {{ .Values.task.db.host }}
             - name: DB_PORT
               value: {{ .Values.task.db.port | squote }}
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+            - name: DB_REPL
+              value: {{ .Values.task.db.replicaset }}
             - name: TASK_DATABASE
               value: {{ .Values.task.db.name }}
             - name: APP_NAME
@@ -362,11 +376,13 @@ spec:
                 secretKeyRef:
                   name: mongo-credential
                   key: username
-            - name: DB_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: mongo-credential
                   key: password
+            - name: DB_REPL
+              value: {{ .Values.notify.db.replicaset }}
             - name: AUTH_DATABASE
               value: {{ .Values.notify.db.name }}
             - name: APP_NAME
@@ -444,11 +460,13 @@ spec:
                 secretKeyRef:
                   name: mongo-credential
                   key: username
-            - name: DB_PASSWORD
+            - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: mongo-credential
                   key: password
+            - name: DB_REPL
+              value: {{ .Values.review.db.replicaset }}
             - name: AUTH_DATABASE
               value: {{ .Values.review.db.name }}
             - name: APP_NAME

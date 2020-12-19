@@ -7,12 +7,14 @@ const database_host = process.env.DB_HOST || 'localhost'
 const database = process.env.TASK_DATABASE || 'nodata'
 const user = process.env.DB_USER || ''
 const password = process.env.DB_PASS || ''
+const replica_set = process.env.DB_REPL || ''
 
 exports.database_host = database_host
 exports.database = database
 
 const post_uri = `${database_host}/${database}`
-const db_uri = user !== '' ? `mongodb://${user}:${password}@${post_uri}` : `mongodb://${post_uri}`
+let db_uri = user !== '' ? `mongodb://${user}:${password}@${post_uri}` : `mongodb://${post_uri}`
+db_uri = replica_set !== '' ? `${db_uri}/?authSource=admin&replicaSet=${replica_set}` : db_uri // include replicaset
 
 exports.database_uri = db_uri
 
