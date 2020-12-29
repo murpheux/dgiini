@@ -1,0 +1,287 @@
+#!groovy
+
+pipeline {
+    agent any
+    environment {
+        APP_NAME = 'dgiini'
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        IMAGE_VERSION="v_${BUILD_NUMBER}"
+        NOTIFICATION_EMAIL = 'dapo.onawole@gmail.com'
+        GIT_URL = 'git@github.com:murpheux/dgiini.git'
+        REGISTRY = 'registry.digitalocean.com/dgiini-k8s'
+    }
+    parameters {
+        string(name: 'branch', defaultValue: 'develop', description: 'Repository branch')
+    }
+    tools {
+        nodejs "node"
+        git "git"
+    }
+
+    stages {
+        stage('Process web') {
+            agent { 
+                label 'scarlet'
+            }
+
+            steps {
+                deleteDir() /* clean up our workspace */
+
+                // Git repository
+                git branch: "${branch}", url: "${GIT_URL}"
+
+                sh '''
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/web/app
+                    
+                '''
+            
+                writeFile file: 'env.js', text: '!function(_){_.__env=_.__env||{},_.__env.apiUrl="https://gw.dgiini.ca/api",_.__env.enableDebug=!0}(this);'
+                sh '''
+                    mv env.js ${WORKSPACE}/web/src
+                '''
+            
+                sh '''
+                    cd ${WORKSPACE}/web
+                    npm install
+                '''
+            
+                sh '''
+                    cd ${WORKSPACE}/web
+                    npm run lint
+                '''
+            
+                writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
+            
+                dir("${WORKSPACE}/web"){
+                    // sh '''
+                    //     npm run test
+                    // '''
+                }
+            
+                dir("${WORKSPACE}/web"){
+                    sh '''
+                        npm run build-do-k8s
+                    '''
+                }
+            
+                sh '''
+                    cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
+                    cp -r ${WORKSPACE}/deploy/nginx/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
+                '''        
+            
+                sh '''
+                    doctl registry login
+                '''        
+            
+                dir("${WORKSPACE}/deploy/docker/deploy/web"){
+                    script {
+                        webImage = docker.build "${REGISTRY}/web:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            webImage.push()
+                        }
+                    }
+                }
+            
+                deleteDir() /* clean up our workspace */
+            }
+        }
+
+        stage('Process ms') {
+            agent {
+                label 'master'
+            }
+
+            steps {
+                deleteDir() /* clean up our workspace */
+
+                // Git repository
+                git branch: "${branch}", url: "${GIT_URL}"
+
+                sh '''
+                    
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/task/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/auth/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/notify/app
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/review/app
+                '''
+            
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm install
+                '''
+            
+                sh '''
+                    cd ${WORKSPACE}/ms
+                    npm run lint
+                '''
+            
+                writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
+            
+                dir("${WORKSPACE}/ms"){
+                    // sh '''
+                    //     npm run test test/unit
+                    // '''
+                }
+            
+                dir("${WORKSPACE}/ms"){
+                    sh 'rm .babelrc'
+                }
+
+            
+                dir("${WORKSPACE}/ms"){
+                    sh '''
+                        OUT_DIR=dist/mstask npm run build src/task.api.js
+                    '''
+                }
+                sh '''
+                    cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/mstask/
+                    cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/mstask/
+                '''
+               
+                dir("${WORKSPACE}/ms"){
+                    sh '''
+                        OUT_DIR=dist/msauth npm run build src/auth.api.js
+                    '''
+                }
+                sh '''
+                    cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msauth/
+                    cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msauth/
+                '''
+                                dir("${WORKSPACE}/ms"){
+                    sh '''
+                        OUT_DIR=dist/msnotify npm run build src/notify.api.js
+                    '''
+                }
+                sh '''
+                    cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msnotify/
+                    cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msnotify/
+                '''
+                                dir("${WORKSPACE}/ms"){
+                    sh '''
+                        OUT_DIR=dist/msreview npm run build src/review.api.js
+                    '''
+                }
+                sh '''
+                    cp ${WORKSPACE}/ms/package.json ${WORKSPACE}/ms/dist/msreview/
+                    cp ${WORKSPACE}/build_version.json ${WORKSPACE}/ms/dist/msreview/
+                '''
+                
+                sh '''
+                    cp -r ${WORKSPACE}/ms/dist/msauth ${WORKSPACE}/deploy/docker/deploy/auth/app
+                '''        
+                
+                sh '''
+                    cp -r ${WORKSPACE}/ms/dist/mstask ${WORKSPACE}/deploy/docker/deploy/task/app
+                '''        
+                
+                sh '''
+                    cp -r ${WORKSPACE}/ms/dist/msnotify ${WORKSPACE}/deploy/docker/deploy/notify/app
+                '''        
+                
+                sh '''
+                    cp -r ${WORKSPACE}/ms/dist/msreview ${WORKSPACE}/deploy/docker/deploy/review/app
+                '''        
+            
+                sh '''
+                    doctl registry login
+                '''        
+
+            
+                dir("${WORKSPACE}/deploy/docker/deploy/auth"){
+                    script {
+                        authImage = docker.build "${REGISTRY}/auth:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            authImage.push()
+                        }
+                    }
+                }
+                
+                dir("${WORKSPACE}/deploy/docker/deploy/task"){
+                    script {
+                        taskImage = docker.build "${REGISTRY}/task:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            taskImage.push()
+                        }
+                    }
+                }
+                
+                dir("${WORKSPACE}/deploy/docker/deploy/notify"){
+                    script {
+                        notifyImage = docker.build "${REGISTRY}/notify:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            notifyImage.push()
+                        }
+                    }
+                }
+                
+                dir("${WORKSPACE}/deploy/docker/deploy/review"){
+                    script {
+                        reviewImage = docker.build "${REGISTRY}/review:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            reviewImage.push()
+                        }
+                    }
+                }
+                    
+                deleteDir() /* clean up our workspace */
+            }
+        }
+
+        stage('Process gw') {
+            agent {
+                label 'macho'
+            }
+
+            steps {
+                deleteDir() /* clean up our workspace */
+
+                // Git repository
+                git branch: "${branch}", url: "${GIT_URL}"
+
+                sh '''
+                    mkdir -p ${WORKSPACE}/deploy/docker/deploy/gw/app
+                '''
+            
+                writeFile file: 'build_version.json', text: "{\"version\": ${BUILD_NUMBER}}"
+            
+                dir("${WORKSPACE}/gw"){
+                    sh '''
+                        npm install
+                        npm run build
+                    '''
+                }
+                sh '''
+                    cp ${WORKSPACE}/gw/package.json ${WORKSPACE}/gw/dist/apigw/
+                    cp ${WORKSPACE}/build_version.json ${WORKSPACE}/gw/dist/apigw/
+                    cp ${WORKSPACE}/gw/config/gateway.config.do.k8s.yml ${WORKSPACE}/gw/dist/apigw/config/gateway.config.yml
+                    cp -r ${WORKSPACE}/gw/cert ${WORKSPACE}/gw/dist/apigw/
+                '''
+            
+                sh '''
+                    cp -r ${WORKSPACE}/gw/dist/apigw ${WORKSPACE}/deploy/docker/deploy/gw/app
+                '''        
+            
+                sh '''
+                    doctl registry login
+                '''        
+            
+                dir("${WORKSPACE}/deploy/docker/deploy/gw"){
+                    script {
+                        gwImage = docker.build "${REGISTRY}/apigw:${BUILD_NUMBER}"
+
+                        docker.withRegistry( '', '' ) {
+                            gwImage.push()
+                        }
+                    }
+                }
+            
+                deleteDir() /* clean up our workspace */
+            }
+        }
+    }
+}
