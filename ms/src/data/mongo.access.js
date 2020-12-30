@@ -63,6 +63,7 @@ module.exports = {
 
     // init
     setup_database: (db_url, database_name, options, collections) => {
+        console.log(db_url)
         return new Promise((resolve, reject) => {
             mongoClient.connect(db_url, options, (err, client) => {
                 collections.forEach(coll => {

@@ -18,7 +18,7 @@ metadata:
 data:
   self-signed.conf: |
     ssl_certificate /etc/ssl/certs/dgiini.ca.crt;
-    ssl_certificate_key /etc/ssl/private/dgiini.ca.key;
+    ssl_certificate_key /etc/ssl/private/dgiini.ca_np.key;
   ssl-params.conf: |
     ssl_protocols TLSv1.2;
     ssl_prefer_server_ciphers on;
@@ -63,7 +63,7 @@ data:
         listen [::]:443 ssl default_server;
 
         ssl_certificate /etc/ssl/certs/dgiini.ca.crt;
-        ssl_certificate_key /etc/ssl/private/dgiini.ca.key;
+        ssl_certificate_key /etc/ssl/private/dgiini.ca_np.key;
         ssl_dhparam /etc/ssl/dh/dhparam.pem;
 
         server_name dgiini.ca www.dgiini.ca;
