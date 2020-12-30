@@ -16,6 +16,9 @@ const post_uri = `${database_host}/${database}`
 let db_uri = user !== '' ? `mongodb://${user}:${password}@${post_uri}` : `mongodb://${post_uri}`
 db_uri = replica_set !== '' ? `${db_uri}/?authSource=admin&replicaSet=${replica_set}` : db_uri // include replicaset
 
+// remove newline due to k8s secrets
+db_uri = db_uri.replace(/\r?\n|\r/g, '')
+
 exports.database_uri = db_uri
 
 exports.smtp_service = process.env.SMTP_SERVICE || 'gmail'
