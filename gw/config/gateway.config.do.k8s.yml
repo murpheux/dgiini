@@ -2,8 +2,8 @@ https:
   port: 443
   tls:
     "default":
-        key: cert/dgiini.key.pem
-        cert: cert/dgiini.cert.pem
+        key: cert/ca/dgiini_ca.key
+        cert: cert/ca/dgiini.ca.pem
 admin:
   port: 9876
 apiEndpoints:
