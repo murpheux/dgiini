@@ -1,9 +1,12 @@
 https:
   port: 443
   tls:
+    "gw.dgiini.ca":
+        key: cert/ca/dgiini.ca_np.key
+        cert: cert/ca/dgiini.ca.crt
     "default":
-        key: cert/ca/dgiini.ca.key
-        cert: cert/ca/dgiini.ca.pem
+        key: cert/ca/dgiini.ca_np.key
+        cert: cert/ca/dgiini.ca.crt
 admin:
   port: 9876
 apiEndpoints:

@@ -125,7 +125,7 @@ pipelines:
       - cors: *cors
       - jwt: &jwt
         - action:
-            secretOrPublicKeyFile: ./cert/murpheux.pem
+            secretOrPublicKeyFile: ./cert/ca/murpheux.pem
             checkCredentialExistence: false
       - proxy: *as
 
