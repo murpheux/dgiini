@@ -205,6 +205,7 @@ pipeline {
                     steps {
                         sh '''
                             cp -r ${WORKSPACE}/web/dist/dgiini/ ${WORKSPACE}/deploy/docker/deploy/web/app/web
+                            mkdir ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
                             cp ${WORKSPACE}/deploy/nginx/*.conf ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
                             cp -r ${WORKSPACE}/web/ssl/ca/ ${WORKSPACE}/deploy/docker/deploy/web/app/nginx
                         '''        
