@@ -2,7 +2,7 @@ https:
   port: 443
   tls:
     "default":
-        key: cert/ca/dgiini_ca.key
+        key: cert/ca/dgiini.ca.key
         cert: cert/ca/dgiini.ca.pem
 admin:
   port: 9876
