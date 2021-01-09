@@ -173,6 +173,7 @@ export class TaskViewComponent implements OnInit {
                 dialogRef = this.dialog.open(PubProfileComponent, {
                     height: '700px',
                     width: '1000px',
+                    disableClose: true,
                     data: {
                         user
                     }

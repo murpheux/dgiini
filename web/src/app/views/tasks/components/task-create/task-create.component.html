@@ -271,43 +271,47 @@
                                     <label for="date"
                                         >Expected Task Completion Date</label
                                     >
-                                    <em
-                                        *ngIf="
-                                            forms[3].controls.date?.invalid &&
-                                            (forms[3].controls.date?.touched ||
-                                                mouseoverSave)
-                                        "
-                                        >Required</em
-                                    >
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        id="date"
-                                        name="date"
-                                        formControlName="date"
-                                        placeholder="Enter Here"
-                                    />
+                                    <div class="col-6">
+                                        <em
+                                            *ngIf="
+                                                forms[3].controls.date?.invalid &&
+                                                (forms[3].controls.date?.touched ||
+                                                    mouseoverSave)
+                                            "
+                                            >Required</em
+                                        >
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            id="date"
+                                            name="date"
+                                            formControlName="date"
+                                            placeholder="Enter Here"
+                                        />
+                                    </div>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="time"
                                         >Expected Task Completion Time</label
                                     >
-                                    <em
-                                        *ngIf="
-                                            forms[3].controls.time?.invalid &&
-                                            (forms[3].controls.time?.touched ||
-                                                mouseoverSave)
-                                        "
-                                        >Required</em
-                                    >
-                                    <input
-                                        type="time"
-                                        class="form-control"
-                                        id="time"
-                                        name="time"
-                                        formControlName="time"
-                                        placeholder="Enter Here"
-                                    />
+                                    <div class="col-6">
+                                        <em
+                                            *ngIf="
+                                                forms[3].controls.time?.invalid &&
+                                                (forms[3].controls.time?.touched ||
+                                                    mouseoverSave)
+                                            "
+                                            >Required</em
+                                        >
+                                        <input
+                                            type="time"
+                                            class="form-control"
+                                            id="time"
+                                            name="time"
+                                            formControlName="time"
+                                            placeholder="Enter Here"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -341,35 +345,37 @@
                                 </div>
                                 <div class="form-group mb-2 mt-2">
                                     <label for="amount">Amount</label>
-                                    <em
-                                        *ngIf="
-                                            forms[4].controls.amount?.invalid &&
-                                            (forms[4].controls.amount
-                                                ?.touched ||
-                                                mouseoverSave)
-                                        "
-                                        >Required</em
-                                    >
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i
-                                                    class="fas fa-dollar-sign text-web"
-                                                ></i
-                                            ></span>
-                                        </div>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Amount"
-                                            id="amount"
-                                            name="amount"
-                                            formControlName="amount"
-                                        />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"
-                                                ></span
-                                            >
+                                    <div class="col-6">
+                                        <em
+                                            *ngIf="
+                                                forms[4].controls.amount?.invalid &&
+                                                (forms[4].controls.amount
+                                                    ?.touched ||
+                                                    mouseoverSave)
+                                            "
+                                            >Required</em
+                                        >
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"
+                                                    ><i
+                                                        class="fas fa-dollar-sign text-web"
+                                                    ></i
+                                                ></span>
+                                            </div>
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="Amount"
+                                                id="amount"
+                                                name="amount"
+                                                formControlName="amount"
+                                            />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"
+                                                    ></span
+                                                >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -377,36 +383,38 @@
                                     <label for="task-hours"
                                         >How long it will take?</label
                                     >
-                                    <em
-                                        *ngIf="
-                                            forms[4].controls.duration
-                                                ?.invalid &&
-                                            (forms[4].controls.duration
-                                                ?.touched ||
-                                                mouseoverSave)
-                                        "
-                                        >Required</em
-                                    >
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"
-                                                ><i
-                                                    class="fas fa-clock text-web"
-                                                ></i
-                                            ></span>
-                                        </div>
-                                        <input
-                                            type="number"
-                                            class="form-control"
-                                            placeholder="Hours"
-                                            id="duration"
-                                            name="duration"
-                                            formControlName="duration"
-                                        />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"
-                                                >hours</span
-                                            >
+                                    <div class="col-6">
+                                        <em
+                                            *ngIf="
+                                                forms[4].controls.duration
+                                                    ?.invalid &&
+                                                (forms[4].controls.duration
+                                                    ?.touched ||
+                                                    mouseoverSave)
+                                            "
+                                            >Required</em
+                                        >
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"
+                                                    ><i
+                                                        class="fas fa-clock text-web"
+                                                    ></i
+                                                ></span>
+                                            </div>
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                placeholder="Hours"
+                                                id="duration"
+                                                name="duration"
+                                                formControlName="duration"
+                                            />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"
+                                                    >hours</span
+                                                >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

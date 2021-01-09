@@ -89,6 +89,7 @@ export class TaskUserComponent implements OnInit {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',
+            disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe((result) => {});

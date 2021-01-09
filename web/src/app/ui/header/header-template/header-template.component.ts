@@ -88,6 +88,7 @@ export class HeaderTemplateComponent
                 dialogRef = this.dialog.open(BecometaskerComponent, {
                     height: '570px',
                     width: '800px',
+                    disableClose: true,
                 });
             } else {
                 dialogRef = this.dialog.open(NologinComponent, {
@@ -108,6 +109,7 @@ export class HeaderTemplateComponent
                 dialogRef = this.dialog.open(TaskCreateComponent, {
                     height: '570px',
                     width: '800px',
+                    disableClose: true,
                 });
             } else {
                 dialogRef = this.dialog.open(NologinComponent, {

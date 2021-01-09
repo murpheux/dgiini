@@ -226,7 +226,7 @@ export class TaskCreateComponent implements OnInit, AfterViewInit {
         if (result.isValid) {
             this.taskService.saveTask(task).subscribe((success) => {
                 this.notifier.showSuccess(
-                    'Task saved successfully!'
+                    'Task processed successfully!'
                 );
                 this.dialogRef.close();
             });

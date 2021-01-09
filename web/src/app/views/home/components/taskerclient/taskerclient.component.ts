@@ -61,6 +61,7 @@ export class VendorclientComponent implements OnInit, AfterViewInit {
         const dialogRef = this.dialog.open(TaskCreateComponent, {
             height: '600px',
             width: '800px',
+            disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe((result) => {});

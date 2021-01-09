@@ -82,7 +82,8 @@ export class HomeComponent implements OnInit {
             dialogRef = this.dialog.open(RegisterComponent, {
                 height: '570px',
                 width: '800px',
-                data:  profile
+                data:  profile,
+                disableClose: true,
             });
 
             dialogRef.afterClosed().subscribe((result) => {});

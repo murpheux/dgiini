@@ -51,6 +51,7 @@ export class FeaturedTaskComponent implements OnInit {
                 dialogRef = this.dialog.open(TaskCategoriesComponent, {
                     height: '570px',
                     width: '800px',
+                    disableClose: true,
                     data: {
                         id
                     }
