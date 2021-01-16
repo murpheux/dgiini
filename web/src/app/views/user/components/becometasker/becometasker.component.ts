@@ -37,7 +37,7 @@ export class BecometaskerComponent implements OnInit {
     selectedSkills: string[] = [];
 
     mouseoverSave = false;
-    percentage = [5, 20, 40, 60, 80, 100];
+    percentage = [20, 40, 60, 100];
     banks = ['bmo', 'scotia', 'td', 'rbc', 'simpli', 'cibc', 'tangerine', 'hsbc'];
     vehicleBrands = [];
     skills = ['capentry', 'welder', 'childcare', 'babysitter', 'mover', 'sweeper'];
@@ -153,39 +153,13 @@ export class BecometaskerComponent implements OnInit {
             role: this.currentUser.role,
             skill_summary: formValues.subUserForms[0].skillSummary,
             skills: this.selectedSkills,
-            social: {
-                website: formValues.subUserForms[1].website,
-                facebook: formValues.subUserForms[1].facebook,
-                twitter: formValues.subUserForms[1].twitter,
-                linkedin: formValues.subUserForms[1].linkedin,
-            },
             bankAccount: {
                 accountNo: formValues.subUserForms[2].accountno,
                 bankName: formValues.subUserForms[2].bankName,
                 transitNo: formValues.subUserForms[2].transitNo,
                 insitutionNo: formValues.subUserForms[2].insitutionNo,
-                address: {
-                    street: formValues.subUserForms[3].bkstreet,
-                    city: formValues.subUserForms[3].bkcity,
-                    state: formValues.subUserForms[3].bkstate,
-                    country: formValues.subUserForms[3].bkcountry,
-                    zipcode: formValues.subUserForms[3].bkzipcode
-                }
-            },
-            creditCard: {
-                cardNumber: formValues.subUserForms[4].cardno,
-                nameOnCard: formValues.subUserForms[4].nameoncard,
-                expiry: formValues.subUserForms[4].expiry,
-                billingAddress: {
-                    street: formValues.subUserForms[5].ccstreet,
-                    city: formValues.subUserForms[5].cccity,
-                    state: formValues.subUserForms[5].ccstate,
-                    country: formValues.subUserForms[5].cccountry,
-                    zipcode: formValues.subUserForms[5].cczipcode
-                }
             },
             jobDonePhotos: this.photos,
-            vehicles: this.vehicleList
         };
         if (!vendor.role.includes('vendor')) {
             vendor.role.push('vendor'); // make vendor

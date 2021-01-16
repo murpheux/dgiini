@@ -34,7 +34,7 @@
                             </div>
                         </div>
                         <div formGroupName="1">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-3">
+                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-2">
                                 <div class="form-group mb-2">
                                     <label for="phone">Bank Name</label>
                                     <em *ngIf="
@@ -81,7 +81,7 @@
                         <div formGroupName="2">
                             <div
                                 class="tab-pane container active p-0 d-none"
-                                id="become-tasker-step-7"
+                                id="become-tasker-step-3"
                             >
                                 <p class="font-weight-bold">
                                     Attachments (Optional)
@@ -129,16 +129,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- </form> -->
-                        <div class="tab-pane container p-0 fade d-none" id="become-tasker-step-9">
+                        <div class="tab-pane container p-0 fade d-none" id="become-tasker-step-4">
                             <p class="font-weight-bold">Confirm Details</p>
                             <p class="m-0 font-weight-bold">Skill Summary</p>
-                            <p class="m-0 font-weight-bold">{{ forms[1].get("skillSummary")?.value }}</p>
+                            <p class="m-0">{{ forms[0].get("skillSummary")?.value }}</p>
                             <p class="m-0 font-weight-bold">Bank Info</p>
-                            <p>{{ forms[2].get("accountNo")?.value }}</p>
-                            <p>{{ forms[2].get("bankName")?.value }}</p>
-                            <p>{{ forms[2].get("transitNo")?.value }}</p>
-                            <p>{{ forms[2].get("insitutionNo")?.value }}</p>
+                            <p>{{ forms[1].get("accountNo")?.value }}</p>
+                            <p>{{ forms[1].get("bankName")?.value }}</p>
+                            <p>{{ forms[1].get("transitNo")?.value }}</p>
+                            <p>{{ forms[1].get("insitutionNo")?.value }}</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +153,7 @@
                 <i class="fas fa-arrow-left"></i> Back
             </button>
             <button (mouseenter)="mouseoverSave = true" (mouseleave)="mouseoverSave = false" #postNextBtn [disabled]="
-                    currentTabOpen > 9
+                    currentTabOpen > 5
                         ? 'true'
                         : forms[currentTabOpen - 1].invalid
                 " type="button" class="btn btn-web next-btn" (click)="nextTab()">
