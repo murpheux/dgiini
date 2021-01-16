@@ -173,7 +173,7 @@ export class BecometaskerComponent implements OnInit {
                 this.notifier.showSuccess(
                     'User information saved successfully!'
                 );
-                this.dialogRef.close();
+                this.dialogRef.close({ status: true });
             });
         } else {
             const messages = result.getFailureMessages();
@@ -184,7 +184,7 @@ export class BecometaskerComponent implements OnInit {
     }
 
     cancel(): void {
-        this.dialogRef.close();
+        this.dialogRef.close({ status: false });
     }
 
     handleFileInput(files: FileList): void {
