@@ -98,9 +98,9 @@ export class HeaderTemplateComponent
             }
         });
 
-        dialogRef.afterClosed().subscribe((result) => { 
+        dialogRef.afterClosed().subscribe((result) => {
             this.isVendor = result.status;
-         });
+        });
     }
 
     async postTask(): Promise<void> {

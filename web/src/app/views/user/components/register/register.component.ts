@@ -18,12 +18,12 @@ import { UserService } from '../../services/user.service';
     styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-    currentCity: ICityLocation;
-    
     static readonly legalAge = 18;
     static readonly maxAge = 80;
 
+    currentCity: ICityLocation;
     public currentTabOpen = 1;
+
     @ViewChild('postBackBtn', { static: false }) postBackBtn: ElementRef;
     @ViewChild('postNextBtn', { static: false }) postNextBtn: ElementRef;
     @ViewChild('postPostBtn', { static: false }) postPostBtn: ElementRef;
