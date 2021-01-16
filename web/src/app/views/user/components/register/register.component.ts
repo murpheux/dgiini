@@ -19,6 +19,9 @@ import { UserService } from '../../services/user.service';
 })
 export class RegisterComponent implements OnInit {
     currentCity: ICityLocation;
+    
+    static readonly legalAge = 18;
+    static readonly maxAge = 80;
 
     public currentTabOpen = 1;
     @ViewChild('postBackBtn', { static: false }) postBackBtn: ElementRef;
@@ -96,7 +99,8 @@ export class RegisterComponent implements OnInit {
                     ]),
                     year: this.formBuilder.control(currentYear, [
                         Validators.required,
-                        Validators.max(currentYear),
+                        Validators.min(currentYear - RegisterComponent.maxAge),
+                        Validators.max(currentYear - RegisterComponent.legalAge),
                     ]),
                 }),
                 this.formBuilder.group({

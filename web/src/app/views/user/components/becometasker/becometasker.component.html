@@ -34,26 +34,6 @@
                             </div>
                         </div>
                         <div formGroupName="1">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-2">
-                                <div class="form-group mb-2">
-                                    <label for="website">Website</label>
-                                    <input type="text" class="form-control" formControlName="website" id="website" name="website" placeholder="www.website.com" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="facebook">Facebook</label>
-                                    <input type="text" class="form-control" formControlName="facebook" id="facebook" name="facebook" placeholder="@username" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="twitter">Twitter</label>
-                                    <input type="text" class="form-control" formControlName="twitter" id="twitter" name="twitter" placeholder="@username" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="linkedin">LinkedIn</label>
-                                    <input type="text" class="form-control" formControlName="linkedin" id="linkedin" name="linkedin" placeholder="@username" />
-                                </div>
-                            </div>
-                        </div>
-                        <div formGroupName="2">
                             <div class="tab-pane container p-0 active d-none" id="become-tasker-step-3">
                                 <div class="form-group mb-2">
                                     <label for="phone">Bank Name</label>
@@ -98,142 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div formGroupName="3">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-4">
-                                <p class="font-weight-bold">
-                                    Bank Branch locations address
-                                </p>
-                                <div class="form-group mb-2">
-                                    <label for="street">Street</label>
-                                    <em *ngIf="
-                                            forms[3].controls.bkstreet?.invalid &&
-                                            (forms[3].controls.bkstreet
-                                                ?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                    <input type="text" class="form-control" id="bkstreet" name="bkstreet" formControlName="bkstreet" placeholder="Street" />
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="city">City</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="bkcity" name="bkcity" formControlName="bkcity" placeholder="City" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="state">State</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="bkstate" name="bkstate" formControlName="bkstate" placeholder="State" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="zipcode">Zip Code</label>
-                                            <em *ngIf="
-                                                    forms[3].controls.bkzipcode
-                                                        ?.invalid &&
-                                                    (forms[3].controls.bkzipcode
-                                                        ?.touched ||
-                                                        mouseoverSave)
-                                                ">Required</em>
-                                            <input type="text" class="form-control" id="bkzipcode" name="bkzipcode" formControlName="bkzipcode" placeholder="Zip Code" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="country">Country</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="bkcountry" name="bkcountry" formControlName="bkcountry" placeholder="Country" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div formGroupName="4">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-5">
-                                <div class="form-group mb-2">
-                                    <label for="cardno">Card No</label>
-                                    <em *ngIf="
-                                            forms[4].controls.cardno?.invalid &&
-                                            (forms[4].controls.cardno?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                    <input type="text" class="form-control" formControlName="cardno" id="cardno" name="cardno" placeholder="Card Number" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="nameoncard">Name on Card</label>
-                                    <em *ngIf="
-                                            forms[4].controls.nameoncard?.invalid &&
-                                            (forms[4].controls.nameoncard?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                        <input type="text" class="form-control" formControlName="nameoncard" id="nameoncard" name="nameoncard" placeholder="Name" />
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="name">Expiry</label>
-                                    <em *ngIf="
-                                            forms[4].controls.expiry?.invalid &&
-                                            (forms[4].controls.expiry?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                    <input type="text" class="form-control" formControlName="expiry" id="expiry" name="expiry" placeholder="Expiry" />
-                                </div>
-                            </div>
-                        </div>
-                        <div formGroupName="5">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-6">
-                                <p class="font-weight-bold">
-                                    Credit card billing address
-                                </p>
-                                <div class="form-group mb-2">
-                                    <label for="street">Street</label>
-                                    <em *ngIf="
-                                            forms[5].controls.ccstreet?.invalid &&
-                                            (forms[5].controls.ccstreet
-                                                ?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                    <input type="text" class="form-control" id="ccstreet" name="ccstreet" formControlName="ccstreet" placeholder="Street" />
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="city">City</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="cccity" name="cccity" formControlName="cccity" placeholder="City" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="state">State</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="ccstate" name="ccstate" formControlName="ccstate" placeholder="State" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="zipcode">Zip Code</label>
-                                            <em *ngIf="
-                                                    forms[5].controls.cczipcode
-                                                        ?.invalid &&
-                                                    (forms[5].controls.cczipcode
-                                                        ?.touched ||
-                                                        mouseoverSave)
-                                                ">Required</em>
-                                            <input type="text" class="form-control" id="cczipcode" name="cczipcode" formControlName="cczipcode" placeholder="Zip Code" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label for="country">Country</label>
-                                            <input type="text" [readonly]="true" class="form-control" id="cccountry" name="cccountry" formControlName="cccountry" placeholder="Country" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div formGroupName="6">
+                        <div formGroupName="2">
                             <div
                                 class="tab-pane container active p-0 d-none"
                                 id="become-tasker-step-7"
@@ -287,31 +132,13 @@
                         <!-- </form> -->
                         <div class="tab-pane container p-0 fade d-none" id="become-tasker-step-9">
                             <p class="font-weight-bold">Confirm Details</p>
+                            <p class="m-0 font-weight-bold">Skill Summary</p>
+                            <p class="m-0 font-weight-bold">{{ forms[1].get("skillSummary")?.value }}</p>
                             <p class="m-0 font-weight-bold">Bank Info</p>
                             <p>{{ forms[2].get("accountNo")?.value }}</p>
                             <p>{{ forms[2].get("bankName")?.value }}</p>
                             <p>{{ forms[2].get("transitNo")?.value }}</p>
                             <p>{{ forms[2].get("insitutionNo")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Bank Address</p>
-                            <p>
-                                {{ forms[3].get("bkstreet")?.value }},
-                                {{ forms[3].get("bkcity")?.value }},
-                                {{ forms[3].get("bkstate")?.value }},
-                                {{ forms[3].get("bkzipcode")?.value }},
-                                {{ forms[3].get("bkcountry")?.value }}
-                            </p>
-                            <p class="m-0 font-weight-bold">Card</p>
-                            <p>{{ forms[4].get("cardno")?.value }}</p>
-                            <p>{{ forms[4].get("nameoncard")?.value }}</p>
-                            <p>{{ forms[4].get("expiry")?.value }}</p>
-                            <p class="m-0 font-weight-bold">Billing Address</p>
-                            <p>
-                                {{ forms[5].get("ccstreet")?.value }},
-                                {{ forms[5].get("cccity")?.value }},
-                                {{ forms[5].get("ccstate")?.value }},
-                                {{ forms[5].get("cczipcode")?.value }},
-                                {{ forms[5].get("cccountry")?.value }}
-                            </p>
                         </div>
                     </div>
                 </div>

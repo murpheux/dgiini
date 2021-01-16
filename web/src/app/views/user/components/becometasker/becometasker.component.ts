@@ -119,8 +119,6 @@ export class BecometaskerComponent implements OnInit {
                 }),
                 this.formBuilder.group({    // dummy - photos
                 }),
-                this.formBuilder.group({    // dummy - vehicles
-                }),
                 this.formBuilder.group({
                     summary: this.formBuilder.control('', [
                         Validators.required,
@@ -247,7 +245,7 @@ export class BecometaskerComponent implements OnInit {
     }
 
     nextTab(): boolean {
-        if (this.currentTabOpen > 9) {
+        if (this.currentTabOpen > 4) {
             return false;
         }
 
@@ -275,7 +273,7 @@ export class BecometaskerComponent implements OnInit {
                 this.postBackBtn.nativeElement.classList.remove('d-none');
                 break;
 
-            case 9:
+            case 4:
                 this.postNextBtn.nativeElement.classList.add('d-none');
                 this.postPostBtn.nativeElement.classList.remove('d-none');
                 break;
@@ -313,7 +311,7 @@ export class BecometaskerComponent implements OnInit {
                 this.postBackBtn.nativeElement.classList.add('d-none');
                 break;
 
-            case 8:
+            case 3:
                 this.postNextBtn.nativeElement.classList.remove('d-none');
                 this.postPostBtn.nativeElement.classList.add('d-none');
                 break;

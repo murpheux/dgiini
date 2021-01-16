@@ -391,7 +391,7 @@ module.exports = {
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
                 .aggregate([
-                    {'$match' : paging.filter },
+                    {'$match' : {$and: [paging.filter, {'status': {'$eq': 'open'}}] }},
                     {'$group' : {_id:'$category', count:{$sum:1}}}
                 ]).toArray()
 
