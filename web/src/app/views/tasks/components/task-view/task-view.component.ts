@@ -157,6 +157,7 @@ export class TaskViewComponent implements OnInit {
                 body: 'you have been invited!'
             };
 
+            this.isRateAccepted = true;
             this.notifier.showSuccess('Bid has been accepted and confirmed!');
 
             this.commService.sendMail(mail).subscribe(__ => {

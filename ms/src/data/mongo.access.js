@@ -2,6 +2,7 @@
 'use strict'
 
 import mongodb from 'mongodb'
+import winston from '../shared/winston'
 
 const mongoClient = mongodb.MongoClient
 const ObjectId = mongodb.ObjectId
@@ -63,19 +64,19 @@ module.exports = {
 
     // init
     setup_database: (db_url, database_name, options, collections) => {
-        console.log(db_url)
         return new Promise((resolve, reject) => {
             mongoClient.connect(db_url, options, (err, client) => {
                 collections.forEach(coll => {
                     client.db(database_name).createCollection(coll, (err) => {
                         err ? reject(err) : resolve(coll)
-
+    
                         if (coll === collections[collections.length - 1]) { client.close() }
                     })
                 })
             })
         })
     },
+
 
     // get connection
     get_connection: (db_url, database_name, options) => {
@@ -364,6 +365,7 @@ module.exports = {
         return new Promise((resolve, _) => {
             const doc = db.collection(collection)
                 .aggregate([
+                    {$match: {'status': {'$eq': 'open'}}},
                     {'$group' : {_id:'$category', count:{$sum:1}}}
                 ]).toArray()
 

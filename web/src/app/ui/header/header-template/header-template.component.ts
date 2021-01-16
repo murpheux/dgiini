@@ -98,7 +98,7 @@ export class HeaderTemplateComponent
             }
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { console.log(`From DRef: ${result}`) });
     }
 
     async postTask(): Promise<void> {

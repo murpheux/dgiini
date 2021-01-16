@@ -37,7 +37,7 @@ export class BecometaskerComponent implements OnInit {
     selectedSkills: string[] = [];
 
     mouseoverSave = false;
-    percentage = [12, 20, 35, 45, 50, 65, 75, 90, 100];
+    percentage = [5, 20, 40, 60, 80, 100];
     banks = ['bmo', 'scotia', 'td', 'rbc', 'simpli', 'cibc', 'tangerine', 'hsbc'];
     vehicleBrands = [];
     skills = ['capentry', 'welder', 'childcare', 'babysitter', 'mover', 'sweeper'];
@@ -94,14 +94,8 @@ export class BecometaskerComponent implements OnInit {
                     skillSummary: this.formBuilder.control('', [
                         Validators.required,
                         Validators.minLength(10),
-                        Validators.maxLength(1000),
+                        Validators.maxLength(250),
                     ]),
-                }),
-                this.formBuilder.group({
-                    website: this.formBuilder.control('', []),
-                    facebook: this.formBuilder.control('', []),
-                    twitter: this.formBuilder.control('', []),
-                    linkedin: this.formBuilder.control('', []),
                 }),
                 this.formBuilder.group({
                     accountNo: this.formBuilder.control('', [
@@ -122,50 +116,6 @@ export class BecometaskerComponent implements OnInit {
                         Validators.minLength(3),
                         Validators.maxLength(3)
                     ])
-                }),
-                this.formBuilder.group({
-                    bkstreet: this.formBuilder.control('', [Validators.required]),
-                    bkcity: this.formBuilder.control('Calgary', [
-                        Validators.required,
-                    ]),
-                    bkstate: this.formBuilder.control('AB', [
-                        Validators.required,
-                    ]),
-                    bkcountry: this.formBuilder.control('Canada', [
-                        Validators.required,
-                    ]),
-                    bkzipcode: this.formBuilder.control('', [
-                        Validators.required,
-                    ])
-                }),
-                this.formBuilder.group({
-                    cardno: this.formBuilder.control('', [
-                        Validators.required,
-                        Validators.minLength(12),
-                        Validators.maxLength(16),
-                    ]),
-                    nameoncard: this.formBuilder.control('', [
-                        Validators.required,
-                        Validators.maxLength(40),
-                    ]),
-                    expiry: this.formBuilder.control('', [
-                        Validators.required,
-                    ])
-                }),
-                this.formBuilder.group({
-                    ccstreet: this.formBuilder.control('', [Validators.required]),
-                    cccity: this.formBuilder.control('Calgary', [
-                        Validators.required,
-                    ]),
-                    ccstate: this.formBuilder.control('AB', [
-                        Validators.required,
-                    ]),
-                    cccountry: this.formBuilder.control('Canada', [
-                        Validators.required,
-                    ]),
-                    cczipcode: this.formBuilder.control('', [
-                        Validators.required,
-                    ]),
                 }),
                 this.formBuilder.group({    // dummy - photos
                 }),

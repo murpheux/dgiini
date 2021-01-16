@@ -56,15 +56,6 @@
                         <div formGroupName="2">
                             <div class="tab-pane container p-0 active d-none" id="become-tasker-step-3">
                                 <div class="form-group mb-2">
-                                    <label for="name">Account No</label>
-                                    <em *ngIf="
-                                            forms[2].controls.name?.invalid &&
-                                            (forms[2].controls.name?.touched ||
-                                                mouseoverSave)
-                                        ">Required</em>
-                                    <input type="number" class="form-control" formControlName="accountNo" id="accountNo" name="accountNo" placeholder="Account Number" />
-                                </div>
-                                <div class="form-group mb-2">
                                     <label for="phone">Bank Name</label>
                                     <em *ngIf="
                                             forms[2].controls.bankName?.invalid &&
@@ -79,6 +70,15 @@
                                         </select>
                                 </div>
                                 <div class="form-group mb-2">
+                                    <label for="name">Institution No</label>
+                                    <em *ngIf="
+                                            forms[2].controls.insitutionNo?.invalid &&
+                                            (forms[2].controls.insitutionNo?.touched ||
+                                                mouseoverSave)
+                                        ">Required</em>
+                                    <input type="number" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
+                                </div>
+                                <div class="form-group mb-2">
                                     <label for="name">Transit No</label>
                                     <em *ngIf="
                                             forms[2].controls.transitNo?.invalid &&
@@ -88,13 +88,13 @@
                                     <input type="number" class="form-control" formControlName="transitNo" id="transitNo" name="transitNo" placeholder="Transit Number" />
                                 </div>
                                 <div class="form-group mb-2">
-                                    <label for="name">Institution No</label>
+                                    <label for="name">Account No</label>
                                     <em *ngIf="
-                                            forms[2].controls.insitutionNo?.invalid &&
-                                            (forms[2].controls.insitutionNo?.touched ||
+                                            forms[2].controls.name?.invalid &&
+                                            (forms[2].controls.name?.touched ||
                                                 mouseoverSave)
                                         ">Required</em>
-                                    <input type="number" class="form-control" formControlName="insitutionNo" id="insitutionNo" name="insitutionNo" placeholder="Institution Number" />
+                                    <input type="number" class="form-control" formControlName="accountNo" id="accountNo" name="accountNo" placeholder="Account Number" />
                                 </div>
                             </div>
                         </div>
@@ -281,57 +281,6 @@
                                         "
                                         multiple
                                     />
-                                </div>
-                            </div>
-                        </div>
-                        <div formGroupName="7">
-                            <div class="tab-pane container p-0 active d-none" id="become-tasker-step-8">
-                                <div class="form-row" *ngFor="let vh of vehicleList; let idx = index">
-                                    <div class="col-1">
-                                        <button type="button" class="btn btn-sm btn-danger float-right" (click)="deleteVehicle(idx)">
-                                            <i class="fas fa-minus"></i>
-                                          </button>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label>Brand</label>
-                                            <select class="form-control" id="brand" name="brand" (change)="getVehicleModel($event, idx);">
-                                                <option value="">-- Select Brand --</option>
-                                                <option *ngFor="
-                                                    let vbrand of vehicleBrands
-                                                " value="{{ vbrand }}">{{ vbrand }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label>Model</label>
-                                            <select class="form-control" id="model" name="model" (change)="setModelValue($event, idx);">
-                                                <option value="">-- Select Model --</option>
-                                                <option *ngFor="
-                                                    let vModel of vehicleModels[idx]
-                                                " value="{{ vModel }}">{{ vModel }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group mb-2">
-                                            <label>Year</label>
-                                            <select class="form-control" id="year" name="year" (change)="setYearValue($event, idx);">
-                                                <option value="">-- Select Year --</option>
-                                                <option *ngFor="
-                                                    let year of autoYearList
-                                                " value="{{ year }}">{{ year }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="col-2">
-                                        <button type="button" class="btn btn-sm btn-success float-right" (click)="addVehicle()">
-                      <i class="fas fa-plus"></i>
-                    </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
