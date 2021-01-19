@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
@@ -51,12 +51,16 @@ export class TaskService {
 
     getFeaturedTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
-        return this.http.get<IResponse>(url);
+
+        let params = new HttpParams().set("status", "open")
+        return this.http.get<IResponse>(url, {params: params});
     }
 
     getRecentTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
-        return this.http.get<IResponse>(url);
+
+        let params = new HttpParams().set("status", "open")
+        return this.http.get<IResponse>(url, {params: params});
     }
 
     getUserTasks(user: Guid): Observable<IResponse> {
