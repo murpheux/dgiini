@@ -149,12 +149,12 @@ export class TaskViewComponent implements OnInit {
     }
 
     handleBidAccepted(bid: IBid): void {
-        this.taskService.acceptBid2(bid._id.toString()).subscribe(_ => {
+        this.taskService.acceptBid2(bid._id.toString(), bid.task).subscribe(_ => {
             const mail: IMail = {
                 from: 'dapo.onawole@mgail.com',
                 to: bid.userAccount.username,
-                subject: 'dgiini invite',
-                body: 'you have been invited!'
+                subject: 'dgiini task',
+                body: 'your bid has been accepted!'
             };
 
             this.isRateAccepted = true;

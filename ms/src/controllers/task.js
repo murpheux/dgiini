@@ -204,10 +204,16 @@ export class TaskController {
         } else {
             const id = bid.id
             delete bid['id']
+
+            const taskid = bid.task
+            delete bid['task']
     
+            const invoke_updatetask = async() => await mgaccess.update_one(this.db, this.TASK_COLL, taskid, {'status': 'accepted'})
+            const tasks = await invoke_updatetask()
+
             const invoke_updateone = async() => await mgaccess.update_one(this.db, this.BID_COLL, id, bid)
-    
-            const tasks = await invoke_updateone()
+            const bid = await invoke_updateone()
+            
             res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', tasks))
         }
     }
