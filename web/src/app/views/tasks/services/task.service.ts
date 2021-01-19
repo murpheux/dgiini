@@ -52,14 +52,14 @@ export class TaskService {
     getFeaturedTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
 
-        let params = new HttpParams().set("status", "open")
+        let params = new HttpParams().set("filter", '{"status": "open"}')
         return this.http.get<IResponse>(url, {params: params});
     }
 
     getRecentTasks(): Observable<IResponse> {
         const url = `${this.serviceUrl}`;
 
-        let params = new HttpParams().set("status", "open")
+        let params = new HttpParams().set("filter", '{"status": "open"}')
         return this.http.get<IResponse>(url, {params: params});
     }
 
