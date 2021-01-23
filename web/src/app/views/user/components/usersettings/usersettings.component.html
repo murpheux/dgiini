@@ -378,6 +378,18 @@
                                     <hr />
                                     <div *ngIf="vendor" class="row">
                                         <div class="col-md-12">
+                                            <input
+                                                type="text"
+                                                class="form-control"
+                                                id="skill"
+                                                placeholder="Add Skill"
+                                            />
+
+                                            <button class="btn btn-web" (click)="handleAddSkill()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-12">
                                             <span *ngFor="let skill of vendor?.skills" class="badge badge-pill badge-primary big-badge mr-1">{{skill}}</span>
                                         </div>
                                     </div>

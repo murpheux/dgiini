@@ -33,4 +33,18 @@ export class UsersettingsComponent implements OnInit {
             }
         });
     }
+
+    handleAddSkill(skill: string): void {
+        if (!this.vendor.skills) {
+            this.vendor.skills = [];
+        }
+
+        this.vendor.skills.push(skill);
+    }
+
+    handleSaveSkills(): void {
+    }
+
+    handleSaveProfile(): void {
+    }
 }

@@ -92,9 +92,6 @@ export class TaskViewComponent implements OnInit {
         });
 
         this.checkBidStatus();
-
-        console.log(this.isVendor)
-        console.log(this.isRateAccepted)
     }
 
     checkBidStatus(): void {
@@ -176,6 +173,9 @@ export class TaskViewComponent implements OnInit {
                 this.notifier.showSuccess('Bidding tasker has been contacted!');
             });
         });
+    }
+
+    handleLogin(): void {
     }
 
     handleViewProfile(user: IUser): void {

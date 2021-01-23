@@ -77,6 +77,7 @@
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" [routerLink]="['/task/edit']" [state]="{data: task}">Edit</button>
                 <button *ngIf="task.client !== currentUser._id && isVendor && !isRateAccepted" class="btn btn-warning ml-2" (click)="handleAcceptOffer()">Accept Rate</button>
                 <button *ngIf="task.client === currentUser._id" class="btn btn-warning ml-2" (click)="handleCancelTask()">Cancel Task</button>
+                <button *ngIf="currentUser === undefined" class="btn btn-warning ml-2" (click)="handleLogin()">Login to Bid</button>
             </div>
             <div class="">
                 <app-google-map
