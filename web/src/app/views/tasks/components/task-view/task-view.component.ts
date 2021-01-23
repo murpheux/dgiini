@@ -56,29 +56,7 @@ export class TaskViewComponent implements OnInit {
             this.taskService.enrichTasksWithPhotos([task]);
         }
 
-        if (this.currentUser) {
-            this.taskService.getTaskBids(this._task._id).subscribe(res => {
-                this.bids = res.payload.data;
-                this.taskService.enrichBids(this.bids);
-
-                const myBids: IBid[] = [];
-
-                this.bids.filter(f => {
-                    if (f.user === this.currentUser._id.toString()) {
-                        myBids.push(f);
-                    }
-                });
-
-                myBids.filter(b => {
-
-                    console.log(this.task.rate.amount)
-                    console.log(b.rate.amount)
-
-                    this.isBidAccepted = this.task.rate.amount === b.rate.amount;
-                    if (this.isBidAccepted) { return; }
-                });
-            });
-        }
+        this.checkBidStatus();
     }
 
     get task(): ITask {
@@ -112,6 +90,34 @@ export class TaskViewComponent implements OnInit {
                 this.isVendor = user.role.includes('vendor');
             }
         });
+
+        this.checkBidStatus();
+    }
+
+    checkBidStatus(): void {
+        if (this.currentUser) {
+            this.taskService.getTaskBids(this._task._id).subscribe(res => {
+                this.bids = res.payload.data;
+                this.taskService.enrichBids(this.bids);
+
+                const myBids: IBid[] = [];
+
+                this.bids.filter(f => {
+                    if (f.user === this.currentUser._id.toString()) {
+                        myBids.push(f);
+                    }
+                });
+
+                myBids.filter(b => {
+
+                    console.log(this.task.rate.amount)
+                    console.log(b.rate.amount)
+
+                    this.isBidAccepted = this.task.rate.amount === b.rate.amount;
+                    if (this.isBidAccepted) { return; }
+                });
+            });
+        }
     }
 
     getGeoLocation(address: IAddress): void {
@@ -133,12 +139,7 @@ export class TaskViewComponent implements OnInit {
         // raise a bid
         const bid: IBid = { task: this.task._id.toString(), user: this.currentUser._id.toString(),  message: 'Tasker has accepted task at current rate', rate: this.task.rate };
         this.taskService.saveBid(bid).subscribe(res => {
-
-            console.log(`1--- ${this.isVendor} - ${this.isRateAccepted} ---`)
-
             this.isRateAccepted = true;
-
-            console.log(`1--- ${this.isVendor} - ${this.isRateAccepted} ---`)
             this.notifier.showSuccess('Rate accepted. Bid submitted successfully!');
         });
     }
