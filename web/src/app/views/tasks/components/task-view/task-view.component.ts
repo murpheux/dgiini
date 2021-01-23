@@ -32,6 +32,7 @@ export class TaskViewComponent implements OnInit {
     location: ILocation;
     isVendor = false;
     isRateAccepted = false;
+    isBidAccepted = false;
 
     faDollarSign = faDollarSign;
     faCheck = faCheck;
@@ -69,7 +70,7 @@ export class TaskViewComponent implements OnInit {
                 });
 
                 myBids.filter(b => {
-                    this.isRateAccepted = this.task.rate.amount === b.rate.amount;
+                    this.isBidAccepted = this.task.rate.amount === b.rate.amount;
                 });
             });
         }
@@ -127,6 +128,12 @@ export class TaskViewComponent implements OnInit {
         // raise a bid
         const bid: IBid = { task: this.task._id.toString(), user: this.currentUser._id.toString(),  message: 'Tasker has accepted task at current rate', rate: this.task.rate };
         this.taskService.saveBid(bid).subscribe(res => {
+
+            console.log(`1--- ${this.isVendor} - ${this.isRateAccepted} ---`)
+
+            this.isRateAccepted = true;
+
+            console.log(`1--- ${this.isVendor} - ${this.isRateAccepted} ---`)
             this.notifier.showSuccess('Rate accepted. Bid submitted successfully!');
         });
     }
@@ -157,7 +164,7 @@ export class TaskViewComponent implements OnInit {
                 body: 'your bid has been accepted!'
             };
 
-            this.isRateAccepted = true;
+            this.isBidAccepted = true;
             this.notifier.showSuccess('Bid has been accepted and confirmed!');
 
             this.commService.sendMail(mail).subscribe(__ => {
