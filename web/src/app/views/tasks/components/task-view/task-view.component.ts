@@ -70,7 +70,12 @@ export class TaskViewComponent implements OnInit {
                 });
 
                 myBids.filter(b => {
+
+                    console.log(this.task.rate.amount)
+                    console.log(b.rate.amount)
+
                     this.isBidAccepted = this.task.rate.amount === b.rate.amount;
+                    if (this.isBidAccepted) { return; }
                 });
             });
         }
