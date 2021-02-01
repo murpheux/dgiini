@@ -7,6 +7,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CorpModule } from 'src/app/views/corp/corp.module';
 import { TasksModule } from 'src/app/views/tasks/tasks.module';
+import { MessagesModule } from 'src/app/views/messages/messages.module';
 import { UserModule } from 'src/app/views/user/user.module';
 import { HeaderTemplateComponent } from './header-template/header-template.component';
 
@@ -17,6 +18,7 @@ import { HeaderTemplateComponent } from './header-template/header-template.compo
         CoreModule,
         SharedModule,
         TasksModule,
+        MessagesModule,
         CorpModule,
         UserModule,
         MatDialogModule,

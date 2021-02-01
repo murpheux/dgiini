@@ -8,10 +8,9 @@ import { TaskUserComponent } from './components/task-user/task-user.component';
 const routes: Routes = [
     { path: '', component: TaskCategoriesComponent, canActivate: [] },
     { path: 'new', component: TaskCreateComponent, canActivate: [] },
-    { path: 'my', component: TaskUserComponent, canActivate: [ ] },
-    { path: 'edit', component: TaskEditComponent, canActivate: [ ] },
-    { path: 'edit/:id', component: TaskEditComponent, canActivate: [ ] },
-    // { path: ':id', component: TaskCategoriesComponent, canActivate: [] },
+    { path: 'my', component: TaskUserComponent, canActivate: [] },
+    { path: 'edit', component: TaskEditComponent, canActivate: [] },
+    { path: 'edit/:id', component: TaskEditComponent, canActivate: [] },
     {
         path: ':category',
         component: TaskCategoriesComponent,

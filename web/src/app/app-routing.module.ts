@@ -9,6 +9,11 @@ const routes: Routes = [
             import('./views/home/home.module').then((m) => m.HomeModule),
     },
     {
+        path: 'message',
+        loadChildren: () =>
+            import('./views/messages/messages.module').then((m) => m.MessagesModule),
+    },
+    {
         path: 'browse',
         loadChildren: () =>
             import('./views/tasks/tasks.module').then((m) => m.TasksModule),

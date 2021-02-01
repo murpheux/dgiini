@@ -9,6 +9,7 @@ import { IMail } from 'src/app/shared/models/mail';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CommunicationService } from 'src/app/shared/services/communication.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { NologinComponent } from 'src/app/views/home/components/nologin/nologin.component';
 import { PubProfileComponent } from 'src/app/views/user/components/pub-profile/pub-profile.component';
 import { IAddress } from 'src/app/views/user/models/address';
 import { IUser } from 'src/app/views/user/models/user';
@@ -176,6 +177,13 @@ export class TaskViewComponent implements OnInit {
     }
 
     handleLogin(): void {
+        const dialogRef = this.dialog.open(NologinComponent, {
+            height: '570px',
+            width: '350px',
+        });
+
+        dialogRef.afterClosed().subscribe(_ => {
+        });
     }
 
     handleViewProfile(user: IUser): void {
