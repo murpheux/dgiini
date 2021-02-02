@@ -26,8 +26,8 @@ export class MessageService {
         return this.http.get<IResponse>(url);
     }
 
-    getUserConversations(userid: IUser, taskid: string): Observable<IResponse> {
-        const url = `${this.serviceUrl}/task/${taksid}`;
+    getUserConversations(userid: Guid, taskid: string): Observable<IResponse> {
+        const url = `${this.serviceUrl}/task/${taskid}`;
         return this.http.get<IResponse>(url);
     }
 
