@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IMessage } from '../../models/message'
+import { IMessage } from '../../models/message';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MessageService } from '../../services/message.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
