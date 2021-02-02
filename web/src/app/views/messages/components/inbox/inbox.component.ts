@@ -25,13 +25,15 @@ export class InboxComponent implements OnInit {
         this.authService.loginUserSubject$.subscribe(user => {
             if (user) {
                 this.currentUser = user;
-                this.getUserMessages(user);
+                taskid = '5d1cf62a8cda953115f07a30';
+                this.getUserConversations(user, taskid);
             }
         });
     }
 
     getUserConversations(user: IUser): void {
-        this.messageService.getUserConversations(user.id).subscribe((success) => {
+        this.messageService.getUserConversations(user._id).subscribe((success) => {
+            console.log(JSON.stringify(success.payload.data));
             this.conversations = success.payload.data;
 
         });

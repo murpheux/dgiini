@@ -18,7 +18,7 @@ export class MessageService {
         private http: HttpClient,
         private userService: UserService
     ) {
-        this.serviceUrl = `${env.apiUrl}/message/v1/messages`;
+        this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
     }
 
     getUserMessages(id: Guid): Observable<IResponse> {
@@ -26,8 +26,8 @@ export class MessageService {
         return this.http.get<IResponse>(url);
     }
 
-    getUserConversations(id: Guid): Observable<IResponse> {
-        const url = `${this.serviceUrl}/message/${id}`;
+    getUserConversations(userid: IUser, taskid: string): Observable<IResponse> {
+        const url = `${this.serviceUrl}/task/${taksid}`;
         return this.http.get<IResponse>(url);
     }
 
