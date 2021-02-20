@@ -5,7 +5,6 @@ import { MessageService } from '../../services/message.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { IUser } from 'src/app/views/user/models/user';
 
-
 @Component({
   selector: 'app-inbox',
   templateUrl: './inbox.component.html',
@@ -35,6 +34,8 @@ export class InboxComponent implements OnInit {
         this.messageService.getUserConversations(user._id, taskid).subscribe((success) => {
             this.conversations = success.payload.data;
 
+            this.messageService.enrichMessagesWithUser(this.conversations);
+            console.log(JSON.stringify(this.conversations));
         });
     }
 
@@ -45,5 +46,6 @@ export class InboxComponent implements OnInit {
 
         });
     }
+
 
 }

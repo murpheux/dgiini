@@ -16,7 +16,7 @@ export class MessageService {
     constructor(
         private env: EnvService,
         private http: HttpClient,
-        private userService: UserService
+        private userService: UserService,
     ) {
         this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
     }
@@ -45,4 +45,24 @@ export class MessageService {
         const url = `${this.serviceUrl}`;
         return this.http.post<IResponse>(url, message);
     }
+
+    enrichMessagesWithUser(messages: IMessage[]): void {
+        if (!messages) {
+            return;
+        }
+
+        const userDoubleList = messages.map((m) => [m.from, m.to])
+        let userList = [].concat.apply([], userDoubleList);
+        userList = userList.filter((value, index, self) => self.indexOf(value) === index);
+
+        this.userService.getUserList(userList).subscribe(res => {
+            messages.forEach(m => {
+                res.payload.data.filter(user => {
+                    m.fromUser = m.from === user._id ? user : m.from;
+                    m.toUser = m.to === user._id ? user : m.to;
+                });
+            });
+        });
+    }
+
 }

@@ -207,6 +207,9 @@ export class AuthenticationController {
         const ip = req.params.ip
         const validation = validator().validate(ip).isNotEmpty().isIP()
         const service_url = `${find_city_service}?host=${ip}`
+        const domain = 'https://www.example.com'
+
+        console.log(`----- ip url-- ${service_url} -----`)
     
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
@@ -217,7 +220,7 @@ export class AuthenticationController {
                     if (result !== undefined) {
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, result))
                     } else {
-                        const response = await fetch(service_url) //, { json: true, headers: { accept: '*/*', connection: 'keep-alive' } })
+                        const response = await fetch(service_url, { json: true, headers: { accept: '*/*', connection: 'keep-alive', 'User-Agent': `keycdn-tools:${domain}` } })
                         const json = await response.json()
                         this.cache.set(ip, json)
                         res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', 0, json))

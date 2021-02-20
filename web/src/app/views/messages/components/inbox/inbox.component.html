@@ -16,6 +16,13 @@
         <div class="row align-items-start">
             <div class="col-2">
                 <div *ngIf="conversations">
+                    <div *ngFor="let conversation of conversations">
+                        <div *ngIf="conversation.fromUser">
+                            <span>{{ conversation.fromUser.name }}</span>
+                        </div>
+                        <span>{{ conversation.message | slice:0:30 }}</span>
+                        <hr>
+                    </div>
                 </div>
             </div>
             <div class="col-8">
