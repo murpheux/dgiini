@@ -51,7 +51,7 @@ export class MessageService {
             return;
         }
 
-        const userDoubleList = messages.map((m) => [m.from, m.to])
+        const userDoubleList = messages.map((m) => [m.from, m.to]);
         let userList = [].concat.apply([], userDoubleList);
         userList = userList.filter((value, index, self) => self.indexOf(value) === index);
 
