@@ -2,7 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
+replicaCount:
+  web: 2
+  apigw: 2
+  authApi: 2
+  taskApi: 2
+  msgApi: 1
+  billApi: 1
+  notifyApi: 1
+  reviewApi: 1
 
 image:
   repository: registry.digitalocean.com/dgiini-k8s

@@ -207,10 +207,8 @@ export class AuthenticationController {
         const ip = req.params.ip
         const validation = validator().validate(ip).isNotEmpty().isIP()
         const service_url = `${find_city_service}?host=${ip}`
-        const domain = 'https://www.example.com'
+        const domain = 'https://www.dgiini.ca'
 
-        console.log(`----- ip url-- ${service_url} -----`)
-    
         if (validation.hasErrors()) {
             res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
         } else {

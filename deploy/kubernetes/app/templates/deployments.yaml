@@ -14,7 +14,12 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.web.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.web }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -111,7 +116,7 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.apigw.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.apigw }}
   template:
     metadata:
       labels:
@@ -175,7 +180,7 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.auth.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.authApi }}
   template:
     metadata:
       labels:
@@ -259,7 +264,7 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.task.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.taskApi }}
   template:
     metadata:
       labels:
@@ -343,7 +348,7 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.notify.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.notifyApi }}
   template:
     metadata:
       labels:
@@ -427,7 +432,7 @@ spec:
     matchLabels:
       app: {{ .Values.appName }}-{{ .Values.review.appName }}
       {{- include "helm.selectorLabels" . | nindent 6 }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount.reviewApi }}
   template:
     metadata:
       labels:

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+   name:  dgiini-ingress
+   namespace: dgiini
+spec:
+  rules:
+  - host: www.dgiini.ca
+    http:
+      paths:
+      - backened:
+        serviceName: dginni-web
+        servicePort: 443
+  - host: gw.dgiini.ca
+    http:
+      paths:
+      - backend:
+        serviceName: dgiini-Gw
+        servicePort: 443
