@@ -31,6 +31,25 @@ export class MessageController {
         }
     }
 
+    get_user_messages = async(req, res) => {
+        const user = req.params.userid
+        var validation = validator().validate(user).isNotEmpty().and.isMongoObjectId()
+    
+        const paging = build_paging(req)
+        paging.filter = { $or: [ {from: user}, {to: user} ] }
+
+        console.log(paging)
+    
+        if (validation.hasErrors()) {
+            res.status(HttpStatus.BAD_REQUEST).json(build_response(HttpStatus.BAD_REQUEST, VALIDATION_MSG, validation.getErrors()))
+        } else {
+            const invoke_getlist = async() => await mgaccess.get_list(this.db, this.MESSAGE_COLL, paging)
+    
+            const [count, data] = await invoke_getlist()
+            res.status(HttpStatus.OK).json(build_response(HttpStatus.OK, '', count, data))
+        }
+    }
+
     get_receiver_messages = async(req, res) => {
         const sender = req.params.sender
         var validation = validator().validate(sender).isNotEmpty().and.isMongoObjectId()

@@ -99,7 +99,9 @@ export class HeaderTemplateComponent
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            this.isVendor = result.status;
+            if (result !== undefined) {
+                this.isVendor = result.status;
+            }
         });
     }
 

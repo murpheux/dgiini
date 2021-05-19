@@ -2,7 +2,7 @@
   window.__env = window.__env || {};
 
   // API url
-  window.__env.apiUrl = `https://macbookpro:8800/api`;
+  window.__env.apiUrl = `https://vector:8800/api`;
 
   // Whether or not to enable debug mode
   // Setting this to false will disable console output

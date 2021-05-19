@@ -21,12 +21,12 @@ export class MessageService {
         this.serviceUrl = `${env.apiUrl}/msg/v1/messages`;
     }
 
-    getUserMessages(id: Guid): Observable<IResponse> {
-        const url = `${this.serviceUrl}/message/${id}`;
+    getUserConversations(userid: Guid): Observable<IResponse> {
+        const url = `${this.serviceUrl}/user/${userid}`;
         return this.http.get<IResponse>(url);
     }
 
-    getUserConversations(userid: Guid, taskid: string): Observable<IResponse> {
+    getUserConversationsForTask(userid: Guid, taskid: string): Observable<IResponse> {
         const url = `${this.serviceUrl}/task/${taskid}`;
         return this.http.get<IResponse>(url);
     }
@@ -64,5 +64,6 @@ export class MessageService {
             });
         });
     }
+
 
 }

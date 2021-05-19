@@ -27,6 +27,7 @@ mgaccess.get_connection(common.database_uri, database_name, options).then(connec
     const api = new MessageController(db)
 
     router.get('/messages/:id', asyncHandler(api.get_messages_by_id))
+    router.get('/messages/user/:userid', asyncHandler(api.get_user_messages))
     router.get('/messages/to/:sender', asyncHandler(api.get_receiver_messages))
     router.get('/messages/from/:sender', asyncHandler(api.get_sender_messages))
     router.get('/messages/task/:id', asyncHandler(api.get_task_messages))
